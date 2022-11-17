@@ -11,15 +11,18 @@ CONFIG += c++11
 SOURCES += \
     main.cpp \
     entrance.cpp \
+    mainwindow.cpp \
     usbthread.cpp
 
 HEADERS += \
     entrance.h \
     hidapi.h \
+    mainwindow.h \
     usbthread.h
 
 FORMS += \
-    entrance.ui
+    entrance.ui \
+    mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

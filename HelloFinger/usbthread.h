@@ -5,6 +5,7 @@
 
 class USBTHREAD : public QThread
 {
+    Q_OBJECT
 public:
     explicit USBTHREAD(QObject *parent = nullptr);
     void stop();
@@ -14,6 +15,7 @@ private:
     volatile bool stopped;
 
 signals:
+    void SI_TableStateUpdate();
 
 };
 

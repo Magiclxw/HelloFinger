@@ -12,12 +12,14 @@ SOURCES += \
     main.cpp \
     entrance.cpp \
     mainwindow.cpp \
+    msghandler.cpp \
     usbthread.cpp
 
 HEADERS += \
     entrance.h \
     hidapi.h \
     mainwindow.h \
+    msghandler.h \
     usbthread.h
 
 FORMS += \

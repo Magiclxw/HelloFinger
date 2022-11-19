@@ -7,11 +7,12 @@
 #include <QElapsedTimer>
 #include <QTimer>
 #include "mainwindow.h"
+#include "msghandler.h"
 
 /*板子上电默认处于协议传输模式*/
 
 
-struct hid_device_ *handle;
+struct hid_device_ *handle = NULL;
 struct hid_device_ *transhandle = NULL;    //透传句柄
 USBTHREAD *usbthread = new USBTHREAD;
 
@@ -46,16 +47,18 @@ Entrance::Entrance(QWidget *parent)
 
     QTimer *timer = new QTimer;
     timer->start(10);
-
     connect(timer,&QTimer::timeout,[=](){
         if(timerCount == 30 && infoFlag == 0){
             timerCount = 29;
+            ui->progressBar->setStyleSheet("QProgressBar{background:write;} QProgressBar::chunk{background:red}");
         }
         if(timerCount == 60 && interfaceFlag == 0){
             timerCount = 59;
+            ui->progressBar->setStyleSheet("QProgressBar{background:write;} QProgressBar::chunk{background:red}");
         }
         if(timerCount == 90 && openFlag == 0){
             timerCount = 89;
+            ui->progressBar->setStyleSheet("QProgressBar{background:write;} QProgressBar::chunk{background:red}");
         }
         if(timerCount == 100){
             timer->stop();
@@ -64,23 +67,17 @@ Entrance::Entrance(QWidget *parent)
         timerCount++;
 
     });
-
-
     hid_device_info *hid_info;
 /*  1、获取设备信息 */
     hid_info = hid_enumerate(Protocol_VID,Protocol_PID);
 
     if(hid_info == NULL){
-        while(1){
-            hid_info = hid_enumerate(Protocol_VID,Protocol_PID);
-            if(hid_info != NULL){
-                infoFlag = 1;
-                break;
-            }
-            qDebug() << "重新连接";
-        }
+        qDebug() << "获取信息失败";
+    }else{
+        infoFlag = 1;
+        qDebug() << "获取信息成功";
     }
-    infoFlag = 1;
+
 /* 2、获取指定接口 */
     for(;hid_info != nullptr;hid_info = hid_info->next){
            if(hid_info->interface_number == 3)//接口匹配
@@ -94,14 +91,15 @@ Entrance::Entrance(QWidget *parent)
         //hid_free_enumeration(hid_info);
 
 /* 3、打开设备接口 */
-    handle = hid_open_path(hid_info->path);
-
-    hid_free_enumeration(hid_info);
+    if(infoFlag == 1 && interfaceFlag == 1){
+        handle = hid_open_path(hid_info->path);
+    }
 
     if(handle == NULL){
         qDebug() << "HID Open Failed";
     }else{
         openFlag = 1;
+        hid_free_enumeration(hid_info);
         qDebug() << "HID Open Success";
     }
 

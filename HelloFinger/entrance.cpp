@@ -40,7 +40,7 @@ Entrance::Entrance(QWidget *parent)
     connect(ui->progressBar,&QProgressBar::valueChanged,[=](){
         if(ui->progressBar->value() == 100){
             m->show();
-            this->hide();
+            //this->hide();
         }
     });
 

@@ -11,6 +11,7 @@ extern uint16_t Transmission_PID;
 
 uint8_t rec;
 uint8_t rec_buffer[20];
+QByteArray rec_buffer_arry;
 
 USBTHREAD::USBTHREAD(QObject *parent) : QThread(parent)
 {
@@ -30,10 +31,12 @@ void USBTHREAD::run()
     }
 
     while(!stopped){
-        rec = hid_read_timeout(transhandle,rec_buffer,20,1000);
-
+        rec = hid_read_timeout(transhandle,rec_buffer,20,1000);     //接收第一字节为后续数据长度
+        rec_buffer_arry = QByteArray((char*)rec_buffer,20);
         qDebug() << "Receive num:" << rec;
-        qDebug() << "Receive data" << rec_buffer;
+        qDebug() << "rec_buffer:" << rec_buffer[0];
+        qDebug() << "Receive data" << rec_buffer_arry;
+        memset(rec_buffer,0,20);
     }
 
 

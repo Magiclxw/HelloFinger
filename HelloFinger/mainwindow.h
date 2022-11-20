@@ -14,9 +14,13 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void paintEvent(QPaintEvent *event);
 
 private:
     Ui::MainWindow *ui;
+
+public slots:
+    void SL_TableStateUpdate(void);
 };
 
 #endif // MAINWINDOW_H

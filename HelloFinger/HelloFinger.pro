@@ -9,6 +9,7 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    listwidgeteditwindow.cpp \
     main.cpp \
     entrance.cpp \
     mainwindow.cpp \
@@ -18,12 +19,14 @@ SOURCES += \
 HEADERS += \
     entrance.h \
     hidapi.h \
+    listwidgeteditwindow.h \
     mainwindow.h \
     msghandler.h \
     usbthread.h
 
 FORMS += \
     entrance.ui \
+    listwidgeteditwindow.ui \
     mainwindow.ui
 
 # Default rules for deployment.
@@ -35,3 +38,6 @@ win32: LIBS += -L$$PWD/./ -lhidapi
 
 INCLUDEPATH += $$PWD/.
 DEPENDPATH += $$PWD/.
+
+RESOURCES += \
+    res.qrc

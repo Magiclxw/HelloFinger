@@ -50,6 +50,9 @@ void USBTHREAD::run()
         case TABLESTATE:
             emit SI_TableStateUpdate();
             break;
+
+        default:
+            break;
         }
 
         memset(rec_buffer,0,20);

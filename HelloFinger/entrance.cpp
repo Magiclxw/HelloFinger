@@ -35,7 +35,7 @@ Entrance::Entrance(QWidget *parent)
     ui->setupUi(this);
     this->setFixedSize(300,100);
     this->setWindowTitle("HelloFinger");
-    QMainWindow *m = new QMainWindow;
+    MainWindow *m = new MainWindow;
 
 /* 等待进度条满 */
     connect(ui->progressBar,&QProgressBar::valueChanged,[=](){
@@ -122,6 +122,7 @@ Entrance::Entrance(QWidget *parent)
     });
 /*************************************************************************/
 
+    connect(usbthread,&USBTHREAD::SI_TableStateUpdate,m,&MainWindow::SL_TableStateUpdate);
 }
 
 Entrance::~Entrance()

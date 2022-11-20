@@ -8,12 +8,14 @@
 #include <QTimer>
 #include "mainwindow.h"
 #include "msghandler.h"
+#include "usbdevice.h"
 
 /*板子上电默认处于协议传输模式*/
 
 
 struct hid_device_ *handle = NULL;
 struct hid_device_ *transhandle = NULL;    //透传句柄
+hid_device_info *hid_info = NULL;
 USBTHREAD *usbthread = new USBTHREAD;
 
 /*协议传输ID*/
@@ -37,6 +39,12 @@ Entrance::Entrance(QWidget *parent)
     this->setWindowTitle("HelloFinger");
     MainWindow *m = new MainWindow;
 
+    USBDEVICE *usbdevice = new USBDEVICE(this);
+    usbdevice->registerDevice(this->winId());
+    qApp->installNativeEventFilter(usbdevice);
+
+    connect(usbdevice,SIGNAL(deviceIn(QString,QString)),this,SLOT(onDeviceIn(QString,QString)));
+    connect(usbdevice,SIGNAL(deviceOut(QString,QString)),this,SLOT(onDeviceOut(QString,QString)));
 /* 等待进度条满 */
     connect(ui->progressBar,&QProgressBar::valueChanged,[=](){
         if(ui->progressBar->value() == 100){
@@ -44,6 +52,8 @@ Entrance::Entrance(QWidget *parent)
             //this->hide();
         }
     });
+
+
 
     QTimer *timer = new QTimer;
     timer->start(10);
@@ -67,11 +77,12 @@ Entrance::Entrance(QWidget *parent)
         timerCount++;
 
     });
-    hid_device_info *hid_info;
+
 /*  1、获取设备信息 */
     hid_info = hid_enumerate(Protocol_VID,Protocol_PID);
 
     if(hid_info == NULL){
+        infoFlag = 0;
         qDebug() << "获取信息失败";
     }else{
         infoFlag = 1;
@@ -124,6 +135,82 @@ Entrance::Entrance(QWidget *parent)
 
     connect(usbthread,&USBTHREAD::SI_TableStateUpdate,m,&MainWindow::SL_TableStateUpdate);
 }
+
+void Entrance::onDeviceIn(QString VID, QString PID)
+{
+    QString vid;
+    QString pid;
+    qDebug()<<"设备已插入"<<"VID:"<<VID<<"PID:"<<PID;
+    vid=VID.right(4);
+    pid=PID.right(4);
+    qDebug()<<vid;
+    qDebug()<<pid;
+    bool ok;
+    if(vid.toInt(&ok,16)==Protocol_VID && pid.toInt(&ok,16)==Protocol_PID)
+    {
+        qDebug() << "In ";
+        while(hid_info == NULL){
+            hid_info = hid_enumerate(Protocol_VID,Protocol_PID);
+
+            if(hid_info == NULL){
+                infoFlag = 0;
+                qDebug() << "获取信息失败";
+            }else{
+                infoFlag = 1;
+                qDebug() << "获取信息成功";
+                //break;
+            }
+            if(infoFlag == 1){
+                for(;hid_info != nullptr;hid_info = hid_info->next){
+                    if(hid_info->interface_number == 3)//接口匹配
+                    {
+                        qDebug("interface_number:%s",hid_info->path);//打印地址
+                        interfaceFlag = 1;
+                        break;
+                    }else{
+                        interfaceFlag = 0;
+                    }
+                }
+            }
+        }
+
+
+        if(infoFlag == 1 && interfaceFlag == 1){
+            handle = hid_open_path(hid_info->path);
+        }
+
+        if(handle == NULL){
+            qDebug() << "HID Open Failed";
+        }else{
+            openFlag = 1;
+            hid_free_enumeration(hid_info);
+            qDebug() << "HID Open Success";
+        }
+
+    }
+
+}
+
+
+void Entrance::onDeviceOut(QString VID, QString PID)
+{
+    QString vid;
+    QString pid;
+    qDebug()<<"设备已拔出"<<"VID:"<<VID<<"PID:"<<PID;
+    vid=VID.right(4);
+    pid=PID.right(4);
+    qDebug()<<vid;
+    qDebug()<<pid;
+    bool ok;
+    if( vid.toInt(&ok,16)==Protocol_VID && pid.toInt(&ok,16)==Protocol_PID )
+    {
+        usbthread->stop();
+        hid_info = NULL;
+        handle = NULL;
+        qDebug()<<"thread stop";
+    }
+}
+
 
 Entrance::~Entrance()
 {

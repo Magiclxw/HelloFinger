@@ -14,6 +14,7 @@ SOURCES += \
     entrance.cpp \
     mainwindow.cpp \
     msghandler.cpp \
+    usbdevice.cpp \
     usbthread.cpp
 
 HEADERS += \
@@ -22,6 +23,7 @@ HEADERS += \
     listwidgeteditwindow.h \
     mainwindow.h \
     msghandler.h \
+    usbdevice.h \
     usbthread.h
 
 FORMS += \

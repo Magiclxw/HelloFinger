@@ -17,5 +17,9 @@ public:
 
 private:
     Ui::Entrance *ui;
+
+private slots:
+    void onDeviceIn(QString VID, QString PID);
+    void onDeviceOut(QString VID, QString PID);
 };
 #endif // ENTRANCE_H

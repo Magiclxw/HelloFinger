@@ -57,6 +57,9 @@ void USBTHREAD::run()
 
         memset(rec_buffer,0,20);
     }
+}
 
-
+void USBTHREAD::stop()
+{
+    stopped = true;
 }

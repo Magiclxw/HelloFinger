@@ -9,6 +9,7 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    hidewindow.cpp \
     listwidgeteditwindow.cpp \
     main.cpp \
     entrance.cpp \
@@ -20,6 +21,7 @@ SOURCES += \
 HEADERS += \
     entrance.h \
     hidapi.h \
+    hidewindow.h \
     listwidgeteditwindow.h \
     mainwindow.h \
     msghandler.h \
@@ -28,6 +30,7 @@ HEADERS += \
 
 FORMS += \
     entrance.ui \
+    hidewindow.ui \
     listwidgeteditwindow.ui \
     mainwindow.ui
 

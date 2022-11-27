@@ -40,7 +40,6 @@ extern uint16_t USART1_RX_STA;
 extern uint16_t USART2_RX_STA;
 extern uint8_t RxData1[100];
 
-extern uint8_t TableState[200];
 
 extern __IO uint8_t rxstate;
 uint8_t data[10];
@@ -145,7 +144,7 @@ int main(void)
 		HAL_UART_Transmit(&KEYOUT,ControlBLN_ERROR,9,1000);
 	}
 	//GetTableState();
-	//Delay_ms(1000);
+	Delay_ms(1000);
 	//Con_AutoIdentify(ID,PARAM);
 	if(!Con_Sleep())
 	{

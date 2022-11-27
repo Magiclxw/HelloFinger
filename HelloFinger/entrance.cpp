@@ -49,7 +49,7 @@ Entrance::Entrance(QWidget *parent)
     connect(ui->progressBar,&QProgressBar::valueChanged,[=](){
         if(ui->progressBar->value() == 100){
             m->show();
-            //this->hide();
+            this->hide();
         }
     });
 
@@ -86,6 +86,7 @@ Entrance::Entrance(QWidget *parent)
         qDebug() << "获取信息失败";
     }else{
         infoFlag = 1;
+        ui->progressBar->setStyleSheet("QProgressBar{background:write;} QProgressBar::chunk{background:green}");
         qDebug() << "获取信息成功";
     }
 
@@ -95,6 +96,7 @@ Entrance::Entrance(QWidget *parent)
            {
                qDebug("interface_number:%s",hid_info->path);//打印地址
                interfaceFlag = 1;
+               ui->progressBar->setStyleSheet("QProgressBar{background:write;} QProgressBar::chunk{background:green}");
                break;
            }
     }
@@ -110,6 +112,7 @@ Entrance::Entrance(QWidget *parent)
         qDebug() << "HID Open Failed";
     }else{
         openFlag = 1;
+        ui->progressBar->setStyleSheet("QProgressBar{background:write;} QProgressBar::chunk{background:green}");
         hid_free_enumeration(hid_info);
         qDebug() << "HID Open Success";
     }
@@ -157,6 +160,7 @@ void Entrance::onDeviceIn(QString VID, QString PID)
                 qDebug() << "获取信息失败";
             }else{
                 infoFlag = 1;
+                ui->progressBar->setStyleSheet("QProgressBar{background:write;} QProgressBar::chunk{background:green}");
                 qDebug() << "获取信息成功";
                 //break;
             }
@@ -166,6 +170,7 @@ void Entrance::onDeviceIn(QString VID, QString PID)
                     {
                         qDebug("interface_number:%s",hid_info->path);//打印地址
                         interfaceFlag = 1;
+                        ui->progressBar->setStyleSheet("QProgressBar{background:write;} QProgressBar::chunk{background:green}");
                         break;
                     }else{
                         interfaceFlag = 0;
@@ -183,7 +188,10 @@ void Entrance::onDeviceIn(QString VID, QString PID)
             qDebug() << "HID Open Failed";
         }else{
             openFlag = 1;
+            ui->progressBar->setStyleSheet("QProgressBar{background:write;} QProgressBar::chunk{background:green}");
             hid_free_enumeration(hid_info);
+            hid_close(handle);
+            usbthread->start();
             qDebug() << "HID Open Success";
         }
 

@@ -1,0 +1,218 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// 中文(简体，中国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#pragma code_page(936)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\CH9329DBG.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""l.chs\\afxres.rc""          // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\ooopic_1551677500.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG 0, 0, 235, 55
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "关于 CH9329DBG"
+FONT 9, "宋体"
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
+    LTEXT           "CH9329TestTool 1.0 版",IDC_STATIC,40,10,119,8,SS_NOPREFIX
+    LTEXT           "WCH版权所有 (C) 2019",IDC_STATIC,40,25,119,8
+    DEFPUSHBUTTON   "确定",IDOK,178,7,50,14,WS_GROUP
+END
+
+IDD_CH9329DBG_DIALOG DIALOGEX 0, 0, 329, 255
+STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "CH9329测试工具_V1.1"
+FONT 9, "宋体", 0, 0, 0x1
+BEGIN
+    LTEXT           "选择设备",IDC_STATIC,15,16,33,8
+    LTEXT           "设备信息",IDC_STATIC,15,35,33,8
+    GROUPBOX        "设备信息",IDC_STATIC,6,2,316,52
+    COMBOBOX        IDC_COMBO_SELECT_DEV,53,16,204,63,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EDIT_STATUS,125,34,189,13,ES_AUTOHSCROLL | ES_READONLY
+    EDITTEXT        IDC_EDIT_CHABA,53,34,70,13,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "发送数据(输入的数据是16进制,中间没空格,个数少于126个)",IDC_STATIC_INFO,14,84,248,8
+    EDITTEXT        IDC_EDIT_SEND,14,96,298,39,ES_MULTILINE | ES_AUTOVSCROLL
+    LTEXT           "已接收:",IDC_STATIC,126,210,29,8
+    EDITTEXT        IDC_EDIT_RECVED,159,208,49,14,ES_CENTER | ES_AUTOHSCROLL | ES_READONLY
+    EDITTEXT        IDC_EDIT_RECV,14,141,221,63,ES_MULTILINE | ES_AUTOVSCROLL | ES_READONLY | WS_VSCROLL
+    PUSHBUTTON      "打开设备",IDC_BUTTON_OPEN,258,15,56,13
+    PUSHBUTTON      "开始发送",IDC_BUTTON_SEND,240,140,72,17
+    PUSHBUTTON      "开始接收",IDC_BUTTON_RECV,240,162,72,17
+    PUSHBUTTON      "停止接收",IDC_BUTTON_STOP,240,183,72,17
+    PUSHBUTTON      "清空接收",IDC_BUTTON_CLEAR,240,204,72,17
+    GROUPBOX        "通信测试",IDC_STATIC,6,56,316,170
+    GROUPBOX        "",IDC_STATIC,6,225,316,24
+    LTEXT           "操作状态:就绪",IDC_STATIC_STATUS,16,235,294,8
+    LTEXT           "字节",IDC_STATIC,216,210,17,8
+    CONTROL         "十六进制传输模式",IDC_RADIO_MODTYPE,"Button",BS_AUTORADIOBUTTON,13,70,83,10
+    CONTROL         "ASCII传输模式",IDC_RADIO_MODTYPE2,"Button",BS_AUTORADIOBUTTON,103,70,89,10
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,1,1,0
+ PRODUCTVERSION 1,1,1,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080404b0"
+        BEGIN
+            VALUE "CompanyName", "江苏沁恒股份有限公司"
+            VALUE "FileDescription", "CH9329TestTool"
+            VALUE "FileVersion", "1, 1, 1, 0"
+            VALUE "InternalName", "CH9329TestTool"
+            VALUE "LegalCopyright", "WCH版权所有 (C) 2019"
+            VALUE "OriginalFilename", "CH9329TestTool.EXE"
+            VALUE "ProductName", "CH9329TestTool"
+            VALUE "ProductVersion", "1, 1, 1, 0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 48
+    END
+
+    IDD_CH9329DBG_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 322
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 250
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDS_ABOUTBOX            "关于 CH9329DBG(&A)..."
+END
+
+#endif    // 中文(简体，中国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE 4, 2
+#pragma code_page(936)
+#endif //_WIN32
+#include "res\CH9329DBG.rc2"  // non-Microsoft Visual C++ edited resources
+#include "l.chs\afxres.rc"          // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

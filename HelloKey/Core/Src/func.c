@@ -25,11 +25,13 @@ extern uint8_t PS_SetChipAddr[SetChipAddrSize];
 extern uint8_t PS_WriteNotepad[WriteNotepadSize];
 extern uint8_t PS_ReadNotepad[ReadNotepadSize];
 
+extern uint8_t RxData1[100];
 extern uint8_t RxData2[100];
+extern __IO uint8_t rxstate1;
 extern __IO uint8_t rxstate;
 
 uint8_t RX_TableData[44];			//存储接收到的数据
-uint8_t RX_TableState[32];			//存储索引表状态信息
+uint8_t RX_TableState[8];			//存储索引表状态信息
 uint8_t RX_SleepData[12];
 uint8_t RX_AutoEnrollData[14];
 uint8_t RX_AutoIdentifyData[17]={0};
@@ -47,7 +49,7 @@ void GetTableState(void)			//获取索引表信息
 	
 	while(rxstate!=1);
 
-	for(int i=10;i<32+10;i++)
+	for(int i=10;i<8+10;i++)
 	{
 		RX_TableState[i-10]=RxData2[i];
 	}

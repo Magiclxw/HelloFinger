@@ -21,6 +21,7 @@
 #include "usart.h"
 
 /* USER CODE BEGIN 0 */
+#include "msgHandler.h"
 uint8_t RxData1[100];
 uint8_t RxData2[100];
 uint8_t RxBuffer1[1];
@@ -30,7 +31,9 @@ uint16_t USART2_RX_STA=0;
 
 __IO uint8_t rxerror=0;
 __IO int cmdlength=0;
+__IO uint8_t dataLength = 0;
 
+__IO uint8_t rxstate1=0;
 __IO uint8_t rxstate=0;
 
 /* USER CODE END 0 */
@@ -251,32 +254,24 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 }
 
 /* USER CODE BEGIN 1 */
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)		//USB通信
 {
 	if(huart->Instance==USART1){
-		if((USART1_RX_STA&0x8000)==0){
-			if(USART1_RX_STA&0x4000){
-				if(RxBuffer1[0]!=0x0a){
-					USART1_RX_STA=0;
-				}else{
-					USART1_RX_STA|=0x8000;
-				}
-			}else{
-				if(RxBuffer1[0]==0x0d){
-					USART1_RX_STA|=0x4000;
-				}else{
-					RxData1[USART1_RX_STA&0X3FFF]=RxBuffer1[0];
-					USART1_RX_STA++;
-					if(USART1_RX_STA>99){
-						USART1_RX_STA=0;
-					}
-				}		 
+		RxData1[USART1_RX_STA] = RxBuffer1[0];
+		if(USART1_RX_STA == 1){
+			dataLength = RxData1[USART1_RX_STA] + 2;
+		}
+		USART1_RX_STA ++;
+		if(dataLength != 0){
+			dataLength --;
+			if(dataLength == 0){
+				Handler(RxData1);
+				USART1_RX_STA = 0;
 			}
 		}
-		HAL_UART_Receive_IT(&huart1,RxBuffer1,1);
 	}
 /******************************************************************************/
-	if(huart->Instance==USART2)
+	if(huart->Instance==USART2)		//指纹模块通信
 	{
 		RxData2[USART2_RX_STA]=RxBuffer2[0];
 		

@@ -13,6 +13,7 @@
 "hellokey\usart.o"
 "hellokey\stm32f1xx_it.o"
 "hellokey\stm32f1xx_hal_msp.o"
+"hellokey\msghandler.o"
 "hellokey\stm32f1xx_hal_gpio_ex.o"
 "hellokey\stm32f1xx_hal_tim.o"
 "hellokey\stm32f1xx_hal_tim_ex.o"

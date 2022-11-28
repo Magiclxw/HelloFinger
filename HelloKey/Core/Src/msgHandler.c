@@ -14,7 +14,7 @@ uint8_t Calc_Checksum(uint8_t *data)		//计算校验和
 	return checksum;
 }
 
-uint8_t Cmp_Checksum(uint8_t *data)
+uint8_t Cmp_Checksum(uint8_t *data)		//比较校验和
 {
 	uint8_t checksum = 0;
 	uint8_t datalenght = data[1];
@@ -28,7 +28,7 @@ uint8_t Cmp_Checksum(uint8_t *data)
 	}
 }
 
-uint8_t* GenerateCmd(uint8_t head,uint8_t *data,uint8_t datalength)
+uint8_t* GenerateCmd(uint8_t head,uint8_t *data,uint8_t datalength)	//生成响应
 {
 	uint8_t checksum;;
 	static uint8_t cmd[20];			//指令长度
@@ -42,7 +42,7 @@ uint8_t* GenerateCmd(uint8_t head,uint8_t *data,uint8_t datalength)
 	return cmd;
 }
 
-void Handler(uint8_t *data)
+void Handler(uint8_t *data)	//判断接收到的数据类型
 {
 	uint8_t head;		//指令码
 	uint8_t cmd;		//指令数据

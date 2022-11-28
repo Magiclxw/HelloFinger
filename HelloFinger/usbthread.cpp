@@ -35,6 +35,14 @@ void USBTHREAD::run()
     }
 
     while(!stopped){
+        if(transhandle == NULL){
+            while(1){
+                transhandle = hid_open(Transmission_VID,Transmission_PID,NULL);
+                qDebug("thread NULL");
+                if(transhandle != NULL) break;
+                msleep(1000);
+            }
+        }
         rec = hid_read_timeout(transhandle,rec_buffer,20,1000);     //接收第一字节为后续数据长度
         rec_buffer_arry = QByteArray((char*)rec_buffer,20);
         qDebug() << "Receive num:" << rec;

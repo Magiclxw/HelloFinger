@@ -35,6 +35,8 @@ uint8_t Handler(uint8_t *msg)
     qDebug() << "handler" ;
     length = msg[0];
     head = msg[1];
+    qDebug() << "length= " << length;
+    qDebug() << "head= " << head;
     switch (head) {
     case TABLESTATE:
         for(int i=0;i<8;i++){

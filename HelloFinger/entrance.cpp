@@ -17,6 +17,7 @@ struct hid_device_ *handle = NULL;
 struct hid_device_ *transhandle = NULL;    //透传句柄
 hid_device_info *hid_info = NULL;
 USBTHREAD *usbthread = new USBTHREAD;
+uint8_t runningstate = PROTOCOLSTATE;   //当前状态，默认处于协议传输状态
 
 /*协议传输ID*/
 uint16_t Protocol_VID = 0x1A86;
@@ -29,7 +30,7 @@ uint8_t interfaceFlag = 0;  //获取指定接口信息成功标志
 uint8_t openFlag = 0;   //打开接口成功标志
 uint8_t timerCount = 0;
 uint8_t Msg[6] = {0x00,0x04};   //保存下传数据
-
+QTimer *cmdtimer = new QTimer;
 Entrance::Entrance(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::Entrance)
@@ -46,18 +47,17 @@ Entrance::Entrance(QWidget *parent)
     connect(usbdevice,SIGNAL(deviceIn(QString,QString)),this,SLOT(onDeviceIn(QString,QString)));
     connect(usbdevice,SIGNAL(deviceOut(QString,QString)),this,SLOT(onDeviceOut(QString,QString)));
 /* 等待进度条满 */
-    connect(ui->progressBar,&QProgressBar::valueChanged,[=](){
+    connect(ui->progressBar,&QProgressBar::valueChanged,this,[=](){
         if(ui->progressBar->value() == 100){
             m->show();
-            this->hide();
+            //this->hide();
         }
     });
 
-
-
     QTimer *timer = new QTimer;
+
     timer->start(10);
-    connect(timer,&QTimer::timeout,[=](){
+    connect(timer,&QTimer::timeout,this,[=](){
         if(timerCount == 30 && infoFlag == 0){
             timerCount = 29;
             ui->progressBar->setStyleSheet("QProgressBar{background:write;} QProgressBar::chunk{background:red}");
@@ -76,6 +76,15 @@ Entrance::Entrance(QWidget *parent)
         ui->progressBar->setValue(timerCount);
         timerCount++;
 
+    });
+
+    connect(cmdtimer,&QTimer::timeout,this,[=](){
+        if(transhandle != NULL){
+            GenerateCmd(USB_TABLESTATE);
+            hid_write(handle,Command,CMDLEN);   //发送获取索引表状态指令
+            qDebug() << "cmdtimer";
+            cmdtimer->stop();
+        }
     });
 
 /*  1、获取设备信息 */
@@ -116,6 +125,12 @@ Entrance::Entrance(QWidget *parent)
         hid_free_enumeration(hid_info);
         qDebug() << "HID Open Success";
     }
+    if(handle != NULL){
+        GenerateCmd(TRANSMISSIONSTATE);
+        hid_write(handle,Command,CMDLEN);   //发送切换为透传状态指令
+    }
+
+
 
 /*****************************测试功能*************************************/
     connect(ui->pushButton,&QPushButton::clicked,this,[=](){
@@ -137,6 +152,25 @@ Entrance::Entrance(QWidget *parent)
 /*************************************************************************/
 
     connect(usbthread,&USBTHREAD::SI_TableStateUpdate,m,&MainWindow::SL_TableStateUpdate);
+}
+
+uint8_t Entrance::GenerateChecksum(uint8_t *cmd)
+{
+    uint8_t checksum = 0;
+    for(int i=0;i<3;i++){
+        checksum += cmd[i];
+    }
+    return checksum;
+}
+
+void Entrance::GenerateCmd(int cmd)
+{
+    uint8_t checksum = 0;
+    Command[0] = RECEIVE;
+    Command[1] = DATALEN;
+    Command[2] = cmd;
+    checksum = GenerateChecksum(Command);
+    Command[3] = checksum;
 }
 
 void Entrance::onDeviceIn(QString VID, QString PID)
@@ -190,10 +224,16 @@ void Entrance::onDeviceIn(QString VID, QString PID)
             openFlag = 1;
             ui->progressBar->setStyleSheet("QProgressBar{background:write;} QProgressBar::chunk{background:green}");
             hid_free_enumeration(hid_info);
-            hid_close(handle);
-            usbthread->start();
+            //hid_close(handle);
+            //usbthread->start();
+            runningstate = PROTOCOLSTATE;
             qDebug() << "HID Open Success";
         }
+
+    }else if(vid.toInt(&ok,16)==Transmission_VID && pid.toInt(&ok,16)==Transmission_PID){
+        hid_close(handle);
+        usbthread->start();
+        cmdtimer->start();
 
     }
 
@@ -212,10 +252,14 @@ void Entrance::onDeviceOut(QString VID, QString PID)
     bool ok;
     if( vid.toInt(&ok,16)==Protocol_VID && pid.toInt(&ok,16)==Protocol_PID )
     {
-        usbthread->stop();
+//        usbthread->stop();
+//        transhandle = NULL;
         hid_info = NULL;
         handle = NULL;
         qDebug()<<"thread stop";
+    }else if(vid.toInt(&ok,16)==Transmission_VID && pid.toInt(&ok,16)==Transmission_PID){
+        usbthread->stop();
+        transhandle = NULL;
     }
 }
 

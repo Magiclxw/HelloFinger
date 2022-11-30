@@ -9,6 +9,7 @@ class USBTHREAD : public QThread
 public:
     explicit USBTHREAD(QObject *parent = nullptr);
     void stop();
+//    void start();
     void run();
 
 private:

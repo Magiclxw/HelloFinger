@@ -23,22 +23,24 @@ USBTHREAD::USBTHREAD(QObject *parent) : QThread(parent)
 void USBTHREAD::run()
 {
     qDebug() << "IN Thread";
-
+    stopped = false;
     /* 开启透传 */
     if(transhandle == NULL){
         while(1){
             transhandle = hid_open(Transmission_VID,Transmission_PID,NULL);
-            qDebug("thread NULL");
+            qDebug("thread1 NULL");
             if(transhandle != NULL) break;
             msleep(1000);
         }
+        qDebug() << "leave thread1";
+        qDebug() << "stopped=" << stopped;
     }
 
     while(!stopped){
         if(transhandle == NULL){
             while(1){
                 transhandle = hid_open(Transmission_VID,Transmission_PID,NULL);
-                qDebug("thread NULL");
+                qDebug("thread2 NULL");
                 if(transhandle != NULL) break;
                 msleep(1000);
             }
@@ -71,3 +73,8 @@ void USBTHREAD::stop()
 {
     stopped = true;
 }
+
+//void USBTHREAD::start()
+//{
+//    stopped = false;
+//}

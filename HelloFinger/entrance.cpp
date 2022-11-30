@@ -28,9 +28,10 @@ uint16_t Transmission_PID = 0xE429;
 uint8_t infoFlag = 0;   //获取信息成功标志
 uint8_t interfaceFlag = 0;  //获取指定接口信息成功标志
 uint8_t openFlag = 0;   //打开接口成功标志
+uint8_t waitingSwitchFlag = 0;      //等待转换传输模式标志    0：未等待模式转换   1：等待模式转换
 uint8_t timerCount = 0;
 uint8_t Msg[6] = {0x00,0x04};   //保存下传数据
-QTimer *cmdtimer = new QTimer;
+
 Entrance::Entrance(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::Entrance)
@@ -77,13 +78,13 @@ Entrance::Entrance(QWidget *parent)
         timerCount++;
 
     });
-
     connect(cmdtimer,&QTimer::timeout,this,[=](){
+
         if(transhandle != NULL){
-            GenerateCmd(USB_TABLESTATE);
-            hid_write(handle,Command,CMDLEN);   //发送获取索引表状态指令
             qDebug() << "cmdtimer";
-            cmdtimer->stop();
+            GenerateCmd(USB_TABLESTATE);
+            hid_write(transhandle,Command,CMDLEN);   //发送获取索引表状态指令
+            //cmdtimer->stop();
         }
     });
 
@@ -128,6 +129,7 @@ Entrance::Entrance(QWidget *parent)
     if(handle != NULL){
         GenerateCmd(TRANSMISSIONSTATE);
         hid_write(handle,Command,CMDLEN);   //发送切换为透传状态指令
+        waitingSwitchFlag = 1;
     }
 
 
@@ -157,7 +159,7 @@ Entrance::Entrance(QWidget *parent)
 uint8_t Entrance::GenerateChecksum(uint8_t *cmd)
 {
     uint8_t checksum = 0;
-    for(int i=0;i<3;i++){
+    for(int i=2;i<5;i++){
         checksum += cmd[i];
     }
     return checksum;
@@ -166,11 +168,13 @@ uint8_t Entrance::GenerateChecksum(uint8_t *cmd)
 void Entrance::GenerateCmd(int cmd)
 {
     uint8_t checksum = 0;
-    Command[0] = RECEIVE;
-    Command[1] = DATALEN;
-    Command[2] = cmd;
+    Command[0] = 0x00;
+    Command[1] = 4;
+    Command[2] = RECEIVE;
+    Command[3] = DATALEN;
+    Command[4] = cmd;
     checksum = GenerateChecksum(Command);
-    Command[3] = checksum;
+    Command[5] = checksum;
 }
 
 void Entrance::onDeviceIn(QString VID, QString PID)
@@ -183,7 +187,7 @@ void Entrance::onDeviceIn(QString VID, QString PID)
     qDebug()<<vid;
     qDebug()<<pid;
     bool ok;
-    if(vid.toInt(&ok,16)==Protocol_VID && pid.toInt(&ok,16)==Protocol_PID)
+    if(vid.toInt(&ok,16)==Protocol_VID && pid.toInt(&ok,16)==Protocol_PID && waitingSwitchFlag == 0)
     {
         qDebug() << "In ";
         while(hid_info == NULL){
@@ -228,12 +232,21 @@ void Entrance::onDeviceIn(QString VID, QString PID)
             //usbthread->start();
             runningstate = PROTOCOLSTATE;
             qDebug() << "HID Open Success";
+            waitingSwitchFlag = 1;
         }
 
     }else if(vid.toInt(&ok,16)==Transmission_VID && pid.toInt(&ok,16)==Transmission_PID){
-        hid_close(handle);
-        usbthread->start();
-        cmdtimer->start();
+        if(waitingSwitchFlag == 1){
+            qDebug() << "enter transmission";
+            hid_close(handle);
+            qDebug() << "enter transmission";
+            usbthread->start();
+            cmdtimer->start(1000);
+            waitingSwitchFlag = 0;
+
+        }else{
+            qDebug() << "尚未完成握手";
+        }
 
     }
 
@@ -256,10 +269,13 @@ void Entrance::onDeviceOut(QString VID, QString PID)
 //        transhandle = NULL;
         hid_info = NULL;
         handle = NULL;
+        //waitingSwitchFlag = 0;
         qDebug()<<"thread stop";
     }else if(vid.toInt(&ok,16)==Transmission_VID && pid.toInt(&ok,16)==Transmission_PID){
+        cmdtimer->stop();
         usbthread->stop();
         transhandle = NULL;
+        waitingSwitchFlag = 0;
     }
 }
 

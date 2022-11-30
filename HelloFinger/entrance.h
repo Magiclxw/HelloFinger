@@ -2,14 +2,15 @@
 #define ENTRANCE_H
 
 #include <QMainWindow>
+#include <QTimer>
 
 #define PROTOCOLSTATE    0x00       //协议传输状态
 #define TRANSMISSIONSTATE 0x01      //透传状态
 
 #define RECEIVE 0xFE            //指令头，表示上位机下发指令
 
-#define DATALEN 0x01            //数据长度
-#define CMDLEN  0x04            //指令长度
+#define DATALEN 0x02            //数据长度
+#define CMDLEN  0x06            //指令长度
 
 #define USB_TRANSMIT 0x01		//透传模式
 #define USB_COMMAND	 0x02		//协议传输模式
@@ -26,10 +27,10 @@ class Entrance : public QMainWindow
 public:
     Entrance(QWidget *parent = nullptr);
     ~Entrance();
-    uint8_t Command[20];    //下发的指令
+    uint8_t Command[CMDLEN];    //下发的指令
     uint8_t GenerateChecksum(uint8_t *cmd);
     void GenerateCmd(int cmd);
-
+    QTimer *cmdtimer = new QTimer;
 private:
     Ui::Entrance *ui;
 

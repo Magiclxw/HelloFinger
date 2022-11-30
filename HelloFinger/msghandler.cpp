@@ -1,6 +1,7 @@
 #include "msghandler.h"
 #include <QDebug>
 #include <QWidget>
+#include "entrance.h"
 
 /* 处理USB接收数据 */
 

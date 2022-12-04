@@ -2,6 +2,7 @@
 #define __ZW800_H
 #include "stm32f1xx.h"
 
+/*														÷∏¡Ó≥§∂»																			*/
 #define 					AutoEnrollSize								17
 #define 					AutoIdentifySize							17
 #define 					DeletCharSize									16
@@ -22,7 +23,38 @@
 #define 					SetChipAddrSize								16
 #define 					WriteNotepadSize							45
 #define 					ReadNotepadSize								13
+#define 					GetImageSize									12
+#define 					GenCharSize										13
+#define 					RegModelSize									12
+#define 					StoreCharSize									15
+#define 					MatchSize											12
+/****************************************************************************/
 
+extern uint8_t PS_AutoEnroll[AutoEnrollSize];
+extern uint8_t PS_AutoIdentify[AutoIdentifySize];
+extern uint8_t PS_DeletChar[DeletCharSize];
+extern uint8_t PS_Cancel[CancelSize];
+extern uint8_t PS_Sleep[SleepSize];
+extern uint8_t PS_ValidTempleteNum[ValidTempleteNumSize];
+extern uint8_t PS_ReadIndexTable[ReadIndexTableSize];
+extern uint8_t PS_SetPwd[SetPwdSize];
+extern uint8_t PS_VfyPwd[VfyPwdSize];
+extern uint8_t PS_GetChipEcho[GetChipEchoSize];
+extern uint8_t PS_AutoCaiSensor[AutoCaiSensorSize];
+extern uint8_t PS_ControlBLN[ControlBLNSize];
+extern uint8_t PS_GetDummyTempleteNo[GetDummyTempleteNoSize];
+
+extern uint8_t PS_GetChipSN[GetChipSNSize];
+extern uint8_t PS_HandShake[HandShakeSize];
+extern uint8_t PS_CheckSensor[CheckSensorSize];
+extern uint8_t PS_SetChipAddr[SetChipAddrSize];
+extern uint8_t PS_WriteNotepad[WriteNotepadSize];
+extern uint8_t PS_ReadNotepad[ReadNotepadSize];
+extern uint8_t	PS_GetImage[GetImageSize];
+extern uint8_t PS_GenChar[GenCharSize];
+extern uint8_t PS_RegModel[RegModelSize];
+extern uint8_t PS_StoreChar[StoreCharSize];
+extern uint8_t PS_Match[MatchSize];
 
 uint8_t *CmdConnect(void);
 void Check_Sum_Div(uint16_t sum);
@@ -46,5 +78,10 @@ void CMD_CheckSensor(void);
 void CMD_SetChipAddr(uint8_t *Addr);
 void CMD_WriteNotePad(uint8_t Page,uint8_t *Content);
 void CMD_ReadNotepad(uint8_t Page);
+void CMD_GetImage(void);
+void CMD_GenChar(uint8_t BufferID);
+void CMD_RegModel(void);
+void CMD_StoreChar(uint8_t BufferID,uint16_t PageID);
+void CMD_Match(void);
 
 #endif

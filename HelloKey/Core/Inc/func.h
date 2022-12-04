@@ -31,5 +31,5 @@ uint8_t Con_VfyPwd(uint8_t *PassWord);
 uint8_t Con_SetChipAddr(uint8_t *Addr);
 uint8_t Con_WriteNotepad(uint8_t Page,uint8_t *Content);
 uint8_t Con_ReadNotepad(uint8_t Page);
-
+uint8_t Con_Register(uint8_t BufferID,uint16_t PageID);
 #endif

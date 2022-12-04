@@ -120,40 +120,39 @@ int main(void)
 	//Con_GetDummyTempleteNo();
 	//UnLock(960,625);
 	//GetTableState();
-
+	Con_Register(1,2);
 	
 //------------------------------指纹模块状态获取与初始化-----------------------------------/
 	
-	if(!Con_HandShake())						//握手
-	{
-		HAL_UART_Transmit(&KEYOUT,HandShake_ERROR,9,1000);
-	}
-	
-	if(!Con_GetChipSN())						//获取芯片序列号
-	{
-		HAL_UART_Transmit(&KEYOUT,GetChipSN_ERROR,9,1000);
-	}
-	
-	if(!Con_CheckSensor())
-	{
-		HAL_UART_Transmit(&KEYOUT,CheckSensor_ERROR,9,1000);
-	}
-	
-	if(!Con_ControlBLN(0x01,0x07,0x07,0x00))
-	{
-		HAL_UART_Transmit(&KEYOUT,ControlBLN_ERROR,9,1000);
-	}
-	//GetTableState();
-	Delay_ms(1000);
-	//Con_AutoIdentify(ID,PARAM);
-	if(!Con_Sleep())
-	{
-		HAL_UART_Transmit(&KEYOUT,Sleep_ERROR,9,1000);
-	}
+	//if(!Con_HandShake())						//握手
+	//{
+	//	HAL_UART_Transmit(&KEYOUT,HandShake_ERROR,9,1000);
+	//}
+	//
+	//if(!Con_GetChipSN())						//获取芯片序列号
+	//{
+	//	HAL_UART_Transmit(&KEYOUT,GetChipSN_ERROR,9,1000);
+	//}
+	//
+	//if(!Con_CheckSensor())
+	//{
+	//	HAL_UART_Transmit(&KEYOUT,CheckSensor_ERROR,9,1000);
+	//}
+	//
+	//if(!Con_ControlBLN(0x01,0x07,0x07,0x00))
+	//{
+	//	HAL_UART_Transmit(&KEYOUT,ControlBLN_ERROR,9,1000);
+	//}
+	////GetTableState();
+	//Delay_ms(1000);
+	////Con_AutoIdentify(ID,PARAM);
+	//if(!Con_Sleep())
+	//{
+	//	HAL_UART_Transmit(&KEYOUT,Sleep_ERROR,9,1000);
+	//}
 	
 	
 //---------------------------------------------------------------------------------/
-	//Con_AutoEnroll(ID,0x04,PARAM);
 	
   /* USER CODE END 2 */
 

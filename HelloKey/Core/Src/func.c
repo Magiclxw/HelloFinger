@@ -4,26 +4,7 @@
 #include "kmfunc.h"
 #include "delay.h"
 
-extern uint8_t PS_AutoEnroll[AutoEnrollSize];
-extern uint8_t PS_AutoIdentify[AutoIdentifySize];
-extern uint8_t PS_DeletChar[DeletCharSize];
-extern uint8_t PS_Cancel[CancelSize];
-extern uint8_t PS_Sleep[SleepSize];
-extern uint8_t PS_ValidTempleteNum[ValidTempleteNumSize];
-extern uint8_t PS_ReadIndexTable[ReadIndexTableSize];
-extern uint8_t PS_SetPwd[SetPwdSize];
-extern uint8_t PS_VfyPwd[VfyPwdSize];
-extern uint8_t PS_GetChipEcho[GetChipEchoSize];
-extern uint8_t PS_AutoCaiSensor[AutoCaiSensorSize];
-extern uint8_t PS_ControlBLN[ControlBLNSize];
-extern uint8_t PS_GetDummyTempleteNo[GetDummyTempleteNoSize];
 
-extern uint8_t PS_GetChipSN[GetChipSNSize];
-extern uint8_t PS_HandShake[HandShakeSize];
-extern uint8_t PS_CheckSensor[CheckSensorSize];
-extern uint8_t PS_SetChipAddr[SetChipAddrSize];
-extern uint8_t PS_WriteNotepad[WriteNotepadSize];
-extern uint8_t PS_ReadNotepad[ReadNotepadSize];
 
 extern uint8_t RxData1[100];
 extern uint8_t RxData2[100];
@@ -86,7 +67,7 @@ void Con_AutoEnroll(uint8_t *ID,uint8_t NUM,uint8_t *PARAM)			//自动注册模板
 	
 	uint8_t enrollstate[14];		//状态接收
 	
-	HAL_NVIC_DisableIRQ(EXTI4_IRQn);
+	HAL_NVIC_DisableIRQ(EXTI4_IRQn);	//禁用指纹触摸中断
 	
 	CMD_AutoEnroll(ID,NUM,PARAM);
 	
@@ -113,9 +94,6 @@ void Con_AutoEnroll(uint8_t *ID,uint8_t NUM,uint8_t *PARAM)			//自动注册模板
 		}
 		
 	}
-	
-	
-	
 	HAL_NVIC_EnableIRQ(EXTI4_IRQn);
 	
 	if(result==1)
@@ -124,6 +102,13 @@ void Con_AutoEnroll(uint8_t *ID,uint8_t NUM,uint8_t *PARAM)			//自动注册模板
 		
 		//HAL_UART_Transmit(&FINGER,PS_ControlBLN,ControlBLNSize,1000);
 	}
+}
+
+void Con_GenerateEnroll()
+{
+	HAL_NVIC_DisableIRQ(EXTI4_IRQn);	//禁用指纹触摸中断
+	
+	
 }
 
 uint8_t Con_AutoIdentify(uint8_t *ID,uint8_t *PARAM)						//自动验证指纹
@@ -370,8 +355,53 @@ uint8_t Con_ReadNotepad(uint8_t Page)
 	
 }
 
+/* 	注册指纹
+*/
+uint8_t Con_Register(uint8_t BufferID,uint16_t PageID)
+{
+	CMD_GetImage();		//生成获取指纹指令
+	CMD_GenChar(1);		//生成生成特征指令
+	CMD_RegModel();		//生成合并特征指令
+	CMD_StoreChar(BufferID,PageID);		//生成存储模板指令
+	
+	HAL_NVIC_DisableIRQ(EXTI4_IRQn);	//禁用指纹触摸中断
+	//HAL_NVIC_DisableIRQ(USART2_IRQn);	//禁用串口中断
+	
+	for(uint8_t i =0;i<4;i++){				//循环4次
+		HAL_UART_Transmit(&FINGER,PS_GetImage,GetImageSize,100);
+		while(rxstate!=1);
+		if(RxData2[9] != 0x00){
+			return RxData2[9];
+		}
+		HAL_UART_Transmit(&FINGER,PS_GenChar,GenCharSize,100);
+		while(rxstate!=1);
+		if(RxData2[9] != 0x00){
+			return RxData2[9];
+		}
+	}
+	
+	HAL_UART_Transmit(&FINGER,PS_RegModel,RegModelSize,100);
+	while(rxstate!=1);
+	if(RxData2[9] != 0x00){
+		return RxData2[9];
+	}
+	HAL_UART_Transmit(&FINGER,PS_StoreChar,StoreCharSize,100);
+	while(rxstate!=1);
+	if(RxData2[9] != 0x00){
+		return RxData2[9];
+	}
+	return 0;
+}
 
-
+void Con_Verify()
+{
+	CMD_GetImage();		//生成获取指纹指令
+	CMD_GenChar(1);		//生成生成特征指令
+	CMD_Match();			//生成精确对比指令
+	
+	
+	
+}
 
 
 

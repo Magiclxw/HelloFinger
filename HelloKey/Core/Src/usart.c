@@ -254,12 +254,21 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 }
 
 /* USER CODE BEGIN 1 */
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)		//USB通信
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)		
 {
-	if(huart->Instance==USART1){
+	if(huart->Instance==USART1){			//USB通信
 		RxData1[USART1_RX_STA] = RxBuffer1[0];
+		/* 判断第1字节是否正确 */
+		if(USART1_RX_STA == 0){
+			if(RxData1[0] != 0xFE){
+				USART1_RX_STA = 0;
+				//memset(RxData1,0,100);
+				return;
+			}
+		}
+		
 		if(USART1_RX_STA == 1){
-			dataLength = RxData1[USART1_RX_STA] + 2;
+			dataLength = RxData1[USART1_RX_STA] + 2;	//接收第2字节为包中数据部分长度
 		}
 		USART1_RX_STA ++;
 		if(dataLength != 0){

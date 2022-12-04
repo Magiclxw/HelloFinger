@@ -3,7 +3,7 @@
 <title>Static Call Graph - [HelloKey\HelloKey.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image HelloKey\HelloKey.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Sun Nov 27 17:16:29 2022
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Sun Dec 04 16:15:39 2022
 <BR><P>
 <H3>Maximum Stack Usage =        136 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -419,18 +419,10 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Check_Sum_Div
 </UL>
-<BR>[Called By]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_AutoIdentify
+<BR>[Called By]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_AutoIdentify
 </UL>
 
-<P><STRONG><a name="[4f]"></a>CMD_CheckSensor</STRONG> (Thumb, 82 bytes, Stack size 12 bytes, zw800.o(i.CMD_CheckSensor))
-<BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = CMD_CheckSensor
-</UL>
-<BR>[Calls]<UL><LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Check_Sum_Div
-</UL>
-<BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_CheckSensor
-</UL>
-
-<P><STRONG><a name="[50]"></a>CMD_ControlBLN</STRONG> (Thumb, 98 bytes, Stack size 20 bytes, zw800.o(i.CMD_ControlBLN))
+<P><STRONG><a name="[4f]"></a>CMD_ControlBLN</STRONG> (Thumb, 98 bytes, Stack size 20 bytes, zw800.o(i.CMD_ControlBLN))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = CMD_ControlBLN
 </UL>
 <BR>[Calls]<UL><LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Check_Sum_Div
@@ -438,36 +430,44 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_ControlBLN
 </UL>
 
-<P><STRONG><a name="[51]"></a>CMD_GetChipSN</STRONG> (Thumb, 88 bytes, Stack size 12 bytes, zw800.o(i.CMD_GetChipSN))
-<BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = CMD_GetChipSN
+<P><STRONG><a name="[50]"></a>CMD_GenChar</STRONG> (Thumb, 86 bytes, Stack size 12 bytes, zw800.o(i.CMD_GenChar))
+<BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = CMD_GenChar
 </UL>
 <BR>[Calls]<UL><LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Check_Sum_Div
 </UL>
-<BR>[Called By]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_GetChipSN
+<BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_Register
 </UL>
 
-<P><STRONG><a name="[52]"></a>CMD_GetDummyTempleteNo</STRONG> (Thumb, 82 bytes, Stack size 12 bytes, zw800.o(i.CMD_GetDummyTempleteNo))
+<P><STRONG><a name="[51]"></a>CMD_GetDummyTempleteNo</STRONG> (Thumb, 82 bytes, Stack size 12 bytes, zw800.o(i.CMD_GetDummyTempleteNo))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = CMD_GetDummyTempleteNo
 </UL>
 <BR>[Calls]<UL><LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Check_Sum_Div
 </UL>
-<BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_GetDummyTempleteNo
+<BR>[Called By]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_GetDummyTempleteNo
 </UL>
 
-<P><STRONG><a name="[53]"></a>CMD_HandShake</STRONG> (Thumb, 82 bytes, Stack size 12 bytes, zw800.o(i.CMD_HandShake))
-<BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = CMD_HandShake
+<P><STRONG><a name="[52]"></a>CMD_GetImage</STRONG> (Thumb, 82 bytes, Stack size 12 bytes, zw800.o(i.CMD_GetImage))
+<BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = CMD_GetImage
 </UL>
 <BR>[Calls]<UL><LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Check_Sum_Div
 </UL>
-<BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_HandShake
+<BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_Register
 </UL>
 
-<P><STRONG><a name="[54]"></a>CMD_ReadIndexTable</STRONG> (Thumb, 88 bytes, Stack size 12 bytes, zw800.o(i.CMD_ReadIndexTable))
+<P><STRONG><a name="[53]"></a>CMD_ReadIndexTable</STRONG> (Thumb, 88 bytes, Stack size 12 bytes, zw800.o(i.CMD_ReadIndexTable))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = CMD_ReadIndexTable
 </UL>
 <BR>[Calls]<UL><LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Check_Sum_Div
 </UL>
 <BR>[Called By]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetTableState
+</UL>
+
+<P><STRONG><a name="[54]"></a>CMD_RegModel</STRONG> (Thumb, 82 bytes, Stack size 12 bytes, zw800.o(i.CMD_RegModel))
+<BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = CMD_RegModel
+</UL>
+<BR>[Calls]<UL><LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Check_Sum_Div
+</UL>
+<BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_Register
 </UL>
 
 <P><STRONG><a name="[55]"></a>CMD_Sleep</STRONG> (Thumb, 84 bytes, Stack size 12 bytes, zw800.o(i.CMD_Sleep))
@@ -478,10 +478,18 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_Sleep
 </UL>
 
+<P><STRONG><a name="[56]"></a>CMD_StoreChar</STRONG> (Thumb, 92 bytes, Stack size 16 bytes, zw800.o(i.CMD_StoreChar))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = CMD_StoreChar
+</UL>
+<BR>[Calls]<UL><LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Check_Sum_Div
+</UL>
+<BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_Register
+</UL>
+
 <P><STRONG><a name="[9b]"></a>Cal</STRONG> (Thumb, 66 bytes, Stack size 12 bytes, mouse.o(i.Cal))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = Cal
 </UL>
-<BR>[Called By]<UL><LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UnLock
+<BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UnLock
 </UL>
 
 <P><STRONG><a name="[6b]"></a>Calc_Checksum</STRONG> (Thumb, 28 bytes, Stack size 8 bytes, msghandler.o(i.Calc_Checksum))
@@ -491,13 +499,14 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[4e]"></a>Check_Sum_Div</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, zw800.o(i.Check_Sum_Div))
-<BR><BR>[Called By]<UL><LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CMD_Sleep
-<LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CMD_ReadIndexTable
-<LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CMD_HandShake
-<LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CMD_GetDummyTempleteNo
-<LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CMD_GetChipSN
-<LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CMD_ControlBLN
-<LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CMD_CheckSensor
+<BR><BR>[Called By]<UL><LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CMD_StoreChar
+<LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CMD_Sleep
+<LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CMD_RegModel
+<LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CMD_ReadIndexTable
+<LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CMD_GetImage
+<LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CMD_GetDummyTempleteNo
+<LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CMD_GenChar
+<LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CMD_ControlBLN
 <LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CMD_AutoIdentify
 </UL>
 
@@ -513,67 +522,52 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Handler
 </UL>
 
-<P><STRONG><a name="[56]"></a>Combine</STRONG> (Thumb, 84 bytes, Stack size 8 bytes, ch9329.o(i.Combine))
+<P><STRONG><a name="[57]"></a>Combine</STRONG> (Thumb, 84 bytes, Stack size 8 bytes, ch9329.o(i.Combine))
 <BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = Combine &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
-<BR>[Calls]<UL><LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
+<BR>[Calls]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
 </UL>
 <BR>[Called By]<UL><LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SendCommand
 </UL>
 
-<P><STRONG><a name="[58]"></a>Con_AutoIdentify</STRONG> (Thumb, 80 bytes, Stack size 8 bytes, func.o(i.Con_AutoIdentify))
+<P><STRONG><a name="[59]"></a>Con_AutoIdentify</STRONG> (Thumb, 80 bytes, Stack size 8 bytes, func.o(i.Con_AutoIdentify))
 <BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = Con_AutoIdentify &rArr; UnLock &rArr; Sendtest &rArr; SendCommand &rArr; Combine &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
-<BR>[Calls]<UL><LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UnLock
-<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
-<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_TogglePin
+<BR>[Calls]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UnLock
+<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
+<LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_TogglePin
 <LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CMD_AutoIdentify
 </UL>
 <BR>[Called By]<UL><LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_EXTI_Callback
 </UL>
 
-<P><STRONG><a name="[5b]"></a>Con_CheckSensor</STRONG> (Thumb, 48 bytes, Stack size 8 bytes, func.o(i.Con_CheckSensor))
-<BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = Con_CheckSensor &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
-</UL>
-<BR>[Calls]<UL><LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
-<LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CMD_CheckSensor
-</UL>
-<BR>[Called By]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-</UL>
-
 <P><STRONG><a name="[5c]"></a>Con_ControlBLN</STRONG> (Thumb, 52 bytes, Stack size 8 bytes, func.o(i.Con_ControlBLN))
 <BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = Con_ControlBLN &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
-<BR>[Calls]<UL><LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
-<LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CMD_ControlBLN
-</UL>
-<BR>[Called By]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DATA_Judge
-</UL>
-
-<P><STRONG><a name="[5d]"></a>Con_GetChipSN</STRONG> (Thumb, 62 bytes, Stack size 8 bytes, func.o(i.Con_GetChipSN))
-<BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = Con_GetChipSN &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
-</UL>
-<BR>[Calls]<UL><LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
-<LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CMD_GetChipSN
-</UL>
-<BR>[Called By]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-</UL>
-
-<P><STRONG><a name="[5e]"></a>Con_GetDummyTempleteNo</STRONG> (Thumb, 64 bytes, Stack size 16 bytes, func.o(i.Con_GetDummyTempleteNo))
-<BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = Con_GetDummyTempleteNo &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
-</UL>
-<BR>[Calls]<UL><LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
-<LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CMD_GetDummyTempleteNo
+<BR>[Calls]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
+<LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CMD_ControlBLN
 </UL>
 <BR>[Called By]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DATA_Judge
 </UL>
 
-<P><STRONG><a name="[5f]"></a>Con_HandShake</STRONG> (Thumb, 52 bytes, Stack size 8 bytes, func.o(i.Con_HandShake))
-<BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = Con_HandShake &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
+<P><STRONG><a name="[5d]"></a>Con_GetDummyTempleteNo</STRONG> (Thumb, 64 bytes, Stack size 16 bytes, func.o(i.Con_GetDummyTempleteNo))
+<BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = Con_GetDummyTempleteNo &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
-<BR>[Calls]<UL><LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
-<LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CMD_HandShake
+<BR>[Calls]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
+<LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CMD_GetDummyTempleteNo
+</UL>
+<BR>[Called By]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DATA_Judge
+</UL>
+
+<P><STRONG><a name="[5e]"></a>Con_Register</STRONG> (Thumb, 92 bytes, Stack size 16 bytes, func.o(i.Con_Register))
+<BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = Con_Register &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
+</UL>
+<BR>[Calls]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
+<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_DisableIRQ
+<LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CMD_StoreChar
+<LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CMD_RegModel
+<LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CMD_GetImage
+<LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CMD_GenChar
 </UL>
 <BR>[Called By]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -581,7 +575,7 @@ Global Symbols
 <P><STRONG><a name="[60]"></a>Con_Sleep</STRONG> (Thumb, 52 bytes, Stack size 8 bytes, func.o(i.Con_Sleep))
 <BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = Con_Sleep &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
-<BR>[Calls]<UL><LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
+<BR>[Calls]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
 <LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CMD_Sleep
 </UL>
 <BR>[Called By]<UL><LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_EXTI_Callback
@@ -598,7 +592,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = DATA_Judge &rArr; GetTableState &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
 <BR>[Calls]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetTableState
-<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_GetDummyTempleteNo
+<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_GetDummyTempleteNo
 <LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_ControlBLN
 <LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DATA_Compare
 </UL>
@@ -669,8 +663,8 @@ Global Symbols
 <P><STRONG><a name="[63]"></a>GetTableState</STRONG> (Thumb, 56 bytes, Stack size 16 bytes, func.o(i.GetTableState))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = GetTableState &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
-<BR>[Calls]<UL><LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
-<LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CMD_ReadIndexTable
+<BR>[Calls]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
+<LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CMD_ReadIndexTable
 </UL>
 <BR>[Called By]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Handler
 <LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DATA_Judge
@@ -705,7 +699,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = HAL_GPIO_EXTI_Callback &rArr; Con_AutoIdentify &rArr; UnLock &rArr; Sendtest &rArr; SendCommand &rArr; Combine &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
 <BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_Sleep
-<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_AutoIdentify
+<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_AutoIdentify
 </UL>
 <BR>[Called By]<UL><LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_EXTI_IRQHandler
 </UL>
@@ -730,8 +724,8 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[59]"></a>HAL_GPIO_TogglePin</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, stm32f1xx_hal_gpio.o(i.HAL_GPIO_TogglePin))
-<BR><BR>[Called By]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_AutoIdentify
+<P><STRONG><a name="[5a]"></a>HAL_GPIO_TogglePin</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, stm32f1xx_hal_gpio.o(i.HAL_GPIO_TogglePin))
+<BR><BR>[Called By]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_AutoIdentify
 </UL>
 
 <P><STRONG><a name="[8e]"></a>HAL_GPIO_WritePin</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, stm32f1xx_hal_gpio.o(i.HAL_GPIO_WritePin))
@@ -740,10 +734,10 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[75]"></a>HAL_GetTick</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, stm32f1xx_hal.o(i.HAL_GetTick))
-<BR><BR>[Called By]<UL><LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
-<LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_WaitOnFlagUntilTimeout
+<BR><BR>[Called By]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
 <LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_OscConfig
 <LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_ClockConfig
+<LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_WaitOnFlagUntilTimeout
 </UL>
 
 <P><STRONG><a name="[96]"></a>HAL_IncTick</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, stm32f1xx_hal.o(i.HAL_IncTick))
@@ -776,6 +770,10 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_SetPriorityGrouping
 </UL>
 <BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Init
+</UL>
+
+<P><STRONG><a name="[5f]"></a>HAL_NVIC_DisableIRQ</STRONG> (Thumb, 34 bytes, Stack size 0 bytes, stm32f1xx_hal_cortex.o(i.HAL_NVIC_DisableIRQ))
+<BR><BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_Register
 </UL>
 
 <P><STRONG><a name="[86]"></a>HAL_NVIC_EnableIRQ</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, stm32f1xx_hal_cortex.o(i.HAL_NVIC_EnableIRQ))
@@ -845,25 +843,25 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[7e]"></a>HAL_UARTEx_RxEventCallback</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f1xx_hal_uart.o(i.HAL_UARTEx_RxEventCallback))
-<BR><BR>[Called By]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_Receive_IT
-<LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_IRQHandler
+<BR><BR>[Called By]<UL><LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_IRQHandler
+<LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_Receive_IT
 </UL>
 
 <P><STRONG><a name="[7c]"></a>HAL_UART_ErrorCallback</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f1xx_hal_uart.o(i.HAL_UART_ErrorCallback))
-<BR><BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_DMAAbortOnError
-<LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_IRQHandler
+<BR><BR>[Called By]<UL><LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_IRQHandler
+<LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_DMAAbortOnError
 </UL>
 
 <P><STRONG><a name="[78]"></a>HAL_UART_IRQHandler</STRONG> (Thumb, 520 bytes, Stack size 24 bytes, stm32f1xx_hal_uart.o(i.HAL_UART_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = HAL_UART_IRQHandler &rArr; UART_Receive_IT &rArr; HAL_UART_RxCpltCallback &rArr; Handler &rArr; GetTableState &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
-<BR>[Calls]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_Receive_IT
-<LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_EndRxTransfer
-<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_TxCpltCallback
+<BR>[Calls]<UL><LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_TxCpltCallback
 <LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_ErrorCallback
 <LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UARTEx_RxEventCallback
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Abort_IT
 <LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Abort
+<LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_Receive_IT
+<LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_EndRxTransfer
 </UL>
 <BR>[Called By]<UL><LI><a href="#[33]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_IRQHandler
 <LI><a href="#[32]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
@@ -872,8 +870,8 @@ Global Symbols
 <P><STRONG><a name="[80]"></a>HAL_UART_Init</STRONG> (Thumb, 98 bytes, Stack size 16 bytes, stm32f1xx_hal_uart.o(i.HAL_UART_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 104<LI>Call Chain = HAL_UART_Init &rArr; HAL_UART_MspInit &rArr; HAL_GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_SetConfig
-<LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_MspInit
+<BR>[Calls]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_MspInit
+<LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_SetConfig
 </UL>
 <BR>[Called By]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_USART2_UART_Init
 <LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_USART1_UART_Init
@@ -900,7 +898,7 @@ Global Symbols
 <LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_USART1_UART_Init
 </UL>
 
-<P><STRONG><a name="[89]"></a>HAL_UART_RxCpltCallback</STRONG> (Thumb, 136 bytes, Stack size 16 bytes, usart.o(i.HAL_UART_RxCpltCallback))
+<P><STRONG><a name="[89]"></a>HAL_UART_RxCpltCallback</STRONG> (Thumb, 150 bytes, Stack size 16 bytes, usart.o(i.HAL_UART_RxCpltCallback))
 <BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = HAL_UART_RxCpltCallback &rArr; Handler &rArr; GetTableState &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Handler
@@ -908,25 +906,23 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_Receive_IT
 </UL>
 
-<P><STRONG><a name="[57]"></a>HAL_UART_Transmit</STRONG> (Thumb, 178 bytes, Stack size 32 bytes, stm32f1xx_hal_uart.o(i.HAL_UART_Transmit))
+<P><STRONG><a name="[58]"></a>HAL_UART_Transmit</STRONG> (Thumb, 178 bytes, Stack size 32 bytes, stm32f1xx_hal_uart.o(i.HAL_UART_Transmit))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
-<BR>[Calls]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_WaitOnFlagUntilTimeout
-<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
+<BR>[Calls]<UL><LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
+<LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_WaitOnFlagUntilTimeout
 </UL>
-<BR>[Called By]<UL><LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UnLock
+<BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UnLock
 <LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetTableState
 <LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_Sleep
-<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_HandShake
-<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_GetDummyTempleteNo
-<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_GetChipSN
+<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_Register
+<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_GetDummyTempleteNo
 <LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_ControlBLN
-<LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_CheckSensor
-<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_AutoIdentify
+<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_AutoIdentify
 <LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Handler
 <LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SendCommand
-<LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Combine
+<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Combine
 </UL>
 
 <P><STRONG><a name="[7f]"></a>HAL_UART_TxCpltCallback</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f1xx_hal_uart.o(i.HAL_UART_TxCpltCallback))
@@ -936,7 +932,7 @@ Global Symbols
 <P><STRONG><a name="[8a]"></a>Handler</STRONG> (Thumb, 62 bytes, Stack size 8 bytes, msghandler.o(i.Handler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = Handler &rArr; GetTableState &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
-<BR>[Calls]<UL><LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
+<BR>[Calls]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
 <LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetTableState
 <LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GenerateCmd
 <LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Cmp_Checksum
@@ -1023,11 +1019,11 @@ Global Symbols
 <P><STRONG><a name="[93]"></a>SendCommand</STRONG> (Thumb, 42 bytes, Stack size 8 bytes, ch9329.o(i.SendCommand))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = SendCommand &rArr; Combine &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
-<BR>[Calls]<UL><LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
+<BR>[Calls]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
 <LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Delay_ms
-<LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Combine
+<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Combine
 </UL>
-<BR>[Called By]<UL><LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UnLock
+<BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UnLock
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Sendtest
 </UL>
 
@@ -1037,7 +1033,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;toASCLL
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SendCommand
 </UL>
-<BR>[Called By]<UL><LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UnLock
+<BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UnLock
 </UL>
 
 <P><STRONG><a name="[c]"></a>SysTick_Handler</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f1xx_it.o(i.SysTick_Handler))
@@ -1078,15 +1074,15 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f103xb.o(RESET)
 </UL>
-<P><STRONG><a name="[5a]"></a>UnLock</STRONG> (Thumb, 62 bytes, Stack size 8 bytes, kmfunc.o(i.UnLock))
+<P><STRONG><a name="[5b]"></a>UnLock</STRONG> (Thumb, 62 bytes, Stack size 8 bytes, kmfunc.o(i.UnLock))
 <BR><BR>[Stack]<UL><LI>Max Depth = 104<LI>Call Chain = UnLock &rArr; Sendtest &rArr; SendCommand &rArr; Combine &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
-<BR>[Calls]<UL><LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
+<BR>[Calls]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
 <LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Cal
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Sendtest
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SendCommand
 </UL>
-<BR>[Called By]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_AutoIdentify
+<BR>[Called By]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_AutoIdentify
 </UL>
 
 <P><STRONG><a name="[8]"></a>UsageFault_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f1xx_it.o(i.UsageFault_Handler))
@@ -1096,15 +1092,12 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f103xb.o(RESET)
 </UL>
-<P><STRONG><a name="[44]"></a>main</STRONG> (Thumb, 222 bytes, Stack size 0 bytes, main.o(i.main))
+<P><STRONG><a name="[44]"></a>main</STRONG> (Thumb, 118 bytes, Stack size 0 bytes, main.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 136<LI>Call Chain = main &rArr; SystemClock_Config &rArr; HAL_RCC_ClockConfig &rArr; HAL_InitTick &rArr; HAL_NVIC_SetPriority
 </UL>
-<BR>[Calls]<UL><LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
+<BR>[Calls]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
 <LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_Sleep
-<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_HandShake
-<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_GetChipSN
-<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_ControlBLN
-<LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_CheckSensor
+<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Con_Register
 <LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Init
 <LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Delay_ms
 <LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Delay_Init
@@ -1166,7 +1159,7 @@ Local Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
 </UL>
-<BR>[Called By]<UL><LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
+<BR>[Called By]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
 </UL>
 
 <P><STRONG><a name="[73]"></a>__NVIC_SetPriority</STRONG> (Thumb, 32 bytes, Stack size 0 bytes, stm32f1xx_hal_cortex.o(i.__NVIC_SetPriority))

@@ -24,7 +24,8 @@ uint8_t				SetPwd								=				0x12;		/*设置口令*/     			uint8_t				SetPwdLen[2]
 uint8_t				VfyPwd								=				0x13;		/*验证口令*/     			uint8_t				VfyPwdLen[2]							=				{0x00,0x07};
 uint8_t				GetImage							=				0x01;		/*获取图像*/     			uint8_t				GetImageLen[2]						=				{0x00,0x03};
 uint8_t				GetRnrollImage				=				0x29;		/*注册用获取图像*/   	uint8_t				GetRnrollImageLen[2]			=				{0x00,0x03};
-uint8_t				GetChar								=				0x02;		/*生成特征*/     			uint8_t				GetCharLen[2]							=				{0x00,0x04};
+uint8_t				GenChar								=				0x02;		/*生成特征*/     			uint8_t				GenCharLen[2]							=				{0x00,0x04};
+uint8_t				Match									=				0x03;		/* 精确对比 */				uint8_t				MatchLen[2]								=				{0x00,0x03};
 uint8_t				RegMB									=				0x05;		/*合并模板*/     			uint8_t				RegMBLen[2]								=				{0x00,0x03};
 uint8_t				StorMB								=				0x06;		/*存储模板*/     			uint8_t				StorMBLen[2]              =				{0x00,0x06};
 uint8_t				SearchMB							=				0x04;		/*搜索模板*/     			uint8_t				SearchMBLen[2]            =       {0x00,0x08};
@@ -39,6 +40,7 @@ uint8_t				FingerCharDown				=				0x08;		/*特征下载*/     		//uint8_t				FingerC
 uint8_t 			FingerMoudleSet				=				0x0E;		/*模组设置*/     			uint8_t				FingerMoudleSetLen[2]     =       {0x00,0x05};
 uint8_t				GetDummyTempleteNo		=				0x68;		/*获取空白存储*/     	uint8_t				GetDummyTempleteNoLen[2]  =       {0x00,0x03};
 uint8_t				GetFingerMoudleVersion=				0x73;		/*获取模组固件版本*/ 	uint8_t				GetFingerMoudleVersionLen[2]=     {0x00,0x03};
+
 
 uint8_t 			GetChipSN							=				0x34;		/*获取芯片唯一序列号*/uint8_t				GetChipSNLen[2]						=				{0x00,0x04};
 uint8_t				HandShake							=				0x35;		/*握手指令*/					uint8_t				HandShakeLen[2]						=				{0x00,0x03};
@@ -70,6 +72,11 @@ uint8_t PS_CheckSensor[CheckSensorSize];
 uint8_t PS_SetChipAddr[SetChipAddrSize];
 uint8_t PS_WriteNotepad[WriteNotepadSize];
 uint8_t PS_ReadNotepad[ReadNotepadSize];
+uint8_t	PS_GetImage[GetImageSize];
+uint8_t PS_GenChar[GenCharSize];
+uint8_t PS_RegModel[RegModelSize];
+uint8_t PS_StoreChar[StoreCharSize];
+uint8_t PS_Match[MatchSize];
 /*---------------------------------------------------------------------------------------------------------*/
 
 
@@ -880,12 +887,166 @@ void CMD_ReadNotepad(uint8_t Page)
 	LEN=i;
 }
 
+void CMD_GetImage(void)		//生成获取图像指令
+{
+	uint8_t i = 0;
+	uint16_t checksum = 0;
+	while(1){
+		PS_GetImage[i] = CMD[i];
+		i++;
+		if(i==7){
+			break;
+		}
+	}
+	PS_GetImage[i++] = GetImageLen[0];
+	
+	PS_GetImage[i++] = GetImageLen[1];
+	
+	PS_GetImage[i++] = GetImage;
+	
+	for(int s=6;s<10;s++){
+		checksum += PS_GetImage[s];
+	}
+	
+	Check_Sum_Div(checksum);
+	
+	PS_GetImage[i++] = SUM[0];
+	
+	PS_GetImage[i++] = SUM[1];
+	
+	LEN = i;
+}
+
+void CMD_GenChar(uint8_t BufferID)			//生成生成模板指令
+{
+	uint8_t i = 0;
+	uint16_t checksum = 0;
+	while(1){
+		PS_GenChar[i] = CMD[i];
+		i++;
+		if(i==7){
+			break;
+		}
+	}
+	PS_GenChar[i++] = GenCharLen[0];
+	
+	PS_GenChar[i++] = GenCharLen[1];
+	
+	PS_GenChar[i++] = GenChar;
+	
+	PS_GenChar[i++] = BufferID;
+	
+	for(int s=6;s<11;s++){
+		checksum += PS_GenChar[s];
+	}
+	Check_Sum_Div(checksum);
+	
+	PS_GenChar[i++] = SUM[0];
+	
+	PS_GenChar[i++] = SUM[1];
+	
+	LEN = i;
+}
 
 
+void CMD_RegModel(void)				//生成合并特征（生成模板）指令
+{
+	uint8_t i = 0;
+	uint16_t checksum = 0;
+	while(1){
+		PS_RegModel[i] = CMD[i];
+		i++;
+		if(i==7){
+			break;
+		}
+	}
+	PS_RegModel[i++] = RegMBLen[0];
+	
+	PS_RegModel[i++] = RegMBLen[1];
+	
+	PS_RegModel[i++] = RegMB;
+	
+	for(int s=6;s<10;s++){
+		checksum += PS_RegModel[s];
+	}
+	
+	Check_Sum_Div(checksum);
+	
+	PS_RegModel[i++] = SUM[0];
+	
+	PS_RegModel[i++] = SUM[1];
+	
+	LEN = i;
+}
 
+void CMD_StoreChar(uint8_t BufferID,uint16_t PageID)
+{
+	uint8_t i = 0;
+	uint16_t checksum = 0;
+	uint8_t pageid[2];
+	while(1){
+		PS_StoreChar[i] = CMD[i];
+		i++;
+		if(i==7){
+			break;
+		}
+	}
+	PS_StoreChar[i++] = StorMBLen[0];
+	
+	PS_StoreChar[i++] = StorMBLen[1];
+	
+	PS_StoreChar[i++] = StorMB;
+	
+	PS_StoreChar[i++] = BufferID;
+	
+	pageid[0] = PageID;
+	
+	pageid[1] = PageID>>8;
+	
+	PS_StoreChar[i++] = pageid[1];
+	
+	PS_StoreChar[i++] = pageid[0];
+	
+	for(int s=6;s<13;s++){
+		checksum += PS_StoreChar[s];
+	}
+	
+	Check_Sum_Div(checksum);
+	
+	PS_StoreChar[i++] = SUM[0];
+	
+	PS_StoreChar[i++] = SUM[1];
+	
+	LEN = i;
+}
 
-
-
+void CMD_Match(void)			//精确对比
+{
+	uint8_t i = 0;
+	uint16_t checksum = 0;
+	while(1){
+		PS_Match[i] = CMD[i];
+		i++;
+		if(i==7){
+			break;
+		}
+	}
+	PS_Match[i++] = MatchLen[0];
+	
+	PS_Match[i++] = MatchLen[1];
+	
+	PS_Match[i++] = Match;
+	
+	for(int s=6;s<10;s++){
+		checksum += PS_Match[s];
+	}
+	
+	PS_Match[i++] = SUM[0];
+	
+	PS_Match[i++] = SUM[1];
+	
+	LEN = i;
+}
 
 
 

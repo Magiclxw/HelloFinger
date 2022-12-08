@@ -359,6 +359,7 @@ uint8_t Con_ReadNotepad(uint8_t Page)
 */
 uint8_t Con_Register(uint8_t BufferID,uint16_t PageID)
 {
+	uint8_t errorcode = 0;
 	CMD_GetImage();		//生成获取指纹指令
 	CMD_GenChar(1);		//生成生成特征指令
 	CMD_RegModel();		//生成合并特征指令
@@ -367,29 +368,65 @@ uint8_t Con_Register(uint8_t BufferID,uint16_t PageID)
 	HAL_NVIC_DisableIRQ(EXTI4_IRQn);	//禁用指纹触摸中断
 	//HAL_NVIC_DisableIRQ(USART2_IRQn);	//禁用串口中断
 	
+	/* 1、获取图像 */
 	for(uint8_t i =0;i<4;i++){				//循环4次
-		HAL_UART_Transmit(&FINGER,PS_GetImage,GetImageSize,100);
-		while(rxstate!=1);
-		if(RxData2[9] != 0x00){
-			return RxData2[9];
+		while(1){
+			HAL_UART_Transmit(&FINGER,PS_GetImage,GetImageSize,100);
+			while(rxstate!=1);
+			if(RxData2[9] == 0x02){
+				HAL_UART_Transmit(&KEYOUT,"请放置指纹",10,100);
+				Delay_ms(1000);
+			}
+			if(RxData2[9] == 0x00){
+				HAL_UART_Transmit(&KEYOUT,"获取指纹",10,100);
+				break;
+			}
+			if(RxData2[9] == 0x01){
+				HAL_UART_Transmit(&KEYOUT,"收包有错",10,100);
+				return errorcode++;
+			}
 		}
-		HAL_UART_Transmit(&FINGER,PS_GenChar,GenCharSize,100);
-		while(rxstate!=1);
-		if(RxData2[9] != 0x00){
-			return RxData2[9];
+		/* 2、生成特征 */
+		while(1){
+			HAL_UART_Transmit(&FINGER,PS_GenChar,GenCharSize,100);
+			while(rxstate!=1);
+			if(RxData2[9] != 0x00){
+				if(RxData2[9] == 0x01) HAL_UART_Transmit(&KEYOUT,"收包有错",10,100);
+				if(RxData2[9] == 0x06) HAL_UART_Transmit(&KEYOUT,"指纹图像乱",10,100);
+				if(RxData2[9] == 0x07) HAL_UART_Transmit(&KEYOUT,"特征点太少",10,100);
+				if(RxData2[9] == 0x08) HAL_UART_Transmit(&KEYOUT,"特征之间无关联",10,100);
+				if(RxData2[9] == 0x0a) HAL_UART_Transmit(&KEYOUT,"合并失败",10,100);
+				if(RxData2[9] == 0x15) HAL_UART_Transmit(&KEYOUT,"无原始图",10,100);
+				if(RxData2[9] == 0x28) HAL_UART_Transmit(&KEYOUT,"特征之间有关联",10,100);
+				return errorcode++;
+			}else{
+				HAL_UART_Transmit(&KEYOUT,"生成特征成功",12,100);
+				break;
+			}
 		}
 	}
-	
+	/* 3、合并特征 */
 	HAL_UART_Transmit(&FINGER,PS_RegModel,RegModelSize,100);
 	while(rxstate!=1);
 	if(RxData2[9] != 0x00){
-		return RxData2[9];
+		return errorcode++;
 	}
+	HAL_UART_Transmit(&KEYOUT,"比较成功",8,100);
+	/* 4、存储模板 */
+	Delay_ms(1000);
 	HAL_UART_Transmit(&FINGER,PS_StoreChar,StoreCharSize,100);
 	while(rxstate!=1);
 	if(RxData2[9] != 0x00){
-		return RxData2[9];
+		if(RxData2[9] == 0x01) HAL_UART_Transmit(&KEYOUT,"收包有错",10,100);
+		if(RxData2[9] == 0x0b) HAL_UART_Transmit(&KEYOUT,"Page id超出范围",20,100);
+		if(RxData2[9] == 0x18) HAL_UART_Transmit(&KEYOUT,"写flash出错",15,100);
+		if(RxData2[9] == 0x31) HAL_UART_Transmit(&KEYOUT,"加密等级不匹配",20,100);
+		return errorcode++;
 	}
+	HAL_UART_Transmit(&KEYOUT,"存储成功",8,100);
+	
+	Delay_ms(1000);
+	HAL_NVIC_EnableIRQ(EXTI4_IRQn);
 	return 0;
 }
 

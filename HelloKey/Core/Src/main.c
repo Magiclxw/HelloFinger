@@ -120,7 +120,7 @@ int main(void)
 	//Con_GetDummyTempleteNo();
 	//UnLock(960,625);
 	//GetTableState();
-	Con_Register(1,2);
+	Con_Register(1,7);
 	
 //------------------------------指纹模块状态获取与初始化-----------------------------------/
 	

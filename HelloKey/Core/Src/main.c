@@ -110,7 +110,7 @@ int main(void)
 	CmdConnect();
 	
 	//HAL_NVIC_DisableIRQ(USART1_IRQn);
-	uint8_t ID[2]={0x00,0x04};
+	uint8_t ID[2]={0xFF,0xFF};
 	uint8_t PARAM[2]={0x00,0x00};
 	//Con_AutoEnroll(ID,4,PARAM);
 	//uint8_t PassWord[4]={0x00,0x00,0x00,0x00};
@@ -120,7 +120,6 @@ int main(void)
 	//Con_GetDummyTempleteNo();
 	//UnLock(960,625);
 	//GetTableState();
-	Con_Register(1,7);
 	
 //------------------------------指纹模块状态获取与初始化-----------------------------------/
 	
@@ -145,7 +144,7 @@ int main(void)
 	//}
 	////GetTableState();
 	//Delay_ms(1000);
-	////Con_AutoIdentify(ID,PARAM);
+	//Con_AutoIdentify(ID,PARAM);
 	//if(!Con_Sleep())
 	//{
 	//	HAL_UART_Transmit(&KEYOUT,Sleep_ERROR,9,1000);

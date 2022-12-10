@@ -63,45 +63,43 @@ void Get_Free_ID()
 
 void Con_AutoEnroll(uint8_t *ID,uint8_t NUM,uint8_t *PARAM)			//自动注册模板
 {
-	uint8_t result=0;
-	
-	uint8_t enrollstate[14];		//状态接收
-	
 	HAL_NVIC_DisableIRQ(EXTI4_IRQn);	//禁用指纹触摸中断
 	
 	CMD_AutoEnroll(ID,NUM,PARAM);
 	
-	HAL_UART_Transmit(&FINGER,PS_AutoEnroll,AutoEnrollSize,1000);
+	HAL_UART_Transmit(&FINGER,PS_AutoEnroll,AutoEnrollSize,1000);	//发送自动注册模板指令
 	
-	while(HAL_UART_Receive(&FINGER,enrollstate,14,1000))
+	while(1)
 	{
-		if(RxData2[9]==0x00 && RxData2[10]==0x06)			//录入成功
-		{
-			
-			HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_13);
-			
-			break;
+		if(rxstate == 1){
+			if(RxData2[9]==0x00){
+				if(RxData2[10]==0x03){
+					HAL_UART_Transmit(&KEYOUT,"手指移开",10,100);
+				}
+				
+				if(RxData2[10]==0x01){
+					HAL_UART_Transmit(&KEYOUT,"放下手指",10,100);
+				}
+
+				if(RxData2[10]==0x06)			//录入成功
+				{
+					HAL_UART_Transmit(&KEYOUT,"录入成功",10,100);
+					HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_13);	//灯闪烁
+					rxstate = 0;
+					break;
+				}
+			}else{
+				if(RxData2[9]==0x27 && RxData2[10]==0x05){
+					HAL_UART_Transmit(&KEYOUT,"指纹重复",10,100);
+				}
+				
+				HAL_UART_Transmit(&KEYOUT,"注册失败",10,100);
+				break;
+			}
+			rxstate = 0;
 		}
-		
-		if(RxData2[9]==0x00 && RxData2[10]==0x03)			//判断手指离开
-		{
-			
-		}
-		
-		if(RxData2[9]==0x22)			//指纹模板非空
-		{
-			
-		}
-		
 	}
 	HAL_NVIC_EnableIRQ(EXTI4_IRQn);
-	
-	if(result==1)
-	{
-		//CMD_ControlBLN(1,2,10);
-		
-		//HAL_UART_Transmit(&FINGER,PS_ControlBLN,ControlBLNSize,1000);
-	}
 }
 
 void Con_GenerateEnroll()
@@ -124,17 +122,16 @@ uint8_t Con_AutoIdentify(uint8_t *ID,uint8_t *PARAM)						//自动验证指纹
 	if(RxData2[9]==0x00 && RxData2[10]==0x05)
 	{
 		HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_13);
-		
-		UnLock(960,625);
+		HAL_UART_Transmit(&KEYOUT,"验证成功",10,100);
+		//UnLock(960,625);
 		
 		rxstate=0;
 		
-		//memset(RxData2,0,20);
-		
 		return 1;
+	}else{
+		return RxData2[9];
 	}
-	//}
-	return 0;
+
 }
 
 uint16_t blanknum;
@@ -430,15 +427,6 @@ uint8_t Con_Register(uint8_t BufferID,uint16_t PageID)
 	return 0;
 }
 
-void Con_Verify()
-{
-	CMD_GetImage();		//生成获取指纹指令
-	CMD_GenChar(1);		//生成生成特征指令
-	CMD_Match();			//生成精确对比指令
-	
-	
-	
-}
 
 
 

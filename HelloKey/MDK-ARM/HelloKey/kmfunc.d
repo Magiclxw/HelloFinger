@@ -1,5 +1,5 @@
-hellokey\kmfunc.o: ..\Core\Src\kmfunc.c
-hellokey\kmfunc.o: ../Core/Inc/kmfunc.h
+hellokey\kmfunc.o: ..\Hardware\FPM383C\kmfunc.c
+hellokey\kmfunc.o: ..\Hardware\FPM383C\kmfunc.h
 hellokey\kmfunc.o: ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h
 hellokey\kmfunc.o: ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h
 hellokey\kmfunc.o: ../Drivers/CMSIS/Include/core_cm3.h
@@ -26,7 +26,7 @@ hellokey\kmfunc.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h
 hellokey\kmfunc.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
 hellokey\kmfunc.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 hellokey\kmfunc.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
-hellokey\kmfunc.o: ../Core/Inc/CH9329.h
+hellokey\kmfunc.o: ..\Hardware\CH9329\CH9329.h
 hellokey\kmfunc.o: ../Core/Inc/delay.h
 hellokey\kmfunc.o: ../Core/Inc/mouse.h
-hellokey\kmfunc.o: ../Core/Inc/func.h
+hellokey\kmfunc.o: ..\Hardware\CH9329\func.h

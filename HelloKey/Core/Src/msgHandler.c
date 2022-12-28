@@ -1,7 +1,10 @@
 #include "msgHandler.h"
 #include "usart.h"
-#include "func.h"
+#include "E:\WORK\PersonalProject\HelloKey\root\HelloKey\Hardware\CH9329\func.h"
+#include "string.h"
+#include "ZW800.h"
 
+static uint8_t g_running_mode = 0;		//系统当前运行模式	0:协议传输	1:透传
 
 
 uint8_t Calc_Checksum(uint8_t *data)		//计算校验和
@@ -28,18 +31,18 @@ uint8_t Cmp_Checksum(uint8_t *data)		//比较校验和
 	}
 }
 
-uint8_t* GenerateCmd(uint8_t head,uint8_t *data,uint8_t datalength)	//生成响应
+uint8_t GenerateCmd(uint8_t head,uint8_t *data,uint8_t datalength)	//生成响应
 {
 	uint8_t checksum;;
-	static uint8_t cmd[20];			//指令长度
-	cmd[0] = head;							
-	cmd[1] = datalength;
+	
+	USB_CMD[0] = head;							
+	USB_CMD[1] = datalength;
 	for(int i=2;i<datalength+2;i++){
-		cmd[i] = data[i-2];
+		USB_CMD[i] = data[i-2];
 	}
-	checksum = Calc_Checksum(cmd);
-	cmd[datalength+2] = checksum;
-	return cmd;
+	checksum = Calc_Checksum(USB_CMD);
+	USB_CMD[datalength+2] = checksum;
+	return datalength+3;
 }
 
 void Handler(uint8_t *data)	//判断接收到的数据类型
@@ -54,17 +57,17 @@ void Handler(uint8_t *data)	//判断接收到的数据类型
 	if(head == RECEIVE){
 		cmd = data[2];
 		switch (cmd){
-		case USB_TRANSMIT:
-				//透传模式
+		case USB_TRANSMIT:	//透传模式
+			g_running_mode = 1;
 			break;
-		case USB_COMMAND:
-				//协议传输模式
+		case USB_COMMAND:		//协议传输模式
+			g_running_mode = 0;
 			break;
 		case USB_TABLESTATE:
 			GetTableState();
-			uint8_t* USB_TableState = GenerateCmd(USB_TABLESTATE,RX_TableState,8);
-			HAL_UART_Transmit(&KEYOUT,USB_TableState,11,1000);
-		
+			uint8_t cmdLen = GenerateCmd(USB_TABLESTATE,RX_TableState,8);
+			HAL_UART_Transmit(&KEYOUT,USB_CMD,cmdLen,1000);
+			memset(USB_CMD,0,100);
 		
 		default :break;
 		}

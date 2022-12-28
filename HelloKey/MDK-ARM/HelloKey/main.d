@@ -31,7 +31,7 @@ hellokey\main.o: ../Core/Inc/usart.h
 hellokey\main.o: ../Core/Inc/gpio.h
 hellokey\main.o: ../Core/Inc/led.h
 hellokey\main.o: ../Core/Inc/delay.h
-hellokey\main.o: ../Core/Inc/ZW800.h
-hellokey\main.o: ../Core/Inc/func.h
-hellokey\main.o: ../Core/Inc/kmfunc.h
+hellokey\main.o: ..\Hardware\FPM383C\ZW800.h
+hellokey\main.o: ..\Hardware\CH9329\func.h
+hellokey\main.o: ..\Hardware\FPM383C\kmfunc.h
 hellokey\main.o: ../Core/Inc/message.h

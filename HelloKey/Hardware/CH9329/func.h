@@ -15,6 +15,7 @@ extern uint8_t RX_AutoEnrollData[14];
 extern uint8_t RX_AutoIdentifyData[17];
 extern uint8_t RX_GetDummyTempleteNoData[14];
 extern uint8_t RX_ControlBLN[12];
+extern uint8_t USB_CMD[100];
 
 void GetTableState(void);
 uint8_t Con_Sleep(void);
@@ -32,4 +33,5 @@ uint8_t Con_SetChipAddr(uint8_t *Addr);
 uint8_t Con_WriteNotepad(uint8_t Page,uint8_t *Content);
 uint8_t Con_ReadNotepad(uint8_t Page);
 uint8_t Con_Register(uint8_t BufferID,uint16_t PageID);
+uint8_t GenerateHeadLenCheck(uint8_t *data,uint8_t head);
 #endif

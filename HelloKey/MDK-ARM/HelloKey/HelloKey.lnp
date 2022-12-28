@@ -1,11 +1,7 @@
 --cpu Cortex-M3
 "hellokey\startup_stm32f103xb.o"
-"hellokey\zw800.o"
 "hellokey\delay.o"
 "hellokey\led.o"
-"hellokey\func.o"
-"hellokey\ch9329.o"
-"hellokey\kmfunc.o"
 "hellokey\mouse.o"
 "hellokey\main.o"
 "hellokey\gpio.o"
@@ -29,6 +25,10 @@
 "hellokey\stm32f1xx_hal_flash_ex.o"
 "hellokey\stm32f1xx_hal_exti.o"
 "hellokey\system_stm32f1xx.o"
+"hellokey\kmfunc.o"
+"hellokey\zw800.o"
+"hellokey\ch9329.o"
+"hellokey\func.o"
 --strict --scatter "HelloKey\HelloKey.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

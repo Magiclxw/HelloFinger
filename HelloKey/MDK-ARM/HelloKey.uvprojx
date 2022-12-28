@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F103xB</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;..\Hardware\CH9329;..\Hardware\FPM383C</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -393,11 +393,6 @@
           <GroupName>Application/User/Core</GroupName>
           <Files>
             <File>
-              <FileName>ZW800.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\ZW800.c</FilePath>
-            </File>
-            <File>
               <FileName>delay.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Core\Src\delay.c</FilePath>
@@ -406,21 +401,6 @@
               <FileName>led.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Core\Src\led.c</FilePath>
-            </File>
-            <File>
-              <FileName>func.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\func.c</FilePath>
-            </File>
-            <File>
-              <FileName>CH9329.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\CH9329.c</FilePath>
-            </File>
-            <File>
-              <FileName>kmfunc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\kmfunc.c</FilePath>
             </File>
             <File>
               <FileName>mouse.c</FileName>
@@ -597,6 +577,36 @@
               <FileName>system_stm32f1xx.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/system_stm32f1xx.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>FPM383C</GroupName>
+          <Files>
+            <File>
+              <FileName>kmfunc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\FPM383C\kmfunc.c</FilePath>
+            </File>
+            <File>
+              <FileName>ZW800.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\FPM383C\ZW800.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CH9329</GroupName>
+          <Files>
+            <File>
+              <FileName>CH9329.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\CH9329\CH9329.c</FilePath>
+            </File>
+            <File>
+              <FileName>func.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\CH9329\func.c</FilePath>
             </File>
           </Files>
         </Group>

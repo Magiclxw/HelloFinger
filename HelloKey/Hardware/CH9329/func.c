@@ -3,7 +3,7 @@
 #include "CH9329.h"
 #include "kmfunc.h"
 #include "delay.h"
-
+#include "stdlib.h"
 
 
 extern uint8_t RxData1[100];
@@ -21,6 +21,29 @@ uint8_t RX_ControlBLN[12];
 
 uint8_t RX_GetChipSN[32];
 uint8_t RX_ReadNotepad[32];
+
+uint8_t USB_CMD[100];		//usb发送指令buffer
+
+uint8_t GenerateHeadLenCheck(uint8_t *data,uint8_t head)		//生成协议格式所需的命令头、数据长度和校验和
+{
+	uint8_t checksum = 0;
+	uint8_t length = 0;
+	length = sizeof(data) + 3;
+	
+	USB_CMD[0] = head;
+	USB_CMD[1] = length;
+	/* 填充数据 */
+	for(uint8_t i=2;i<length-1;i++){
+		USB_CMD[i] = data[i-2];
+	}
+	/* 计算校验和 */
+	for(uint8_t i=0;i<length-1;i++){
+		checksum += USB_CMD[i];
+	}
+	USB_CMD[length - 1] = checksum;
+	
+	return length;
+}
 
 void GetTableState(void)			//获取索引表信息
 {

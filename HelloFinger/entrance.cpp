@@ -18,6 +18,7 @@ struct hid_device_ *transhandle = NULL;    //透传句柄
 hid_device_info *hid_info = NULL;
 USBTHREAD *usbthread = new USBTHREAD;
 uint8_t runningstate = PROTOCOLSTATE;   //当前状态，默认处于协议传输状态
+uint8_t table_state_flag = 0;       //索引表获取标志，0：索引表未获取  1：索引表已获取
 
 /*协议传输ID*/
 uint16_t Protocol_VID = 0x1A86;
@@ -25,6 +26,7 @@ uint16_t Protocol_PID = 0xE129;
 /*透传ID*/
 uint16_t Transmission_VID = 0x1A86;
 uint16_t Transmission_PID = 0xE429;
+
 uint8_t infoFlag = 0;   //获取信息成功标志
 uint8_t interfaceFlag = 0;  //获取指定接口信息成功标志
 uint8_t openFlag = 0;   //打开接口成功标志
@@ -84,7 +86,10 @@ Entrance::Entrance(QWidget *parent)
             qDebug() << "cmdtimer";
             GenerateCmd(USB_TABLESTATE);
             hid_write(transhandle,Command,CMDLEN);   //发送获取索引表状态指令
-            //cmdtimer->stop();
+            if(table_state_flag == 1){
+                cmdtimer->stop();
+            }
+
         }
     });
 

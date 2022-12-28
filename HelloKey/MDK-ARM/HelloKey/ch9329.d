@@ -1,5 +1,5 @@
-hellokey\ch9329.o: ..\Core\Src\CH9329.c
-hellokey\ch9329.o: ../Core/Inc/CH9329.h
+hellokey\ch9329.o: ..\Hardware\CH9329\CH9329.c
+hellokey\ch9329.o: ..\Hardware\CH9329\CH9329.h
 hellokey\ch9329.o: ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h
 hellokey\ch9329.o: ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h
 hellokey\ch9329.o: ../Drivers/CMSIS/Include/core_cm3.h
@@ -28,4 +28,4 @@ hellokey\ch9329.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 hellokey\ch9329.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 hellokey\ch9329.o: ../Core/Inc/delay.h
 hellokey\ch9329.o: E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin\..\include\string.h
-hellokey\ch9329.o: ../Core/Inc/func.h
+hellokey\ch9329.o: ..\Hardware\CH9329\func.h

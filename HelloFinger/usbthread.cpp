@@ -10,6 +10,7 @@ extern struct hid_device_ *transhandle;
 extern uint16_t Transmission_VID;
 extern uint16_t Transmission_PID;
 
+extern uint8_t table_state_flag;
 uint8_t rec;
 uint8_t rec_buffer[20]; //接收缓冲区
 uint8_t returnFlag=0;
@@ -59,6 +60,7 @@ void USBTHREAD::run()
         switch (returnFlag){
         case TABLESTATE:
             emit SI_TableStateUpdate();
+            table_state_flag = 1;
             break;
 
         default:

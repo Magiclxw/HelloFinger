@@ -110,9 +110,9 @@ int main(void)
 	CmdConnect();
 	
 	//HAL_NVIC_DisableIRQ(USART1_IRQn);
-	uint8_t ID[2]={0xFF,0xFF};
+	uint8_t ID[2]={0x00,0x08};
 	uint8_t PARAM[2]={0x00,0x00};
-	//Con_AutoEnroll(ID,4,PARAM);
+	Con_AutoEnroll(ID,4,PARAM);
 	//uint8_t PassWord[4]={0x00,0x00,0x00,0x00};
 	//uint8_t *tmp=CMD_ControlBLN(2,4,2);
 	//HAL_UART_Transmit(&huart1,tmp,ControlBLNSize,1000);
@@ -152,7 +152,7 @@ int main(void)
 	
 	
 //---------------------------------------------------------------------------------/
-	
+	HAL_UART_Transmit(&KEYOUT,"test",10,100);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -178,6 +178,8 @@ int main(void)
 			
 			USART1_RX_STA=0;
 		}
+		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_0,GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_1,GPIO_PIN_RESET);
 		
     /* USER CODE END WHILE */
 

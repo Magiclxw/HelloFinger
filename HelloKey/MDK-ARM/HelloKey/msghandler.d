@@ -28,4 +28,6 @@ hellokey\msghandler.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 hellokey\msghandler.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 hellokey\msghandler.o: ../Core/Inc/usart.h
 hellokey\msghandler.o: ../Core/Inc/main.h
-hellokey\msghandler.o: ../Core/Inc/func.h
+hellokey\msghandler.o: E:\WORK\PersonalProject\HelloKey\root\HelloKey\Hardware\CH9329\func.h
+hellokey\msghandler.o: E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin\..\include\string.h
+hellokey\msghandler.o: ..\Hardware\FPM383C\ZW800.h

@@ -1,5 +1,5 @@
-hellokey\func.o: ..\Core\Src\func.c
-hellokey\func.o: ../Core/Inc/func.h
+hellokey\func.o: ..\Hardware\CH9329\func.c
+hellokey\func.o: ..\Hardware\CH9329\func.h
 hellokey\func.o: ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h
 hellokey\func.o: ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h
 hellokey\func.o: ../Drivers/CMSIS/Include/core_cm3.h
@@ -26,7 +26,8 @@ hellokey\func.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h
 hellokey\func.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
 hellokey\func.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 hellokey\func.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
-hellokey\func.o: ../Core/Inc/ZW800.h
-hellokey\func.o: ../Core/Inc/CH9329.h
-hellokey\func.o: ../Core/Inc/kmfunc.h
+hellokey\func.o: ..\Hardware\FPM383C\ZW800.h
+hellokey\func.o: ..\Hardware\CH9329\CH9329.h
+hellokey\func.o: ..\Hardware\FPM383C\kmfunc.h
 hellokey\func.o: ../Core/Inc/delay.h
+hellokey\func.o: E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin\..\include\stdlib.h

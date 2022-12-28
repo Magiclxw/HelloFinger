@@ -22,23 +22,23 @@ Dialog DLL:      TCM.DLL V1.36.1.0
  
 <h2>Project:</h2>
 E:\WORK\PersonalProject\HelloKey\root\HelloKey\MDK-ARM\HelloKey.uvprojx
-Project File Date:  11/27/2022
+Project File Date:  12/11/2022
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin'
 Build target 'HelloKey'
-compiling func.c...
-..\Core\Src\func.c(114): warning:  #177-D: variable "result"  was declared but never referenced
-  	uint8_t result=0;
-..\Core\Src\func.c(321): warning:  #940-D: missing return statement at end of non-void function "Con_WriteNotepad" 
-  }
-..\Core\Src\func.c(353): warning:  #940-D: missing return statement at end of non-void function "Con_ReadNotepad" 
-  }
-..\Core\Src\func.c: 3 warnings, 0 errors
+compiling msgHandler.c...
+..\Core\Src\msgHandler.c(59): warning:  #546-D: transfer of control bypasses initialization of:
+            variable "cmdLen"  (declared at line 68)
+  		switch (cmd){
+  		^
+..\Core\Src\msgHandler.c(7): warning:  #550-D: variable "g_running_mode"  was set but never used
+  static uint8_t g_running_mode = 0;		//系统当前运行模式	0:协议传输	1:透传
+..\Core\Src\msgHandler.c: 2 warnings, 0 errors
 linking...
-Program Size: Code=7400 RO-data=292 RW-data=188 ZI-data=2564  
+Program Size: Code=7964 RO-data=292 RW-data=188 ZI-data=2644  
 FromELF: creating hex file...
-"HelloKey\HelloKey.axf" - 0 Error(s), 3 Warning(s).
+"HelloKey\HelloKey.axf" - 0 Error(s), 2 Warning(s).
 
 <h2>Software Packages used:</h2>
 

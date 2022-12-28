@@ -1,5 +1,5 @@
-hellokey\zw800.o: ..\Core\Src\ZW800.c
-hellokey\zw800.o: ../Core/Inc/ZW800.h
+hellokey\zw800.o: ..\Hardware\FPM383C\ZW800.c
+hellokey\zw800.o: ..\Hardware\FPM383C\ZW800.h
 hellokey\zw800.o: ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h
 hellokey\zw800.o: ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h
 hellokey\zw800.o: ../Drivers/CMSIS/Include/core_cm3.h
@@ -26,4 +26,4 @@ hellokey\zw800.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h
 hellokey\zw800.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
 hellokey\zw800.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 hellokey\zw800.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
-hellokey\zw800.o: ../Core/Inc/func.h
+hellokey\zw800.o: ..\Hardware\CH9329\func.h

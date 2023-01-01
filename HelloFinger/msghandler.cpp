@@ -2,8 +2,11 @@
 #include <QDebug>
 #include <QWidget>
 #include "entrance.h"
+#include "mainwindow.h"
 
 /* 处理USB接收数据 */
+
+extern uint8_t g_enroll_state;  //注册状态
 
 uint8_t length; //数据长度
 uint8_t head;   //指令码
@@ -46,6 +49,12 @@ uint8_t Handler(uint8_t *msg)
         qDebug() << "tablestate" ;
         return TABLESTATE;
         break;
+    case ENROLL:
+    {
+        g_enroll_state = msg[3];
+        qDebug()<<"enroll_state:"<<g_enroll_state;
+        return ENROLL;
+    }
     default:
         break;
     }

@@ -31,3 +31,5 @@ hellokey\func.o: ..\Hardware\CH9329\CH9329.h
 hellokey\func.o: ..\Hardware\FPM383C\kmfunc.h
 hellokey\func.o: ../Core/Inc/delay.h
 hellokey\func.o: E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin\..\include\stdlib.h
+hellokey\func.o: ../Core/Inc/msgHandler.h
+hellokey\func.o: E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin\..\include\string.h

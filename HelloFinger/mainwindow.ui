@@ -398,21 +398,21 @@
          <number>1</number>
         </property>
         <item>
-         <widget class="QPushButton" name="pushButton_3">
+         <widget class="QPushButton" name="add">
           <property name="text">
            <string>添加</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="modify">
           <property name="text">
            <string>修改</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_2">
+         <widget class="QPushButton" name="delete_2">
           <property name="text">
            <string>删除</string>
           </property>

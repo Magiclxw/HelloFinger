@@ -17,7 +17,7 @@ private:
 
 signals:
     void SI_TableStateUpdate();
-
+    void SI_EnrollStateUpdate();
 };
 
 #endif // USBTHREAD_H

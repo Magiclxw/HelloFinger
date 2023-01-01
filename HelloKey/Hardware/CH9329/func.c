@@ -4,7 +4,8 @@
 #include "kmfunc.h"
 #include "delay.h"
 #include "stdlib.h"
-
+#include "msgHandler.h"
+#include "string.h"
 
 extern uint8_t RxData1[100];
 extern uint8_t RxData2[100];
@@ -86,6 +87,8 @@ void Get_Free_ID()
 
 void Con_AutoEnroll(uint8_t *ID,uint8_t NUM,uint8_t *PARAM)			//自动注册模板
 {
+	uint8_t rsp[4] = {0x11,0x01,0x00,0x00};
+	
 	HAL_NVIC_DisableIRQ(EXTI4_IRQn);	//禁用指纹触摸中断
 	
 	CMD_AutoEnroll(ID,NUM,PARAM);
@@ -96,27 +99,45 @@ void Con_AutoEnroll(uint8_t *ID,uint8_t NUM,uint8_t *PARAM)			//自动注册模板
 	{
 		if(rxstate == 1){
 			if(RxData2[9]==0x00){
-				if(RxData2[10]==0x03){
-					HAL_UART_Transmit(&KEYOUT,"手指移开",10,100);
+				if(RxData2[10]==0x03){		//手指移开
+					rsp[0] = 0x11;
+					rsp[1] = 0x01;
+					rsp[2] = ENROLL_STATE_LEAVE;
+					rsp[3] = Calc_Checksum(rsp);
+					HAL_UART_Transmit(&KEYOUT,rsp,4,100);
+					memset(rsp,0,4);
 				}
 				
-				if(RxData2[10]==0x01){
-					HAL_UART_Transmit(&KEYOUT,"放下手指",10,100);
+				if(RxData2[10]==0x01){		//放下手指
+					rsp[0] = 0x11;
+					rsp[1] = 0x01;
+					rsp[2] = ENROLL_STATE_PUT;
+					rsp[3] = Calc_Checksum(rsp);
+					HAL_UART_Transmit(&KEYOUT,rsp,4,100);
+					memset(rsp,0,4);
 				}
 
 				if(RxData2[10]==0x06)			//录入成功
 				{
-					HAL_UART_Transmit(&KEYOUT,"录入成功",10,100);
-					HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_13);	//灯闪烁
+					rsp[0] = 0x11;
+					rsp[1] = 0x01;
+					rsp[2] = ENROLL_STATE_SUCCESS;
+					rsp[3] = Calc_Checksum(rsp);
+					HAL_UART_Transmit(&KEYOUT,rsp,4,100);
 					rxstate = 0;
 					break;
 				}
 			}else{
-				if(RxData2[9]==0x27 && RxData2[10]==0x05){
-					HAL_UART_Transmit(&KEYOUT,"指纹重复",10,100);
+				if(RxData2[9]==0x27 && RxData2[10]==0x05){		//指纹重复
+					rsp[0] = 0x11;
+					rsp[1] = 0x01;
+					rsp[2] = ENROLL_STATE_REPEAT;
+					rsp[3] = Calc_Checksum(rsp);
+					HAL_UART_Transmit(&KEYOUT,rsp,4,100);
+					rxstate = 0;
 				}
 				
-				HAL_UART_Transmit(&KEYOUT,"注册失败",10,100);
+				//HAL_UART_Transmit(&KEYOUT,"注册失败",10,100);
 				break;
 			}
 			rxstate = 0;
@@ -150,7 +171,7 @@ uint8_t Con_AutoIdentify(uint8_t *ID,uint8_t *PARAM)						//自动验证指纹
 		
 		rxstate=0;
 		
-		return 1;
+		return 0x00;
 	}else{
 		return RxData2[9];
 	}

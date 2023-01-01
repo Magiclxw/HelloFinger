@@ -6,6 +6,7 @@
 extern uint8_t rec_buffer[20];
 
 #define TABLESTATE  0x10
+#define ENROLL      0x11
 
 class MsgHandler
 {

@@ -84,7 +84,8 @@ Entrance::Entrance(QWidget *parent)
 
         if(transhandle != NULL){
             qDebug() << "cmdtimer";
-            GenerateCmd(USB_TABLESTATE);
+            uint8_t cmd[1] = {USB_TABLESTATE};
+            GenerateCmd(cmd,1);
             hid_write(transhandle,Command,CMDLEN);   //发送获取索引表状态指令
             if(table_state_flag == 1){
                 cmdtimer->stop();
@@ -132,7 +133,8 @@ Entrance::Entrance(QWidget *parent)
         qDebug() << "HID Open Success";
     }
     if(handle != NULL){
-        GenerateCmd(TRANSMISSIONSTATE);
+        uint8_t cmd[1] = {TRANSMISSIONSTATE};
+        GenerateCmd(cmd,1);
         hid_write(handle,Command,CMDLEN);   //发送切换为透传状态指令
         waitingSwitchFlag = 1;
     }
@@ -159,28 +161,57 @@ Entrance::Entrance(QWidget *parent)
 /*************************************************************************/
 
     connect(usbthread,&USBTHREAD::SI_TableStateUpdate,m,&MainWindow::SL_TableStateUpdate);
+    connect(usbthread,&USBTHREAD::SI_EnrollStateUpdate,m,&MainWindow::SL_EnrollStateUpdate);
+    connect(m,&MainWindow::SI_AddFinger,this,[=](uint8_t id,uint8_t times,uint8_t *param){
+        uint8_t cmd[6] = {USB_ENROLL,0x00,id,times,param[0],param[1]};
+        GenerateCmd(cmd,6);
+        hid_write(transhandle,Command,11);
+    });
 }
 
-uint8_t Entrance::GenerateChecksum(uint8_t *cmd)
+//uint8_t Entrance::GenerateChecksum(uint8_t *cmd)
+//{
+//    uint8_t checksum = 0;
+//    for(int i=2;i<5;i++){
+//        checksum += cmd[i];
+//    }
+//    return checksum;
+//}
+//
+uint8_t Entrance::GenerateChecksum(uint8_t *cmd,uint8_t cmdLen) //cmdLen:指令长度，不包括固定头和固定长度（cmd[0]、cmd[1]）
 {
     uint8_t checksum = 0;
-    for(int i=2;i<5;i++){
+    for(int i=2;i<cmdLen+2;i++){
         checksum += cmd[i];
     }
     return checksum;
 }
-
-void Entrance::GenerateCmd(int cmd)
+void Entrance::GenerateCmd(uint8_t *data,uint8_t dataLen)
 {
     uint8_t checksum = 0;
+    uint8_t len = 0;
     Command[0] = 0x00;
-    Command[1] = 4;
+    Command[1] = dataLen + 3;
     Command[2] = RECEIVE;
-    Command[3] = DATALEN;
-    Command[4] = cmd;
-    checksum = GenerateChecksum(Command);
-    Command[5] = checksum;
+    Command[3] = dataLen;
+    for(uint8_t i=4;i<dataLen+4;i++){
+        Command[i] = data[i-4];
+    }
+    checksum = GenerateChecksum(Command,dataLen+3);
+    Command[dataLen+4] = checksum;
+
 }
+//void Entrance::GenerateCmd(int cmd)
+//{
+//    uint8_t checksum = 0;
+//    Command[0] = 0x00;
+//    Command[1] = 4;
+//    Command[2] = RECEIVE;
+//    Command[3] = DATALEN;
+//    Command[4] = cmd;
+//    checksum = GenerateChecksum(Command);
+//    Command[5] = checksum;
+//}
 
 void Entrance::onDeviceIn(QString VID, QString PID)
 {

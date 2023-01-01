@@ -11,7 +11,7 @@ uint8_t Calc_Checksum(uint8_t *data)		//计算校验和
 {
 	uint8_t checksum = 0;
 	uint8_t datalenght = data[1];
-	for(int i=0;i<datalenght+1;i++){
+	for(int i=0;i<datalenght+2;i++){
 		checksum += data[i];
 	}
 	return checksum;
@@ -63,11 +63,25 @@ void Handler(uint8_t *data)	//判断接收到的数据类型
 		case USB_COMMAND:		//协议传输模式
 			g_running_mode = 0;
 			break;
-		case USB_TABLESTATE:
+		case USB_TABLESTATE:	//获取索引表信息
 			GetTableState();
 			uint8_t cmdLen = GenerateCmd(USB_TABLESTATE,RX_TableState,8);
 			HAL_UART_Transmit(&KEYOUT,USB_CMD,cmdLen,1000);
 			memset(USB_CMD,0,100);
+			break;
+		case USB_ENROLL:	//注册指纹
+		{
+			uint8_t ID[2] = {0};
+			uint8_t PARAM[2]={0};
+			uint8_t enrolltimes = 0;
+			ID[1] = data[4];
+			enrolltimes = data[5];
+			PARAM[0] = data[6];
+			PARAM[1] = data[7];
+			Con_AutoEnroll(ID,enrolltimes,PARAM);
+			
+		}
+			break;
 		
 		default :break;
 		}

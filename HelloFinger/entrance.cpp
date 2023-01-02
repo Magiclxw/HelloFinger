@@ -18,7 +18,7 @@ struct hid_device_ *transhandle = NULL;    //透传句柄
 hid_device_info *hid_info = NULL;
 USBTHREAD *usbthread = new USBTHREAD;
 uint8_t runningstate = PROTOCOLSTATE;   //当前状态，默认处于协议传输状态
-uint8_t table_state_flag = 0;       //索引表获取标志，0：索引表未获取  1：索引表已获取
+uint8_t table_state_flag = 0;       //索引表获取（更新）标志，0：索引表未获取  1：索引表已获取
 
 /*协议传输ID*/
 uint16_t Protocol_VID = 0x1A86;
@@ -86,11 +86,11 @@ Entrance::Entrance(QWidget *parent)
             qDebug() << "cmdtimer";
             uint8_t cmd[1] = {USB_TABLESTATE};
             GenerateCmd(cmd,1);
-            hid_write(transhandle,Command,CMDLEN);   //发送获取索引表状态指令
+            hid_write(transhandle,Command,6);   //发送获取索引表状态指令
             if(table_state_flag == 1){
                 cmdtimer->stop();
             }
-
+            memset(Command,0,20);
         }
     });
 
@@ -137,6 +137,7 @@ Entrance::Entrance(QWidget *parent)
         GenerateCmd(cmd,1);
         hid_write(handle,Command,CMDLEN);   //发送切换为透传状态指令
         waitingSwitchFlag = 1;
+        memset(Command,0,20);
     }
 
 
@@ -165,7 +166,26 @@ Entrance::Entrance(QWidget *parent)
     connect(m,&MainWindow::SI_AddFinger,this,[=](uint8_t id,uint8_t times,uint8_t *param){
         uint8_t cmd[6] = {USB_ENROLL,0x00,id,times,param[0],param[1]};
         GenerateCmd(cmd,6);
-        hid_write(transhandle,Command,11);
+        hid_write(transhandle,Command,11);  //cmd:6 + head:4 + tail:1
+        memset(Command,0,20);
+        //table_state_flag = 0;
+        //cmdtimer->start(1000);
+
+    });
+
+    connect(m,&MainWindow::SI_FingerDelete,this,[=](uint8_t ID){
+        uint8_t cmd[5] = {USB_DELETE,0x00,ID,0x00,0x01};
+        GenerateCmd(cmd,5);
+        hid_write(transhandle,Command,10);
+        memset(Command,0,20);
+        table_state_flag = 0;
+        cmdtimer->start(1000);
+
+    });
+
+    connect(m,&MainWindow::SI_FingerRefresh,this,[=](){
+        table_state_flag = 0;
+        cmdtimer->start(1000);
     });
 }
 

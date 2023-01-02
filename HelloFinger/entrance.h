@@ -17,6 +17,7 @@
 #define USB_TABLESTATE 0x10     //获取索引表状态
 #define USB_ENROLL      0x11    //注册指纹
 #define USB_IDENTIFY    0x12    //验证指纹
+#define USB_DELETE      0x14
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Entrance; }

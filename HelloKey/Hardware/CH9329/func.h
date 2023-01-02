@@ -39,4 +39,5 @@ uint8_t Con_WriteNotepad(uint8_t Page,uint8_t *Content);
 uint8_t Con_ReadNotepad(uint8_t Page);
 uint8_t Con_Register(uint8_t BufferID,uint16_t PageID);
 uint8_t GenerateHeadLenCheck(uint8_t *data,uint8_t head);
+uint8_t Con_DeleteChar(uint8_t *PageID,uint8_t *N);
 #endif

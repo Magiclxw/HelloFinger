@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setWindowIcon(QIcon(":/Icon.jpg"));
     setWindowTitle("HelloFinger");
-    setWindowFlags(Qt::WindowStaysOnTopHint);   //保持顶层显示
+    //setWindowFlags(Qt::WindowStaysOnTopHint);   //保持顶层显示
     ListWidgetEditWindow *listwidgeteditwindow = new ListWidgetEditWindow;
     enroll = new enrollstate;
     /* 更新listwidget状态 */
@@ -48,7 +48,18 @@ MainWindow::MainWindow(QWidget *parent) :
         enroll->show();
         uint8_t times = 4;
         uint8_t param[2] = {0x00,0x00};
-        emit SI_AddFinger(checkedRow-1,times,param);
+        emit SI_AddFinger(checkedRow,times,param);
+    });
+
+    connect(ui->fdelete,&QPushButton::clicked,this,[=](){
+        uint8_t checkedRow = 0;
+        QModelIndex index = ui->listWidget->currentIndex();
+        checkedRow = index.row();
+        emit SI_FingerDelete(checkedRow);
+    });
+
+    connect(ui->refresh,&QPushButton::clicked,this,[=](){
+        emit SI_FingerRefresh();
     });
 
     connect(this,&MainWindow::SI_TableStateUpdata_T,enroll,&enrollstate::SL_InterfaceUpdate);

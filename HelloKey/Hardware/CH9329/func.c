@@ -396,6 +396,25 @@ uint8_t Con_ReadNotepad(uint8_t Page)
 	
 }
 
+uint8_t Con_DeleteChar(uint8_t *PageID,uint8_t *N)
+{
+	CMD_DeletChar(PageID,N);
+	
+	HAL_UART_Transmit(&FINGER,PS_DeletChar,DeletCharSize,1000);
+	
+	while(rxstate!=1);
+	
+	rxstate=0;
+	
+	if(RxData2[6] == 0x07 && RxData2[9] == 0x00){		//É¾³ý³É¹¦
+		return 1;
+	}else if(RxData2[6] == 0x07 && RxData2[9] == 0x10){		//É¾³ýÊ§°Ü
+		return 0;
+	}
+	
+}
+
+
 /* 	×¢²áÖ¸ÎÆ
 */
 uint8_t Con_Register(uint8_t BufferID,uint16_t PageID)

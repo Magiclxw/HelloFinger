@@ -27,6 +27,22 @@ Project File Date:  12/11/2022
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin'
 Build target 'HelloKey'
+compiling main.c...
+../Core/Inc/message.h(12): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Src/main.c: 1 warning, 0 errors
+compiling msgHandler.c...
+..\Core\Src\msgHandler.c(59): warning:  #546-D: transfer of control bypasses initialization of:
+            variable "cmdLen"  (declared at line 68)
+  		switch (cmd){
+  		^
+..\Core\Src\msgHandler.c(7): warning:  #550-D: variable "g_running_mode"  was set but never used
+  static uint8_t g_running_mode = 0;		//系统当前运行模式	0:协议传输	1:透传
+..\Core\Src\msgHandler.c: 2 warnings, 0 errors
+compiling gpio.c...
+compiling usart.c...
+compiling kmfunc.c...
+compiling CH9329.c...
 compiling func.c...
 ..\Hardware\CH9329\func.c(158): warning:  #177-D: variable "result"  was declared but never referenced
   	uint8_t result=0;
@@ -34,11 +50,14 @@ compiling func.c...
   }
 ..\Hardware\CH9329\func.c(397): warning:  #940-D: missing return statement at end of non-void function "Con_ReadNotepad" 
   }
-..\Hardware\CH9329\func.c: 3 warnings, 0 errors
+..\Hardware\CH9329\func.c(415): warning:  #940-D: missing return statement at end of non-void function "Con_DeleteChar" 
+  }
+..\Hardware\CH9329\func.c: 4 warnings, 0 errors
+compiling ZW800.c...
 linking...
-Program Size: Code=8004 RO-data=292 RW-data=188 ZI-data=2644  
+Program Size: Code=8276 RO-data=292 RW-data=188 ZI-data=2644  
 FromELF: creating hex file...
-"HelloKey\HelloKey.axf" - 0 Error(s), 3 Warning(s).
+"HelloKey\HelloKey.axf" - 0 Error(s), 7 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -61,7 +80,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.1.2
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:03
 </pre>
 </body>
 </html>

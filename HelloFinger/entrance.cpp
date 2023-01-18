@@ -9,6 +9,7 @@
 #include "mainwindow.h"
 #include "msghandler.h"
 #include "usbdevice.h"
+#include "hidewindow.h"
 
 /*板子上电默认处于协议传输模式*/
 
@@ -42,6 +43,8 @@ Entrance::Entrance(QWidget *parent)
     this->setFixedSize(300,100);
     this->setWindowTitle("HelloFinger");
     MainWindow *m = new MainWindow;
+    HideWindow *hidewindow = new HideWindow;
+    hidewindow->show();
 
     USBDEVICE *usbdevice = new USBDEVICE(this);
     usbdevice->registerDevice(this->winId());

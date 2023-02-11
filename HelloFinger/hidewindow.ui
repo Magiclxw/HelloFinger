@@ -30,10 +30,28 @@
     <widget class="QListWidget" name="listWidget">
      <property name="iconSize">
       <size>
-       <width>0</width>
-       <height>5</height>
+       <width>60</width>
+       <height>60</height>
       </size>
      </property>
+     <item>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="res.qrc">
+        <normaloff>:/Icon.jpg</normaloff>:/Icon.jpg</iconset>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="res.qrc">
+        <normaloff>:/MainPic.jpg</normaloff>:/MainPic.jpg</iconset>
+      </property>
+     </item>
      <item>
       <property name="text">
        <string/>

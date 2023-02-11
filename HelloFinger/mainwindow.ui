@@ -64,7 +64,7 @@
      <item>
       <widget class="QListWidget" name="listWidget">
        <property name="styleSheet">
-        <string notr="true"/>
+        <string notr="true">QListWidget::Index{color:red}</string>
        </property>
        <item>
         <property name="text">
@@ -72,6 +72,15 @@
         </property>
         <property name="textAlignment">
          <set>AlignLeading|AlignVCenter</set>
+        </property>
+        <property name="background">
+         <brush brushstyle="NoBrush">
+          <color alpha="0">
+           <red>0</red>
+           <green>0</green>
+           <blue>0</blue>
+          </color>
+         </brush>
         </property>
         <property name="icon">
          <iconset resource="res.qrc">

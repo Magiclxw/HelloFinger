@@ -6,6 +6,7 @@
 #include <QGuiApplication>
 #include <QScreen>
 #include <QMouseEvent>
+#include <QtWinExtras>
 
 HideWindow::HideWindow(QWidget *parent) :
     QWidget(parent),
@@ -27,7 +28,24 @@ HideWindow::HideWindow(QWidget *parent) :
     resize(50,210);
     move(500,500);
 
+    setWindowOpacity(0.5);      //设置透明度
 
+    ui->listWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->listWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    //if(QtWin::isCompositionEnabled()){        //毛玻璃效果
+    //    qDebug()<<"可用";
+    //    QtWin::extendFrameIntoClientArea(this,-1,-1,-1,-1);
+    //    setAttribute(Qt::WA_TranslucentBackground,true);
+    //    setAttribute(Qt::WA_NoSystemBackground,false);
+    //    setStyleSheet("HideWindow { background: transparent; }");
+    //
+    //}else{
+    //    qDebug()<<"不可用";
+    //    QtWin::resetExtendedFrame(this);
+    //    setAttribute(Qt::WA_TranslucentBackground,false);
+    //    setStyleSheet(QString("HideWindow{background: %1;}").arg(QtWin::realColorizationColor().name()));
+    //}
 
 
 }

@@ -5,6 +5,8 @@
 #include <QPainter>
 #include "enrollstate.h"
 #include <QDebug>
+#include <QFileInfo>
+#include <QSettings>
 
 extern uint8_t TableState[8];
 
@@ -25,6 +27,35 @@ MainWindow::MainWindow(QWidget *parent) :
     setWindowIcon(QIcon(":/Icon.jpg"));
     setWindowTitle("HelloFinger");
     //setWindowFlags(Qt::WindowStaysOnTopHint);   //保持顶层显示
+
+    QFile file("hello.ini");
+//    if(!file.open(QIODevice::WriteOnly)) qDebug()<<"error";
+//    file.write("hello!");
+
+//    file.close();
+//    QFileInfo info(file);
+//    qDebug()<<info.absoluteFilePath()<<endl;
+/* 创建、写入ini文件 */
+    //QSettings *iniWrite = new QSettings("hello.ini",QSettings::IniFormat);
+    //iniWrite->setValue("/ip/first","123");
+    //iniWrite->setValue("ip/second","456");
+    //iniWrite->setValue("port/open","222");
+    //delete iniWrite;
+
+/* 读取ini文件 */
+    //QSettings *iniRead = new QSettings("hello.ini",QSettings::IniFormat);
+    //QString item1 = iniRead->value("item1/text").toString();
+
+    /* 判断文件有无 */
+    if(!file.open(QIODevice::ReadOnly)){    //文件不存在
+        QSettings *iniWrite = new QSettings("hello.ini",QSettings::IniFormat);
+        for(int i=0;i<60;i++){  //赋予默认值：0~59
+            QString item = "item";
+            item.append(QString::number(i));
+            iniWrite->setValue(item+"/value",i);
+        }
+    }
+
     ListWidgetEditWindow *listwidgeteditwindow = new ListWidgetEditWindow;
     enroll = new enrollstate;
     /* 更新listwidget状态 */
@@ -40,6 +71,8 @@ MainWindow::MainWindow(QWidget *parent) :
             }
         }
     }
+
+
 
     connect(ui->add,&QPushButton::clicked,this,[=](){   //添加指纹
         uint8_t checkedRow = 0;

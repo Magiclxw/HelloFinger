@@ -7,6 +7,10 @@
 #include <QDebug>
 #include <QFileInfo>
 #include <QSettings>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonValue>
+#include <QFile>
 
 extern uint8_t TableState[8];
 
@@ -29,32 +33,29 @@ MainWindow::MainWindow(QWidget *parent) :
     //setWindowFlags(Qt::WindowStaysOnTopHint);   //保持顶层显示
 
     QFile file("hello.ini");
-//    if(!file.open(QIODevice::WriteOnly)) qDebug()<<"error";
-//    file.write("hello!");
+    QFile jsonFile("jsonFile.json");
 
-//    file.close();
-//    QFileInfo info(file);
-//    qDebug()<<info.absoluteFilePath()<<endl;
-/* 创建、写入ini文件 */
-    //QSettings *iniWrite = new QSettings("hello.ini",QSettings::IniFormat);
-    //iniWrite->setValue("/ip/first","123");
-    //iniWrite->setValue("ip/second","456");
-    //iniWrite->setValue("port/open","222");
-    //delete iniWrite;
+    /* INI格式文件处理 */
+    /* 判断文件有无 此方式只能存储ascii码格式文件，不方便于文本存储*/
+    //if(!file.open(QIODevice::ReadOnly)){    //文件不存在
+    //    QSettings *iniWrite = new QSettings("hello.ini",QSettings::IniFormat);
+    //    //iniWrite->setValue("item0/value","你好单独发放嘎嘎地方都是发大水发士大夫撒对光反射");
+    //    for(int i=0;i<60;i++){  //赋予默认值：0~59
+    //        QString item = "item";
+    //        item.append(QString::number(i));
+    //        iniWrite->setValue(item+"/value",i);
+    //    }
+    //    delete iniWrite;
+    //}else{  // 文件存在
+    //    QSettings *iniRead = new QSettings("hello.ini",QSettings::IniFormat);
+    //    for(int i=0;i<60;i++){
+    //        QString item = "item";
+    //        item.append(QString::number(i));
+    //        ui->listWidget->item(i)->setText(iniRead->value(item+"/value").toString());
+    //    }
+    //}
+    //file.close();
 
-/* 读取ini文件 */
-    //QSettings *iniRead = new QSettings("hello.ini",QSettings::IniFormat);
-    //QString item1 = iniRead->value("item1/text").toString();
-
-    /* 判断文件有无 */
-    if(!file.open(QIODevice::ReadOnly)){    //文件不存在
-        QSettings *iniWrite = new QSettings("hello.ini",QSettings::IniFormat);
-        for(int i=0;i<60;i++){  //赋予默认值：0~59
-            QString item = "item";
-            item.append(QString::number(i));
-            iniWrite->setValue(item+"/value",i);
-        }
-    }
 
     ListWidgetEditWindow *listwidgeteditwindow = new ListWidgetEditWindow;
     enroll = new enrollstate;
@@ -72,6 +73,38 @@ MainWindow::MainWindow(QWidget *parent) :
         }
     }
 
+    /* JSON格式文件处理 */
+    if(!jsonFile.open(QIODevice::ReadOnly)){    //文件不存在
+        //QJsonObject mainObj;
+        QJsonObject subObj;
+        for(int i=1;i<60;i++){
+            QString item = "item";
+            item.append(QString::number(i));
+            subObj.insert(item,QJsonValue(QString::number(i)));
+        }
+        //mainObj.insert("ListConfig",QJsonValue(subObj));
+        //QJsonDocument doc(mainObj);
+        QJsonDocument doc(subObj);
+        QByteArray data = doc.toJson();
+        jsonFile.open(QIODevice::ReadWrite);
+        jsonFile.write(data);
+        jsonFile.close();
+    }else{                                      //文件存在
+        QByteArray data = jsonFile.readAll();
+        jsonFile.close();
+        QJsonDocument doc = QJsonDocument::fromJson(data);
+        if(doc.isObject()){
+            QJsonObject obj = doc.object();
+            //QString data = "ListConfig";
+            for(int i=0;i<60;i++){
+                QString item = "item";
+                item.append(QString::number(i));
+                QJsonValue value = obj.value(item);
+                //QJsonObject subObj = value.toObject();
+                ui->listWidget->item(i)->setText(value.toString());
+            }
+        }
+    }
 
 
     connect(ui->add,&QPushButton::clicked,this,[=](){   //添加指纹
@@ -105,6 +138,30 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(listwidgeteditwindow,&ListWidgetEditWindow::btn_ok_Clicked,this,[=](){
         ui->listWidget->item(rowIndex)->setText(inputText);
+        QJsonObject mainObj;
+        QJsonObject subObj;
+        QString item = "item";
+        //item.append(QString::number(rowIndex));
+        //subObj.insert(item,inputText);
+        //mainObj.insert("ListConfig",QJsonValue(subObj));
+        //QJsonDocument doc(mainObj);
+        //QByteArray data = doc.toJson();
+        QFile file("jsonFile.json");
+        file.open(QIODevice::ReadWrite);
+        QByteArray data = file.readAll();
+        QJsonDocument doc = QJsonDocument::fromJson(data);
+        //if(doc.isObject()){
+            mainObj = doc.object();
+            //QString listconfig = "ListConfig";
+            item.append(QString::number(rowIndex));
+            mainObj.insert(item,inputText);
+            //mainObj.insert(listconfig,subObj);
+        //}
+        QJsonDocument writeDoc(mainObj);
+        QByteArray writeArry = writeDoc.toJson();
+        file.seek(0);       //回到文件开头
+        file.write(writeArry);      //文件重写
+        file.close();
     });
 
 

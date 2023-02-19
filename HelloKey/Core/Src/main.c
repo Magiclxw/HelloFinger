@@ -30,6 +30,7 @@
 #include "func.h"
 #include "kmfunc.h"
 #include "message.h"
+#include "CH9329.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -153,6 +154,10 @@ int main(void)
 	
 //---------------------------------------------------------------------------------/
 	
+	
+	Set_Cfg();
+	Delay_ms(1000);
+	Get_Cfg();
   /* USER CODE END 2 */
 
   /* Infinite loop */

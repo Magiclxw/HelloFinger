@@ -104,6 +104,15 @@ void Handler(uint8_t *data)	//判断接收到的数据类型
 		}
 		default :break;
 		}
+	}else if(head == PROTOCOL){		//协议传输响应
+		switch (data[3]){
+			case READ_PARA_CFG:
+				memset(RxData1,0,100);
+				break;
+			case SET_PARA_CFG:
+				memset(RxData1,0,100);
+				break;
+		}
 	}
 	
 }

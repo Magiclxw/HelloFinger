@@ -388,8 +388,35 @@ uint32_t ascll[127]={
 */
 };
 /***************************************************************************************************************/
+uint8_t CH_CONFIG[50] = {0x00,0x80,0x00,0x00,0x00,0x25,0x80,0x08,0x00,0x00,
+												 0x03,0x86,0x1A,0x29,0xE1,0x00,0x00,0x00,0x01,0x00,
+												 0x0D,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+												 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+												 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
 
-
+void CH9329_Init(void)		//CH9329引脚初始化
+{
+	GPIO_InitTypeDef gpio;
+	__HAL_RCC_GPIOA_CLK_ENABLE();
+	
+	/* 复位引脚默认低电平 */
+	HAL_GPIO_WritePin(GPIOA,GPIO_PIN_12,GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_5,GPIO_PIN_RESET);
+	
+	gpio.Mode=GPIO_MODE_OUTPUT_PP;
+	gpio.Pin=GPIO_PIN_12;
+	gpio.Pull=GPIO_PULLDOWN;
+	gpio.Speed=GPIO_SPEED_FREQ_HIGH;
+	HAL_GPIO_Init(GPIOA,&gpio);
+	
+	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_5,GPIO_PIN_SET);
+	
+	gpio.Mode=GPIO_MODE_OUTPUT_PP;
+	gpio.Pin=GPIO_PIN_5;
+	gpio.Pull=GPIO_PULLDOWN;
+	gpio.Speed=GPIO_SPEED_FREQ_HIGH;
+	HAL_GPIO_Init(GPIOB,&gpio);
+}
 
 
 void Combine( uint8_t *head, uint8_t *body)		//字节拼接
@@ -449,6 +476,29 @@ void toASCLL( uint8_t *asc)
 	result[len+3]=0x0A;
 }
 
+void Get_Cfg(void)
+{
+	uint8_t cmd[6] = {0x57,0xAB,0x00,0x08,0x00};
+	uint8_t checksum = 0;
+	for(uint8_t i=0;i<5;i++){
+		checksum+=cmd[i];
+	}
+	cmd[5] = checksum;
+	
+	HAL_UART_Transmit(&KEYOUT,cmd,6,1000);
+}
+
+void Set_Cfg(void)
+{
+	uint8_t cmd[56] = {0x57,0xAB,0x00,0x09,0x32};
+	uint8_t checksum = 0;
+	for(uint8_t i=0;i<55;i++){
+		cmd[i+5] = CH_CONFIG[i];
+		checksum += cmd[i];
+	}
+	cmd[55] = checksum;
+	HAL_UART_Transmit(&KEYOUT,cmd,56,1000);
+}
 
 /************************************ 淘汰字符串发送函数  *****************************************************
 void SendWords(const uint8_t *w1,const uint8_t *w2,const uint8_t *w3,const uint8_t *w4,const uint8_t *w5,

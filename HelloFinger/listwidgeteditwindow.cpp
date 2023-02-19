@@ -11,6 +11,7 @@ ListWidgetEditWindow::ListWidgetEditWindow(QWidget *parent) :
     connect(ui->btn_ok,&QPushButton::clicked,this,[=](){
         inputText = ui->lineEdit->text();
         emit btn_ok_Clicked();
+        ui->lineEdit->clear();
         this->hide();
     });
 }

@@ -35,3 +35,4 @@ hellokey\main.o: ..\Hardware\FPM383C\ZW800.h
 hellokey\main.o: ..\Hardware\CH9329\func.h
 hellokey\main.o: ..\Hardware\FPM383C\kmfunc.h
 hellokey\main.o: ../Core/Inc/message.h
+hellokey\main.o: ..\Hardware\CH9329\CH9329.h

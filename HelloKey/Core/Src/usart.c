@@ -29,6 +29,8 @@ uint8_t RxBuffer2[1];
 uint16_t USART1_RX_STA=0;
 uint16_t USART2_RX_STA=0;
 
+uint8_t RecState = 0;	//与CH9329通信状态，0：协议传输	1：透传
+
 __IO uint8_t rxerror=0;
 __IO int cmdlength=0;
 __IO uint8_t dataLength = 0;
@@ -260,15 +262,22 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		RxData1[USART1_RX_STA] = RxBuffer1[0];
 		/* 判断第1字节是否正确 */
 		if(USART1_RX_STA == 0){
-			if(RxData1[0] != 0xFE){
+			if(RxData1[0] == 0x57){
+				RecState = 0;
+			}else if(RxData1[0] == 0xFE){
+				RecState = 1;
+			}else{
 				USART1_RX_STA = 0;
 				//memset(RxData1,0,100);
 				return;
 			}
 		}
 		
-		if(USART1_RX_STA == 1){
+		if(USART1_RX_STA == 1 && RecState == 1){
 			dataLength = RxData1[USART1_RX_STA] + 2;	//接收第2字节为包中数据部分长度
+		}
+		if(USART1_RX_STA == 4 && RecState == 0){
+			dataLength = RxData1[USART1_RX_STA] + 1;
 		}
 		USART1_RX_STA ++;
 		if(dataLength != 0){

@@ -27,7 +27,7 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h)(0x63061344)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h)(0x63061344)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h)(0x63061344)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x63061344)
-F (..\Core\Src\led.c)(0x630DF93C)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\Hardware\CH9329 -I ..\Hardware\FPM383C-I.\RTE\_HelloKey-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellokey\led.o --omf_browse hellokey\led.crf --depend hellokey\led.d)
+F (..\Core\Src\led.c)(0x63F1F21A)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\Hardware\CH9329 -I ..\Hardware\FPM383C-I.\RTE\_HelloKey-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellokey\led.o --omf_browse hellokey\led.crf --depend hellokey\led.d)
 I (../Core/Inc/led.h)(0x630DF08E)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h)(0x63061344)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h)(0x63061344)
@@ -81,7 +81,7 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h)(0x63061344)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h)(0x63061344)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h)(0x63061344)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x63061344)
-F (../Core/Src/main.c)(0x63A44DF5)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\Hardware\CH9329 -I ..\Hardware\FPM383C-I.\RTE\_HelloKey-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellokey\main.o --omf_browse hellokey\main.crf --depend hellokey\main.d)
+F (../Core/Src/main.c)(0x63F1F0A3)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\Hardware\CH9329 -I ..\Hardware\FPM383C-I.\RTE\_HelloKey-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellokey\main.o --omf_browse hellokey\main.crf --depend hellokey\main.d)
 I (../Core/Inc/main.h)(0x631EEC42)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x63061344)
 I (../Core/Inc/stm32f1xx_hal_conf.h)(0x631EEC42)
@@ -117,6 +117,7 @@ I (..\Hardware\FPM383C\ZW800.h)(0x638C538C)
 I (..\Hardware\CH9329\func.h)(0x63B269AB)
 I (..\Hardware\FPM383C\kmfunc.h)(0x63302458)
 I (../Core/Inc/message.h)(0x633FB71C)
+I (..\Hardware\CH9329\CH9329.h)(0x63F1F4DA)
 F (../Core/Src/gpio.c)(0x633024B0)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\Hardware\CH9329 -I ..\Hardware\FPM383C-I.\RTE\_HelloKey-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellokey\gpio.o --omf_browse hellokey\gpio.crf --depend hellokey\gpio.d)
 I (../Core/Inc/gpio.h)(0x6306153C)
 I (../Core/Inc/main.h)(0x631EEC42)
@@ -175,7 +176,7 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h)(0x63061344)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h)(0x63061344)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h)(0x63061344)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x63061344)
-F (../Core/Src/usart.c)(0x63ABEDF2)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\Hardware\CH9329 -I ..\Hardware\FPM383C-I.\RTE\_HelloKey-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellokey\usart.o --omf_browse hellokey\usart.crf --depend hellokey\usart.d)
+F (../Core/Src/usart.c)(0x63F1ED49)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\Hardware\CH9329 -I ..\Hardware\FPM383C-I.\RTE\_HelloKey-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellokey\usart.o --omf_browse hellokey\usart.crf --depend hellokey\usart.d)
 I (../Core/Inc/usart.h)(0x63830410)
 I (../Core/Inc/main.h)(0x631EEC42)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x63061344)
@@ -203,7 +204,7 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h)(0x63061344)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h)(0x63061344)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h)(0x63061344)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x63061344)
-I (../Core/Inc/msgHandler.h)(0x63B269C9)
+I (../Core/Inc/msgHandler.h)(0x63F1EC36)
 F (../Core/Src/stm32f1xx_it.c)(0x63830CAB)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\Hardware\CH9329 -I ..\Hardware\FPM383C-I.\RTE\_HelloKey-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellokey\stm32f1xx_it.o --omf_browse hellokey\stm32f1xx_it.crf --depend hellokey\stm32f1xx_it.d)
 I (../Core/Inc/main.h)(0x631EEC42)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x63061344)
@@ -260,8 +261,8 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h)(0x63061344)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h)(0x63061344)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h)(0x63061344)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x63061344)
-F (..\Core\Src\msgHandler.c)(0x63B26C2A)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\Hardware\CH9329 -I ..\Hardware\FPM383C-I.\RTE\_HelloKey-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellokey\msghandler.o --omf_browse hellokey\msghandler.crf --depend hellokey\msghandler.d)
-I (../Core/Inc/msgHandler.h)(0x63B269C9)
+F (..\Core\Src\msgHandler.c)(0x63F1EC5B)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\Hardware\CH9329 -I ..\Hardware\FPM383C-I.\RTE\_HelloKey-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellokey\msghandler.o --omf_browse hellokey\msghandler.crf --depend hellokey\msghandler.d)
+I (../Core/Inc/msgHandler.h)(0x63F1EC36)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h)(0x63061344)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h)(0x63061344)
 I (../Drivers/CMSIS/Include/core_cm3.h)(0x63061336)
@@ -709,7 +710,7 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h)(0x63061344)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h)(0x63061344)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h)(0x63061344)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x63061344)
-I (..\Hardware\CH9329\CH9329.h)(0x631D3434)
+I (..\Hardware\CH9329\CH9329.h)(0x63F1F4DA)
 I (../Core/Inc/delay.h)(0x630CAE9A)
 I (../Core/Inc/mouse.h)(0x631D41CE)
 I (..\Hardware\CH9329\func.h)(0x63B269AB)
@@ -741,8 +742,8 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h)(0x63061344)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h)(0x63061344)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x63061344)
 I (..\Hardware\CH9329\func.h)(0x63B269AB)
-F (..\Hardware\CH9329\CH9329.c)(0x63301D3A)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\Hardware\CH9329 -I ..\Hardware\FPM383C-I.\RTE\_HelloKey-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellokey\ch9329.o --omf_browse hellokey\ch9329.crf --depend hellokey\ch9329.d)
-I (..\Hardware\CH9329\CH9329.h)(0x631D3434)
+F (..\Hardware\CH9329\CH9329.c)(0x63F1F635)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\Hardware\CH9329 -I ..\Hardware\FPM383C-I.\RTE\_HelloKey-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellokey\ch9329.o --omf_browse hellokey\ch9329.crf --depend hellokey\ch9329.d)
+I (..\Hardware\CH9329\CH9329.h)(0x63F1F4DA)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h)(0x63061344)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h)(0x63061344)
 I (../Drivers/CMSIS/Include/core_cm3.h)(0x63061336)
@@ -799,9 +800,9 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h)(0x63061344)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h)(0x63061344)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x63061344)
 I (..\Hardware\FPM383C\ZW800.h)(0x638C538C)
-I (..\Hardware\CH9329\CH9329.h)(0x631D3434)
+I (..\Hardware\CH9329\CH9329.h)(0x63F1F4DA)
 I (..\Hardware\FPM383C\kmfunc.h)(0x63302458)
 I (../Core/Inc/delay.h)(0x630CAE9A)
 I (E:\SOFTWARE\Environment\Keil\ARM\ARMCC\include\stdlib.h)(0x599EDB3C)
-I (../Core/Inc/msgHandler.h)(0x63B269C9)
+I (../Core/Inc/msgHandler.h)(0x63F1EC36)
 I (E:\SOFTWARE\Environment\Keil\ARM\ARMCC\include\string.h)(0x599EDB3C)

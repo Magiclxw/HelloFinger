@@ -193,6 +193,30 @@ extern uint8_t 					Explorer							[13]						;
 extern uint8_t 					ScreenSave						[13]						;
 extern uint8_t 					KeyRelease						[13]						;
 
+typedef struct
+{
+	uint8_t WorkState;
+	uint8_t SerialMode;
+	uint8_t SerialAddr;
+	uint8_t SerialBaudRate[4];
+	uint8_t SerialInterval[2];
+	uint8_t Vid[2];
+	uint8_t Pid[2];
+	uint8_t UploadInterval[2];
+	uint8_t KeyReleaseInterval[2];
+	uint8_t AutoEnterFlag;
+	uint8_t EnterSymbol[8];
+	uint8_t Filter[8];
+	uint8_t StringEnable;
+	uint8_t QuickUpload;
+}Para_Cfg;
+
+
+
+
+
+
+
 
 
 
@@ -202,6 +226,9 @@ void SendWords(uint8_t *w1,uint8_t *w2,uint8_t *w3,uint8_t *w4,uint8_t *w5,
 							 uint8_t *w6, uint8_t *w7, uint8_t *w8, uint8_t *w9, uint8_t *w10, uint8_t num);
 void toASCLL( uint8_t *asc);
 void Sendtest( uint8_t *asc);
+void CH9329_Init(void);
+void Get_Cfg(void);
+void Set_Cfg(void);
 
 #endif
 

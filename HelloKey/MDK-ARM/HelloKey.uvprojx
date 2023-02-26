@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F103xB</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;..\Hardware\CH9329;..\Hardware\FPM383C</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;..\Hardware\CH9329;..\Hardware\FPM383C;..\Hardware\KEY;..\Hardware\AT24C02</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -493,6 +493,16 @@
               <FileType>1</FileType>
               <FilePath>..\Core\Src\msgHandler.c</FilePath>
             </File>
+            <File>
+              <FileName>key.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\KEY\key.c</FilePath>
+            </File>
+            <File>
+              <FileName>iic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\iic.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -607,6 +617,16 @@
               <FileName>func.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Hardware\CH9329\func.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>AT24C02</GroupName>
+          <Files>
+            <File>
+              <FileName>24c02.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\AT24C02\24c02.c</FilePath>
             </File>
           </Files>
         </Group>

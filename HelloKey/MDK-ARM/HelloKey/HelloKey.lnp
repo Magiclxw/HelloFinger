@@ -10,6 +10,8 @@
 "hellokey\stm32f1xx_it.o"
 "hellokey\stm32f1xx_hal_msp.o"
 "hellokey\msghandler.o"
+"hellokey\key.o"
+"hellokey\iic.o"
 "hellokey\stm32f1xx_hal_gpio_ex.o"
 "hellokey\stm32f1xx_hal_tim.o"
 "hellokey\stm32f1xx_hal_tim_ex.o"
@@ -29,6 +31,7 @@
 "hellokey\zw800.o"
 "hellokey\ch9329.o"
 "hellokey\func.o"
+"hellokey\24c02.o"
 --strict --scatter "HelloKey\HelloKey.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

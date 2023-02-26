@@ -14,18 +14,18 @@ void Delay_us(uint32_t us)
 {
 	uint32_t ticks;
 	uint32_t told,tnow,tcnt=0;
-	uint32_t reload=SysTick->LOAD;				//LOAD的值	    	 
-	ticks=us*fac_us; 						//需要的节拍数 
-	told=SysTick->VAL;        				//刚进入时的计数器值
+	uint32_t reload=SysTick->LOAD;  	 
+	ticks=us*fac_us;
+	told=SysTick->VAL;
 	while(1)
 	{
 		tnow=SysTick->VAL;	
 		if(tnow!=told)
 		{	    
-			if(tnow<told)tcnt+=told-tnow;	//这里注意一下SYSTICK是一个递减的计数器就可以了.
+			if(tnow<told)tcnt+=told-tnow;
 			else tcnt+=reload-tnow+told;	    
 			told=tnow;
-			if(tcnt>=ticks)break;			//时间超过/等于要延迟的时间,则退出.
+			if(tcnt>=ticks)break;
 		}  
 	}
 }

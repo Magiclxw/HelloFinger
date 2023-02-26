@@ -36,3 +36,6 @@ hellokey\main.o: ..\Hardware\CH9329\func.h
 hellokey\main.o: ..\Hardware\FPM383C\kmfunc.h
 hellokey\main.o: ../Core/Inc/message.h
 hellokey\main.o: ..\Hardware\CH9329\CH9329.h
+hellokey\main.o: ..\Hardware\KEY\key.h
+hellokey\main.o: ..\Hardware\AT24C02\24c02.h
+hellokey\main.o: ../Core/Inc/iic.h

@@ -393,7 +393,7 @@ uint8_t CH_CONFIG[50] = {0x00,0x80,0x00,0x00,0x00,0x25,0x80,0x08,0x00,0x00,
 												 0x0D,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
 												 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
 												 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
-
+												 
 void CH9329_Init(void)		//CH9329引脚初始化
 {
 	GPIO_InitTypeDef gpio;
@@ -401,16 +401,16 @@ void CH9329_Init(void)		//CH9329引脚初始化
 	
 	/* 复位引脚默认低电平 */
 	HAL_GPIO_WritePin(GPIOA,GPIO_PIN_12,GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_5,GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_5,GPIO_PIN_SET);		//SET脚默认高电平
 	
+	/* 复位引脚配置 */
 	gpio.Mode=GPIO_MODE_OUTPUT_PP;
 	gpio.Pin=GPIO_PIN_12;
 	gpio.Pull=GPIO_PULLDOWN;
 	gpio.Speed=GPIO_SPEED_FREQ_HIGH;
 	HAL_GPIO_Init(GPIOA,&gpio);
 	
-	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_5,GPIO_PIN_SET);
-	
+	/* SET脚配置 */
 	gpio.Mode=GPIO_MODE_OUTPUT_PP;
 	gpio.Pin=GPIO_PIN_5;
 	gpio.Pull=GPIO_PULLDOWN;
@@ -418,6 +418,57 @@ void CH9329_Init(void)		//CH9329引脚初始化
 	HAL_GPIO_Init(GPIOB,&gpio);
 }
 
+void CH9329_Reset(void)
+{
+	HAL_GPIO_WritePin(GPIOA,GPIO_PIN_12,GPIO_PIN_SET);
+	Delay_ms(200);
+	HAL_GPIO_WritePin(GPIOA,GPIO_PIN_12,GPIO_PIN_RESET);
+}
+
+void CH9329_WorkMode_Config(uint8_t workmode)
+{
+	CH_CONFIG[0] = workmode;
+}
+
+void CH9329_SerialMode_Config(uint8_t serialmode)
+{
+	CH_CONFIG[1] = serialmode;
+}
+
+void CH9329_SerialAddr_Config(uint8_t addr)
+{
+	CH_CONFIG[2] = addr;
+}
+
+void CH9329_SerialBaudRate_Config(uint8_t* baudrate)
+{
+	CH_CONFIG[3] = baudrate[0];
+	CH_CONFIG[4] = baudrate[1];
+	CH_CONFIG[5] = baudrate[2];
+	CH_CONFIG[6] = baudrate[3];
+}
+
+void CH9329_SerialInterval_Config(uint8_t* interval)
+{
+	CH_CONFIG[9] = interval[0];
+	CH_CONFIG[10] = interval[1];
+}
+
+void CH9329_Vid_Pid_Config(uint8_t* vid,uint8_t* pid)
+{
+	CH_CONFIG[11] = vid[1];
+	CH_CONFIG[12] = vid[0];
+	CH_CONFIG[13] = pid[1];
+	CH_CONFIG[14] = pid[0];
+}
+
+
+
+void CH9329_Config()
+{
+	Para_Cfg config;
+	
+}
 
 void Combine( uint8_t *head, uint8_t *body)		//字节拼接
 {

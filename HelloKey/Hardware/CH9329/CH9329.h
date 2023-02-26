@@ -195,27 +195,41 @@ extern uint8_t 					KeyRelease						[13]						;
 
 typedef struct
 {
-	uint8_t WorkState;
-	uint8_t SerialMode;
-	uint8_t SerialAddr;
-	uint8_t SerialBaudRate[4];
-	uint8_t SerialInterval[2];
+	uint8_t WorkMode;	//工作模式
+	uint8_t SerialMode;	//通信模式
+	uint8_t SerialAddr;	//串口通信地址
+	uint8_t SerialBaudRate[4];	//串口通信波特率
+	uint8_t SerialInterval[2];	//串口通信包间隔
 	uint8_t Vid[2];
 	uint8_t Pid[2];
-	uint8_t UploadInterval[2];
-	uint8_t KeyReleaseInterval[2];
-	uint8_t AutoEnterFlag;
-	uint8_t EnterSymbol[8];
-	uint8_t Filter[8];
-	uint8_t StringEnable;
-	uint8_t QuickUpload;
+	uint8_t UploadInterval[2];	//键盘上传时间间隔
+	uint8_t KeyReleaseInterval[2];	//键盘释放延时时间
+	uint8_t AutoEnterFlag;	//键盘自动回车标志
+	uint8_t EnterSymbol[8];	//键盘回车符
+	uint8_t Filter[8];	//键盘过滤开始、结束字符串
+	uint8_t StringEnable;	//字符串使能标志
+	uint8_t QuickUpload;	//快速上传标志
 }Para_Cfg;
 
 
+#define WORKMODE_SOFT_0		0x00
+#define WORKMODE_SOFT_1		0x01
+#define WORKMODE_SOFT_2		0x02
+#define WORKMODE_SOFT_3		0x03
+#define WORKMODE_HARD_0		0x80
+#define WORKMODE_HARD_1		0x81
+#define WORKMODE_HARD_2		0x82
+#define WORKMODE_HARD_3		0x83
 
+#define SERIALMODE_SOFT_0				0x00
+#define SERIALMODE_SOFT_1				0x01
+#define SERIALMODE_SOFT_2				0x02
+#define SERIALMODE_HARD_0				0x80
+#define SERIALMODE_HARD_1				0x81
+#define SERIALMODE_HARD_2				0x82
 
-
-
+#define AUTOENTERFLAG_ENABLE		0x01
+#define AUTOENTERFLAG_DISABLE		0x00
 
 
 
@@ -227,6 +241,7 @@ void SendWords(uint8_t *w1,uint8_t *w2,uint8_t *w3,uint8_t *w4,uint8_t *w5,
 void toASCLL( uint8_t *asc);
 void Sendtest( uint8_t *asc);
 void CH9329_Init(void);
+void CH9329_Reset(void);
 void Get_Cfg(void);
 void Set_Cfg(void);
 

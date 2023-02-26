@@ -31,6 +31,8 @@
 #include "kmfunc.h"
 #include "message.h"
 #include "CH9329.h"
+#include "key.h"
+#include "24c02.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -107,7 +109,18 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 	LED_Init();
+	KEY_Init();
+	CH9329_Init();
 	Delay_Init();
+	IIC_Init();
+	
+	while(AT24CXX_Check()){
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET);
+		Delay_ms(100);
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_SET);
+		Delay_ms(100);
+	}
+	
 	CmdConnect();
 	
 	//HAL_NVIC_DisableIRQ(USART1_IRQn);
@@ -155,8 +168,8 @@ int main(void)
 //---------------------------------------------------------------------------------/
 	
 	
-	Set_Cfg();
-	Delay_ms(1000);
+	//Set_Cfg();
+	//Delay_ms(1000);
 	Get_Cfg();
   /* USER CODE END 2 */
 
@@ -170,7 +183,10 @@ int main(void)
 			Con_Sleep();
 			Delay_ms(2000);
 		}
-		
+		if(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_10)==GPIO_PIN_RESET)
+		{
+			CH9329_Reset();
+		}
 		//Delay_ms(500);
 		//HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_13);
 		//HAL_UART_Receive(&huart1,data,10,1000);

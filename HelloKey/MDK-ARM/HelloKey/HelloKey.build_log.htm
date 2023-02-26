@@ -22,16 +22,25 @@ Dialog DLL:      TCM.DLL V1.36.1.0
  
 <h2>Project:</h2>
 E:\WORK\PersonalProject\HelloKey\root\HelloKey\MDK-ARM\HelloKey.uvprojx
-Project File Date:  12/11/2022
+Project File Date:  02/25/2023
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin'
 Build target 'HelloKey'
-compiling CH9329.c...
+compiling main.c...
+../Core/Inc/message.h(12): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\Hardware\KEY\key.h(6): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Inc/iic.h(60): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\Hardware\AT24C02\24c02.h(16): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Src/main.c: 4 warnings, 0 errors
 linking...
-Program Size: Code=8468 RO-data=308 RW-data=276 ZI-data=2644  
+Program Size: Code=9444 RO-data=308 RW-data=192 ZI-data=2640  
 FromELF: creating hex file...
-"HelloKey\HelloKey.axf" - 0 Error(s), 0 Warning(s).
+"HelloKey\HelloKey.axf" - 0 Error(s), 4 Warning(s).
 
 <h2>Software Packages used:</h2>
 

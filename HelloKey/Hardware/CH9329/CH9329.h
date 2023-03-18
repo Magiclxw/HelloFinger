@@ -4,6 +4,8 @@
 
 #define buffersize 20
 
+extern uint8_t CH_CONFIG[50];
+
 /**按键控制部分*/
 //uint8_t KeyUP[8]={0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
 //uint8_t KeyUP[20]={0x57,0xAB,0x00,0x02,0x08,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x0C,0x0A};
@@ -200,7 +202,7 @@ typedef struct
 	uint8_t SerialAddr;	//串口通信地址
 	uint8_t SerialBaudRate[4];	//串口通信波特率
 	uint8_t SerialInterval[2];	//串口通信包间隔
-	uint8_t Vid[2];
+	uint8_t Vid[2] = {0x86,0x1A};
 	uint8_t Pid[2];
 	uint8_t UploadInterval[2];	//键盘上传时间间隔
 	uint8_t KeyReleaseInterval[2];	//键盘释放延时时间

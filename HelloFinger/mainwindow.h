@@ -15,7 +15,7 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void paintEvent(QPaintEvent *event);
-
+    void on_keyEvent(QKeyEvent* event);
 private:
     Ui::MainWindow *ui;
 

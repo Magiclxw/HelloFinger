@@ -512,7 +512,7 @@ uint8_t *Combination( uint8_t *control, uint8_t *key)
 }
 
 
-uint8_t word[100]={"0"};		//用来接收串口数据
+//uint8_t word[100]={"0"};		//用来接收串口数据
 uint8_t result[103];													//用于存储转换结果
 uint8_t len;																	//记录数据长度
 /**把字符串转换为ASCLL码序号*/

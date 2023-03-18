@@ -1,8 +1,9 @@
 #include "msgHandler.h"
 #include "usart.h"
-#include "E:\WORK\PersonalProject\HelloKey\root\HelloKey\Hardware\CH9329\func.h"
+#include "func.h"
 #include "string.h"
 #include "ZW800.h"
+#include "CH9329.h"
 
 static uint8_t g_running_mode = 0;		//系统当前运行模式	0:协议传输	1:透传
 
@@ -107,10 +108,15 @@ void Handler(uint8_t *data)	//判断接收到的数据类型
 	}else if(head == PROTOCOL){		//协议传输响应
 		switch (data[3]){
 			case READ_PARA_CFG:
-				
+				memcpy(CH_CONFIG,RxData1,50);
 				memset(RxData1,0,100);
 				break;
 			case SET_PARA_CFG:
+				//1、判断eeprom中数据是否有效
+				//2、获取eeprom中数据
+				//3、更新配置
+				//4、设置配置
+				//5、保存配置
 				memset(RxData1,0,100);
 				break;
 		}

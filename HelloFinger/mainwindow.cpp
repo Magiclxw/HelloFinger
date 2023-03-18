@@ -11,6 +11,10 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QFile>
+#include "GlobalMouseKey/globalkeyevent.h"
+#include <QMetaEnum>
+#include <QString>
+#include <QKeyEvent>
 
 extern uint8_t TableState[8];
 
@@ -163,7 +167,8 @@ MainWindow::MainWindow(QWidget *parent) :
         file.write(writeArry);      //文件重写
         file.close();
     });
-
+    GlobalKeyEvent::installKeyEvent();
+    connect(GlobalKeyEvent::getInstance(),&GlobalKeyEvent::keyEvent,this,&MainWindow::on_keyEvent);
 
 }
 
@@ -203,9 +208,27 @@ void MainWindow::paintEvent(QPaintEvent *event)
     painter.drawPixmap(0,0,this->width(),this->height(),pix);
 }
 
+void MainWindow::on_keyEvent(QKeyEvent* event)
+{
+    QMetaEnum type = QMetaEnum::fromType<QEvent::Type>();
+    QMetaEnum key = QMetaEnum::fromType<Qt::Key>();
+    QMetaEnum keyboard = QMetaEnum::fromType<Qt::KeyboardModifiers>();
+    QString str = QString("状态：[%1]\t按键：[%2]\t修饰：[%3]]").arg(type.valueToKey(event->type()))
+                                           .arg(key.valueToKey(event->key()))
+                                           .arg(QString(keyboard.valueToKeys(int(event->modifiers()))));
+    if(!event->text().isEmpty())
+    {
+        str += QString("\t字符：[%1]").arg(event->text());
+    }
+    qDebug() << "字符" << str;
+    delete event;       // 使用完成后记得delete
+}
+
+
 MainWindow::~MainWindow()
 {
     delete ui;
 }
+
 
 

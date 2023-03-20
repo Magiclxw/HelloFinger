@@ -32,3 +32,4 @@ hellofinger\ch9329.o: ../Core/Inc/delay.h
 hellofinger\ch9329.o: E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin\..\include\string.h
 hellofinger\ch9329.o: ../Core/Inc/usart.h
 hellofinger\ch9329.o: ../Core/Inc/main.h
+hellofinger\ch9329.o: ../Core/Inc/msgHandler.h

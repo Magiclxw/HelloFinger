@@ -19,8 +19,11 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "usart.h"
+#include "string.h"
 
 /* USER CODE BEGIN 0 */
+
+
 uint8_t RxBuffer1[1];
 uint8_t RxBuffer2[1];
 uint8_t RxData1[100];
@@ -126,7 +129,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
     /* USART1 interrupt Init */
-    HAL_NVIC_SetPriority(USART1_IRQn, 1, 1);
+    HAL_NVIC_SetPriority(USART1_IRQn, 2, 2);
     HAL_NVIC_EnableIRQ(USART1_IRQn);
   /* USER CODE BEGIN USART1_MspInit 1 */
 
@@ -156,7 +159,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
     /* USART2 interrupt Init */
-    HAL_NVIC_SetPriority(USART2_IRQn, 1, 0);
+    HAL_NVIC_SetPriority(USART2_IRQn, 1, 1);
     HAL_NVIC_EnableIRQ(USART2_IRQn);
   /* USER CODE BEGIN USART2_MspInit 1 */
 
@@ -237,7 +240,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		if(data_cnt1 != 0){
 			data_cnt1 --;
 			if(data_cnt1 == 0){
-				//Handler(RxData1);
+				Handler(RxData1);
+				//memset(RxData1,0,100);
 				USART1_RX_STA = 0;
 			}
 		}

@@ -10,11 +10,11 @@
 #elif defined(__GNUC__)
 #endif
 
-uint8_t CH_CONFIG[50] = {0x00,0x80,0x00,0x00,0x00,0x25,0x80,0x08,0x00,0x00,
-												 0x03,0x86,0x1A,0x29,0xE1,0x00,0x00,0x00,0x01,0x00,
-												 0x0D,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-												 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-												 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+uint8_t CH9329_CONFIG[50] = {0x00,0x80,0x00,0x00,0x00,0x25,0x80,0x08,0x00,0x00,
+														 0x03,0x86,0x1A,0x29,0xE1,0x00,0x00,0x00,0x01,0x00,
+														 0x0D,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+														 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+														 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
 
 uint8_t 					FIXED_HEAD						[5]								={0x57,0xAB,0x00,0x02,0x08};		//命令头
 uint8_t 					INFO									[9]								={0x57,0xAB,0x00,0x01,0x00,0x03,0xFF,0x0D,0x0A};
@@ -424,7 +424,7 @@ void CH9329_Init(void)		//CH9329引脚初始化
 void CH9329_Reset(void)
 {
 	HAL_GPIO_WritePin(GPIOA,GPIO_PIN_12,GPIO_PIN_SET);
-	Delay_ms(200);
+	Delay_ms(1000);
 	HAL_GPIO_WritePin(GPIOA,GPIO_PIN_12,GPIO_PIN_RESET);
 }
 
@@ -445,39 +445,39 @@ void toASCLL( uint8_t *asc)
 
 void CH9329_WorkMode_Config(uint8_t workmode)
 {
-	CH_CONFIG[0] = workmode;
+	CH9329_CONFIG[0] = workmode;
 }
 
 void CH9329_SerialMode_Config(uint8_t serialmode)
 {
-	CH_CONFIG[1] = serialmode;
+	CH9329_CONFIG[1] = serialmode;
 }
 
 void CH9329_SerialAddr_Config(uint8_t addr)
 {
-	CH_CONFIG[2] = addr;
+	CH9329_CONFIG[2] = addr;
 }
 
 void CH9329_SerialBaudRate_Config(uint8_t* baudrate)
 {
-	CH_CONFIG[3] = baudrate[0];
-	CH_CONFIG[4] = baudrate[1];
-	CH_CONFIG[5] = baudrate[2];
-	CH_CONFIG[6] = baudrate[3];
+	CH9329_CONFIG[3] = baudrate[0];
+	CH9329_CONFIG[4] = baudrate[1];
+	CH9329_CONFIG[5] = baudrate[2];
+	CH9329_CONFIG[6] = baudrate[3];
 }
 
 void CH9329_SerialInterval_Config(uint8_t* interval)
 {
-	CH_CONFIG[9] = interval[0];
-	CH_CONFIG[10] = interval[1];
+	CH9329_CONFIG[9] = interval[0];
+	CH9329_CONFIG[10] = interval[1];
 }
 
-void CH9329_Vid_Pid_Config(uint8_t* vid,uint8_t* pid)
+void CH9329_Vid_Pid_Config(uint16_t vid,uint16_t pid)
 {
-	CH_CONFIG[11] = vid[1];
-	CH_CONFIG[12] = vid[0];
-	CH_CONFIG[13] = pid[1];
-	CH_CONFIG[14] = pid[0];
+	CH9329_CONFIG[11] = vid;
+	CH9329_CONFIG[12] = vid>>8;
+	CH9329_CONFIG[13] = pid;
+	CH9329_CONFIG[14] = pid>>8;
 }
 
 
@@ -523,7 +523,7 @@ uint8_t *Combination( uint8_t *control, uint8_t *key)
 }
 
 
-void CH9329_Get_Cfg(void)
+void CH9329_Get_Cfg(void)	//CH9329获取配置信息
 {
 	uint8_t cmd[6] = {0x57,0xAB,0x00,0x08,0x00};
 	uint8_t checksum = 0;
@@ -538,17 +538,17 @@ void CH9329_Get_Cfg(void)
 	SET_DEN;
 }
 
-void CH9329_Set_Cfg(void)
+void CH9329_Set_Cfg(void)	//CH9329参数配置
 {
 	uint8_t cmd[56] = {0x57,0xAB,0x00,0x09,0x32};
 	uint8_t checksum = 0;
 	for(uint8_t i=0;i<55;i++){
-		cmd[i+5] = CH_CONFIG[i];
+		cmd[i+5] = CH9329_CONFIG[i];
 		checksum += cmd[i];
 	}
 	cmd[55] = checksum;
 	HAL_UART_Transmit(&KEYOUT,cmd,56,1000);
-	Delay_ms(1000);
+	Delay_ms(2000);
 	CH9329_Reset();
 }
 

@@ -139,6 +139,7 @@ Entrance::Entrance(QWidget *parent)
         uint8_t cmd[1] = {TRANSMISSIONSTATE};
         GenerateCmd(cmd,1);
         hid_write(handle,Command,CMDLEN);   //发送切换为透传状态指令
+        qDebug() << "Switch Ok";
         waitingSwitchFlag = 1;
         memset(Command,0,20);
     }

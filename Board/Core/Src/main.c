@@ -29,6 +29,8 @@
 #include "delay.h"
 #include "ch9329.h"
 #include "func_info.h"
+#include "func_fingerprint.h"
+#include "fpm383c.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -98,15 +100,9 @@ int main(void)
 	LED_Init();
 	KEY_Init();
 	CH9329_Init();
+	CmdConnect();
+	//GetTableState();
 	
-	//CH9329_WorkMode_Config(WORKMODE_SOFT_3);
-	//CH9329_SerialMode_Config(SERIALMODE_SOFT_2);
-	//CH9329_Set_Cfg();
-	SET_EN;
-	Delay_ms(500);
-	CH9329_Get_Cfg();
-	Delay_ms(500);
-	SET_DEN;
   /* USER CODE END 2 */
 
   /* Infinite loop */

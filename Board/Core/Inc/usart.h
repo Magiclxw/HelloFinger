@@ -29,7 +29,7 @@ extern "C" {
 #include "main.h"
 
 /* USER CODE BEGIN Includes */
-
+#include "msgHandler.h"
 /* USER CODE END Includes */
 
 extern UART_HandleTypeDef huart1;
@@ -39,6 +39,11 @@ extern UART_HandleTypeDef huart2;
 /* USER CODE BEGIN Private defines */
 #define KEYOUT	huart1
 #define FINGER	huart2
+
+extern uint8_t RxData1[100];
+extern uint8_t RxData2[100];
+extern __IO uint8_t RxState;
+
 /* USER CODE END Private defines */
 
 void MX_USART1_UART_Init(void);

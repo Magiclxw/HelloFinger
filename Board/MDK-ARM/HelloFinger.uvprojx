@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F103xB</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;..\Hardware\KEY;..\Hardware\LED;..\Hardware\CH9329;..\Drivers</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;..\Hardware\KEY;..\Hardware\LED;..\Hardware\CH9329;..\Drivers;..\Hardware\FPM383C</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -422,6 +422,11 @@
               <FileType>1</FileType>
               <FilePath>../Core/Src/stm32f1xx_hal_msp.c</FilePath>
             </File>
+            <File>
+              <FileName>msgHandler.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\msgHandler.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -442,6 +447,11 @@
               <FileType>1</FileType>
               <FilePath>..\Drivers\func_info.c</FilePath>
             </File>
+            <File>
+              <FileName>func_fingerprint.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\func_fingerprint.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -461,6 +471,11 @@
               <FileName>ch9329.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Hardware\CH9329\ch9329.c</FilePath>
+            </File>
+            <File>
+              <FileName>fpm383c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\FPM383C\fpm383c.c</FilePath>
             </File>
           </Files>
         </Group>

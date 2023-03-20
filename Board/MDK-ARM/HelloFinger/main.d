@@ -30,9 +30,12 @@ hellofinger\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 hellofinger\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 hellofinger\main.o: ../Core/Inc/adc.h
 hellofinger\main.o: ../Core/Inc/usart.h
+hellofinger\main.o: ../Core/Inc/msgHandler.h
 hellofinger\main.o: ../Core/Inc/gpio.h
 hellofinger\main.o: ..\Hardware\LED\led.h
 hellofinger\main.o: ..\Hardware\KEY\key.h
 hellofinger\main.o: ../Core/Inc/delay.h
 hellofinger\main.o: ..\Hardware\CH9329\ch9329.h
 hellofinger\main.o: ..\Drivers\func_info.h
+hellofinger\main.o: ..\Drivers\func_fingerprint.h
+hellofinger\main.o: ..\Hardware\FPM383C\fpm383c.h

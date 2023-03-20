@@ -45,7 +45,7 @@ void USBTHREAD::run()
                 transhandle = hid_open(Transmission_VID,Transmission_PID,NULL);
                 qDebug("thread2 NULL");
                 if(transhandle != NULL) break;
-                msleep(1000);
+                msleep(5000);
             }
         }
         rec = hid_read_timeout(transhandle,rec_buffer,20,1000);     //接收第一字节为后续数据长度

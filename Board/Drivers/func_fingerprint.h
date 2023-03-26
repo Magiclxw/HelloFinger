@@ -10,10 +10,12 @@ extern UART_HandleTypeDef huart2;
 #define KEYOUT	huart1
 #define FINGER	huart2
 
+#define ENROLL_TIMEOUT					10000
 #define ENROLL_STATE_LEAVE			0x01
 #define ENROLL_STATE_PUT				0x02
 #define ENROLL_STATE_SUCCESS		0x03
 #define ENROLL_STATE_REPEAT			0x04
+#define ENROLL_STATE_TIMEOUT		0x05
 
 extern uint8_t RX_TableData[44];			//存储接收到的数据
 extern uint8_t RX_TableState[8];			//存储索引表状态信息
@@ -26,7 +28,7 @@ extern uint8_t USB_CMD[100];
 
 uint8_t Calc_Checksum(uint8_t *data);
 uint8_t Cmp_Checksum(uint8_t *data);
-void GetTableState(void);
+uint8_t GetTableState(void);
 uint8_t Con_Sleep(void);
 void Con_AutoEnroll(uint8_t *ID,uint8_t NUM,uint8_t *PARAM);
 uint8_t Con_AutoIdentify(uint8_t *ID,uint8_t *PARAM);

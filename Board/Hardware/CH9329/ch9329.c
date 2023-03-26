@@ -2,6 +2,8 @@
 #include "delay.h"
 #include "string.h"
 #include "usart.h"
+
+
 /* Suppress warning messages */
 #if defined(__CC_ARM)
 // Suppress warning message: extended constant initialiser used
@@ -16,6 +18,9 @@ uint8_t CH9329_CONFIG[50] = {0x00,0x80,0x00,0x00,0x00,0x25,0x80,0x08,0x00,0x00,
 														 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
 														 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
 
+uint8_t g_keystate = 0x00;	//键盘指示灯状态，1：点亮，0：熄灭，bit0:NUM LOCK状态，bit1:CAPS LOCK状态，bit2:SCROLL LOCK状态
+uint8_t g_connectstate = 0x00;	//USB连接状态，1：连接成功，2：连接失败
+														 
 uint8_t 					FIXED_HEAD						[5]								={0x57,0xAB,0x00,0x02,0x08};		//命令头
 uint8_t 					INFO									[9]								={0x57,0xAB,0x00,0x01,0x00,0x03,0xFF,0x0D,0x0A};
 uint8_t 					KeyUP									[20]							={0x57,0xAB,0x00,0x02,0x08,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x0C,0xFF,0x0D,0x0A};
@@ -419,6 +424,12 @@ void CH9329_Init(void)		//CH9329引脚初始化
 	gpio.Pull=GPIO_PULLDOWN;
 	gpio.Speed=GPIO_SPEED_FREQ_HIGH;
 	HAL_GPIO_Init(GPIOB,&gpio);
+	/* 工作模式配置为协议传输 */
+	SET_EN;
+	CH9329_WorkMode_Config(WORKMODE_SOFT_0);
+	CH9329_SerialMode_Config(SERIALMODE_SOFT_0);
+	CH9329_Set_Cfg();
+	SET_DEN;
 }
 
 void CH9329_Reset(void)
@@ -430,10 +441,10 @@ void CH9329_Reset(void)
 
 
 uint8_t result[103];													//用于存储转换结果
-uint8_t len;																	//记录数据长度
 /**把字符串转换为ASCLL码序号*/
-void toASCLL( uint8_t *asc)
+uint16_t toASCLL( uint8_t *asc)
 {
+	uint16_t len = 0;	//记录数据长度
 	len=strlen((char*)asc);
 	for(int i=0;i<len;i++){
 		result[i]=(char)asc[i];
@@ -441,6 +452,7 @@ void toASCLL( uint8_t *asc)
 	result[len+1]=0xFF;
 	result[len+2]=0x0D;
 	result[len+3]=0x0A;
+	return len;
 }
 
 void CH9329_WorkMode_Config(uint8_t workmode)
@@ -511,7 +523,7 @@ void SendCommand( uint8_t *body)
 }
 
 
-/**配置组合键  控制键+按键*/
+/*配置组合键  控制键+按键*/
 
 uint8_t *Combination( uint8_t *control, uint8_t *key)
 {
@@ -550,6 +562,20 @@ void CH9329_Set_Cfg(void)	//CH9329参数配置
 	HAL_UART_Transmit(&KEYOUT,cmd,56,1000);
 	Delay_ms(2000);
 	CH9329_Reset();
+}
+
+/**
+	*@brief	获取芯片版本号、USB状态和键盘指示灯状态
+	*@param	NULL
+	*@return 成功标志，1：成功，0：失败
+	*/
+uint8_t CMD_GET_INFO(void)
+{
+	HAL_UART_Transmit(&KEYOUT,INFO,9,1000);
+	if(g_connectstate == 0x01){
+		return 1;
+	}
+	return 0;
 }
 
 

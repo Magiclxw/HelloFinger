@@ -30,6 +30,17 @@
 #define 					MatchSize											12
 /****************************************************************************/
 
+#define 					LED_FUNC_BREATHE						1
+#define 					LED_FUNC_BLINK							2
+#define 					LED_FUNC_OPEN								3
+#define 					LED_FUNC_CLOSE							4
+#define 					LED_FUNC_OPEN_SLOW					5
+#define 					LED_FUNC_CLOSE_SLOW					6
+#define 					LED_COLOR_BLUE							0x01
+#define 					LED_COLOR_GREEN							0x02
+#define 					LED_COLOR_RED								0x04
+
+
 extern uint8_t PS_AutoEnroll[AutoEnrollSize];
 extern uint8_t PS_AutoIdentify[AutoIdentifySize];
 extern uint8_t PS_DeletChar[DeletCharSize];
@@ -69,7 +80,7 @@ uint8_t *CMD_SetPwd(uint8_t *PassWord);
 uint8_t *CMD_VfyPwd(uint8_t *PassWord);
 uint8_t *CMD_GetChipEcho(void);
 uint8_t *CMD_AutoCaiSensor(void);
-uint8_t *CMD_ControlBLN(uint8_t FUNC,uint8_t startcolor,uint8_t endcolor,uint8_t circle);
+uint8_t *CMD_ControlBLN(uint8_t FUNC,uint8_t startcolor,uint8_t endcolor,uint8_t cycle);
 void CMD_GetDummyTempleteNo(void);
 
 void CMD_GetChipSN(void);

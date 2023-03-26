@@ -103,13 +103,13 @@ void CMD_Init()
 	
 }
 
-/*
-func:generate AutoEnrool Command.
-para:ID:Position of finger.
-NUM:Record times.
-PARAM:Parameter.
-return:Address of CMD.
-*/
+/**
+	*@brief	generate AutoEnrool Command.
+	*@param	ID:Position of finger.
+	*@param	NUM:Record times.
+	*@param	Parameter.
+	*@return Address of CMD.
+	*/
 uint8_t * CMD_AutoEnroll(uint8_t *ID,uint8_t NUM,uint8_t *PARAM)		//生成自动注册模板指令
 {
 	uint8_t i=0;

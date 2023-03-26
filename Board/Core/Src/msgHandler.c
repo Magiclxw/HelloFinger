@@ -4,6 +4,7 @@
 #include "ch9329.h"
 #include "fpm383c.h"
 #include "func_fingerprint.h"
+#include "func_keyboard.h"
 
 static uint8_t g_running_mode = 0;		//系统当前运行模式	0:协议传输	1:透传
 uint16_t protocol_vid = 0x1998;
@@ -27,7 +28,7 @@ uint8_t GenerateCmd(uint8_t head,uint8_t *data,uint8_t datalength)	//生成响应
 	return datalength+3;
 }
 
-void Handler(uint8_t *data)	//判断接收到的数据类型
+void USB_Handler(uint8_t *data)	//判断接收到的数据类型
 {
 	uint8_t head;		//指令码
 	uint8_t cmd;		//指令数据
@@ -102,7 +103,7 @@ void Handler(uint8_t *data)	//判断接收到的数据类型
 				//5、保存配置
 				memset(RxData1,0,100);
 				break;
-			case PRO_HID_DATA:
+			case PRO_HID_DATA:	//收到上位机切换透传模式指令
 			{
 				if(data[7] == USB_TRANSMIT){
 					SET_EN;
@@ -113,7 +114,48 @@ void Handler(uint8_t *data)	//判断接收到的数据类型
 				}
 				break;
 			}
+			case PRO_GET_INFO:
+			{
+				g_connectstate = data[6];
+				g_keystate = data[7];
+				break;
+			}
+			
 		}
 	}
 	
 }
+
+void FPM383_Handler(uint8_t *data)
+{
+	uint32_t dev_addr = data[2]<<24 | data[3]<<16 | data[4]<<8 | data[5];	//设备地址
+	uint8_t pack_id = data[6];	//包标识
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

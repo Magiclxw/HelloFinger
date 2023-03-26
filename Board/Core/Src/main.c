@@ -31,6 +31,7 @@
 #include "func_info.h"
 #include "func_fingerprint.h"
 #include "fpm383c.h"
+#include "func_keyboard.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -101,8 +102,11 @@ int main(void)
 	KEY_Init();
 	CH9329_Init();
 	CmdConnect();
-	//GetTableState();
 	
+	//GetTableState();
+	Con_ControlBLN(LED_FUNC_BREATHE,LED_COLOR_GREEN,LED_COLOR_RED,0);
+	Delay_ms(2000);
+	//UnLock(960,625);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -110,7 +114,20 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-		
+		if(!HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_8)){
+			Delay_ms(50);
+			while(!HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_8)){
+				HAL_GPIO_WritePin(GPIOB,GPIO_PIN_14,GPIO_PIN_SET);
+			}
+			HAL_GPIO_WritePin(GPIOB,GPIO_PIN_14,GPIO_PIN_RESET);
+		}
+		if(!HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_11)){
+			Delay_ms(50);
+			while(!HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_11)){
+				HAL_GPIO_WritePin(GPIOB,GPIO_PIN_15,GPIO_PIN_SET);
+			}
+			HAL_GPIO_WritePin(GPIOB,GPIO_PIN_15,GPIO_PIN_RESET);
+		}
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

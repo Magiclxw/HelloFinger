@@ -34,8 +34,8 @@ uint16_t USART2_RX_STA=0;
 
 __IO uint8_t RecState = 0;	//与CH9329通信状态，0：协议传输	1：透传
 __IO uint8_t data_cnt1 = 0;	//串口1接收计数
-__IO uint8_t data_cnt2 = 0;	//串口2接收计数
-__IO	uint8_t RxState = 0;
+__IO uint16_t data_cnt2 = 0;	//串口2接收计数
+__IO uint8_t RxState = 0;
 
 /* USER CODE END 0 */
 
@@ -240,8 +240,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		if(data_cnt1 != 0){
 			data_cnt1 --;
 			if(data_cnt1 == 0){
-				Handler(RxData1);
-				//memset(RxData1,0,100);
+				USB_Handler(RxData1);
+				memset(RxData1,0,100);
 				USART1_RX_STA = 0;
 			}
 		}
@@ -250,10 +250,10 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	if(huart->Instance==USART2)		//指纹模块通信
 	{
 		RxData2[USART2_RX_STA] = RxBuffer2[0];
-		
+		/* 获取指令包长度 */
 		if(USART2_RX_STA==8 && RxData2[8]!=0)
 		{
-			data_cnt2 = RxData2[8]+1;
+			data_cnt2 = (RxData2[7]<<8 | RxData2[8]) + 1;
 		}
 		
 		USART2_RX_STA++;
@@ -263,19 +263,17 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 			data_cnt2--;
 			if(data_cnt2 == 0)
 			{
+				FPM383_Handler(RxData2);
 				RxState = 1;
 				USART2_RX_STA = 0;
 			}
 		}
-		
-		
+		/* 异常处理 */
 		if(RxData2[0]!=0xEF || USART2_RX_STA>99)
 		{
+			RxState = 0;
 			USART2_RX_STA=0;
 		}
-		
-		
-
 	}
 }
 /* USER CODE END 1 */

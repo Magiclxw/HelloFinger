@@ -40,3 +40,7 @@ hellofinger\main.o: ..\Drivers\func_info.h
 hellofinger\main.o: ..\Drivers\func_fingerprint.h
 hellofinger\main.o: ..\Hardware\FPM383C\fpm383c.h
 hellofinger\main.o: ..\Drivers\func_keyboard.h
+hellofinger\main.o: ../Core/Inc/soft_iic.h
+hellofinger\main.o: ..\Hardware\AT24C64\at24c64.h
+hellofinger\main.o: E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin\..\include\string.h
+hellofinger\main.o: ..\Hardware\SIQ-02FVS3\encoder.h

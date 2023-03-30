@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F103xB</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;..\Hardware\KEY;..\Hardware\LED;..\Hardware\CH9329;..\Drivers;..\Hardware\FPM383C</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;..\Hardware\KEY;..\Hardware\LED;..\Hardware\CH9329;..\Drivers;..\Hardware\FPM383C;..\Hardware\AT24C64;..\Hardware\SIQ-02FVS3</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -427,6 +427,11 @@
               <FileType>1</FileType>
               <FilePath>..\Core\Src\msgHandler.c</FilePath>
             </File>
+            <File>
+              <FileName>soft_iic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\soft_iic.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -476,6 +481,16 @@
               <FileName>fpm383c.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Hardware\FPM383C\fpm383c.c</FilePath>
+            </File>
+            <File>
+              <FileName>at24c64.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\AT24C64\at24c64.c</FilePath>
+            </File>
+            <File>
+              <FileName>encoder.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\SIQ-02FVS3\encoder.c</FilePath>
             </File>
           </Files>
         </Group>

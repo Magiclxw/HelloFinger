@@ -64,7 +64,13 @@ uint16_t WaitForResponse(uint16_t ticks)
 	return 0;
 }
 
-uint8_t GenerateHeadLenCheck(uint8_t *data,uint8_t head)		//生成协议格式所需的命令头、数据长度和校验和
+/**
+ * @brief		生成协议格式所需的命令头、数据长度和校验和
+ * @param		
+ * @date		
+ * @return 	
+ */
+uint8_t GenerateFixedCMD(uint8_t *data,uint8_t head)		
 {
 	uint8_t checksum = 0;
 	uint8_t length = 0;

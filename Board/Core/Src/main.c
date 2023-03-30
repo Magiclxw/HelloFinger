@@ -32,6 +32,10 @@
 #include "func_fingerprint.h"
 #include "fpm383c.h"
 #include "func_keyboard.h"
+#include "soft_iic.h"
+#include "at24c64.h"
+#include "string.h"
+#include "encoder.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -100,6 +104,8 @@ int main(void)
 	Delay_Init();
 	LED_Init();
 	KEY_Init();
+	ENCODER_Init();
+	IIC_Init();
 	CH9329_Init();
 	CmdConnect();
 	
@@ -107,6 +113,8 @@ int main(void)
 	Con_ControlBLN(LED_FUNC_BREATHE,LED_COLOR_GREEN,LED_COLOR_RED,0);
 	Delay_ms(2000);
 	//UnLock(960,625);
+	uint8_t test[5] = {0xAB,1,2,3,4};
+	uint8_t read[5] = {0};
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -115,18 +123,29 @@ int main(void)
   {
     /* USER CODE END WHILE */
 		if(!HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_8)){
-			Delay_ms(50);
-			while(!HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_8)){
-				HAL_GPIO_WritePin(GPIOB,GPIO_PIN_14,GPIO_PIN_SET);
+			Delay_ms(150);
+			if(!HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_8)){
+				//HAL_GPIO_WritePin(GPIOB,GPIO_PIN_14,GPIO_PIN_SET);
+				HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_14);
+				memset(read,0,5);
+				AT24C64_Write(0xFFFF,test,1);
 			}
-			HAL_GPIO_WritePin(GPIOB,GPIO_PIN_14,GPIO_PIN_RESET);
+			//HAL_GPIO_WritePin(GPIOB,GPIO_PIN_14,GPIO_PIN_RESET);
 		}
 		if(!HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_11)){
-			Delay_ms(50);
-			while(!HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_11)){
-				HAL_GPIO_WritePin(GPIOB,GPIO_PIN_15,GPIO_PIN_SET);
+			Delay_ms(150);
+			if(!HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_11)){
+				//HAL_GPIO_WritePin(GPIOB,GPIO_PIN_15,GPIO_PIN_SET);
+				HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_15);
+				AT24C64_Read(0xFFFF,read,1);
 			}
-			HAL_GPIO_WritePin(GPIOB,GPIO_PIN_15,GPIO_PIN_RESET);
+			//HAL_GPIO_WritePin(GPIOB,GPIO_PIN_15,GPIO_PIN_RESET);
+		}
+		if(ENCODER_PUSH == 0){
+			Delay_ms(150);
+			if(ENCODER_PUSH == 0){
+				HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_15);
+			}
 		}
     /* USER CODE BEGIN 3 */
   }

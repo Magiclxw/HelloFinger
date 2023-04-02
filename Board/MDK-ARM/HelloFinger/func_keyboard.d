@@ -27,8 +27,11 @@ hellofinger\func_keyboard.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_a
 hellofinger\func_keyboard.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h
 hellofinger\func_keyboard.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
 hellofinger\func_keyboard.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
+hellofinger\func_keyboard.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
+hellofinger\func_keyboard.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 hellofinger\func_keyboard.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 hellofinger\func_keyboard.o: ../Core/Inc/usart.h
 hellofinger\func_keyboard.o: ../Core/Inc/main.h
 hellofinger\func_keyboard.o: ../Core/Inc/msgHandler.h
-hellofinger\func_keyboard.o: ..\Hardware\CH9329\ch9329.h
+hellofinger\func_keyboard.o: E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin\..\include\stdio.h
+hellofinger\func_keyboard.o: ../Hardware/CH9329/ch9329.h

@@ -27,11 +27,14 @@ hellofinger\func_fingerprint.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ha
 hellofinger\func_fingerprint.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h
 hellofinger\func_fingerprint.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
 hellofinger\func_fingerprint.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
+hellofinger\func_fingerprint.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
+hellofinger\func_fingerprint.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 hellofinger\func_fingerprint.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 hellofinger\func_fingerprint.o: ../Core/Inc/usart.h
 hellofinger\func_fingerprint.o: ../Core/Inc/main.h
 hellofinger\func_fingerprint.o: ../Core/Inc/msgHandler.h
+hellofinger\func_fingerprint.o: E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin\..\include\stdio.h
 hellofinger\func_fingerprint.o: ../Core/Inc/delay.h
 hellofinger\func_fingerprint.o: E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin\..\include\stdlib.h
 hellofinger\func_fingerprint.o: E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin\..\include\string.h
-hellofinger\func_fingerprint.o: ..\Hardware\FPM383C\fpm383c.h
+hellofinger\func_fingerprint.o: ../Hardware/FPM383C/fpm383c.h

@@ -27,9 +27,12 @@ hellofinger\ch9329.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h
 hellofinger\ch9329.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h
 hellofinger\ch9329.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
 hellofinger\ch9329.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
+hellofinger\ch9329.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
+hellofinger\ch9329.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 hellofinger\ch9329.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 hellofinger\ch9329.o: ../Core/Inc/delay.h
 hellofinger\ch9329.o: E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin\..\include\string.h
 hellofinger\ch9329.o: ../Core/Inc/usart.h
 hellofinger\ch9329.o: ../Core/Inc/main.h
 hellofinger\ch9329.o: ../Core/Inc/msgHandler.h
+hellofinger\ch9329.o: E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin\..\include\stdio.h

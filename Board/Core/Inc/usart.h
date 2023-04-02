@@ -30,6 +30,8 @@ extern "C" {
 
 /* USER CODE BEGIN Includes */
 #include "msgHandler.h"
+#include "stm32f1xx.h"
+#include "stdio.h"
 /* USER CODE END Includes */
 
 extern UART_HandleTypeDef huart1;

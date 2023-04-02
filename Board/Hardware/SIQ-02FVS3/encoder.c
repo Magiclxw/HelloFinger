@@ -21,7 +21,7 @@ void ENCODER_Init(void)
 	gpio.Speed = GPIO_SPEED_FREQ_HIGH;
 	HAL_GPIO_Init(GPIOA,&gpio);
 
-	HAL_NVIC_SetPriority(EXTI9_5_IRQn,3,0);       //抢占优先级为2，子优先级为0
+	HAL_NVIC_SetPriority(EXTI9_5_IRQn,1,0);       //抢占优先级为2，子优先级为0
   HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 }
 

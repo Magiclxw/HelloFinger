@@ -19,6 +19,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
+#include "dma.h"
+#include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 
@@ -97,20 +99,23 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_ADC1_Init();
   MX_USART1_UART_Init();
   MX_USART2_UART_Init();
+  MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
 	Delay_Init();
 	LED_Init();
 	KEY_Init();
 	ENCODER_Init();
+	
 	IIC_Init();
 	CH9329_Init();
 	CmdConnect();
 	
 	//GetTableState();
-	Con_ControlBLN(LED_FUNC_BREATHE,LED_COLOR_GREEN,LED_COLOR_RED,0);
+	Con_ControlBLN(LED_FUNC_BREATHE,LED_COLOR_GREEN,LED_COLOR_BLUE,0);
 	Delay_ms(2000);
 	//UnLock(960,625);
 	uint8_t test[5] = {0xAB,1,2,3,4};
@@ -122,31 +127,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-		if(!HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_8)){
-			Delay_ms(150);
-			if(!HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_8)){
-				//HAL_GPIO_WritePin(GPIOB,GPIO_PIN_14,GPIO_PIN_SET);
-				HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_14);
-				memset(read,0,5);
-				AT24C64_Write(0xFFFF,test,1);
-			}
-			//HAL_GPIO_WritePin(GPIOB,GPIO_PIN_14,GPIO_PIN_RESET);
-		}
-		if(!HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_11)){
-			Delay_ms(150);
-			if(!HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_11)){
-				//HAL_GPIO_WritePin(GPIOB,GPIO_PIN_15,GPIO_PIN_SET);
-				HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_15);
-				AT24C64_Read(0xFFFF,read,1);
-			}
-			//HAL_GPIO_WritePin(GPIOB,GPIO_PIN_15,GPIO_PIN_RESET);
-		}
-		if(ENCODER_PUSH == 0){
-			Delay_ms(150);
-			if(ENCODER_PUSH == 0){
-				HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_15);
-			}
-		}
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

@@ -231,6 +231,7 @@ void CH9329_Get_Cfg(void);
 void CH9329_Set_Cfg(void);
 void CH9329_Init(void);
 void CH9329_Reset(void);
+uint8_t CH9329_Generate_Checksum(uint8_t* cmd,uint8_t len);
 uint8_t CMD_GET_INFO(void);
 uint16_t toASCLL( uint8_t *asc);
 void SendCommand( uint8_t *body);

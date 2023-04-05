@@ -492,6 +492,15 @@ void CH9329_Vid_Pid_Config(uint16_t vid,uint16_t pid)
 	CH9329_CONFIG[14] = pid>>8;
 }
 
+uint8_t CH9329_Generate_Checksum(uint8_t* cmd,uint8_t len)
+{
+	uint8_t checksum = 0;
+	for(uint8_t i=0;i<len;i++){
+		checksum+=cmd[i];
+	}
+	cmd[len] = checksum;
+	return checksum;
+}
 
 void Combine( uint8_t *head, uint8_t *body)		//×Ö½ÚÆ´½Ó
 {

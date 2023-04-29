@@ -38,3 +38,4 @@ hellofinger\msghandler.o: ../Hardware/CH9329/ch9329.h
 hellofinger\msghandler.o: ../Hardware/FPM383C/fpm383c.h
 hellofinger\msghandler.o: ../Drivers/func_fingerprint.h
 hellofinger\msghandler.o: ../Drivers/func_keyboard.h
+hellofinger\msghandler.o: ../Core/Inc/delay.h

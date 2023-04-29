@@ -5,6 +5,7 @@
 #include "fpm383c.h"
 #include "func_fingerprint.h"
 #include "func_keyboard.h"
+#include "delay.h"
 
 static uint8_t g_running_mode = 0;		//系统当前运行模式	0:协议传输	1:透传
 uint16_t protocol_vid = 0x1998;
@@ -50,6 +51,7 @@ void USB_Handler(uint8_t *data)	//判断接收到的数据类型
 		{
 			GetTableState();
 			uint8_t cmdLen = GenerateCmd(USB_TABLESTATE,RX_TableState,8);
+			Delay_ms(100);
 			HAL_UART_Transmit(&KEYOUT,USB_CMD,cmdLen,1000);
 			memset(USB_CMD,0,100);
 			break;

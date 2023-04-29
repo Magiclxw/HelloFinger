@@ -12,6 +12,10 @@
 #define RELATIVE_MOUSE_DIR_Y	8
 #define RELATIVE_MOUSE_BTN		6
 
+#define INFO_NUM_LOCK	0x01
+#define INFO_CAPS_LOCK	0x02
+#define INFO_SCROLL_LOCK	0x04
+
 typedef enum{
 	button_NULL = 0,
 	button_LEFT = 1,
@@ -19,13 +23,9 @@ typedef enum{
 	button_MID  = 4
 }BUTTON_VALUE;
 
-void ABS_Keyboard_Wheel_Ctrl(uint8_t step);
-void ABD_Keyboard_Move_Ctrl(uint8_t* pos_x,uint8_t* pos_y);
-void ABS_Keyboard_Button_Ctrl(BUTTON_VALUE button);
-void REL_Keyboard_Wheel_Ctrl(uint8_t step);
-void REL_Keyboard_Move_Ctrl(uint8_t dir_x,uint8_t dir_y);
-void REL_Keyboard_Button_Ctrl(BUTTON_VALUE button);
+void ABD_Mouse_Ctrl(uint8_t step,uint8_t* pos_x,uint8_t* pos_y,BUTTON_VALUE button);
+void REL_Mouse_Ctrl(uint8_t step,uint8_t dir_x,uint8_t dir_y,BUTTON_VALUE button);
 
-void UnLock(uint16_t X,uint16_t Y);
+void UnLock(uint16_t X,uint16_t Y,uint8_t* password,uint8_t len);
 
 #endif

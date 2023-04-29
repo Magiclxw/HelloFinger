@@ -35,3 +35,4 @@ hellofinger\func_keyboard.o: ../Core/Inc/main.h
 hellofinger\func_keyboard.o: ../Core/Inc/msgHandler.h
 hellofinger\func_keyboard.o: E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin\..\include\stdio.h
 hellofinger\func_keyboard.o: ../Hardware/CH9329/ch9329.h
+hellofinger\func_keyboard.o: ../Core/Inc/delay.h

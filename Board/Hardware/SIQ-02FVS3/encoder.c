@@ -39,7 +39,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 				signal_a = 1;
 			}else if(Signal_A_Read == GPIO_PIN_RESET && Signal_B_Read == GPIO_PIN_SET && signal_a == 1){
 				//HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_14);
-				REL_Keyboard_Wheel_Ctrl(0x01);
+				REL_Mouse_Ctrl(0x01,0,0,button_NULL);
 				signal_a = 0;
 			}else{
 				signal_a = 0;
@@ -53,7 +53,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 				signal_b = 1;
 			}else if(Signal_B_Read == GPIO_PIN_RESET && Signal_A_Read == GPIO_PIN_SET && signal_b == 1){
 				//HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_15);
-				REL_Keyboard_Wheel_Ctrl(0xFF);
+				REL_Mouse_Ctrl(0xFF,0,0,button_NULL);
 				signal_b = 0;
 			}else{
 				signal_b = 0;
@@ -63,9 +63,9 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 		
 		case GPIO_PIN_1:
 		{
-			REL_Keyboard_Button_Ctrl(button_MID);
+			REL_Mouse_Ctrl(0,0,0,button_MID);
 			Delay_ms(20);
-			REL_Keyboard_Button_Ctrl(button_NULL);
+			REL_Mouse_Ctrl(0,0,0,button_NULL);
 		}
 		break;
 	}

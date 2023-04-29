@@ -1,6 +1,7 @@
 #include "func_keyboard.h"
 #include "usart.h"
 #include "ch9329.h"
+#include "delay.h"
 
 uint8_t tests[10]={"asd13579"};
 /* 绝对鼠标数据包 */
@@ -20,83 +21,79 @@ void Sendtest(uint8_t *asc)
 	}
 }
 
-void ABS_Keyboard_Wheel_Ctrl(uint8_t step)
+/**
+* @brief	绝对鼠标数据包
+* @param	step:滚轮滑动步数
+* @param	pos_x:x方向移动路径
+* @param	pos_y:y方向移动路径
+* @param	button:按下按键	0x01:左键，0x02:右键，0x04:中键
+* @date	2023-4-15 20:13:27
+* @return 
+*/
+void ABD_Mouse_Ctrl(uint8_t step,uint8_t* pos_x,uint8_t* pos_y,BUTTON_VALUE button)
 {
 	Absolute_Mouse[ABSOLUTE_MOUSE_WHEEL] = step;
-	CH9329_Generate_Checksum(Absolute_Mouse,9);
-	HAL_UART_Transmit(&KEYOUT,Absolute_Mouse,16,1000);
-	Absolute_Mouse[ABSOLUTE_MOUSE_WHEEL] = 0;
-}
-
-void ABD_Keyboard_Move_Ctrl(uint8_t* pos_x,uint8_t* pos_y)
-{
 	Absolute_Mouse[ABSOLUTE_MOUSE_DIR_X] = pos_x[0];
 	Absolute_Mouse[ABSOLUTE_MOUSE_DIR_X+1] = pos_x[1];
 	Absolute_Mouse[ABSOLUTE_MOUSE_DIR_Y] = pos_y[0];
 	Absolute_Mouse[ABSOLUTE_MOUSE_DIR_Y+1] = pos_y[1];
+	Absolute_Mouse[ABSOLUTE_MOUSE_BTN] = button;
 	
-	CH9329_Generate_Checksum(Absolute_Mouse,9);
+	CH9329_Generate_Checksum(Absolute_Mouse,12);
 	
 	HAL_UART_Transmit(&KEYOUT,Absolute_Mouse,16,1000);
 	
+	Absolute_Mouse[ABSOLUTE_MOUSE_WHEEL] = 0;
 	Absolute_Mouse[ABSOLUTE_MOUSE_DIR_X] = 0;
 	Absolute_Mouse[ABSOLUTE_MOUSE_DIR_X+1] = 0;
 	Absolute_Mouse[ABSOLUTE_MOUSE_DIR_Y] = 0;
 	Absolute_Mouse[ABSOLUTE_MOUSE_DIR_Y+1] = 0;
-	
+	Absolute_Mouse[ABSOLUTE_MOUSE_BTN] = 0;
 }
 
-void ABS_Keyboard_Button_Ctrl(BUTTON_VALUE button)
-{
-	Absolute_Mouse[ABSOLUTE_MOUSE_BTN] = button;
-	CH9329_Generate_Checksum(Absolute_Mouse,10);
-	HAL_UART_Transmit(&KEYOUT,Absolute_Mouse,14,1000);
-	Absolute_Mouse[ABSOLUTE_MOUSE_BTN] = button_NULL;
-}
-
-void REL_Keyboard_Wheel_Ctrl(uint8_t step)
+/**
+* @brief	相对鼠标数据包
+* @param	step:滚轮滑动步数
+* @param	pos_x:x方向移动路径
+* @param	pos_y:y方向移动路径
+* @param	button:按下按键	0x01:左键，0x02:右键，0x04:中键
+* @date	2023-4-15 20:36:24
+* @return 
+*/
+void REL_Mouse_Ctrl(uint8_t step,uint8_t dir_x,uint8_t dir_y,BUTTON_VALUE button)
 {
 	Relative_Mouse[RELATIVE_MOUSE_WHEEL] = step;
-	CH9329_Generate_Checksum(Relative_Mouse,10);
-	HAL_UART_Transmit(&KEYOUT,Relative_Mouse,14,1000);
-	Relative_Mouse[RELATIVE_MOUSE_WHEEL] = 0;
-}
-
-void REL_Keyboard_Move_Ctrl(uint8_t dir_x,uint8_t dir_y)
-{
 	Relative_Mouse[RELATIVE_MOUSE_DIR_X] = dir_x;
 	Relative_Mouse[RELATIVE_MOUSE_DIR_Y] = dir_y;
-	CH9329_Generate_Checksum(Relative_Mouse,10);
-	HAL_UART_Transmit(&KEYOUT,Relative_Mouse,14,1000);
-	Relative_Mouse[RELATIVE_MOUSE_DIR_X] = 0;
-	Relative_Mouse[RELATIVE_MOUSE_DIR_Y] = 0;
-}
-
-void REL_Keyboard_Button_Ctrl(BUTTON_VALUE button)
-{
 	Relative_Mouse[RELATIVE_MOUSE_BTN] = button;
 	CH9329_Generate_Checksum(Relative_Mouse,10);
 	HAL_UART_Transmit(&KEYOUT,Relative_Mouse,14,1000);
-	Relative_Mouse[RELATIVE_MOUSE_BTN] = button_NULL;
+	Relative_Mouse[RELATIVE_MOUSE_WHEEL] = 0;
+	Relative_Mouse[RELATIVE_MOUSE_DIR_X] = 0;
+	Relative_Mouse[RELATIVE_MOUSE_DIR_Y] = 0;
+	Relative_Mouse[RELATIVE_MOUSE_BTN] = 0;
 }
 
-//1920*1080:  X=960,Y=625		解锁
-void UnLock(uint16_t X,uint16_t Y)
+/**
+* @brief	解锁电脑
+* @param	（X，Y）1920*1080:  X=960,Y=625
+* @date	2023-4-15 20:38:20
+* @return 
+*/
+void UnLock(uint16_t X,uint16_t Y,uint8_t* password,uint8_t len)
 {
 	//Cal(X,Y);
 	uint8_t pos_x[2] = {X>>8,(uint8_t)X};
 	uint8_t pos_y[2] = {Y>>8,(uint8_t)Y};
 	
-	ABD_Keyboard_Move_Ctrl(pos_x,pos_y);
-	ABS_Keyboard_Button_Ctrl(button_LEFT);
-	ABS_Keyboard_Button_Ctrl(button_NULL);
+	ABD_Mouse_Ctrl(0,pos_x,pos_y,button_NULL);
+	ABD_Mouse_Ctrl(0,0,0,button_LEFT);
+	ABD_Mouse_Ctrl(0,0,0,button_NULL);
 	
-	Sendtest(tests);
+	Sendtest(password);
+	
 	SendCommand(LeftEnter);
 }
-
-
-
 
 
 

@@ -120,6 +120,7 @@ int main(void)
 	//UnLock(960,625);
 	uint8_t test[5] = {0xAB,1,2,3,4};
 	uint8_t read[5] = {0};
+	
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -127,7 +128,21 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+		if(!HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_8)){
+			Delay_ms(50);
+			while(!HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_8)){
+				REL_Mouse_Ctrl(0,0,0,button_LEFT);
+			}
+			REL_Mouse_Ctrl(0,0,0,button_NULL);
+		}
+		
+		if(!HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_11)){
+			Delay_ms(50);
+			while(!HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_11)){
+				REL_Mouse_Ctrl(0,0,0,button_RIGHT);
+			}
+			REL_Mouse_Ctrl(0,0,0,button_NULL);
+		}
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

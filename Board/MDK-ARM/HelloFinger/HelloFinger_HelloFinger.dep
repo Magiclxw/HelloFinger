@@ -1,6 +1,6 @@
 Dependencies for Project 'HelloFinger', Target 'HelloFinger': (DO NOT MODIFY !)
 F (startup_stm32f103xb.s)(0x64296AC0)(--cpu Cortex-M3 -g --apcs=interwork -I.\RTE\_HelloFinger-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include--pd "__UVISION_VERSION SETA 526" --pd "_RTE_ SETA 1" --pd "STM32F10X_MD SETA 1"--list startup_stm32f103xb.lst --xref -o hellofinger\startup_stm32f103xb.o --depend hellofinger\startup_stm32f103xb.d)
-F (..\Core\Src\msgHandler.c)(0x64200CF6)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Hardware/KEY -I ../Hardware/LED -I ../Hardware/CH9329 -I ../Drivers -I ../Hardware/FPM383C -I ../Hardware/AT24C64 -I ../Hardware/SIQ-02FVS3-I.\RTE\_HelloFinger-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger\msghandler.o --omf_browse hellofinger\msghandler.crf --depend hellofinger\msghandler.d)
+F (..\Core\Src\msgHandler.c)(0x6443AF96)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Hardware/KEY -I ../Hardware/LED -I ../Hardware/CH9329 -I ../Drivers -I ../Hardware/FPM383C -I ../Hardware/AT24C64 -I ../Hardware/SIQ-02FVS3-I.\RTE\_HelloFinger-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger\msghandler.o --omf_browse hellofinger\msghandler.crf --depend hellofinger\msghandler.d)
 I (../Core/Inc/msgHandler.h)(0x64200D17)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h)(0x639B1693)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h)(0x639B1693)
@@ -35,10 +35,11 @@ I (../Core/Inc/usart.h)(0x6429899A)
 I (../Core/Inc/main.h)(0x640DA2E6)
 I (E:\SOFTWARE\Environment\Keil\ARM\ARMCC\include\stdio.h)(0x599EDB3C)
 I (E:\SOFTWARE\Environment\Keil\ARM\ARMCC\include\string.h)(0x599EDB3C)
-I (../Hardware/CH9329/ch9329.h)(0x642D3220)
+I (../Hardware/CH9329/ch9329.h)(0x643BC191)
 I (../Hardware/FPM383C/fpm383c.h)(0x6419B9E7)
 I (../Drivers/func_fingerprint.h)(0x642045B8)
-I (../Drivers/func_keyboard.h)(0x642D678E)
+I (../Drivers/func_keyboard.h)(0x643BB920)
+I (../Core/Inc/delay.h)(0x64154DE7)
 F (..\Core\Src\soft_iic.c)(0x6424236B)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Hardware/KEY -I ../Hardware/LED -I ../Hardware/CH9329 -I ../Drivers -I ../Hardware/FPM383C -I ../Hardware/AT24C64 -I ../Hardware/SIQ-02FVS3-I.\RTE\_HelloFinger-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger\soft_iic.o --omf_browse hellofinger\soft_iic.crf --depend hellofinger\soft_iic.d)
 I (../Core/Inc/soft_iic.h)(0x642423F4)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h)(0x639B1693)
@@ -71,7 +72,7 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h)(0x639B1693)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x639B1693)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x639B1693)
 I (../Core/Inc/delay.h)(0x64154DE7)
-F (../Core/Src/main.c)(0x642D5A3C)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Hardware/KEY -I ../Hardware/LED -I ../Hardware/CH9329 -I ../Drivers -I ../Hardware/FPM383C -I ../Hardware/AT24C64 -I ../Hardware/SIQ-02FVS3-I.\RTE\_HelloFinger-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger\main.o --omf_browse hellofinger\main.crf --depend hellofinger\main.d)
+F (../Core/Src/main.c)(0x643E85CA)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Hardware/KEY -I ../Hardware/LED -I ../Hardware/CH9329 -I ../Drivers -I ../Hardware/FPM383C -I ../Hardware/AT24C64 -I ../Hardware/SIQ-02FVS3-I.\RTE\_HelloFinger-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger\main.o --omf_browse hellofinger\main.crf --depend hellofinger\main.d)
 I (../Core/Inc/main.h)(0x640DA2E6)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x639B1693)
 I (../Core/Inc/stm32f1xx_hal_conf.h)(0x64296ABE)
@@ -112,11 +113,11 @@ I (../Core/Inc/gpio.h)(0x640DA2E6)
 I (../Hardware/LED/led.h)(0x64154E04)
 I (../Hardware/KEY/key.h)(0x64154DF9)
 I (../Core/Inc/delay.h)(0x64154DE7)
-I (../Hardware/CH9329/ch9329.h)(0x642D3220)
+I (../Hardware/CH9329/ch9329.h)(0x643BC191)
 I (../Drivers/func_info.h)(0x6415C170)
 I (../Drivers/func_fingerprint.h)(0x642045B8)
 I (../Hardware/FPM383C/fpm383c.h)(0x6419B9E7)
-I (../Drivers/func_keyboard.h)(0x642D678E)
+I (../Drivers/func_keyboard.h)(0x643BB920)
 I (../Core/Inc/soft_iic.h)(0x642423F4)
 I (../Hardware/AT24C64/at24c64.h)(0x64259662)
 I (E:\SOFTWARE\Environment\Keil\ARM\ARMCC\include\string.h)(0x599EDB3C)
@@ -253,7 +254,7 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h)(0x639B1693)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x639B1693)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x639B1693)
 I (../Core/Inc/adc.h)(0x642983CD)
-F (../Core/Src/usart.c)(0x64298985)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Hardware/KEY -I ../Hardware/LED -I ../Hardware/CH9329 -I ../Drivers -I ../Hardware/FPM383C -I ../Hardware/AT24C64 -I ../Hardware/SIQ-02FVS3-I.\RTE\_HelloFinger-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger\usart.o --omf_browse hellofinger\usart.crf --depend hellofinger\usart.d)
+F (../Core/Src/usart.c)(0x644396F4)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Hardware/KEY -I ../Hardware/LED -I ../Hardware/CH9329 -I ../Drivers -I ../Hardware/FPM383C -I ../Hardware/AT24C64 -I ../Hardware/SIQ-02FVS3-I.\RTE\_HelloFinger-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger\usart.o --omf_browse hellofinger\usart.crf --depend hellofinger\usart.d)
 I (../Core/Inc/usart.h)(0x6429899A)
 I (../Core/Inc/main.h)(0x640DA2E6)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x639B1693)
@@ -382,8 +383,8 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h)(0x639B1693)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h)(0x639B1693)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x639B1693)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x639B1693)
-F (..\Drivers\func_keyboard.c)(0x642D5F72)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Hardware/KEY -I ../Hardware/LED -I ../Hardware/CH9329 -I ../Drivers -I ../Hardware/FPM383C -I ../Hardware/AT24C64 -I ../Hardware/SIQ-02FVS3-I.\RTE\_HelloFinger-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger\func_keyboard.o --omf_browse hellofinger\func_keyboard.crf --depend hellofinger\func_keyboard.d)
-I (..\Drivers\func_keyboard.h)(0x642D678E)
+F (..\Drivers\func_keyboard.c)(0x643BBA84)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Hardware/KEY -I ../Hardware/LED -I ../Hardware/CH9329 -I ../Drivers -I ../Hardware/FPM383C -I ../Hardware/AT24C64 -I ../Hardware/SIQ-02FVS3-I.\RTE\_HelloFinger-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger\func_keyboard.o --omf_browse hellofinger\func_keyboard.crf --depend hellofinger\func_keyboard.d)
+I (..\Drivers\func_keyboard.h)(0x643BB920)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h)(0x639B1693)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h)(0x639B1693)
 I (../Drivers/CMSIS/Include/core_cm3.h)(0x639B168D)
@@ -417,7 +418,8 @@ I (../Core/Inc/usart.h)(0x6429899A)
 I (../Core/Inc/main.h)(0x640DA2E6)
 I (../Core/Inc/msgHandler.h)(0x64200D17)
 I (E:\SOFTWARE\Environment\Keil\ARM\ARMCC\include\stdio.h)(0x599EDB3C)
-I (../Hardware/CH9329/ch9329.h)(0x642D3220)
+I (../Hardware/CH9329/ch9329.h)(0x643BC191)
+I (../Core/Inc/delay.h)(0x64154DE7)
 F (..\Drivers\func_info.c)(0x6415C224)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Hardware/KEY -I ../Hardware/LED -I ../Hardware/CH9329 -I ../Drivers -I ../Hardware/FPM383C -I ../Hardware/AT24C64 -I ../Hardware/SIQ-02FVS3-I.\RTE\_HelloFinger-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger\func_info.o --omf_browse hellofinger\func_info.crf --depend hellofinger\func_info.d)
 I (..\Drivers\func_info.h)(0x6415C170)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h)(0x639B1693)
@@ -455,8 +457,8 @@ I (../Core/Inc/msgHandler.h)(0x64200D17)
 I (E:\SOFTWARE\Environment\Keil\ARM\ARMCC\include\stdio.h)(0x599EDB3C)
 I (../Core/Inc/delay.h)(0x64154DE7)
 I (E:\SOFTWARE\Environment\Keil\ARM\ARMCC\include\string.h)(0x599EDB3C)
-I (../Hardware/CH9329/ch9329.h)(0x642D3220)
-F (..\Drivers\func_fingerprint.c)(0x64241A82)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Hardware/KEY -I ../Hardware/LED -I ../Hardware/CH9329 -I ../Drivers -I ../Hardware/FPM383C -I ../Hardware/AT24C64 -I ../Hardware/SIQ-02FVS3-I.\RTE\_HelloFinger-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger\func_fingerprint.o --omf_browse hellofinger\func_fingerprint.crf --depend hellofinger\func_fingerprint.d)
+I (../Hardware/CH9329/ch9329.h)(0x643BC191)
+F (..\Drivers\func_fingerprint.c)(0x6443935A)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Hardware/KEY -I ../Hardware/LED -I ../Hardware/CH9329 -I ../Drivers -I ../Hardware/FPM383C -I ../Hardware/AT24C64 -I ../Hardware/SIQ-02FVS3-I.\RTE\_HelloFinger-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger\func_fingerprint.o --omf_browse hellofinger\func_fingerprint.crf --depend hellofinger\func_fingerprint.d)
 I (..\Drivers\func_fingerprint.h)(0x642045B8)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h)(0x639B1693)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h)(0x639B1693)
@@ -527,7 +529,7 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h)(0x639B1693)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x639B1693)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x639B1693)
 I (../Core/Inc/delay.h)(0x64154DE7)
-I (../Hardware/CH9329/ch9329.h)(0x642D3220)
+I (../Hardware/CH9329/ch9329.h)(0x643BC191)
 F (..\Hardware\LED\led.c)(0x64154DFC)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Hardware/KEY -I ../Hardware/LED -I ../Hardware/CH9329 -I ../Drivers -I ../Hardware/FPM383C -I ../Hardware/AT24C64 -I ../Hardware/SIQ-02FVS3-I.\RTE\_HelloFinger-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger\led.o --omf_browse hellofinger\led.crf --depend hellofinger\led.d)
 I (..\Hardware\LED\led.h)(0x64154E04)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h)(0x639B1693)
@@ -559,8 +561,8 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h)(0x639B1693)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h)(0x639B1693)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x639B1693)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x639B1693)
-F (..\Hardware\CH9329\ch9329.c)(0x642D5A05)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Hardware/KEY -I ../Hardware/LED -I ../Hardware/CH9329 -I ../Drivers -I ../Hardware/FPM383C -I ../Hardware/AT24C64 -I ../Hardware/SIQ-02FVS3-I.\RTE\_HelloFinger-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger\ch9329.o --omf_browse hellofinger\ch9329.crf --depend hellofinger\ch9329.d)
-I (..\Hardware\CH9329\ch9329.h)(0x642D3220)
+F (..\Hardware\CH9329\ch9329.c)(0x643BC952)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Hardware/KEY -I ../Hardware/LED -I ../Hardware/CH9329 -I ../Drivers -I ../Hardware/FPM383C -I ../Hardware/AT24C64 -I ../Hardware/SIQ-02FVS3-I.\RTE\_HelloFinger-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger\ch9329.o --omf_browse hellofinger\ch9329.crf --depend hellofinger\ch9329.d)
+I (..\Hardware\CH9329\ch9329.h)(0x643BC191)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h)(0x639B1693)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h)(0x639B1693)
 I (../Drivers/CMSIS/Include/core_cm3.h)(0x639B168D)
@@ -660,7 +662,7 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x639B1693)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x639B1693)
 I (../Core/Inc/soft_iic.h)(0x642423F4)
 I (../Core/Inc/delay.h)(0x64154DE7)
-F (..\Hardware\SIQ-02FVS3\encoder.c)(0x642D69BD)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Hardware/KEY -I ../Hardware/LED -I ../Hardware/CH9329 -I ../Drivers -I ../Hardware/FPM383C -I ../Hardware/AT24C64 -I ../Hardware/SIQ-02FVS3-I.\RTE\_HelloFinger-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger\encoder.o --omf_browse hellofinger\encoder.crf --depend hellofinger\encoder.d)
+F (..\Hardware\SIQ-02FVS3\encoder.c)(0x643A91D6)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Hardware/KEY -I ../Hardware/LED -I ../Hardware/CH9329 -I ../Drivers -I ../Hardware/FPM383C -I ../Hardware/AT24C64 -I ../Hardware/SIQ-02FVS3-I.\RTE\_HelloFinger-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger\encoder.o --omf_browse hellofinger\encoder.crf --depend hellofinger\encoder.d)
 I (..\Hardware\SIQ-02FVS3\encoder.h)(0x642597FE)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h)(0x639B1693)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h)(0x639B1693)
@@ -691,7 +693,7 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h)(0x639B1693)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h)(0x639B1693)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x639B1693)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x639B1693)
-I (../Drivers/func_keyboard.h)(0x642D678E)
+I (../Drivers/func_keyboard.h)(0x643BB920)
 I (../Core/Inc/delay.h)(0x64154DE7)
 F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c)(0x639B1693)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Hardware/KEY -I ../Hardware/LED -I ../Hardware/CH9329 -I ../Drivers -I ../Hardware/FPM383C -I ../Hardware/AT24C64 -I ../Hardware/SIQ-02FVS3-I.\RTE\_HelloFinger-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger\stm32f1xx_hal_gpio_ex.o --omf_browse hellofinger\stm32f1xx_hal_gpio_ex.crf --depend hellofinger\stm32f1xx_hal_gpio_ex.d)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x639B1693)

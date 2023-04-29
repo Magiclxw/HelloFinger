@@ -46,7 +46,7 @@ uint8_t Cmp_Checksum(uint8_t *data)		//比较校验和
 }
 /**
  * @brief		等待应答包
- * @param		ticks	功能码 1：普通呼吸灯	2：闪烁灯	3：常开灯	4：常闭灯
+ * @param		ticks	次数
  * @date		2023-3-26 17:30:34
  * @return 	执行状态
  *					- 0 未收到响应
@@ -105,6 +105,8 @@ uint8_t GetTableState(void)			//获取索引表信息
 	HAL_UART_Transmit(&FINGER,PS_ReadIndexTable,ReadIndexTableSize,1000);
 	
 	if(WaitForResponse(1000)){
+	//if(RxState == 1){
+		//RxState = 0;
 		for(int i=10;i<8+10;i++)
 		{
 			RX_TableState[i-10]=RxData2[i];

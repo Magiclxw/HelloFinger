@@ -34,6 +34,10 @@ uint8_t openFlag = 0;   //打开接口成功标志
 uint8_t waitingSwitchFlag = 0;      //等待转换传输模式标志    0：未等待模式转换   1：等待模式转换
 uint8_t timerCount = 0;
 uint8_t Msg[6] = {0x00,0x04};   //保存下传数据
+MainWindow *m;
+HideWindow *hidewindow;
+
+QTimer *progress_timer = new QTimer;
 
 Entrance::Entrance(QWidget *parent)
     : QMainWindow(parent)
@@ -42,8 +46,8 @@ Entrance::Entrance(QWidget *parent)
     ui->setupUi(this);
     this->setFixedSize(300,100);
     this->setWindowTitle("HelloFinger");
-    MainWindow *m = new MainWindow;
-    HideWindow *hidewindow = new HideWindow;
+    m = new MainWindow;             //创建主窗口
+    hidewindow = new HideWindow;    //创建自动隐藏窗口
     hidewindow->show();
 
     USBDEVICE *usbdevice = new USBDEVICE(this);
@@ -52,51 +56,18 @@ Entrance::Entrance(QWidget *parent)
 
     connect(usbdevice,SIGNAL(deviceIn(QString,QString)),this,SLOT(onDeviceIn(QString,QString)));
     connect(usbdevice,SIGNAL(deviceOut(QString,QString)),this,SLOT(onDeviceOut(QString,QString)));
-/* 等待进度条满 */
-    connect(ui->progressBar,&QProgressBar::valueChanged,this,[=](){
-        if(ui->progressBar->value() == 100){
-            m->show();
-            //this->hide();
-        }
-    });
 
-    QTimer *timer = new QTimer;
+/* 若进度条满，则隐藏进度条窗口 */
+    connect(ui->progressBar,&QProgressBar::valueChanged,this,&Entrance::SL_HideWindow);
 
-    timer->start(10);
-    connect(timer,&QTimer::timeout,this,[=](){
-        if(timerCount == 30 && infoFlag == 0){
-            timerCount = 29;
-            ui->progressBar->setStyleSheet("QProgressBar{background:write;} QProgressBar::chunk{background:red}");
-        }
-        if(timerCount == 60 && interfaceFlag == 0){
-            timerCount = 59;
-            ui->progressBar->setStyleSheet("QProgressBar{background:write;} QProgressBar::chunk{background:red}");
-        }
-        if(timerCount == 90 && openFlag == 0){
-            timerCount = 89;
-            ui->progressBar->setStyleSheet("QProgressBar{background:write;} QProgressBar::chunk{background:red}");
-        }
-        if(timerCount == 100){
-            timer->stop();
-        }
-        ui->progressBar->setValue(timerCount);
-        timerCount++;
+/* 进度条定时器 */
+    progress_timer->start(10);
+    connect(progress_timer,&QTimer::timeout,this,&Entrance::ProgressCtrl);
 
-    });
-    connect(cmdtimer,&QTimer::timeout,this,[=](){
+/* 定时发送获取索引表状态指令 */
+    connect(cmdtimer,&QTimer::timeout,this,&Entrance::SL_GetTableState);
 
-        if(transhandle != NULL){
-            qDebug() << "cmdtimer";
-            uint8_t cmd[1] = {USB_TABLESTATE};
-            GenerateCmd(cmd,1);
-            hid_write(transhandle,Command,6);   //发送获取索引表状态指令
-            if(table_state_flag == 1){
-                cmdtimer->stop();
-            }
-            memset(Command,0,20);
-        }
-    });
-
+/******************************************** 建立连接过程 *************************************************/
 /*  1、获取设备信息 */
     hid_info = hid_enumerate(Protocol_VID,Protocol_PID);
 
@@ -139,11 +110,10 @@ Entrance::Entrance(QWidget *parent)
         uint8_t cmd[1] = {TRANSMISSIONSTATE};
         GenerateCmd(cmd,1);
         hid_write(handle,Command,CMDLEN);   //发送切换为透传状态指令
-        qDebug() << "Switch Ok";
         waitingSwitchFlag = 1;
         memset(Command,0,20);
     }
-
+/********************************************************************************************************/
 
 
 /*****************************测试功能*************************************/
@@ -193,15 +163,7 @@ Entrance::Entrance(QWidget *parent)
     });
 }
 
-//uint8_t Entrance::GenerateChecksum(uint8_t *cmd)
-//{
-//    uint8_t checksum = 0;
-//    for(int i=2;i<5;i++){
-//        checksum += cmd[i];
-//    }
-//    return checksum;
-//}
-//
+/* 生成校验位 */
 uint8_t Entrance::GenerateChecksum(uint8_t *cmd,uint8_t cmdLen) //cmdLen:指令长度，不包括固定头和固定长度（cmd[0]、cmd[1]）
 {
     uint8_t checksum = 0;
@@ -210,21 +172,69 @@ uint8_t Entrance::GenerateChecksum(uint8_t *cmd,uint8_t cmdLen) //cmdLen:指令�
     }
     return checksum;
 }
+
+/* 生成指令 */
 void Entrance::GenerateCmd(uint8_t *data,uint8_t dataLen)
 {
     uint8_t checksum = 0;
     uint8_t len = 0;
-    Command[0] = 0x00;
-    Command[1] = dataLen + 3;
-    Command[2] = RECEIVE;
+    Command[0] = 0x00;  //HID通信固定起始字节
+    Command[1] = dataLen + 3;   //HID通信固定字节，通信数据长度
+    Command[2] = RECEIVE;   //协议指令头
     Command[3] = dataLen;
     for(uint8_t i=4;i<dataLen+4;i++){
         Command[i] = data[i-4];
     }
-    checksum = GenerateChecksum(Command,dataLen+3);
+    checksum = GenerateChecksum(Command,dataLen+3);     //获取校验位
     Command[dataLen+4] = checksum;
 
 }
+
+void Entrance::ProgressCtrl()
+{
+    if(timerCount == 30 && infoFlag == 0){
+        timerCount = 29;
+        ui->progressBar->setStyleSheet("QProgressBar{background:write;} QProgressBar::chunk{background:red}");
+    }
+    if(timerCount == 60 && interfaceFlag == 0){
+        timerCount = 59;
+        ui->progressBar->setStyleSheet("QProgressBar{background:write;} QProgressBar::chunk{background:red}");
+    }
+    if(timerCount == 90 && openFlag == 0){
+        timerCount = 89;
+        ui->progressBar->setStyleSheet("QProgressBar{background:write;} QProgressBar::chunk{background:red}");
+    }
+    if(timerCount == 100){
+        progress_timer->stop();
+    }
+    ui->progressBar->setValue(timerCount);
+    timerCount++;
+
+}
+
+void Entrance::SL_HideWindow()
+{
+    if(ui->progressBar->value() == 100){
+        m->show();
+        this->hide();
+    }
+}
+
+void Entrance::SL_GetTableState()
+{
+    if(transhandle != NULL){
+        qDebug() << "cmdtimer";
+        uint8_t cmd[1] = {USB_TABLESTATE};
+        GenerateCmd(cmd,1);
+        hid_write(transhandle,Command,6);   //发送获取索引表状态指令
+        if(table_state_flag == 1){
+            cmdtimer->stop();
+        }
+        memset(Command,0,20);
+    }
+}
+
+
 //void Entrance::GenerateCmd(int cmd)
 //{
 //    uint8_t checksum = 0;

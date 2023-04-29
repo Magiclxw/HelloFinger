@@ -50,10 +50,11 @@ void USBTHREAD::run()
         }
         rec = hid_read_timeout(transhandle,rec_buffer,20,1000);     //接收第一字节为后续数据长度
         rec_buffer_arry = QByteArray((char*)rec_buffer,20);
-        qDebug() << "Receive num:" << rec;
-        qDebug() << "rec_buffer:" << rec_buffer[0];
-        qDebug() << "Receive data" << rec_buffer_arry;
-
+        if(rec != 0){       //接受数据非空
+            qDebug() << "Receive num:" << rec;
+            qDebug() << "rec_buffer:" << rec_buffer[0];
+            qDebug() << "Receive data" << rec_buffer_arry.toHex();
+        }
         if(!CalcCheckSum(rec_buffer)){
             continue;
         }

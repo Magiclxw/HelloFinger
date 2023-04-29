@@ -54,6 +54,7 @@ void USB_Handler(uint8_t *data)	//判断接收到的数据类型
 			Delay_ms(100);
 			HAL_UART_Transmit(&KEYOUT,USB_CMD,cmdLen,1000);
 			memset(USB_CMD,0,100);
+			memset(RX_TableState,0,8);
 			break;
 		}
 		case USB_ENROLL:	//注册指纹

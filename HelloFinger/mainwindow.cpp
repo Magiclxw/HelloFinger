@@ -195,6 +195,7 @@ void MainWindow::SL_TableStateUpdate(void)
             }
         }
     }
+    memset(TableState,0,8);
 }
 
 

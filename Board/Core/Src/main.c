@@ -111,6 +111,7 @@ int main(void)
 	ENCODER_Init();
 	
 	IIC_Init();
+	Delay_ms(1000);
 	CH9329_Init();
 	CmdConnect();
 	

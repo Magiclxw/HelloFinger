@@ -33,6 +33,7 @@ public:
     uint8_t Command[20];    //下发的指令
     uint8_t GenerateChecksum(uint8_t *cmd,uint8_t cmdLen);
     void GenerateCmd(uint8_t *data,uint8_t dataLen);
+
     QTimer *cmdtimer = new QTimer;
 private:
     Ui::Entrance *ui;
@@ -40,5 +41,8 @@ private:
 private slots:
     void onDeviceIn(QString VID, QString PID);
     void onDeviceOut(QString VID, QString PID);
+    void ProgressCtrl(void);
+    void SL_HideWindow(void);
+    void SL_GetTableState(void);
 };
 #endif // ENTRANCE_H

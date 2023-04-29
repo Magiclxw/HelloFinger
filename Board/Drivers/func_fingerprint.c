@@ -162,8 +162,8 @@ void Con_AutoEnroll(uint8_t *ID,uint8_t NUM,uint8_t *PARAM)
 		if(WaitForResponse(1000)){
 			if(RxData2[9]==0x00){
 				if(RxData2[10]==0x03){		//手指移开
-					//rsp[0] = 0x11;
-					//rsp[1] = 0x01;
+					rsp[0] = 0x11;
+					rsp[1] = 0x01;
 					rsp[2] = ENROLL_STATE_LEAVE;
 					rsp[3] = Calc_Checksum(rsp);
 					HAL_UART_Transmit(&KEYOUT,rsp,4,100);
@@ -172,8 +172,8 @@ void Con_AutoEnroll(uint8_t *ID,uint8_t NUM,uint8_t *PARAM)
 				}
 				
 				if(RxData2[10]==0x01){		//放下手指
-					//rsp[0] = 0x11;
-					//rsp[1] = 0x01;
+					rsp[0] = 0x11;
+					rsp[1] = 0x01;
 					rsp[2] = ENROLL_STATE_PUT;
 					rsp[3] = Calc_Checksum(rsp);
 					HAL_UART_Transmit(&KEYOUT,rsp,4,100);
@@ -183,8 +183,8 @@ void Con_AutoEnroll(uint8_t *ID,uint8_t NUM,uint8_t *PARAM)
 
 				if(RxData2[10]==0x06)			//录入成功
 				{
-					//rsp[0] = 0x11;
-					//rsp[1] = 0x01;
+					rsp[0] = 0x11;
+					rsp[1] = 0x01;
 					rsp[2] = ENROLL_STATE_SUCCESS;
 					rsp[3] = Calc_Checksum(rsp);
 					HAL_UART_Transmit(&KEYOUT,rsp,4,100);
@@ -193,8 +193,8 @@ void Con_AutoEnroll(uint8_t *ID,uint8_t NUM,uint8_t *PARAM)
 				}
 			}else{
 				if(RxData2[9]==0x27 && RxData2[10]==0x05){		//指纹重复
-					//rsp[0] = 0x11;
-					//rsp[1] = 0x01;
+					rsp[0] = 0x11;
+					rsp[1] = 0x01;
 					rsp[2] = ENROLL_STATE_REPEAT;
 					rsp[3] = Calc_Checksum(rsp);
 					HAL_UART_Transmit(&KEYOUT,rsp,4,100);

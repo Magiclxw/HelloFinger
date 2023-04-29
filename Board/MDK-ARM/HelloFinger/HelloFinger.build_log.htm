@@ -27,20 +27,18 @@ Project File Date:  04/02/2023
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin'
 Build target 'HelloFinger'
-compiling msgHandler.c...
+compiling main.c...
 ../Drivers/func_keyboard.h(31): warning:  #1-D: last line of file ends without a newline
   #endif
-..\Core\Src\msgHandler.c(133): warning:  #177-D: variable "dev_addr"  was declared but never referenced
-  	uint32_t dev_addr = data[2]<<24 | data[3]<<16 | data[4]<<8 | data[5];	//设备地址
-..\Core\Src\msgHandler.c(134): warning:  #177-D: variable "pack_id"  was declared but never referenced
-  	uint8_t pack_id = data[6];	//包标识
-..\Core\Src\msgHandler.c(10): warning:  #550-D: variable "g_running_mode"  was set but never used
-  static uint8_t g_running_mode = 0;		//系统当前运行模式	0:协议传输	1:透传
-..\Core\Src\msgHandler.c: 4 warnings, 0 errors
+../Core/Src/main.c(122): warning:  #177-D: variable "test"  was declared but never referenced
+  	uint8_t test[5] = {0xAB,1,2,3,4};
+../Core/Src/main.c(123): warning:  #177-D: variable "read"  was declared but never referenced
+  	uint8_t read[5] = {0};
+../Core/Src/main.c: 3 warnings, 0 errors
 linking...
-Program Size: Code=11972 RO-data=308 RW-data=312 ZI-data=2696  
+Program Size: Code=12036 RO-data=308 RW-data=312 ZI-data=2696  
 FromELF: creating hex file...
-"HelloFinger\HelloFinger.axf" - 0 Error(s), 4 Warning(s).
+"HelloFinger\HelloFinger.axf" - 0 Error(s), 3 Warning(s).
 
 <h2>Software Packages used:</h2>
 

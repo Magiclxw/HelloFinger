@@ -23,6 +23,8 @@ private:
 
 signals:
     void btn_ok_Clicked();
+private slots:
+
 };
 
 #endif // LISTWIDGETEDITWINDOW_H

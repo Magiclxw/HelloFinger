@@ -269,6 +269,9 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 				USART1_RX_STA = 0;
 			}
 		}
+		if(USART1_RX_STA >= 100){
+			USART1_RX_STA = 0;
+		}
 	}
 /******************************************************************************/
 	if(huart->Instance==USART2)		//指纹模块通信

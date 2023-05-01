@@ -24,7 +24,7 @@ uint8_t CalcCheckSum(uint8_t *msg)
         checksum += msg[i];
     }
     if(checksum == msg[length]){
-        qDebug() << "验证成功" ;
+        //qDebug() << "验证成功" ;
         checksum = 0;
         return 1;
     }else{

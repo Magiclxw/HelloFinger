@@ -16,12 +16,14 @@ public:
     ~MainWindow();
     void paintEvent(QPaintEvent *event);
     void on_keyEvent(QKeyEvent* event);
+
 private:
     Ui::MainWindow *ui;
 
 public slots:
     void SL_TableStateUpdate(void);
     void SL_EnrollStateUpdate(void);
+    void on_listWidget_customContextMenuRequested(const QPoint &pos);
 signals:
     void SI_AddFinger(uint8_t pos,uint8_t times,uint8_t *param);
     void SI_FingerDelete(uint8_t ID);

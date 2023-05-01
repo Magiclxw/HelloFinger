@@ -63,8 +63,14 @@
      </item>
      <item>
       <widget class="QListWidget" name="listWidget">
+       <property name="contextMenuPolicy">
+        <enum>Qt::CustomContextMenu</enum>
+       </property>
        <property name="styleSheet">
         <string notr="true">QListWidget::Index{color:red}</string>
+       </property>
+       <property name="verticalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
        </property>
        <item>
         <property name="text">
@@ -441,13 +447,6 @@
        </property>
        <property name="text">
         <string>添加</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="modify">
-       <property name="text">
-        <string>修改</string>
        </property>
       </widget>
      </item>

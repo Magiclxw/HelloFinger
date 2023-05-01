@@ -2,8 +2,10 @@
 #include "ui_enrollstate.h"
 #include <QDebug>
 #include <QPropertyAnimation>
+#include "entrance.h"
 
 extern uint8_t g_enroll_state;
+extern uint8_t table_state_flag;
 
 QPropertyAnimation *animation;
 
@@ -12,7 +14,7 @@ enrollstate::enrollstate(QWidget *parent) :
     ui(new Ui::enrollstate)
 {
     ui->setupUi(this);
-    animation = new QPropertyAnimation(this,"windowOpacity");
+    //animation = new QPropertyAnimation(this,"windowOpacity");
     setWindowFlags(Qt::FramelessWindowHint);
     connect(animation,&QPropertyAnimation::finished,this,[=](){
         this->hide();
@@ -28,6 +30,7 @@ enrollstate::~enrollstate()
 void enrollstate::SL_InterfaceUpdate(void)
 {
     qDebug() << "InterfaceUpdate";
+    animation = new QPropertyAnimation(this,"windowOpacity");
     animation->setDuration(2000);
     animation->setStartValue(1);
     animation->setEndValue(0);
@@ -40,6 +43,7 @@ void enrollstate::SL_InterfaceUpdate(void)
             break;
         case 0x03:
             ui->state->setText("录入成功");
+            emit SI_Enroll_Finished();  //录入成功后发送成功信号，槽对列表执行刷新操作
             animation->start();
             //this->hide();
             break;

@@ -10,6 +10,7 @@
 #include "msghandler.h"
 #include "usbdevice.h"
 #include "hidewindow.h"
+#include "enrollstate.h"
 
 /*板子上电默认处于协议传输模式*/
 
@@ -161,6 +162,8 @@ Entrance::Entrance(QWidget *parent)
         table_state_flag = 0;
         cmdtimer->start(1000);
     });
+
+
 }
 
 /* 生成校验位 */

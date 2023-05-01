@@ -50,28 +50,33 @@ void USBTHREAD::run()
         }
         rec = hid_read_timeout(transhandle,rec_buffer,20,1000);     //接收第一字节为后续数据长度
         rec_buffer_arry = QByteArray((char*)rec_buffer,20);
+
+        if(!CalcCheckSum(rec_buffer)){  //判断校验位
+            continue;
+        }
+
         if(rec != 0){       //接受数据非空
             qDebug() << "Receive num:" << rec;
             qDebug() << "rec_buffer:" << rec_buffer[0];
             qDebug() << "Receive data" << rec_buffer_arry.toHex();
-        }
-        if(!CalcCheckSum(rec_buffer)){
-            continue;
+
+            returnFlag = Handler(rec_buffer);   //判断指令类型
+            switch (returnFlag){
+            case TABLESTATE:
+                emit SI_TableStateUpdate();
+                table_state_flag = 1;
+                break;
+            case ENROLL:
+                emit SI_EnrollStateUpdate();
+            default:
+                break;
+            }
+
+            memset(rec_buffer,0,20);
         }
 
-        returnFlag = Handler(rec_buffer);
-        switch (returnFlag){
-        case TABLESTATE:
-            emit SI_TableStateUpdate();
-            table_state_flag = 1;
-            break;
-        case ENROLL:
-            emit SI_EnrollStateUpdate();
-        default:
-            break;
-        }
 
-        memset(rec_buffer,0,20);
+
     }
 }
 

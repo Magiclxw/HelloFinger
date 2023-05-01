@@ -15,6 +15,7 @@
 #include <QMetaEnum>
 #include <QString>
 #include <QKeyEvent>
+#include <QListWidget>
 
 extern uint8_t TableState[8];
 
@@ -26,6 +27,11 @@ QColor colUncheck("#ffffff");
 
 enrollstate *enroll;
 
+
+QAction *AddAction;
+QAction *RefreshAction;
+QAction *DeleteAction;
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -35,6 +41,41 @@ MainWindow::MainWindow(QWidget *parent) :
     setWindowIcon(QIcon(":/Icon.jpg"));
     setWindowTitle("HelloFinger");
     //setWindowFlags(Qt::WindowStaysOnTopHint);   //保持顶层显示
+
+    ui->listWidget->setContextMenuPolicy(Qt::CustomContextMenu);    //通过触发信号的方式现实菜单
+
+    this->setContextMenuPolicy(Qt::NoContextMenu);
+
+    QMenuBar *bar = menuBar();
+    this->setMenuBar(bar);
+    QMenu *fileMenu = bar->addMenu("MENU");
+    bar->setVisible(false);
+
+    AddAction = fileMenu->addAction("增加");
+    RefreshAction = fileMenu->addAction("刷新");
+    DeleteAction = fileMenu->addAction("删除");
+
+    // 绑定槽函数
+        connect(AddAction,&QAction::triggered,this,[=](){
+            uint8_t checkedRow = 0;
+            QModelIndex index = ui->listWidget->currentIndex();
+            checkedRow = index.row();
+            enroll->show(); //弹出注册状态窗口
+            uint8_t times = 4;
+            uint8_t param[2] = {0x00,0x00};
+            emit SI_AddFinger(checkedRow,times,param);
+        });
+
+        connect(RefreshAction,&QAction::triggered,this,[=](){
+            emit SI_FingerRefresh();
+        });
+
+        connect(DeleteAction,&QAction::triggered,this,[=](){
+            uint8_t checkedRow = 0;
+            QModelIndex index = ui->listWidget->currentIndex();
+            checkedRow = index.row();
+            emit SI_FingerDelete(checkedRow);
+        });
 
     QFile file("hello.ini");
     QFile jsonFile("jsonFile.json");
@@ -121,18 +162,22 @@ MainWindow::MainWindow(QWidget *parent) :
         emit SI_AddFinger(checkedRow,times,param);
     });
 
-    connect(ui->fdelete,&QPushButton::clicked,this,[=](){
+    connect(ui->fdelete,&QPushButton::clicked,this,[=](){   //删除指纹
         uint8_t checkedRow = 0;
         QModelIndex index = ui->listWidget->currentIndex();
         checkedRow = index.row();
         emit SI_FingerDelete(checkedRow);
     });
 
-    connect(ui->refresh,&QPushButton::clicked,this,[=](){
+    connect(ui->refresh,&QPushButton::clicked,this,[=](){   //刷新指纹列表
         emit SI_FingerRefresh();
     });
 
-    connect(this,&MainWindow::SI_TableStateUpdata_T,enroll,&enrollstate::SL_InterfaceUpdate);
+    connect(this,&MainWindow::SI_TableStateUpdata_T,enroll,&enrollstate::SL_InterfaceUpdate);   //更新指纹注册状态
+
+    connect(enroll,&enrollstate::SI_Enroll_Finished,this,[=](){
+        emit SI_FingerRefresh();
+    });
 
     connect(ui->listWidget,&QListWidget::itemDoubleClicked,this,[=](){  //列表项双击信号
         QModelIndex index = ui->listWidget->currentIndex();
@@ -225,6 +270,27 @@ void MainWindow::on_keyEvent(QKeyEvent* event)
     delete event;       // 使用完成后记得delete
 }
 
+
+void MainWindow::on_listWidget_customContextMenuRequested(const QPoint &pos)
+{
+    Q_UNUSED(pos);
+
+    // 新建Menu菜单
+    QMenu *ptr = new QMenu(this);
+
+    // 添加Actions创建菜单项
+    ptr->addAction(AddAction);
+    ptr->addAction(RefreshAction);
+    // 添加一个分割线
+    ptr->addSeparator();
+    ptr->addAction(DeleteAction);
+
+    // 在鼠标光标位置显示右键快捷菜单
+    ptr->exec(QCursor::pos());
+
+    // 手工创建的指针必须手工删除
+    delete ptr;
+}
 
 MainWindow::~MainWindow()
 {

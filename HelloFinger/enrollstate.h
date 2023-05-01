@@ -19,7 +19,8 @@ private:
     Ui::enrollstate *ui;
 public slots:
     void SL_InterfaceUpdate(void);
-
+signals:
+    void SI_Enroll_Finished();
 };
 
 #endif // ENROLLSTATE_H

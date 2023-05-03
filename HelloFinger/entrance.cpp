@@ -14,6 +14,7 @@
 
 /*板子上电默认处于协议传输模式*/
 
+extern uint8_t Command[20];
 
 struct hid_device_ *handle = NULL;
 struct hid_device_ *transhandle = NULL;    //透传句柄
@@ -166,33 +167,6 @@ Entrance::Entrance(QWidget *parent)
 
 }
 
-/* 生成校验位 */
-uint8_t Entrance::GenerateChecksum(uint8_t *cmd,uint8_t cmdLen) //cmdLen:指令长度，不包括固定头和固定长度（cmd[0]、cmd[1]）
-{
-    uint8_t checksum = 0;
-    for(int i=2;i<cmdLen+2;i++){
-        checksum += cmd[i];
-    }
-    return checksum;
-}
-
-/* 生成指令 */
-void Entrance::GenerateCmd(uint8_t *data,uint8_t dataLen)
-{
-    uint8_t checksum = 0;
-    uint8_t len = 0;
-    Command[0] = 0x00;  //HID通信固定起始字节
-    Command[1] = dataLen + 3;   //HID通信固定字节，通信数据长度
-    Command[2] = RECEIVE;   //协议指令头
-    Command[3] = dataLen;
-    for(uint8_t i=4;i<dataLen+4;i++){
-        Command[i] = data[i-4];
-    }
-    checksum = GenerateChecksum(Command,dataLen+3);     //获取校验位
-    Command[dataLen+4] = checksum;
-
-}
-
 void Entrance::ProgressCtrl()
 {
     if(timerCount == 30 && infoFlag == 0){
@@ -229,10 +203,11 @@ void Entrance::SL_GetTableState()
         qDebug() << "cmdtimer";
         uint8_t cmd[1] = {USB_TABLESTATE};
         GenerateCmd(cmd,1);
-        hid_write(transhandle,Command,6);   //发送获取索引表状态指令
         if(table_state_flag == 1){
             cmdtimer->stop();
+            return;
         }
+        hid_write(transhandle,Command,6);   //发送获取索引表状态指令
         memset(Command,0,20);
     }
 }

@@ -18,6 +18,7 @@
 #define USB_ENROLL      0x11    //注册指纹
 #define USB_IDENTIFY    0x12    //验证指纹
 #define USB_DELETE      0x14
+#define USB_HEARTBEAT   0x15
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Entrance; }
@@ -30,10 +31,6 @@ class Entrance : public QMainWindow
 public:
     Entrance(QWidget *parent = nullptr);
     ~Entrance();
-    uint8_t Command[20];    //下发的指令
-    uint8_t GenerateChecksum(uint8_t *cmd,uint8_t cmdLen);
-    void GenerateCmd(uint8_t *data,uint8_t dataLen);
-
     QTimer *cmdtimer = new QTimer;
 private:
     Ui::Entrance *ui;
@@ -45,4 +42,5 @@ private slots:
     void SL_HideWindow(void);
     void SL_GetTableState(void);
 };
+
 #endif // ENTRANCE_H

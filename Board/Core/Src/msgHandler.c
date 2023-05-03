@@ -80,14 +80,14 @@ void USB_Handler(uint8_t *data)	//判断接收到的数据类型
 			uint8_t result = Con_DeleteChar(ID,NUM);
 			if(result == 1){		//删除成功
 				state[0] = 0x00;
-				uint8_t cmdLen = GenerateCmd(USB_DELETE,state,1);
+				//uint8_t cmdLen = GenerateCmd(USB_DELETE,state,1);
 				//HAL_UART_Transmit(&KEYOUT,USB_CMD,cmdLen,1000);
-				memset(USB_CMD,0,100);
+				//memset(USB_CMD,0,100);
 			}else{
 				state[0] = 0x01;	//删除失败
-				uint8_t cmdLen = GenerateCmd(USB_DELETE,state,1);
+				//uint8_t cmdLen = GenerateCmd(USB_DELETE,state,1);
 				//HAL_UART_Transmit(&KEYOUT,USB_CMD,cmdLen,1000);
-				memset(USB_CMD,0,100);
+				//memset(USB_CMD,0,100);
 			}
 		}
 		default :break;

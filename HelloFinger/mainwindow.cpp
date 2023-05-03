@@ -51,11 +51,13 @@ MainWindow::MainWindow(QWidget *parent) :
     QMenu *fileMenu = bar->addMenu("MENU");
     bar->setVisible(false);
 
+    enroll = new enrollstate;
+
     AddAction = fileMenu->addAction("增加");
     RefreshAction = fileMenu->addAction("刷新");
     DeleteAction = fileMenu->addAction("删除");
 
-    // 绑定槽函数
+
         connect(AddAction,&QAction::triggered,this,[=](){
             uint8_t checkedRow = 0;
             QModelIndex index = ui->listWidget->currentIndex();
@@ -103,7 +105,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     ListWidgetEditWindow *listwidgeteditwindow = new ListWidgetEditWindow;
-    enroll = new enrollstate;
+
     /* 更新listwidget状态 */
     for (int i=0;i<8 ;i++ ) {
         for(int j=0;j<8;j++){

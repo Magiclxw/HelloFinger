@@ -61,6 +61,7 @@ uint16_t WaitForResponse(uint16_t ticks)
 		}
 		Delay_us(100);
 	}
+	RxState = 0;
 	return 0;
 }
 
@@ -206,6 +207,7 @@ void Con_AutoEnroll(uint8_t *ID,uint8_t NUM,uint8_t *PARAM)
 		}
 		timeout ++;
 		if(timeout >= ENROLL_TIMEOUT){
+			Con_Cancel();	//向fpm383发送取消指令
 			rsp[2] = ENROLL_STATE_TIMEOUT;
 			rsp[3] = Calc_Checksum(rsp);
 			HAL_UART_Transmit(&KEYOUT,rsp,4,100);
@@ -217,6 +219,28 @@ void Con_AutoEnroll(uint8_t *ID,uint8_t NUM,uint8_t *PARAM)
 	HAL_NVIC_EnableIRQ(EXTI4_IRQn);
 }
 
+/**
+ * @brief		取消自动注册模板和自动验证指纹
+ * @param		NULL
+ * @date		2023-3-26 21:32:07
+ * @return 	取消结果
+ *					- 1 成功
+ *					- 0	失败
+ */
+uint8_t Con_Cancel(void)
+{
+	CMD_Cancel();
+	
+	HAL_UART_Transmit(&FINGER,PS_Cancel,12,100);
+	
+	if(WaitForResponse(1000)){
+		if(RxData2[6] == 0x07 && RxData2[9] == 0x00){
+			return 1;
+		}
+	}
+	
+	return 0;
+}
 
 void Con_GenerateEnroll()
 {
@@ -530,7 +554,7 @@ uint8_t Con_DeleteChar(uint8_t *PageID,uint8_t *N)
 	
 	HAL_UART_Transmit(&FINGER,PS_DeletChar,DeletCharSize,1000);
 	
-	if(WaitForResponse(1000)){
+	if(WaitForResponse(10000)){
 		
 		if(RxData2[6] == 0x07 && RxData2[9] == 0x00){		//删除成功
 			return 1;

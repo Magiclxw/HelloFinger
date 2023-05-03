@@ -152,50 +152,50 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>84</LineNumber>
+          <LineNumber>536</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134232598</Address>
+          <Address>134220834</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\Core\Src\msgHandler.c</Filename>
+          <Filename>..\Drivers\func_fingerprint.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\HelloFinger\../Core/Src/msgHandler.c\84</Expression>
+          <Expression>\\HelloFinger\../Drivers/func_fingerprint.c\536</Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>90</LineNumber>
+          <LineNumber>64</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134232652</Address>
+          <Address>134232808</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\Core\Src\msgHandler.c</Filename>
+          <Filename>..\Drivers\func_fingerprint.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\\../Core/Src/msgHandler.c\90</Expression>
+          <Expression>\\HelloFinger\../Drivers/func_fingerprint.c\64</Expression>
         </Bp>
         <Bp>
           <Number>2</Number>
           <Type>0</Type>
-          <LineNumber>298</LineNumber>
+          <LineNumber>559</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134229930</Address>
+          <Address>0</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>../Core/Src/usart.c</Filename>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>..\Drivers\func_fingerprint.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\HelloFinger\../Core/Src/usart.c\298</Expression>
+          <Expression></Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>

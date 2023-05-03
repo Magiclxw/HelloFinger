@@ -131,15 +131,17 @@ int main(void)
     /* USER CODE END WHILE */
 		if(!HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_8)){
 			Delay_ms(50);
-			while(!HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_8)){
-				REL_Mouse_Ctrl(0,0,0,button_LEFT);
+			if(!HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_8)){
+				//REL_Mouse_Ctrl(0,0,0,button_LEFT);
+				uint8_t data[10] = {0x57,0xAB,0x00,0x06,0x04,0x14,0x01,0x00,0x01,0x22};
+				HAL_UART_Transmit(&KEYOUT,data,10,1000);
 			}
-			REL_Mouse_Ctrl(0,0,0,button_NULL);
+			//REL_Mouse_Ctrl(0,0,0,button_NULL);
 		}
 		
 		if(!HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_11)){
 			Delay_ms(50);
-			while(!HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_11)){
+			if(!HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_11)){
 				REL_Mouse_Ctrl(0,0,0,button_RIGHT);
 			}
 			REL_Mouse_Ctrl(0,0,0,button_NULL);

@@ -4,9 +4,11 @@
 #include "string.h"
 #include "fpm383c.h"
 #include "usart.h"
+#include "msgHandler.h"
 
 extern uint8_t RxData1[100];
 extern uint8_t RxData2[100];
+extern uint8_t Protocol_CMD[100];
 
 uint8_t RX_TableData[44];			//存储接收到的数据
 uint8_t RX_TableState[8];			//存储索引表状态信息
@@ -167,7 +169,8 @@ void Con_AutoEnroll(uint8_t *ID,uint8_t NUM,uint8_t *PARAM)
 					rsp[1] = 0x01;
 					rsp[2] = ENROLL_STATE_LEAVE;
 					rsp[3] = Calc_Checksum(rsp);
-					HAL_UART_Transmit(&KEYOUT,rsp,4,100);
+					GenerateProtocolCMD(rsp,4);
+					HAL_UART_Transmit(&KEYOUT,Protocol_CMD,10,100);
 					timeout = 0;
 					memset(rsp,0,4);
 				}
@@ -177,7 +180,8 @@ void Con_AutoEnroll(uint8_t *ID,uint8_t NUM,uint8_t *PARAM)
 					rsp[1] = 0x01;
 					rsp[2] = ENROLL_STATE_PUT;
 					rsp[3] = Calc_Checksum(rsp);
-					HAL_UART_Transmit(&KEYOUT,rsp,4,100);
+					GenerateProtocolCMD(rsp,4);
+					HAL_UART_Transmit(&KEYOUT,Protocol_CMD,10,100);
 					timeout = 0;
 					memset(rsp,0,4);
 				}
@@ -188,7 +192,8 @@ void Con_AutoEnroll(uint8_t *ID,uint8_t NUM,uint8_t *PARAM)
 					rsp[1] = 0x01;
 					rsp[2] = ENROLL_STATE_SUCCESS;
 					rsp[3] = Calc_Checksum(rsp);
-					HAL_UART_Transmit(&KEYOUT,rsp,4,100);
+					GenerateProtocolCMD(rsp,4);
+					HAL_UART_Transmit(&KEYOUT,Protocol_CMD,10,100);
 					RxState = 0;
 					break;
 				}
@@ -198,7 +203,8 @@ void Con_AutoEnroll(uint8_t *ID,uint8_t NUM,uint8_t *PARAM)
 					rsp[1] = 0x01;
 					rsp[2] = ENROLL_STATE_REPEAT;
 					rsp[3] = Calc_Checksum(rsp);
-					HAL_UART_Transmit(&KEYOUT,rsp,4,100);
+					GenerateProtocolCMD(rsp,4);
+					HAL_UART_Transmit(&KEYOUT,Protocol_CMD,10,100);
 					RxState = 0;
 				}
 				break;

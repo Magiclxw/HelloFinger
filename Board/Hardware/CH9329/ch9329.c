@@ -609,7 +609,14 @@ void CMD_Media_WakeUp(void)
 	HAL_UART_Transmit(&KEYOUT,up,11,1000);
 }
 
-
+uint8_t CH9329_GenerateCheckSum(uint8_t *data,uint8_t length)
+{
+	uint8_t checksum = 0;
+	for(uint8_t i=0;i<length;i++){
+		checksum += data[i];
+	}
+	return checksum;
+}
 
 
 

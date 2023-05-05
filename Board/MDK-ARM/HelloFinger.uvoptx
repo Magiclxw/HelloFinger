@@ -152,9 +152,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>536</LineNumber>
+          <LineNumber>565</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134220834</Address>
+          <Address>134221106</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -163,28 +163,44 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\Drivers\func_fingerprint.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\HelloFinger\../Drivers/func_fingerprint.c\536</Expression>
+          <Expression>\\HelloFinger\../Drivers/func_fingerprint.c\565</Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>64</LineNumber>
+          <LineNumber>69</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134232808</Address>
+          <Address>134232836</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\Drivers\func_fingerprint.c</Filename>
+          <Filename>..\Core\Src\msgHandler.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\HelloFinger\../Drivers/func_fingerprint.c\64</Expression>
+          <Expression>\\HelloFinger\../Core/Src/msgHandler.c\69</Expression>
         </Bp>
         <Bp>
           <Number>2</Number>
           <Type>0</Type>
-          <LineNumber>559</LineNumber>
+          <LineNumber>70</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134232842</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\Core\Src\msgHandler.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\HelloFinger\../Core/Src/msgHandler.c\70</Expression>
+        </Bp>
+        <Bp>
+          <Number>3</Number>
+          <Type>0</Type>
+          <LineNumber>85</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -193,7 +209,23 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>0</BreakIfRCount>
-          <Filename>..\Drivers\func_fingerprint.c</Filename>
+          <Filename>..\Core\Src\msgHandler.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>4</Number>
+          <Type>0</Type>
+          <LineNumber>86</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>..\Core\Src\msgHandler.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
         </Bp>

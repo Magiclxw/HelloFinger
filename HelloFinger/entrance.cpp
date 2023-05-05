@@ -109,11 +109,13 @@ Entrance::Entrance(QWidget *parent)
         qDebug() << "HID Open Success";
     }
     if(handle != NULL){
-        uint8_t cmd[1] = {TRANSMISSIONSTATE};
-        GenerateCmd(cmd,1);
-        hid_write(handle,Command,CMDLEN);   //发送切换为透传状态指令
-        waitingSwitchFlag = 1;
-        memset(Command,0,20);
+//        uint8_t cmd[1] = {TRANSMISSIONSTATE};
+//        GenerateCmd(cmd,1);
+//        hid_write(handle,Command,CMDLEN);   //发送切换为透传状态指令
+//        waitingSwitchFlag = 1;
+//        memset(Command,0,20);
+        usbthread->start();
+        cmdtimer->start(1000);
     }
 /********************************************************************************************************/
 
@@ -142,7 +144,7 @@ Entrance::Entrance(QWidget *parent)
     connect(m,&MainWindow::SI_AddFinger,this,[=](uint8_t id,uint8_t times,uint8_t *param){
         uint8_t cmd[6] = {USB_ENROLL,0x00,id,times,param[0],param[1]};
         GenerateCmd(cmd,6);
-        hid_write(transhandle,Command,11);  //cmd:6 + head:4 + tail:1
+        hid_write(handle,Command,11);  //cmd:6 + head:4 + tail:1
         memset(Command,0,20);
         //table_state_flag = 0;
         //cmdtimer->start(1000);
@@ -152,7 +154,7 @@ Entrance::Entrance(QWidget *parent)
     connect(m,&MainWindow::SI_FingerDelete,this,[=](uint8_t ID){
         uint8_t cmd[5] = {USB_DELETE,0x00,ID,0x00,0x01};
         GenerateCmd(cmd,5);
-        hid_write(transhandle,Command,10);
+        hid_write(handle,Command,10);
         memset(Command,0,20);
         table_state_flag = 0;
         cmdtimer->start(1000);
@@ -199,7 +201,7 @@ void Entrance::SL_HideWindow()
 
 void Entrance::SL_GetTableState()
 {
-    if(transhandle != NULL){
+    if(handle != NULL){
         qDebug() << "cmdtimer";
         uint8_t cmd[1] = {USB_TABLESTATE};
         GenerateCmd(cmd,1);
@@ -207,7 +209,7 @@ void Entrance::SL_GetTableState()
             cmdtimer->stop();
             return;
         }
-        hid_write(transhandle,Command,6);   //发送获取索引表状态指令
+        hid_write(handle,Command,6);   //发送获取索引表状态指令
         memset(Command,0,20);
     }
 }

@@ -236,5 +236,6 @@ uint8_t CMD_GET_INFO(void);
 uint16_t toASCLL( uint8_t *asc);
 void SendCommand( uint8_t *body);
 void CMD_Media_Sleep(void);
+uint8_t CH9329_GenerateCheckSum(uint8_t *data,uint8_t length);
 
 #endif

@@ -36,6 +36,10 @@ extern ADC_HandleTypeDef hadc1;
 
 /* USER CODE BEGIN Private defines */
 extern uint16_t value_X_Y[2];
+
+#define MIN_OFFSET 36
+#define MAX_OFFSET 44
+
 /* USER CODE END Private defines */
 
 void MX_ADC1_Init(void);

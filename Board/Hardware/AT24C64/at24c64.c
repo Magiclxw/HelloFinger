@@ -79,7 +79,7 @@ void AT24C64_Read(uint16_t ReadAddr,uint8_t *pBuffer,uint16_t NumToRead)
 {
 	while(NumToRead)
 	{
-		*pBuffer++=AT24C64_ReadOneByte(ReadAddr++);	
+		*pBuffer++=AT24C64_ReadOneByte(ReadAddr++);
 		NumToRead--;
 	}
 }

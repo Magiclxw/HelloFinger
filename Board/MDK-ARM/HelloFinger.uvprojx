@@ -82,7 +82,7 @@
           <AfterMake>
             <RunUserProg1>0</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name></UserProg1Name>
+            <UserProg1Name>E:\SOFTWARE\Environment\Keil\ARM\ARMCC\bin\fromelf.exe --bin -o  ..\BIN\HelloFinger.bin .\HelloFinger\HelloFinger.axf</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -393,6 +393,11 @@
           <GroupName>Application/User/Core</GroupName>
           <Files>
             <File>
+              <FileName>main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Core/Src/main.c</FilePath>
+            </File>
+            <File>
               <FileName>msgHandler.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Core\Src\msgHandler.c</FilePath>
@@ -401,11 +406,6 @@
               <FileName>soft_iic.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Core\Src\soft_iic.c</FilePath>
-            </File>
-            <File>
-              <FileName>main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../Core/Src/main.c</FilePath>
             </File>
             <File>
               <FileName>gpio.c</FileName>

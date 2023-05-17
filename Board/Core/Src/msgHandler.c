@@ -124,6 +124,7 @@ void USB_Handler(uint8_t *data)	//判断接收到的数据类型
 				//HAL_UART_Transmit(&KEYOUT,USB_CMD,cmdLen,1000);
 				//memset(USB_CMD,0,100);
 			}
+			break;
 		}
 		default :break;
 		}
@@ -175,6 +176,7 @@ void USB_Handler(uint8_t *data)	//判断接收到的数据类型
 				PARAM[0] = data[11];
 				PARAM[1] = data[12];
 				Con_AutoEnroll(ID,enrolltimes,PARAM);
+				break;
 			}
 			case PRO_DELETE:
 			{

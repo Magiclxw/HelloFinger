@@ -1,8 +1,8 @@
 --cpu Cortex-M3
 "hellofinger\startup_stm32f103xb.o"
+"hellofinger\main.o"
 "hellofinger\msghandler.o"
 "hellofinger\soft_iic.o"
-"hellofinger\main.o"
 "hellofinger\gpio.o"
 "hellofinger\adc.o"
 "hellofinger\dma.o"

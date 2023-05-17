@@ -22,6 +22,7 @@
 
 /* USER CODE BEGIN 0 */
 #include "usart.h"
+#include "func_keyboard.h"
 uint16_t value_X_Y[2] = {0};
 /* USER CODE END 0 */
 
@@ -162,5 +163,27 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 {
 	//printf("x = %d y = %d\r\n",value_X_Y[0],value_X_Y[1]);
+	uint8_t move_dist_x = 0;	//x方向移动距离
+	uint8_t move_dist_y = 0;	//y方向移动距离
+	uint8_t offset_X = value_X_Y[0]/50;
+	uint8_t offset_Y = value_X_Y[1]/50;
+	
+	//printf("x = %d y = %d\r\n",offset_X,offset_Y);
+	if(offset_X < MIN_OFFSET){
+		move_dist_x = (MIN_OFFSET - offset_X)*1;
+	}
+	if(offset_X > MAX_OFFSET){
+		move_dist_x = 0xFF - ((offset_X - MAX_OFFSET)*1);
+	}
+	if(offset_Y < MIN_OFFSET){
+		move_dist_y = (MIN_OFFSET - offset_Y)*1;
+	}
+	if(offset_Y > MAX_OFFSET){
+		move_dist_y = 0xFF - ((offset_Y - MAX_OFFSET)*1);
+	}
+	if(move_dist_x != 0 | move_dist_y != 0){
+		REL_Mouse_Ctrl(0,move_dist_x,move_dist_y,button_NULL);
+	}
+	
 }
 /* USER CODE END 1 */

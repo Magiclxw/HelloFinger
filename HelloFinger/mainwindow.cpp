@@ -16,12 +16,17 @@
 #include <QString>
 #include <QKeyEvent>
 #include <QListWidget>
+#include <QColor>
 
 extern uint8_t TableState[8];
 
 uint8_t lwIndex = 0;
 uint8_t rowIndex = 0;
 uint8_t g_enroll_state = 0;
+uint8_t color_A = 0;
+uint8_t color_R = 0;
+uint8_t color_G = 0;
+uint8_t color_B = 0;
 QColor colCheck("#99ffff");
 QColor colUncheck("#ffffff");
 
@@ -152,28 +157,32 @@ MainWindow::MainWindow(QWidget *parent) :
             }
         }
     }
+    QPalette p;
 
+    p.setColor(QPalette::Window,colCheck);
+    ui->widget_2->setAutoFillBackground(true);
+    ui->widget_2->setPalette(p);
 
-    connect(ui->add,&QPushButton::clicked,this,[=](){   //添加指纹
-        uint8_t checkedRow = 0;
-        QModelIndex index = ui->listWidget->currentIndex();
-        checkedRow = index.row();
-        enroll->show();
-        uint8_t times = 4;
-        uint8_t param[2] = {0x00,0x00};
-        emit SI_AddFinger(checkedRow,times,param);
-    });
-
-    connect(ui->fdelete,&QPushButton::clicked,this,[=](){   //删除指纹
-        uint8_t checkedRow = 0;
-        QModelIndex index = ui->listWidget->currentIndex();
-        checkedRow = index.row();
-        emit SI_FingerDelete(checkedRow);
-    });
-
-    connect(ui->refresh,&QPushButton::clicked,this,[=](){   //刷新指纹列表
-        emit SI_FingerRefresh();
-    });
+   // connect(ui->add,&QPushButton::clicked,this,[=](){   //添加指纹
+   //     uint8_t checkedRow = 0;
+   //     QModelIndex index = ui->listWidget->currentIndex();
+   //     checkedRow = index.row();
+   //     enroll->show();
+   //     uint8_t times = 4;
+   //     uint8_t param[2] = {0x00,0x00};
+   //     emit SI_AddFinger(checkedRow,times,param);
+   // });
+   //
+   // connect(ui->fdelete,&QPushButton::clicked,this,[=](){   //删除指纹
+   //     uint8_t checkedRow = 0;
+   //     QModelIndex index = ui->listWidget->currentIndex();
+   //     checkedRow = index.row();
+   //     emit SI_FingerDelete(checkedRow);
+   // });
+   //
+   // connect(ui->refresh,&QPushButton::clicked,this,[=](){   //刷新指纹列表
+   //     emit SI_FingerRefresh();
+   // });
 
     connect(this,&MainWindow::SI_TableStateUpdata_T,enroll,&enrollstate::SL_InterfaceUpdate);   //更新指纹注册状态
 
@@ -214,6 +223,12 @@ MainWindow::MainWindow(QWidget *parent) :
         file.write(writeArry);      //文件重写
         file.close();
     });
+
+    connect(ui->A_Slider,&QSlider::sliderMoved,this,&MainWindow::SL_UpdateRGB);
+    connect(ui->R_Slider,&QSlider::sliderMoved,this,&MainWindow::SL_UpdateRGB);
+    connect(ui->G_Slider,&QSlider::sliderMoved,this,&MainWindow::SL_UpdateRGB);
+    connect(ui->B_Slider,&QSlider::sliderMoved,this,&MainWindow::SL_UpdateRGB);
+
     GlobalKeyEvent::installKeyEvent();
     connect(GlobalKeyEvent::getInstance(),&GlobalKeyEvent::keyEvent,this,&MainWindow::on_keyEvent);
 
@@ -292,6 +307,18 @@ void MainWindow::on_listWidget_customContextMenuRequested(const QPoint &pos)
 
     // 手工创建的指针必须手工删除
     delete ptr;
+}
+
+void MainWindow::SL_UpdateRGB()
+{
+    QPalette p;
+    color_A = ui->A_Slider->value();
+    color_R = ui->R_Slider->value();
+    color_G = ui->G_Slider->value();
+    color_B = ui->B_Slider->value();
+    p.setColor(QPalette::Window,QColor(color_R,color_G,color_B,color_A));
+    ui->widget_2->setAutoFillBackground(true);
+    ui->widget_2->setPalette(p);
 }
 
 MainWindow::~MainWindow()

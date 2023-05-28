@@ -19,6 +19,16 @@
 #define USB_IDENTIFY    0x12    //验证指纹
 #define USB_DELETE      0x14
 #define USB_HEARTBEAT   0x15
+#define USB_FUNC_STORE    0x20
+
+
+typedef enum{
+    TYPE_Windows_Password = 0,
+    TYPE_Password,
+    TYPE_Account_Password,
+    TYPE_Shortcut
+}CMD_TYPE;
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Entrance; }

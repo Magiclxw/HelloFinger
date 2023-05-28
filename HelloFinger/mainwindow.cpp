@@ -23,19 +23,26 @@ extern uint8_t TableState[8];
 uint8_t lwIndex = 0;
 uint8_t rowIndex = 0;
 uint8_t g_enroll_state = 0;
-uint8_t color_A = 0;
+/* RGB三色控制 */
 uint8_t color_R = 0;
 uint8_t color_G = 0;
 uint8_t color_B = 0;
-QColor colCheck("#99ffff");
-QColor colUncheck("#ffffff");
+
+QColor colCheck("#99ffff"); //指纹有效颜色
+QColor colUncheck("#ffffff");   //指纹无效颜色
 
 enrollstate *enroll;
 
 
-QAction *AddAction;
-QAction *RefreshAction;
-QAction *DeleteAction;
+QAction *AddAction; //添加指纹
+QAction *RefreshAction; //刷新列表
+QAction *DeleteAction;  //删除指纹
+QAction *Func_unlock;   //解锁功能
+QAction *Func_shortcut; //快捷键
+QAction *Func_enterAccount_Password;     //输入账号
+QAction *Func_enterPassword;    //输入密码
+QAction *Func_openApp;
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -53,36 +60,61 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QMenuBar *bar = menuBar();
     this->setMenuBar(bar);
-    QMenu *fileMenu = bar->addMenu("MENU");
+    QMenu *Menu = bar->addMenu("MENU");
+
     bar->setVisible(false);
+    ui->lineedit_windowsPassword->setEchoMode(QLineEdit::Password);
+    ui->lineEdit_password->setEchoMode(QLineEdit::Password);
+    ui->lineEdit_password_o->setEchoMode(QLineEdit::Password);
 
     enroll = new enrollstate;
 
-    AddAction = fileMenu->addAction("增加");
-    RefreshAction = fileMenu->addAction("刷新");
-    DeleteAction = fileMenu->addAction("删除");
+    AddAction = Menu->addAction("增加");
+    RefreshAction = Menu->addAction("刷新");
+    DeleteAction = Menu->addAction("删除");
+    Func_unlock = Menu->addAction("解锁");
+    Func_shortcut = Menu->addAction("快捷键");
+    Func_enterAccount_Password = Menu->addAction("输入账号/密码");
+    Func_enterPassword = Menu->addAction("输入密码");
 
+    connect(AddAction,&QAction::triggered,this,[=](){
+        uint8_t checkedRow = 0;
+        QModelIndex index = ui->listWidget->currentIndex();
+        checkedRow = index.row();
+        enroll->show(); //弹出注册状态窗口
+        uint8_t times = 4;
+        uint8_t param[2] = {0x00,0x00};
+        emit SI_AddFinger(checkedRow,times,param);
+    });
 
-        connect(AddAction,&QAction::triggered,this,[=](){
-            uint8_t checkedRow = 0;
-            QModelIndex index = ui->listWidget->currentIndex();
-            checkedRow = index.row();
-            enroll->show(); //弹出注册状态窗口
-            uint8_t times = 4;
-            uint8_t param[2] = {0x00,0x00};
-            emit SI_AddFinger(checkedRow,times,param);
-        });
+    connect(RefreshAction,&QAction::triggered,this,[=](){
+        emit SI_FingerRefresh();
+    });
 
-        connect(RefreshAction,&QAction::triggered,this,[=](){
-            emit SI_FingerRefresh();
-        });
+    connect(DeleteAction,&QAction::triggered,this,[=](){
+        uint8_t checkedRow = 0;
+        QModelIndex index = ui->listWidget->currentIndex();
+        checkedRow = index.row();
+        emit SI_FingerDelete(checkedRow);
+    });
 
-        connect(DeleteAction,&QAction::triggered,this,[=](){
-            uint8_t checkedRow = 0;
-            QModelIndex index = ui->listWidget->currentIndex();
-            checkedRow = index.row();
-            emit SI_FingerDelete(checkedRow);
-        });
+    connect(Func_unlock,&QAction::triggered,this,[=](){
+        ui->stackedWidget->setCurrentIndex(1);
+    });
+
+    connect(Func_enterAccount_Password,&QAction::triggered,this,[=](){
+        ui->stackedWidget->setCurrentIndex(2);
+    });
+
+    connect(Func_enterPassword,&QAction::triggered,this,[=](){
+        ui->stackedWidget->setCurrentIndex(3);
+    });
+
+    connect(ui->pushButton_windowspassword,&QPushButton::clicked,this,[=](){
+        QString windows_password = ui->lineedit_windowsPassword->text();
+        emit SI_USB_SEND_WindowsPassword(windows_password);
+        qDebug()<<windows_password;
+    });
 
     QFile file("hello.ini");
     QFile jsonFile("jsonFile.json");
@@ -157,12 +189,6 @@ MainWindow::MainWindow(QWidget *parent) :
             }
         }
     }
-    QPalette p;
-
-    p.setColor(QPalette::Window,colCheck);
-    ui->widget_2->setAutoFillBackground(true);
-    ui->widget_2->setPalette(p);
-
    // connect(ui->add,&QPushButton::clicked,this,[=](){   //添加指纹
    //     uint8_t checkedRow = 0;
    //     QModelIndex index = ui->listWidget->currentIndex();
@@ -186,8 +212,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(this,&MainWindow::SI_TableStateUpdata_T,enroll,&enrollstate::SL_InterfaceUpdate);   //更新指纹注册状态
 
-    connect(enroll,&enrollstate::SI_Enroll_Finished,this,[=](){
-        emit SI_FingerRefresh();
+    connect(enroll,&enrollstate::SI_Enroll_Finished,this,[=](){ //连接指纹注册完成信号
+        emit SI_FingerRefresh();    //刷新指纹列表
     });
 
     connect(ui->listWidget,&QListWidget::itemDoubleClicked,this,[=](){  //列表项双击信号
@@ -224,7 +250,6 @@ MainWindow::MainWindow(QWidget *parent) :
         file.close();
     });
 
-    connect(ui->A_Slider,&QSlider::sliderMoved,this,&MainWindow::SL_UpdateRGB);
     connect(ui->R_Slider,&QSlider::sliderMoved,this,&MainWindow::SL_UpdateRGB);
     connect(ui->G_Slider,&QSlider::sliderMoved,this,&MainWindow::SL_UpdateRGB);
     connect(ui->B_Slider,&QSlider::sliderMoved,this,&MainWindow::SL_UpdateRGB);
@@ -271,7 +296,7 @@ void MainWindow::paintEvent(QPaintEvent *event)
     painter.drawPixmap(0,0,this->width(),this->height(),pix);
 }
 
-void MainWindow::on_keyEvent(QKeyEvent* event)
+void MainWindow::on_keyEvent(QKeyEvent* event)  //全局按键事件
 {
     QMetaEnum type = QMetaEnum::fromType<QEvent::Type>();
     QMetaEnum key = QMetaEnum::fromType<Qt::Key>();
@@ -294,6 +319,7 @@ void MainWindow::on_listWidget_customContextMenuRequested(const QPoint &pos)
 
     // 新建Menu菜单
     QMenu *ptr = new QMenu(this);
+    ptr->setFixedWidth(100);
 
     // 添加Actions创建菜单项
     ptr->addAction(AddAction);
@@ -301,10 +327,14 @@ void MainWindow::on_listWidget_customContextMenuRequested(const QPoint &pos)
     // 添加一个分割线
     ptr->addSeparator();
     ptr->addAction(DeleteAction);
-
+    QMenu *functionMenu = new QMenu("功能");
+    functionMenu->addAction(Func_unlock);
+    functionMenu->addAction(Func_shortcut);
+    functionMenu->addAction(Func_enterAccount_Password);
+    functionMenu->addAction(Func_enterPassword);
+    ptr->addMenu(functionMenu);
     // 在鼠标光标位置显示右键快捷菜单
     ptr->exec(QCursor::pos());
-
     // 手工创建的指针必须手工删除
     delete ptr;
 }
@@ -312,11 +342,10 @@ void MainWindow::on_listWidget_customContextMenuRequested(const QPoint &pos)
 void MainWindow::SL_UpdateRGB()
 {
     QPalette p;
-    color_A = ui->A_Slider->value();
     color_R = ui->R_Slider->value();
     color_G = ui->G_Slider->value();
     color_B = ui->B_Slider->value();
-    p.setColor(QPalette::Window,QColor(color_R,color_G,color_B,color_A));
+    p.setColor(QPalette::Window,QColor(color_R,color_G,color_B));
     ui->widget_2->setAutoFillBackground(true);
     ui->widget_2->setPalette(p);
 }

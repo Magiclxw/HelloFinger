@@ -166,6 +166,33 @@ Entrance::Entrance(QWidget *parent)
         cmdtimer->start(1000);
     });
 
+    connect(m,&MainWindow::SI_USB_SEND_WindowsPassword,this,[=](QString password){
+        /* 转换为字符数组 */
+        QByteArray ba_password = password.toLatin1();
+        char *c_password = ba_password.data();
+
+        uint8_t flag = USB_FUNC_STORE;
+        uint8_t type = TYPE_Windows_Password;
+        uint8_t len = password.length();    //获取密码长度
+        uint8_t cmdLen = len+3+1;
+        uint8_t *cmd = new uint8_t[cmdLen];
+        cmd[0] = flag;
+        cmd[1] = type;
+        cmd[2] = len;
+
+        for (uint8_t i=3;i < len+3 ; i++) {
+            cmd[i] = c_password[i-3];
+        }
+
+        GenerateCmd(cmd,cmdLen);
+
+        //hid_write(handle,Command,cmdLen+5);
+
+        QByteArray tmp = QByteArray((char*)Command,cmdLen+5);
+        qDebug() << "command = " << tmp.toHex();
+        //qDebug()<<"len" << len;
+        //hid_write(handle,,)
+    });
 
 }
 

@@ -30,6 +30,7 @@ signals:
     void SI_FingerDelete(uint8_t ID);
     void SI_FingerRefresh(void);
     void SI_TableStateUpdata_T(void);
+    void SI_USB_SEND_WindowsPassword(QString password);
 };
 
 #endif // MAINWINDOW_H

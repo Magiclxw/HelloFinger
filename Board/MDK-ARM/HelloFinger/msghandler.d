@@ -39,3 +39,5 @@ hellofinger\msghandler.o: ../Hardware/FPM383C/fpm383c.h
 hellofinger\msghandler.o: ../Drivers/func_fingerprint.h
 hellofinger\msghandler.o: ../Drivers/func_keyboard.h
 hellofinger\msghandler.o: ../Core/Inc/delay.h
+hellofinger\msghandler.o: ../Drivers/func_info.h
+hellofinger\msghandler.o: ..\MDK-ARM\sys_config.h

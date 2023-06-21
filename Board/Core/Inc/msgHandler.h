@@ -22,6 +22,7 @@
 #define PRO_GET_TABLESTATE	0x10	//获取索引表状态
 #define PRO_ENROLL	0x11	//注册指纹
 #define PRO_DELETE	0x14
+#define PRO_STORE_FUNC	0x15	//存储账号/密码/快捷键
 
 /****************************************************************************/
 /*                               指纹模块通信相关宏                         */

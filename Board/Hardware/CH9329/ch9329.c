@@ -27,7 +27,7 @@ uint8_t 					KeyUP									[20]							={0x57,0xAB,0x00,0x02,0x08,0x00,0x00,0x00,
 
 uint8_t FIXED[20];
 uint8_t CHECK;	//累加和
-static	uint8_t CB[8];
+uint8_t g_key_value[8] = {0};
 
 extern UART_HandleTypeDef huart1;
 extern UART_HandleTypeDef huart2;
@@ -535,13 +535,14 @@ void SendCommand( uint8_t *body)
 
 /*配置组合键  控制键+按键*/
 
-uint8_t *Combination( uint8_t *control, uint8_t *key)
+uint8_t *Combination_Key( uint8_t control, uint8_t *key)
 {
-	for(int i=0;i<8;i++){
-		CB[i]=control[i];
+	g_key_value[0] = control;
+	g_key_value[1] = 0x00;
+	for(int i=2;i<8;i++){
+		g_key_value[i]=key[i-2];
 	}
-	CB[2]=key[2];
-	return CB;
+	return g_key_value;
 }
 
 

@@ -22,13 +22,40 @@ Dialog DLL:      TCM.DLL V1.36.1.0
  
 <h2>Project:</h2>
 E:\WORK\PersonalProject\HelloKey\root\Board\MDK-ARM\HelloFinger.uvprojx
-Project File Date:  05/14/2023
+Project File Date:  06/17/2023
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin'
 Build target 'HelloFinger'
+compiling key.c...
+compiling msgHandler.c...
+..\MDK-ARM\sys_config.h(11): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\Core\Src\msgHandler.c(109): warning:  #550-D: variable "state"  was set but never used
+  			uint8_t state[1] = {0};
+..\Core\Src\msgHandler.c(184): warning:  #550-D: variable "state"  was set but never used
+  				uint8_t state[1] = {0};
+..\Core\Src\msgHandler.c(214): warning:  #188-D: enumerated type mixed with another type
+  				Func_Store(store_type,store_data);
+..\Core\Src\msgHandler.c(226): warning:  #177-D: variable "dev_addr"  was declared but never referenced
+  	uint32_t dev_addr = data[2]<<24 | data[3]<<16 | data[4]<<8 | data[5];	//设备地址
+..\Core\Src\msgHandler.c(227): warning:  #177-D: variable "pack_id"  was declared but never referenced
+  	uint8_t pack_id = data[6];	//包标识
+..\Core\Src\msgHandler.c(11): warning:  #550-D: variable "g_running_mode"  was set but never used
+  static uint8_t g_running_mode = 0;		//系统当前运行模式	0:协议传输	1:透传
+..\Core\Src\msgHandler.c: 7 warnings, 0 errors
+compiling ch9329.c...
+compiling func_info.c...
+..\MDK-ARM\sys_config.h(11): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\Drivers\func_info.c(49): warning:  #940-D: missing return statement at end of non-void function "Func_Store" 
+  }
+..\Drivers\func_info.c(117): warning:  #940-D: missing return statement at end of non-void function "Func_Exe" 
+  }
+..\Drivers\func_info.c: 3 warnings, 0 errors
+compiling func_keyboard.c...
 compiling main.c...
-../Drivers/func_keyboard.h(31): warning:  #1-D: last line of file ends without a newline
+..\MDK-ARM\sys_config.h(11): warning:  #1-D: last line of file ends without a newline
   #endif
 ../Core/Src/main.c(122): warning:  #177-D: variable "test"  was declared but never referenced
   	uint8_t test[5] = {0xAB,1,2,3,4};
@@ -36,9 +63,9 @@ compiling main.c...
   	uint8_t read[5] = {0};
 ../Core/Src/main.c: 3 warnings, 0 errors
 linking...
-Program Size: Code=15876 RO-data=308 RW-data=2288 ZI-data=2896  
+Program Size: Code=16656 RO-data=308 RW-data=2284 ZI-data=2892  
 FromELF: creating hex file...
-"HelloFinger\HelloFinger.axf" - 0 Error(s), 3 Warning(s).
+"HelloFinger\HelloFinger.axf" - 0 Error(s), 13 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -61,7 +88,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.1.2
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:04
 </pre>
 </body>
 </html>

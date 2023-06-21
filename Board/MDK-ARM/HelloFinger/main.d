@@ -42,6 +42,7 @@ hellofinger\main.o: ../Hardware/KEY/key.h
 hellofinger\main.o: ../Core/Inc/delay.h
 hellofinger\main.o: ../Hardware/CH9329/ch9329.h
 hellofinger\main.o: ../Drivers/func_info.h
+hellofinger\main.o: ..\MDK-ARM\sys_config.h
 hellofinger\main.o: ../Drivers/func_fingerprint.h
 hellofinger\main.o: ../Hardware/FPM383C/fpm383c.h
 hellofinger\main.o: ../Drivers/func_keyboard.h

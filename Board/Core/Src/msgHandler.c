@@ -6,6 +6,7 @@
 #include "func_fingerprint.h"
 #include "func_keyboard.h"
 #include "delay.h"
+#include "func_info.h"
 
 static uint8_t g_running_mode = 0;		//系统当前运行模式	0:协议传输	1:透传
 uint16_t protocol_vid = 0x1998;
@@ -206,7 +207,15 @@ void USB_Handler(uint8_t *data)	//判断接收到的数据类型
 				g_keystate = data[7];
 				break;
 			}
+			case PRO_STORE_FUNC:
+			{
+				uint8_t store_type = data[8];
+				uint8_t *store_data = &data[9];
+				Func_Store(store_type,store_data);
+				break;
+			}
 			
+			default : break;
 		}
 	}
 	

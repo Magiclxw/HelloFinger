@@ -25,6 +25,128 @@
 #define AUTOENTERFLAG_ENABLE		0x01
 #define AUTOENTERFLAG_DISABLE		0x00
 
+/* 按键对应键码，用于填充指令 */
+#define KEY_Pie									0x35
+#define KEY_One									0x1E
+#define KEY_Two									0x1F
+#define KEY_Three								0x20
+#define KEY_Four								0x21
+#define KEY_Five								0x22
+#define KEY_Six									0x23
+#define KEY_Seven								0x24
+#define KEY_Eight								0x25
+#define KEY_Nine								0x26
+#define KEY_Zero								0x27
+#define KEY_Line								0x2D
+#define KEY_Equal								0x2E
+#define KEY_Keycode14						0x89
+#define KEY_BackSpace						0x2A
+#define KEY_Tab									0x2B
+#define KEY_q										0x14
+#define KEY_w										0x1A
+#define KEY_e										0x08
+#define KEY_r										0x15
+#define KEY_t										0x17
+#define KEY_y										0x1C
+#define KEY_u										0x18
+#define KEY_i										0x0C
+#define KEY_o										0x12
+#define KEY_p										0x13
+#define KEY_LeftSquareBrackets	0x2F
+#define KEY_RightSquareBrackets	0x30
+#define KEY_Backlash						0x31
+#define KEY_CapsLock						0x39
+#define KEY_a										0x04
+#define KEY_s										0x16
+#define KEY_d										0x07
+#define KEY_f										0x09
+#define KEY_g										0x0A
+#define KEY_h										0x0B
+#define KEY_j										0x0D
+#define KEY_k										0x0E
+#define KEY_l										0x0F
+#define KEY_Semicolon						0x33
+#define KEY_SingleQuotes				0x34
+#define KEY_Keycode42						0x32
+#define KEY_LeftEnter						0x28
+#define KEY_LeftShift						0xE1
+#define KEY_Keycode45						0x64
+#define KEY_z										0x1D
+#define KEY_x										0x1B
+#define KEY_c										0x06
+#define KEY_v										0x19
+#define KEY_b										0x05
+#define KEY_n										0x11
+#define KEY_m										0x10
+#define KEY_Comma								0x36
+#define KEY_Point								0x37
+#define KEY_ObliqueLine					0x38
+#define KEY_Keycode56						0x87
+#define KEY_RightShift					0xE5
+#define KEY_LeftCtrl						0xE0
+#define KEY_LeftAlt							0xE2
+#define KEY_Space								0x2C
+#define KEY_RightAlt						0xE6
+#define KEY_RightCtrl						0xE4
+#define KEY_Insert							0x49
+#define KEY_Delete							0x4C
+#define KEY_LeftArrow						0x50
+#define KEY_Home								0x4A
+#define KEY_End									0x4D
+#define KEY_UpArrow							0x52
+#define KEY_DownArrow						0x51
+#define KEY_PgUp								0x4B
+#define KEY_PgDn								0x4E
+#define KEY_RightArrow					0x4F
+#define KEY_NumLock							0x53
+#define KEY_sSeven							0x5F
+#define KEY_sFour								0x5C
+#define KEY_sOne								0x59
+#define KEY_Divide							0x54
+#define KEY_sEight							0x60
+#define KEY_sFive								0x5D
+#define KEY_sTwo								0x5A
+#define KEY_sZero								0x62
+#define KEY_sStar								0x55
+#define KEY_sNine								0x61
+#define KEY_sSix								0x5E
+#define KEY_sThree							0x5B
+#define KEY_sDot								0x63
+#define KEY_sSub								0x56
+#define KEY_sPlus								0x57
+#define KEY_Keycode107					0x85
+#define KEY_RightEnter					0x58
+#define KEY_Esc									0x29
+#define KEY_F1									0x3A
+#define KEY_F2									0x3B
+#define KEY_F3									0x3C
+#define KEY_F4									0x3D
+#define KEY_F5									0x3E
+#define KEY_F6									0x3F
+#define KEY_F7									0x40
+#define KEY_F8									0x41
+#define KEY_F9									0x42
+#define KEY_F10									0x43
+#define KEY_F11									0x44
+#define KEY_F12									0x45
+#define KEY_PrintScreen					0x46
+#define KEY_ScrollLock					0x47
+#define KEY_Pause								0x48
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 extern uint8_t CH9329_CONFIG[50];
 extern uint8_t g_keystate;
 extern uint8_t g_connectstate;
@@ -234,6 +356,7 @@ void CH9329_Reset(void);
 uint8_t CH9329_Generate_Checksum(uint8_t* cmd,uint8_t len);
 uint8_t CMD_GET_INFO(void);
 uint16_t toASCLL( uint8_t *asc);
+uint8_t *Combination_Key( uint8_t control, uint8_t *key);
 void SendCommand( uint8_t *body);
 void CMD_Media_Sleep(void);
 uint8_t CH9329_GenerateCheckSum(uint8_t *data,uint8_t length);

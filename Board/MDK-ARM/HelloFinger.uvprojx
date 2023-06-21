@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F103xB</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;../Hardware/KEY;../Hardware/LED;../Hardware/CH9329;../Drivers;../Hardware/FPM383C;../Hardware/AT24C64;../Hardware/SIQ-02FVS3</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;../Hardware/KEY;../Hardware/LED;../Hardware/CH9329;../Drivers;../Hardware/FPM383C;../Hardware/AT24C64;../Hardware/SIQ-02FVS3;..\MDK-ARM</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -393,11 +393,6 @@
           <GroupName>Application/User/Core</GroupName>
           <Files>
             <File>
-              <FileName>main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../Core/Src/main.c</FilePath>
-            </File>
-            <File>
               <FileName>msgHandler.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Core\Src\msgHandler.c</FilePath>
@@ -406,6 +401,11 @@
               <FileName>soft_iic.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Core\Src\soft_iic.c</FilePath>
+            </File>
+            <File>
+              <FileName>main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Core/Src/main.c</FilePath>
             </File>
             <File>
               <FileName>gpio.c</FileName>
@@ -543,6 +543,11 @@
               <FileName>stm32f1xx_hal_msp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/stm32f1xx_hal_msp.c</FilePath>
+            </File>
+            <File>
+              <FileName>sys_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\sys_config.h</FilePath>
             </File>
           </Files>
         </Group>

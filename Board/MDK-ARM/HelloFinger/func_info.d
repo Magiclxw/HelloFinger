@@ -27,10 +27,11 @@ hellofinger\func_info.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_e
 hellofinger\func_info.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h
 hellofinger\func_info.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
 hellofinger\func_info.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
+hellofinger\func_info.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h
 hellofinger\func_info.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 hellofinger\func_info.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 hellofinger\func_info.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
-hellofinger\func_info.o: ..\MDK-ARM\sys_config.h
+hellofinger\func_info.o: ../MDK-ARM/sys_config.h
 hellofinger\func_info.o: ../Core/Inc/usart.h
 hellofinger\func_info.o: ../Core/Inc/main.h
 hellofinger\func_info.o: ../Core/Inc/msgHandler.h

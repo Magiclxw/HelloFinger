@@ -1,6 +1,7 @@
 #include "encoder.h"
 #include "func_keyboard.h"
 #include "delay.h"
+#include "func_fingerprint.h"
 uint8_t signal_a = 0;
 uint8_t signal_b = 0;
 
@@ -63,10 +64,18 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 		
 		case GPIO_PIN_1:
 		{
-			REL_Mouse_Ctrl(0,0,0,button_MID);
-			Delay_ms(20);
-			REL_Mouse_Ctrl(0,0,0,button_NULL);
+			//REL_Mouse_Ctrl(0,0,0,button_MID);
+			//Delay_ms(20);
+			//REL_Mouse_Ctrl(0,0,0,button_NULL);
+			Con_Sleep();
+			break;
 		}
+		
+		case GPIO_PIN_4:
+		{
+			g_finger_rec_flag = 1;
+		}
+		
 		break;
 	}
 }

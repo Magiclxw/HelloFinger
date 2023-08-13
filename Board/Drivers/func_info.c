@@ -7,6 +7,13 @@
 #include "stdlib.h"
 #include "func_keyboard.h"
 
+/**
+ * @brief	保存指纹号所对应的功能
+ * @param	cmdtype 功能类型 1：开机密码	2：密码	3：账号+密码	4：快捷键
+ * @param	data 解析的指令 data[0]:指纹号
+ * @date	2023-6-24 11:40:11
+ * @return 
+ */
 uint8_t Func_Store(CMD_TYPE_t cmdtype,uint8_t *data)
 {
 	uint8_t index = data[0];	//指纹号

@@ -27,6 +27,7 @@ hellofinger\msghandler.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_
 hellofinger\msghandler.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h
 hellofinger\msghandler.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
 hellofinger\msghandler.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
+hellofinger\msghandler.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h
 hellofinger\msghandler.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 hellofinger\msghandler.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 hellofinger\msghandler.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
@@ -40,4 +41,4 @@ hellofinger\msghandler.o: ../Drivers/func_fingerprint.h
 hellofinger\msghandler.o: ../Drivers/func_keyboard.h
 hellofinger\msghandler.o: ../Core/Inc/delay.h
 hellofinger\msghandler.o: ../Drivers/func_info.h
-hellofinger\msghandler.o: ..\MDK-ARM\sys_config.h
+hellofinger\msghandler.o: ../MDK-ARM/sys_config.h

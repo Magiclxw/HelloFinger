@@ -67,9 +67,10 @@ extern uint8_t PS_RegModel[RegModelSize];
 extern uint8_t PS_StoreChar[StoreCharSize];
 extern uint8_t PS_Match[MatchSize];
 
+void FPM383C_Init(void);
 uint8_t *CmdConnect(void);
 void Check_Sum_Div(uint16_t sum);
-uint8_t * CMD_AutoEnroll(uint8_t *ID,uint8_t NUM,uint8_t *PARAM);
+uint8_t *CMD_AutoEnroll(uint8_t *ID,uint8_t NUM,uint8_t *PARAM);
 uint8_t *CMD_AutoIdentify(uint8_t secureleval,uint8_t *ID,uint8_t *PARAM);
 uint8_t *CMD_DeletChar(uint8_t *PageID,uint8_t *N);
 uint8_t *CMD_Cancel(void);

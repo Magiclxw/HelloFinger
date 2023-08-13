@@ -23,6 +23,8 @@ uint8_t RX_ReadNotepad[32];
 
 uint8_t USB_CMD[100];		//usb发送指令buffer
 
+uint8_t g_finger_rec_flag = 0;
+
 uint8_t Calc_Checksum(uint8_t *data)		//计算校验和
 {
 	uint8_t checksum = 0;
@@ -260,9 +262,8 @@ void Con_GenerateEnroll()
  * @param		*ID	ID号,0xFFFF:1-N搜索,其他:1-1搜索
  * @param		*PARAM	参数
  * @date		2023-3-26 21:32:07
- * @return 	对比结果
- *					- 0x00 成功
- *					- others	失败原因
+ * @return 	匹配模板
+ *					
  */
 uint8_t Con_AutoIdentify(uint8_t *ID,uint8_t *PARAM)
 {
@@ -274,10 +275,10 @@ uint8_t Con_AutoIdentify(uint8_t *ID,uint8_t *PARAM)
 		if(RxData2[9]==0x00 && RxData2[10]==0x05)	//对比成功
 		{
 			
-			return 0x00;
+			return RxData2[12];
 		}
 	}
-	return RxData2[9];
+	return RxData2[12];
 }
 
 /**
@@ -334,6 +335,7 @@ uint8_t Con_ControlBLN(uint8_t FUNC,uint8_t startcolor,uint8_t endcolor,uint8_t 
 	if(WaitForResponse(1000)){
 		if(RxData2[6]==0x07 && RxData2[9]==0x00)
 		{
+			memset(RxData2,0,100);
 			return 1;
 		}
 	}

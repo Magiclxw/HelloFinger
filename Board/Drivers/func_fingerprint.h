@@ -10,6 +10,8 @@ extern UART_HandleTypeDef huart2;
 #define KEYOUT	huart1
 #define FINGER	huart2
 
+extern uint8_t g_finger_rec_flag;
+
 #define ENROLL_TIMEOUT					10000
 #define ENROLL_STATE_LEAVE			0x01
 #define ENROLL_STATE_PUT				0x02

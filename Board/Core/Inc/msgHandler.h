@@ -37,5 +37,5 @@
 
 uint8_t GenerateProtocolCMD(uint8_t *data,uint8_t cmdLen);
 void USB_Handler(uint8_t *data);
-void FPM383_Handler(uint8_t *data);
+void FPM383_Handler(uint8_t *exeFlag);
 #endif

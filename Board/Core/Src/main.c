@@ -20,13 +20,14 @@
 #include "main.h"
 #include "adc.h"
 #include "dma.h"
+#include "spi.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "led.h"
+//#include "led.h"
 #include "key.h"
 #include "delay.h"
 #include "ch9329.h"
@@ -38,6 +39,8 @@
 #include "at24c64.h"
 #include "string.h"
 #include "encoder.h"
+#include "ws2812b.h"
+#include "ws2812b_interface.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -68,7 +71,9 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+ws2812b_handle_t ws2812_handle;
+static uint32_t gs_rgb[21]; 
+static uint8_t gs_temp[1024];
 /* USER CODE END 0 */
 
 /**
@@ -104,21 +109,42 @@ int main(void)
   MX_USART1_UART_Init();
   MX_USART2_UART_Init();
   MX_TIM1_Init();
-  /* USER CODE BEGIN 2 */
+  MX_SPI2_Init();
+  ///* USER CODE BEGIN 2 */
 	Delay_Init();
-	LED_Init();
+	//LED_Init();
 	KEY_Init();
 	ENCODER_Init();
-	
+	FPM383C_Init();
 	IIC_Init();
+	
+	
+	ws2812b_init(&ws2812_handle);
+	
+	uint32_t rgb;
+	uint8_t r,g,b;
+	r = 0x0F;                               /* set red */
+  g = 0x0F;                                /* set green */
+  b = 0x0F;                                /* set blue */
+  rgb = ((uint32_t)(r) << 16) | ((uint32_t)(g) << 8) | b;
+	
+	/* write color */
+	for (uint8_t i = 0; i < 21; i++)
+	{
+			gs_rgb[i] = rgb;//0xE0;
+	}
+
+/* write data */
+	ws2812b_write(&ws2812_handle,gs_rgb, 12, gs_temp, 1024);
+	
 	Delay_ms(1000);
 	CH9329_Init();
 	CmdConnect();
 	
 	//GetTableState();
-	Con_ControlBLN(LED_FUNC_BREATHE,LED_COLOR_GREEN,LED_COLOR_BLUE,0);
+	Con_ControlBLN(LED_FUNC_OPEN,LED_COLOR_RED|LED_COLOR_BLUE,LED_COLOR_RED|LED_COLOR_BLUE,0);
 	Delay_ms(2000);
-	//UnLock(960,625);
+	UnLock(960,625,"asd13579",8);
 	uint8_t test[5] = {0xAB,1,2,3,4};
 	uint8_t read[5] = {0};
 	
@@ -129,7 +155,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+		FPM383_Handler(&g_finger_rec_flag);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

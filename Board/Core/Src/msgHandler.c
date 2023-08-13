@@ -221,10 +221,17 @@ void USB_Handler(uint8_t *data)	//判断接收到的数据类型
 	
 }
 
-void FPM383_Handler(uint8_t *data)
+void FPM383_Handler(uint8_t *exeFlag)
 {
-	uint32_t dev_addr = data[2]<<24 | data[3]<<16 | data[4]<<8 | data[5];	//设备地址
-	uint8_t pack_id = data[6];	//包标识
+	if(*exeFlag == 0x01){
+		*exeFlag = 0;
+		uint8_t id[2] = {0xFF,0xFF};
+		uint8_t param[2] = {0x00,0x04};
+		uint8_t index = Con_AutoIdentify(id,param);
+		Delay_ms(1000);
+		Con_Sleep();
+		
+	}
 	
 }
 

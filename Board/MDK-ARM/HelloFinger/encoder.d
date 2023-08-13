@@ -27,8 +27,14 @@ hellofinger\encoder.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.
 hellofinger\encoder.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h
 hellofinger\encoder.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
 hellofinger\encoder.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
+hellofinger\encoder.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h
 hellofinger\encoder.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 hellofinger\encoder.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 hellofinger\encoder.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 hellofinger\encoder.o: ../Drivers/func_keyboard.h
 hellofinger\encoder.o: ../Core/Inc/delay.h
+hellofinger\encoder.o: ../Drivers/func_fingerprint.h
+hellofinger\encoder.o: ../Core/Inc/usart.h
+hellofinger\encoder.o: ../Core/Inc/main.h
+hellofinger\encoder.o: ../Core/Inc/msgHandler.h
+hellofinger\encoder.o: E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin\..\include\stdio.h

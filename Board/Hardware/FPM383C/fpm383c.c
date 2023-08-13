@@ -78,6 +78,21 @@ uint8_t PS_StoreChar[StoreCharSize];
 uint8_t PS_Match[MatchSize];
 /*---------------------------------------------------------------------------------------------------------*/
 
+void FPM383C_Init(void)
+{
+	GPIO_InitTypeDef gpio;
+	__HAL_RCC_GPIOA_CLK_ENABLE();
+	
+	gpio.Mode = GPIO_MODE_IT_RISING;
+	gpio.Pin = GPIO_PIN_4;
+	gpio.Pull = GPIO_PULLDOWN;
+	gpio.Speed = GPIO_SPEED_FREQ_HIGH;
+	HAL_GPIO_Init(GPIOA,&gpio);
+
+	HAL_NVIC_SetPriority(EXTI4_IRQn,1,1);
+	HAL_NVIC_EnableIRQ(EXTI4_IRQn);
+}
+
 
 uint8_t *CmdConnect(void)				//合并包头+芯片地址+包标识
 {
@@ -1046,8 +1061,6 @@ void CMD_Match(void)			//精确对比
 	
 	LEN = i;
 }
-
-
 
 
 

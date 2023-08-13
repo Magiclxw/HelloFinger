@@ -259,12 +259,17 @@ void USART2_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
-void EXTI1_IRQHandler(void)
+void EXTI1_IRQHandler(void)	//编码器按键中断
 {
 	HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_1);
 }
 
-void EXTI9_5_IRQHandler(void)
+void EXTI4_IRQHandler(void)
+{
+	HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_4);
+}
+
+void EXTI9_5_IRQHandler(void)		//编码器信号中断
 {
 	uint32_t status = EXTI->PR;
 	if(status & 0x100){
@@ -274,8 +279,7 @@ void EXTI9_5_IRQHandler(void)
 	if(status & 0x200){
 		HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_9);		//调用中断处理公用函数
 		EXTI->PR &= ~0x200;
-	}
-    
+	} 
 }
 
 //void EXTI15_10_IRQHandler(void)

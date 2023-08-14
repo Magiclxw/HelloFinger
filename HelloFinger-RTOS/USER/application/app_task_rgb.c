@@ -1,4 +1,5 @@
 #include "app_task_rgb.h"
+#include "task.h"
 
 static void vTaskRGBProcessing(void);
 
@@ -20,13 +21,14 @@ int Task_RGB_ProcessCreate(void)
 
 static void vTaskRGBProcessing(void)
 {
-	uint32_t gs_rgb[6]; 
-	uint8_t gs_temp[1024];
+	static uint32_t gs_rgb[6]; 
+	static uint8_t gs_temp[1024];
 	__IO uint32_t rgb;
 	__IO uint8_t r,g,b;
-	r = 0xFF;                               /* set red */
+	r = 0x00;                               /* set red */
 	g = 0x00;                                /* set green */
-	b = 0x00;                                /* set blue */
+	b = 0xFF;                                /* set blue */
+	__IO uint8_t dir = 0;
 	while(1)
 	{
 		rgb = ((uint32_t)(r) << 16) | ((uint32_t)(g) << 8) | b;
@@ -37,7 +39,29 @@ static void vTaskRGBProcessing(void)
 		}
 		/* write data */
 		WS25812B_write(gs_rgb, 6, gs_temp);
-		b++;
+		if(dir == 0)
+		{
+			//r-=5;
+			b-=5;
+			//g-=5;
+		}
+		if(dir == 1)
+		{
+			//r+=5;
+			b+=5;
+			//g+=5;
+		}
+		
+		if(b == 0)
+		{
+			dir = 1;
+		}
+		if(b == 255)
+		{
+			dir = 0;
+		}
+
+		memset(gs_temp,0,(sizeof(uint8_t)*1024));
 		vTaskDelay(100);
 	}
 }

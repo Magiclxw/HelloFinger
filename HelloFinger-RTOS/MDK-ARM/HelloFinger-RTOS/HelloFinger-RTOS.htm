@@ -3,11 +3,11 @@
 <title>Static Call Graph - [HelloFinger-RTOS\HelloFinger-RTOS.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image HelloFinger-RTOS\HelloFinger-RTOS.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Sun Aug 13 22:26:42 2023
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Mon Aug 14 21:23:37 2023
 <BR><P>
-<H3>Maximum Stack Usage =       1184 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =        208 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
-vTaskRGBProcessing &rArr; WS25812B_write &rArr; HAL_SPI_Transmit &rArr; SPI_EndRxTxTransaction &rArr; SPI_WaitFlagStateUntilTimeout
+prvTimerTask &rArr; prvProcessReceivedCommands &rArr; xQueueReceive &rArr; prvUnlockQueue &rArr; prvNotifyQueueSetContainer &rArr; prvCopyDataToQueue &rArr; xTaskPriorityDisinherit &rArr; __2printf
 <P>
 <H3>
 Mutually Recursive functions
@@ -285,6 +285,7 @@ Global Symbols
 
 <P><STRONG><a name="[4f]"></a>__aeabi_memclr4</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemClock_Config
+<LI><a href="#[3b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskRGBProcessing
 <LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CH9329_Set_Cfg
 </UL>
 
@@ -1729,10 +1730,11 @@ Local Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> app_task_key.o(i.Task_Key_DataCTLCreate)
 </UL>
-<P><STRONG><a name="[3b]"></a>vTaskRGBProcessing</STRONG> (Thumb, 98 bytes, Stack size 1064 bytes, app_task_rgb.o(i.vTaskRGBProcessing))
-<BR><BR>[Stack]<UL><LI>Max Depth = 1184<LI>Call Chain = vTaskRGBProcessing &rArr; WS25812B_write &rArr; HAL_SPI_Transmit &rArr; SPI_EndRxTxTransaction &rArr; SPI_WaitFlagStateUntilTimeout
+<P><STRONG><a name="[3b]"></a>vTaskRGBProcessing</STRONG> (Thumb, 152 bytes, Stack size 24 bytes, app_task_rgb.o(i.vTaskRGBProcessing))
+<BR><BR>[Stack]<UL><LI>Max Depth = 144<LI>Call Chain = vTaskRGBProcessing &rArr; WS25812B_write &rArr; HAL_SPI_Transmit &rArr; SPI_EndRxTxTransaction &rArr; SPI_WaitFlagStateUntilTimeout
 </UL>
-<BR>[Calls]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WS25812B_write
+<BR>[Calls]<UL><LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WS25812B_write
 <LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelay
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> app_task_rgb.o(i.Task_RGB_ProcessCreate)

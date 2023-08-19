@@ -144,7 +144,7 @@ int main(void)
 	//GetTableState();
 	Con_ControlBLN(LED_FUNC_OPEN,LED_COLOR_RED|LED_COLOR_BLUE,LED_COLOR_RED|LED_COLOR_BLUE,0);
 	Delay_ms(2000);
-	UnLock(960,625,"asd13579",8);
+	//UnLock(960,625,"asd13579",8);
 	uint8_t test[5] = {0xAB,1,2,3,4};
 	uint8_t read[5] = {0};
 	

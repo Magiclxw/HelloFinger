@@ -23,6 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "usart.h"
+#include "dma.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -203,6 +204,8 @@ void DebugMon_Handler(void)
 extern FUNC_USARTRECVTCB USART1RECVCallback;
 extern FUNC_USARTRECVTCB USART2RECVCallback;
 
+extern DMA_HandleTypeDef hdma_adc1;
+
 void USART1_IRQHandler(void)
 {
 	uint8_t recByte = 0;
@@ -247,5 +250,17 @@ void EXTI9_5_IRQHandler(void)		//±àÂëÆ÷ÐÅºÅÖÐ¶Ï
 		EXTI->PR &= ~0x200;
 	} 
 }
+
+void DMA1_Channel1_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA1_Channel1_IRQn 0 */
+
+  /* USER CODE END DMA1_Channel1_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_adc1);
+  /* USER CODE BEGIN DMA1_Channel1_IRQn 1 */
+
+  /* USER CODE END DMA1_Channel1_IRQn 1 */
+}
+
 
 /* USER CODE END 1 */

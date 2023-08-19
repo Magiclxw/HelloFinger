@@ -182,7 +182,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 		move_dist_y = 0xFF - ((offset_Y - MAX_OFFSET)*1);
 	}
 	if(move_dist_x != 0 | move_dist_y != 0){
-		//REL_Mouse_Ctrl(0,move_dist_x,move_dist_y,button_NULL);
+		REL_Mouse_Ctrl(0,move_dist_x,move_dist_y,button_NULL);
 	}
 	
 }

@@ -163,23 +163,19 @@ int WS2812B_Write_One_Frame(uint32_t rgb, uint8_t temp[48])
  */
 int WS25812B_write(uint32_t *rgb, uint32_t len, uint8_t *temp)
 {
-    uint32_t i, bit_size = WS2812_NUM * 8;
+    uint32_t i, bit_size = 288;	//(16*24*6)/8;
     
-    for (i = 0; i < bit_size; i++)                                          /* set the reset frame */
-    {
-        temp[i] = 0x00;                                                     /* set 0x00 */
-    }
-    HAL_SPI_Transmit(&hspi2, temp, (uint16_t)bit_size, 1000);              /* write command */
-    
-    bit_size = 24 * 16 * len ;                                              /* set the bit size */
-    bit_size = bit_size / 8;                                                /* set the bit size */
+    memset(temp,0,288);
+	
+    HAL_SPI_Transmit(&hspi2, temp, 288, 1000);              /* write command */
+                                                   /* set the bit size */
 
     for (i = 0; i < len; i++)                                               /* set the color frame */
     {
         WS2812B_Write_One_Frame(rgb[i], &temp[i * 48]);                   /* set color */
     }
     
-    HAL_SPI_Transmit(&hspi2, temp, (uint16_t)bit_size, 1000);               /* write command */
+    HAL_SPI_Transmit(&hspi2, temp, 288, 1000);               /* write command */
 }
 
 /**

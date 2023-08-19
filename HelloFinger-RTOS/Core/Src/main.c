@@ -33,6 +33,9 @@
 #include "drv_encoder.h"
 #include "..\USER\driver\WS2812\drv_ws2812b.h"
 #include "app_task_rgb.h"
+#include "adc.h"
+#include "dma.h"
+#include "app_task_joystick.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -96,8 +99,12 @@ int main(void)
   MX_GPIO_Init();
   MX_USART1_UART_Init();
   MX_USART2_UART_Init();
+	MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
 	MX_SPI2_Init();
+	MX_DMA_Init();
+	MX_ADC1_Init();
+	
 	delay_init(72);
 	FPM383C_Init();
 	CH9329_Init();
@@ -108,6 +115,7 @@ int main(void)
 	//CH9329_Input_Ascii(hello);
 	RegisterUsart1ReceiveCallBack(Key_GiveNotifyFromISR);
 	RegisterUsart2ReceiveCallBack(Finger_GiveNotifyFromISR);
+	RegisterADC1ReceiveCallBack(JoyStick_GiveNotifyFromISR);
 	//Generate_StoreChar(0xAB,0x01);
 	Task_Create();
 	vTaskStartScheduler();

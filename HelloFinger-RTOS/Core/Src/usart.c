@@ -69,9 +69,9 @@ FILE __stdout;
 /* MDK下需要重定义fputc函数, printf函数最终会通过调用fputc输出字符串到串口 */
 int fputc(int ch, FILE *f)
 {
-    while ((USART1->SR & 0X40) == 0);     /* 等待上一个字符发送完成 */
+    while ((USART3->SR & 0X40) == 0);     /* 等待上一个字符发送完成 */
 
-    USART1->DR = (uint8_t)ch;             /* 将要发送的字符 ch 写入到DR寄存器 */
+    USART3->DR = (uint8_t)ch;             /* 将要发送的字符 ch 写入到DR寄存器 */
     return ch;
 }
 #endif
@@ -82,6 +82,7 @@ FUNC_USARTRECVTCB USART2RECVCallback = NULL;
 
 UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
+UART_HandleTypeDef huart3;
 
 /* USART1 init function */
 
@@ -138,6 +139,34 @@ void MX_USART2_UART_Init(void)
   }
   /* USER CODE BEGIN USART2_Init 2 */
 	__HAL_UART_ENABLE_IT(&huart2,UART_IT_RXNE);
+  /* USER CODE END USART2_Init 2 */
+
+}
+
+void MX_USART3_UART_Init(void)
+{
+
+  /* USER CODE BEGIN USART2_Init 0 */
+
+  /* USER CODE END USART2_Init 0 */
+
+  /* USER CODE BEGIN USART2_Init 1 */
+
+  /* USER CODE END USART2_Init 1 */
+  huart3.Instance = USART3;
+  huart3.Init.BaudRate = 115200;
+  huart3.Init.WordLength = UART_WORDLENGTH_8B;
+  huart3.Init.StopBits = UART_STOPBITS_1;
+  huart3.Init.Parity = UART_PARITY_NONE;
+  huart3.Init.Mode = UART_MODE_TX_RX;
+  huart3.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart3.Init.OverSampling = UART_OVERSAMPLING_16;
+  if (HAL_UART_Init(&huart3) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USART2_Init 2 */
+	__HAL_UART_ENABLE_IT(&huart3,UART_IT_RXNE);
   /* USER CODE END USART2_Init 2 */
 
 }
@@ -200,6 +229,31 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
   /* USER CODE BEGIN USART2_MspInit 1 */
 		HAL_NVIC_SetPriority(USART2_IRQn, 6, 0);
     HAL_NVIC_EnableIRQ(USART2_IRQn);
+  /* USER CODE END USART2_MspInit 1 */
+  }
+	else if(uartHandle->Instance==USART3)
+  {
+  /* USER CODE BEGIN USART2_MspInit 0 */
+
+  /* USER CODE END USART2_MspInit 0 */
+    /* USART2 clock enable */
+    __HAL_RCC_USART3_CLK_ENABLE();
+
+    __HAL_RCC_GPIOB_CLK_ENABLE();
+
+    GPIO_InitStruct.Pin = GPIO_PIN_10;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+    GPIO_InitStruct.Pin = GPIO_PIN_11;
+    GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /* USER CODE BEGIN USART2_MspInit 1 */
+		//HAL_NVIC_SetPriority(USART3_IRQn, 6, 0);
+    //HAL_NVIC_EnableIRQ(USART3_IRQn);
   /* USER CODE END USART2_MspInit 1 */
   }
 }

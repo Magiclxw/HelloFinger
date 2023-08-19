@@ -42,6 +42,7 @@ typedef int(*FUNC_USARTRECVTCB)(uint8_t *pData, uint8_t Datasize);//串口接收回调
 
 void MX_USART1_UART_Init(void);
 void MX_USART2_UART_Init(void);
+void MX_USART3_UART_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 int RegisterUsart1ReceiveCallBack(FUNC_USARTRECVTCB USART1RECVCBT);

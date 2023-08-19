@@ -5,6 +5,8 @@
 "hellofinger-rtos\usart.o"
 "hellofinger-rtos\stm32f1xx_it.o"
 "hellofinger-rtos\stm32f1xx_hal_msp.o"
+"hellofinger-rtos\adc.o"
+"hellofinger-rtos\dma.o"
 "hellofinger-rtos\stm32f1xx_hal_spi.o"
 "hellofinger-rtos\stm32f1xx_hal_gpio_ex.o"
 "hellofinger-rtos\stm32f1xx_hal_tim.o"
@@ -20,6 +22,8 @@
 "hellofinger-rtos\stm32f1xx_hal_flash.o"
 "hellofinger-rtos\stm32f1xx_hal_flash_ex.o"
 "hellofinger-rtos\stm32f1xx_hal_exti.o"
+"hellofinger-rtos\stm32f1xx_hal_adc.o"
+"hellofinger-rtos\stm32f1xx_hal_adc_ex.o"
 "hellofinger-rtos\system_stm32f1xx.o"
 "hellofinger-rtos\croutine.o"
 "hellofinger-rtos\event_groups.o"
@@ -42,6 +46,7 @@
 "hellofinger-rtos\app_task_finger.o"
 "hellofinger-rtos\app_task_key.o"
 "hellofinger-rtos\app_task_rgb.o"
+"hellofinger-rtos\app_task_joystick.o"
 --library_type=microlib --strict --scatter "HelloFinger-RTOS\HelloFinger-RTOS.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

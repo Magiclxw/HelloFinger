@@ -22,6 +22,8 @@ hellofinger-rtos\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_exti.
 hellofinger-rtos\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h
 hellofinger-rtos\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma_ex.h
 hellofinger-rtos\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h
+hellofinger-rtos\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc.h
+hellofinger-rtos\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h
 hellofinger-rtos\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h
 hellofinger-rtos\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
 hellofinger-rtos\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
@@ -49,6 +51,9 @@ hellofinger-rtos\main.o: ../SYSTEM/delay/delay.h
 hellofinger-rtos\main.o: ../FreeRTOS/include/semphr.h
 hellofinger-rtos\main.o: ../FreeRTOS/include/event_groups.h
 hellofinger-rtos\main.o: ../FreeRTOS/include/timers.h
+hellofinger-rtos\main.o: ../Core/Inc/adc.h
+hellofinger-rtos\main.o: ../SYSTEM/sys_config.h
+hellofinger-rtos\main.o: ../Core/Inc/dma.h
 hellofinger-rtos\main.o: ../USER/driver/FPM383/drv_fpm383.h
 hellofinger-rtos\main.o: ../USER/application/app_task_key.h
 hellofinger-rtos\main.o: ../USER/driver/CH9329/drv_ch9329.h
@@ -56,3 +61,4 @@ hellofinger-rtos\main.o: ../USER/driver/AT24C64/drv_at24c64.h
 hellofinger-rtos\main.o: ../USER/driver/SIQ-02FVS3/drv_encoder.h
 hellofinger-rtos\main.o: ../SYSTEM/..\USER\driver\WS2812\drv_ws2812b.h
 hellofinger-rtos\main.o: ../USER/application/app_task_rgb.h
+hellofinger-rtos\main.o: ../USER/application/app_task_joystick.h

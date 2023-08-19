@@ -26,6 +26,7 @@
 #include "app_task_key.h"
 #include "app_task_finger.h"
 #include "app_task_rgb.h"
+#include "app_task_joystick.h"
 /**
  * @brief       设置中断向量表偏移地址
  * @param       baseaddr: 基址
@@ -107,6 +108,7 @@ void Task_Create(void)
 	Task_Finger_DataCTLCreate();
 	Task_Key_DataCTLCreate();
 	Task_RGB_ProcessCreate();
+	Task_JoyStick_DataCTLCreate();
 	
 	taskEXIT_CRITICAL();
 }

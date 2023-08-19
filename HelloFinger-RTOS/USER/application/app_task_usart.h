@@ -6,17 +6,4 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-int Finger_GiveNotifyFromISR(uint8_t *recData,uint8_t dataSize);
-
 #endif

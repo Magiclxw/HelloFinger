@@ -417,6 +417,16 @@
               <FileType>1</FileType>
               <FilePath>../Core/Src/stm32f1xx_hal_msp.c</FilePath>
             </File>
+            <File>
+              <FileName>adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\adc.c</FilePath>
+            </File>
+            <File>
+              <FileName>dma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\dma.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -496,6 +506,16 @@
               <FileName>stm32f1xx_hal_exti.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_exti.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f1xx_hal_adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_adc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f1xx_hal_adc_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_adc_ex.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -641,6 +661,11 @@
               <FileName>app_task_rgb.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\USER\application\app_task_rgb.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_task_joystick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\USER\application\app_task_joystick.c</FilePath>
             </File>
           </Files>
         </Group>

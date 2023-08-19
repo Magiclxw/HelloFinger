@@ -23,6 +23,8 @@ hellofinger-rtos\drv_encoder.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ha
 hellofinger-rtos\drv_encoder.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h
 hellofinger-rtos\drv_encoder.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma_ex.h
 hellofinger-rtos\drv_encoder.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h
+hellofinger-rtos\drv_encoder.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc.h
+hellofinger-rtos\drv_encoder.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h
 hellofinger-rtos\drv_encoder.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h
 hellofinger-rtos\drv_encoder.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
 hellofinger-rtos\drv_encoder.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
@@ -48,4 +50,7 @@ hellofinger-rtos\drv_encoder.o: ../Core/Inc/main.h
 hellofinger-rtos\drv_encoder.o: ../FreeRTOS/include/semphr.h
 hellofinger-rtos\drv_encoder.o: ../FreeRTOS/include/event_groups.h
 hellofinger-rtos\drv_encoder.o: ../FreeRTOS/include/timers.h
+hellofinger-rtos\drv_encoder.o: ../Core/Inc/adc.h
+hellofinger-rtos\drv_encoder.o: ../SYSTEM/sys_config.h
+hellofinger-rtos\drv_encoder.o: ../Core/Inc/dma.h
 hellofinger-rtos\drv_encoder.o: ../USER/driver/CH9329/drv_ch9329.h

@@ -5,7 +5,7 @@
 
 extern QueueHandle_t Queue_JOYSTICKProcessing_Handle;
 
-#define TASK_JOYSTICK_CONTROL_SIZE	(200)
+#define TASK_JOYSTICK_CONTROL_SIZE	(100)
 #define TASK_JOYSTICK_CONTROL_PRIORITY	(8)
 
 #define QUEUE_JOYSTICK_LEN	1

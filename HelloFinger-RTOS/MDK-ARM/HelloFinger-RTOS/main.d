@@ -62,3 +62,4 @@ hellofinger-rtos\main.o: ../USER/driver/SIQ-02FVS3/drv_encoder.h
 hellofinger-rtos\main.o: ../SYSTEM/..\USER\driver\WS2812\drv_ws2812b.h
 hellofinger-rtos\main.o: ../USER/application/app_task_rgb.h
 hellofinger-rtos\main.o: ../USER/application/app_task_joystick.h
+hellofinger-rtos\main.o: ../SYSTEM/..\USER\driver\W25Q128\drv_w25q128.h

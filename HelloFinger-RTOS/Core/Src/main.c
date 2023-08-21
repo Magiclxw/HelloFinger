@@ -36,6 +36,7 @@
 #include "adc.h"
 #include "dma.h"
 #include "app_task_joystick.h"
+#include "..\USER\driver\W25Q128\drv_w25q128.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -76,7 +77,7 @@ void SystemClock_Config(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+	uint16_t id = 0;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -101,6 +102,7 @@ int main(void)
   MX_USART2_UART_Init();
 	MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
+	Flash_Init();
 	MX_SPI2_Init();
 	MX_DMA_Init();
 	MX_ADC1_Init();
@@ -110,7 +112,15 @@ int main(void)
 	CH9329_Init();
 	delay_ms(1000);
 	ENCODER_Init();
-	
+	id = Flash_Read_id(); /* ∂¡»°FLASH ID */
+
+    while ((id == 0) || (id == 0XFFFF)) /* ºÏ≤‚≤ªµΩFLASH–æ∆¨ */
+    {
+        printf("FLASH Check Failed!");
+        delay_ms(500);
+        printf( "Please Check!      ");
+        delay_ms(500);
+    }
 	//char hello[15] = {"hello world!!!"};
 	//CH9329_Input_Ascii(hello);
 	RegisterUsart1ReceiveCallBack(Key_GiveNotifyFromISR);

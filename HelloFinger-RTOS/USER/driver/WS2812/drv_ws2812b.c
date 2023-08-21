@@ -39,6 +39,20 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
 {
 
   GPIO_InitTypeDef GPIO_InitStruct = {0};
+	
+	if(spiHandle->Instance == SPI1)
+	{
+		GPIO_InitTypeDef gpio_init_struct;
+    
+    __HAL_RCC_GPIOA_CLK_ENABLE();
+
+    gpio_init_struct.Pin = GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7;
+    gpio_init_struct.Mode = GPIO_MODE_AF_PP;
+    gpio_init_struct.Pull = GPIO_PULLUP;
+    gpio_init_struct.Speed = GPIO_SPEED_FREQ_HIGH;
+    HAL_GPIO_Init(GPIOA, &gpio_init_struct);
+	}
+	
   if(spiHandle->Instance==SPI2)
   {
   /* USER CODE BEGIN SPI2_MspInit 0 */

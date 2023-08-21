@@ -42,18 +42,18 @@ void vTaskJoyStickProcessing(void)
 		BaseType_t ret = xQueueReceive(Queue_JOYSTICKProcessing_Handle,&offset_XY,portMAX_DELAY);
 		//printf("x=%d,y=%d\r\n",offset_XY[0],offset_XY[1]);
 		//REL_Mouse_Ctrl(0,move_dist_x_y[0],move_dist_x_y[1],button_NULL);
-		
-		if(offset_XY[0] < MIN_OFFSET){
-			move_dist_x_y[0] = (MIN_OFFSET - offset_XY[0])*1;
-		}
-		if(offset_XY[0] > MAX_OFFSET){
-			move_dist_x_y[0] = 0xFF - ((offset_XY[0] - MAX_OFFSET)*1);
-		}
+		taskENTER_CRITICAL();
 		if(offset_XY[1] < MIN_OFFSET){
 			move_dist_x_y[1] = (MIN_OFFSET - offset_XY[1])*1;
 		}
 		if(offset_XY[1] > MAX_OFFSET){
 			move_dist_x_y[1] = 0xFF - ((offset_XY[1] - MAX_OFFSET)*1);
+		}
+		if(offset_XY[0] < MIN_OFFSET){
+			move_dist_x_y[0] = (MIN_OFFSET - offset_XY[0])*1;
+		}
+		if(offset_XY[0] > MAX_OFFSET){
+			move_dist_x_y[0] = 0xFF - ((offset_XY[0] - MAX_OFFSET)*1);
 		}
 		if(move_dist_x_y[0] != 0 | move_dist_x_y[1] != 0){
 			printf("x=%d,y=%d\r\n",offset_XY[0],offset_XY[1]);
@@ -61,6 +61,7 @@ void vTaskJoyStickProcessing(void)
 			memset(move_dist_x_y,0,2);
 			memset(offset_XY,0,2);
 		}
+		taskEXIT_CRITICAL();
 		vTaskDelay(30);
 		HAL_ADC_Start_DMA(&hadc1,(uint32_t*)&value_X_Y,(uint32_t)2);
 	}

@@ -31,8 +31,9 @@ static void vTaskRGBProcessing(void)
 	__IO uint8_t dir = 0;
 	while(1)
 	{
+		taskENTER_CRITICAL();
 		rgb = ((uint32_t)(r) << 16) | ((uint32_t)(g) << 8) | b;
-
+		
 		for (uint8_t i = 0; i < 6; i++)
 		{
 			gs_rgb[i] = rgb;//0xE0;
@@ -62,6 +63,7 @@ static void vTaskRGBProcessing(void)
 		}
 
 		memset(gs_temp,0,(sizeof(uint8_t)*1024));
-		vTaskDelay(100);
+		taskEXIT_CRITICAL();
+		vTaskDelay(10);
 	}
 }

@@ -27,6 +27,9 @@ CMD_GenChar_t						g_gen_char					= {0};	//生成特征结构体
 CMD_RegModel_t					g_reg_model					= {0};	//合并模板结构体
 CMD_StoreChar_t					g_store_char				= {0};	//存储模板结构体
 CMD_Match_t							g_match							= {0};	//精确对比结构体
+CMD_ControlBLN_t				g_control_bln				=	{0};	//控制LED
+CMD_ControlBLN_PRO_t		g_control_bln_pro		= {0};	//控制七彩LED
+
 
 /*******************指令码**********************/													/***********************指令码长度*************************/
 const uint8_t				AutoEnroll						=				0x31;		/*自动注册模板*/			const uint8_t 			AutoEnrollLen[2]					=				{0x00,0x08};
@@ -52,6 +55,7 @@ const uint8_t				AutoCaiSensor					=				0x36;		/*校验传感器*/    		const uint8_t
 const uint8_t				UpImage								=				0x0A;		/*上传图像*/    	 		const uint8_t				UpImageLen[2]             =       {0x00,0x03};
 const uint8_t       ReadSysPara						=				0x16;		/*读取系统基本参数*/ 	const uint8_t				ReadSysParaLen[2]         =       {0x00,0x03};
 const uint8_t				ControlBLN						=				0x3C;		/*三色灯指令*/     		const uint8_t				ControlBLNLen[2]          =       {0x00,0x07};
+const uint8_t				ControlBLN_PRO				=				0x3C;		/* 七彩灯 */					const uint8_t				ControlBLN_PROLen[2]			= 			{0x00,0x0B};
 const uint8_t				FingerCharUp					=				0x07;		/*特征上传*/     			const uint8_t				FingerCharUpLen[2]        =       {0x00,0x03};
 const uint8_t				FingerCharDown				=				0x08;		/*特征下载*/     		//const uint8_t				FingerCharDownLen[2]      =       {0x00,0x0} ;
 const uint8_t 			FingerMoudleSet				=				0x0E;		/*模组设置*/     			const uint8_t				FingerMoudleSetLen[2]     =       {0x00,0x05};
@@ -626,4 +630,73 @@ void Generate_Match(void)			//精确对比
 	
 	g_match.CHECKSUM[1] = (uint8_t)checksum;
 }
+
+void Generate_ControlBLN(_LED_Function_t func,uint8_t startColor,uint8_t endColor,uint8_t cycle)
+{
+	uint16_t checksum=0;
+	
+	memcpy((uint8_t*)g_control_bln.CMD_HEAD,CMD_HEAD,2);
+	
+	memcpy((uint8_t*)g_control_bln.CMD_ADDR,CMD_ADDR,4);
+	
+	g_control_bln.TYPE = ID_CMD;
+	
+	g_control_bln.LEN[0] = ControlBLNLen[0];
+	
+	g_control_bln.LEN[1] = ControlBLNLen[1];
+	
+	g_control_bln.CMD = ControlBLN;
+	
+	g_control_bln.FUNC = func;
+	
+	g_control_bln.S_COLOR = startColor;
+	
+	g_control_bln.E_COLOR = endColor;
+	
+	g_control_bln.CYCLE_TIME = cycle;
+	
+	checksum = Generate_CMD_Checksum((uint8_t*)&g_control_bln.TYPE,(g_control_bln.LEN[0]<<8|g_control_bln.LEN[1])+CHECKNUM_EXPECT_LEN);
+	
+	g_control_bln.CHECKSUM[0] = checksum>>8;
+	
+	g_control_bln.CHECKSUM[1] = (uint8_t)checksum;
+}
+
+void Generate_ControlBLN_Program(uint8_t time,uint8_t color_1,uint8_t color_2,uint8_t color_3,uint8_t color_4,uint8_t color_5,uint8_t cycle)
+{
+	uint16_t checksum=0;
+	
+	memcpy((uint8_t*)g_control_bln_pro.CMD_HEAD,CMD_HEAD,2);
+	
+	memcpy((uint8_t*)g_control_bln_pro.CMD_ADDR,CMD_ADDR,4);
+	
+	g_control_bln_pro.TYPE = ID_CMD;
+	
+	g_control_bln_pro.LEN[0] = ControlBLN_PROLen[0];
+	
+	g_control_bln_pro.LEN[1] = ControlBLN_PROLen[1];
+	
+	g_control_bln_pro.CMD = ControlBLN_PRO;
+	
+	g_control_bln_pro.FUNC = 7;
+	
+	g_control_bln_pro.TIME = time;
+	
+	g_control_bln_pro.COLOR1 = color_1;
+	g_control_bln_pro.COLOR2 = color_2;
+	g_control_bln_pro.COLOR3 = color_3;
+	g_control_bln_pro.COLOR4 = color_4;
+	g_control_bln_pro.COLOR5 = color_5;
+	
+	g_control_bln_pro.CYCLE_TIME = cycle;
+	
+	checksum = Generate_CMD_Checksum((uint8_t*)&g_control_bln_pro.TYPE,(g_control_bln_pro.LEN[0]<<8|g_control_bln_pro.LEN[1])+CHECKNUM_EXPECT_LEN);
+	
+	g_control_bln_pro.CHECKSUM[0] = checksum>>8;
+	
+	g_control_bln_pro.CHECKSUM[1] = (uint8_t)checksum;
+}
+
+
+
 

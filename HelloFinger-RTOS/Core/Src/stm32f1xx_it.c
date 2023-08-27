@@ -215,6 +215,7 @@ void USART1_IRQHandler(void)
 	{
 		USART1RECVCallback(&recByte,1);
 	}
+	huart1.Instance->CR1 |= USART_CR1_RXNEIE;
 }
 
 void USART2_IRQHandler(void)
@@ -226,6 +227,7 @@ void USART2_IRQHandler(void)
 	{
 		USART2RECVCallback(&recByte,1);
 	}
+	huart2.Instance->CR1 |= USART_CR1_RXNEIE;
 }
 
 void EXTI1_IRQHandler(void)	//±àÂëÆ÷°´¼üÖÐ¶Ï

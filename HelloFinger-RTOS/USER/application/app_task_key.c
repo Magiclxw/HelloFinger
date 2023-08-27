@@ -28,7 +28,8 @@ extern CMD_GenChar_t						g_gen_char;
 extern CMD_RegModel_t						g_reg_model;
 extern CMD_StoreChar_t					g_store_char;
 extern CMD_Match_t							g_match;
-
+extern CMD_ControlBLN_t					g_control_bln;
+extern CMD_ControlBLN_PRO_t			g_control_bln_pro;
 
 TaskHandle_t Task_Key_Handle = NULL;
 QueueHandle_t Queue_KeyProcessing_Handle = NULL;
@@ -65,6 +66,31 @@ static void vTaskKeyProcessing(void)
 	uint8_t rec_data = 0;
 	KeyResetData();
 	Queue_KeyProcessing_Handle = xQueueCreate((UBaseType_t)KEY_DATA_HANDLE_QUEUE_LEN,(UBaseType_t)KEY_DATA_HANDLE_QUEUE_SIZE);
+	//uint16_t id = 0x00;
+	//uint8_t enroll_times = 0x02;
+	//uint16_t param = 0x0F;
+	//Generate_AutoEnroll(id,enroll_times,param);
+	//HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_autoenroll,g_autoenroll.LEN[0]<<8|g_autoenroll.LEN[1]+FIXED_CMD_LEN,1000);
+	//taskENTER_CRITICAL();
+	//Generate_ReadIndexTable(0);
+	//HAL_UART_Transmit(&huart2,(uint8_t*)&g_read_index_table,g_read_index_table.LEN[0]<<8|g_read_index_table.LEN[1]+FIXED_CMD_LEN,1000);
+	//taskEXIT_CRITICAL();
+	uint8_t func = 1;
+	uint8_t start_color = LED_COLOR_RED;
+	uint8_t end_color = LED_COLOR_RED;
+	uint8_t cycle_time = 0;
+	Generate_ControlBLN(func,start_color,end_color,cycle_time);
+	HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_control_bln,g_control_bln.LEN[0]<<8|g_control_bln.LEN[1]+FIXED_CMD_LEN,1000);
+	
+	//uint8_t time = 0x24;
+	//uint8_t color1 = 0x99;
+	//uint8_t color2 = 0x00;
+	//uint8_t color3 = 0x00;
+	//uint8_t color4 = 0x00;
+	//uint8_t color5 = 0x00;
+	//uint8_t cycle = 0;
+	//Generate_ControlBLN_Program(time,color1,color2,color3,color4,color5,cycle);
+	//HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_control_bln_pro,g_control_bln_pro.LEN[0]<<8|g_control_bln_pro.LEN[1]+FIXED_CMD_LEN,1000);
 	while(1)
 	{
 		BaseType_t ret = xQueueReceive(Queue_KeyProcessing_Handle,&rec_data,portMAX_DELAY);
@@ -131,40 +157,42 @@ int Key_Protocol_Mode_RecData_Handle(uint8_t data)	//协议传输数据处理
 			}
 			else
 			{
-				if(g_key_data_ctl.rec_data_size < 5)
-				{
-					*g_key_data_ctl.pData = data;
-					g_key_data_ctl.pData++;
-					g_key_data_ctl.rec_data_size++;
-				}
-				else
-				{
-					g_key_data_ctl.data_state = DATA_RECV_STATE_GET;
-					g_key_data_ctl.data_length = g_key_data_format.len+CH9329_CHECKSUM_LEN;
-					g_key_data_ctl.rec_data_size++;
-				}
-				if(g_key_data_ctl.data_state == DATA_RECV_STATE_GET)
-				{
-					if(g_key_data_ctl.data_length)
+					if(g_key_data_ctl.rec_data_size < 5)
 					{
-						g_key_data_ctl.data_length--;
 						*g_key_data_ctl.pData = data;
 						g_key_data_ctl.pData++;
+						g_key_data_ctl.rec_data_size++;
 					}
-					else
+					else if(g_key_data_ctl.rec_data_size == 5)
 					{
-						int result = Key_CMP_Checksum((uint8_t*)g_key_data_format.head,g_key_data_format.len);
-						if(result == OPERATE_SUCCESS)
+						g_key_data_ctl.data_state = DATA_RECV_STATE_GET;
+						g_key_data_ctl.data_length = g_key_data_format.len+CH9329_CHECKSUM_LEN;
+						g_key_data_ctl.rec_data_size++;
+						if(g_key_data_ctl.data_length > 64) KeyResetData();
+					}
+					if(g_key_data_ctl.data_state == DATA_RECV_STATE_GET)
+					{
+						if(g_key_data_ctl.data_length)
 						{
-							Key_Func_Exec();
-							KeyResetData();
+							g_key_data_ctl.data_length--;
+							*g_key_data_ctl.pData = data;
+							g_key_data_ctl.pData++;
 						}
 						else
 						{
-							KeyResetData();
+							int result = Key_CMP_Checksum((uint8_t*)g_key_data_format.head,g_key_data_format.len+5);
+							if(result == OPERATE_SUCCESS)
+							{
+								Key_Func_Exec();
+								KeyResetData();
+							}
+							else
+							{
+								KeyResetData();
+							}
 						}
 					}
-				}
+					
 			}
 		}
 	}
@@ -260,7 +288,7 @@ static void Key_Func_Exec(void)
 
 int HID_Data_Handle(void)
 {
-	 if(g_key_data_format.data[0] == 0xFE && (Key_CMP_Checksum((uint8_t*)&g_key_data_format.data,g_key_data_format.data[1]) == g_key_data_format.data[g_key_data_format.data[1]+2]))	//判断是否为自定义USB通信协议头
+	 if(g_key_data_format.data[0] == 0xFE && (Key_CMP_Checksum((uint8_t*)&g_key_data_format.data,g_key_data_format.data[1]+2) == OPERATE_SUCCESS))	//判断是否为自定义USB通信协议头
 	 {
 		 
 		 switch (g_key_data_format.data[2])		//判断指令类型
@@ -272,18 +300,39 @@ int HID_Data_Handle(void)
 			 case USB_PROTOCOL_FORMAT_GET_INDEX_LIST:	//获取索引表状态
 			 {
 				 Generate_ReadIndexTable(0);
-				 HAL_UART_Transmit(&huart2,(uint8_t*)&g_read_index_table,g_read_index_table.LEN[0]<<8|g_read_index_table.LEN[1],1000);
+				 HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_read_index_table,g_read_index_table.LEN[0]<<8|g_read_index_table.LEN[1]+FIXED_CMD_LEN,1000);
 				 xEventGroupSetBits((EventGroupHandle_t)FingerEvent_Handle,(EventBits_t)EVENT_INDEX_LIST);
 				 break;
 			 }
-			 case USB_PROTOCOL_FORMAT_ENROLL_FINGER:
+			 case USB_PROTOCOL_FORMAT_ENROLL_FINGER:	//注册指纹
 			 {
 				 uint16_t id = g_key_data_format.data[3]<<8|g_key_data_format.data[4];
 				 uint8_t enroll_times = g_key_data_format.data[5];
 				 uint16_t param = g_key_data_format.data[6]<<8|g_key_data_format.data[7];
 				 Generate_AutoEnroll(id,enroll_times,param);
-				 HAL_UART_Transmit(&huart2,(uint8_t*)&g_autoenroll,g_autoenroll.LEN[0]<<8|g_autoenroll.LEN[1],1000);
+				 HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_autoenroll,g_autoenroll.LEN[0]<<8|g_autoenroll.LEN[1]+FIXED_CMD_LEN,1000);
 				 xEventGroupSetBits((EventGroupHandle_t)FingerEvent_Handle,(EventBits_t)EVENT_AUTO_ENROLL);
+			 }
+			 case USB_PROTOCOL_FORMAT_SET_FINGER_COLOR:	//设置指纹模块颜色
+			 {
+				 uint8_t func = g_key_data_format.data[3];
+				 uint8_t start_color = g_key_data_format.data[4];
+				 uint8_t end_color = g_key_data_format.data[5];
+				 uint8_t cycle_time = g_key_data_format.data[6];
+				 Generate_ControlBLN(func,start_color,end_color,cycle_time);
+				 HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_control_bln,g_control_bln.LEN[0]<<8|g_control_bln.LEN[1]+FIXED_CMD_LEN,1000);
+			 }
+			 case USB_PROTOCOL_FORMAT_SET_FINGER_COLOR_PRO:
+			 {
+				 uint8_t time = g_key_data_format.data[3];
+				 uint8_t color1 = g_key_data_format.data[4];
+				 uint8_t color2 = g_key_data_format.data[5];
+				 uint8_t color3 = g_key_data_format.data[6];
+				 uint8_t color4 = g_key_data_format.data[7];
+				 uint8_t color5 = g_key_data_format.data[8];
+				 uint8_t cycle = g_key_data_format.data[9];
+				 Generate_ControlBLN_Program(time,color1,color2,color3,color4,color5,cycle);
+				 HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_control_bln_pro,g_control_bln_pro.LEN[0]<<8|g_control_bln_pro.LEN[1]+FIXED_CMD_LEN,1000);
 			 }
 			 default : break;
 		 }

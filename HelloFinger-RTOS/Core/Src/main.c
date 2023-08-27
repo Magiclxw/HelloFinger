@@ -109,7 +109,7 @@ int main(void)
 	
 	delay_init(72);
 	FPM383C_Init();
-	CH9329_Init();
+	//CH9329_Init();
 	delay_ms(1000);
 	ENCODER_Init();
 	id = Flash_Read_id(); /* ∂¡»°FLASH ID */
@@ -121,6 +121,7 @@ int main(void)
         printf( "Please Check!      ");
         delay_ms(500);
     }
+		
 	//char hello[15] = {"hello world!!!"};
 	//CH9329_Input_Ascii(hello);
 	RegisterUsart1ReceiveCallBack(Key_GiveNotifyFromISR);

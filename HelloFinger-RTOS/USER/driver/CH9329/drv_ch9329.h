@@ -6,7 +6,7 @@
 #define SET_EN	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_5,GPIO_PIN_SET)	//CH9329芯片参数配置引脚使能
 #define SET_DEN	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_5,GPIO_PIN_RESET)	//CH9329芯片参数配置引脚禁止
 
-#define CH9329_CHECKSUM_LEN	(2)
+#define CH9329_CHECKSUM_LEN	(1)
 #define CH9329_TRANS_MAX_DATA_LEN (65)
 
 /* 协议传输指令类型 */

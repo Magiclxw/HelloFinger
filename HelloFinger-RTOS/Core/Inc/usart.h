@@ -36,7 +36,13 @@ extern UART_HandleTypeDef huart1;
 
 extern UART_HandleTypeDef huart2;
 
+extern UART_HandleTypeDef huart3;
+
 /* USER CODE BEGIN Private defines */
+#define KEY_HANDLE		huart1
+#define FINGER_HANDLE	huart2
+#define DEBUG_HANDLE	huart3
+
 typedef int(*FUNC_USARTRECVTCB)(uint8_t *pData, uint8_t Datasize);//串口接收回调函数指针定义
 /* USER CODE END Private defines */
 

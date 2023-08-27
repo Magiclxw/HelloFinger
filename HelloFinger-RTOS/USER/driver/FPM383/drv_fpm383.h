@@ -90,12 +90,6 @@
 #define 					MatchSize											12
 /****************************************************************************/
 
-#define 					LED_FUNC_BREATHE						1
-#define 					LED_FUNC_BLINK							2
-#define 					LED_FUNC_OPEN								3
-#define 					LED_FUNC_CLOSE							4
-#define 					LED_FUNC_OPEN_SLOW					5
-#define 					LED_FUNC_CLOSE_SLOW					6
 #define 					LED_COLOR_BLUE							0x01
 #define 					LED_COLOR_GREEN							0x02
 #define 					LED_COLOR_RED								0x04
@@ -112,6 +106,16 @@
 #define AUTOENROLL_PARAM_ENROLL_REPEAT_OFF	0x0010
 #define AUTOENROLL_PARAM_FINGER_MOVE_ON			0x0000
 #define AUTOENROLL_PARAM_FINGER_MOVE_OFF		0x0020
+
+typedef enum _LED_Function_
+{
+	LED_FUNC_BREATHE = 1,
+	LED_FUNC_BLINK,
+	LED_FUNC_OPEN,
+	LED_FUNC_CLOSE,
+	LED_FUNC_OPEN_SLOW,
+	LED_FUNC_CLOSE_SLOW,
+}_LED_Function_t;
 
 typedef struct _CMD_AutoEnroll_
 {
@@ -321,8 +325,43 @@ typedef struct _CMD_Match_
 	volatile uint8_t CHECKSUM[2];
 }CMD_Match_t;
 
+typedef struct _CMD_ControlBLN_
+{
+	volatile uint8_t CMD_HEAD[2];
+	volatile uint8_t CMD_ADDR[4];
+	volatile uint8_t TYPE;
+	volatile uint8_t LEN[2];
+	volatile uint8_t CMD;
+	volatile uint8_t FUNC;
+	volatile uint8_t S_COLOR;
+	volatile uint8_t E_COLOR;
+	volatile uint8_t CYCLE_TIME;	//循环次数
+	volatile uint8_t CHECKSUM[2];
+}CMD_ControlBLN_t;
+
+typedef struct _CMD_ControlBLN_PRO_
+{
+	volatile uint8_t CMD_HEAD[2];
+	volatile uint8_t CMD_ADDR[4];
+	volatile uint8_t TYPE;
+	volatile uint8_t LEN[2];
+	volatile uint8_t CMD;
+	uint8_t FUNC;
+	volatile uint8_t TIME;
+	volatile uint8_t COLOR1;
+	volatile uint8_t COLOR2;
+	volatile uint8_t COLOR3;
+	volatile uint8_t COLOR4;
+	volatile uint8_t COLOR5;
+	volatile uint8_t CYCLE_TIME;	//循环次数
+	volatile uint8_t CHECKSUM[2];
+}CMD_ControlBLN_PRO_t;
+
 void FPM383C_Init(void);
 void Generate_AutoEnroll(uint16_t ID,uint8_t enrollTimes,uint16_t PARAM);
 void Generate_StoreChar(uint8_t BufferID,uint16_t PageID);
 void Generate_ReadIndexTable(uint8_t page);
+
+void Generate_ControlBLN(_LED_Function_t func,uint8_t startColor,uint8_t endColor,uint8_t cycle);
+void Generate_ControlBLN_Program(uint8_t time,uint8_t color_1,uint8_t color_2,uint8_t color_3,uint8_t color_4,uint8_t color_5,uint8_t cycle);
 #endif

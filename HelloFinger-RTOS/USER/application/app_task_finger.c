@@ -172,7 +172,7 @@ int Finger_RecData_Handle(uint8_t data)
 								g_finger_data_ctl.pData++;
 								g_finger_data_ctl.rec_data_size++;
 							}
-							else
+							else if(g_finger_data_ctl.rec_data_size == 9)
 							{
 								g_finger_data_ctl.data_state = DATA_RECV_STATE_GET;
 								g_finger_data_ctl.data_length = g_data_format.len[0]<<8|g_data_format.len[1];
@@ -217,7 +217,7 @@ static int CMP_Checksum(uint8_t *data,uint8_t len)		//比较校验和
 	for(uint8_t i=0; i<len; i++){
 		checksum += data[i];
 	}
-	if(checksum == (data[len+1]<<8|data[len+2]))
+	if(checksum == (data[len]<<8|data[len+1]))
 	{
 		return OPERATE_SUCCESS;
 	}

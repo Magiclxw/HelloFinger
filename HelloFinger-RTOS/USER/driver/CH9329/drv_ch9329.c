@@ -493,7 +493,7 @@ int Send_HID_Data(uint8_t *data,uint8_t len)
 	memcpy((uint8_t*)&g_cmd_format.data,data,len);
 	g_cmd_format.data[g_cmd_format.len] = CH9329_CAL_SUM((uint8_t*)&g_cmd_format,g_cmd_format.len+5);
 	
-	HAL_UART_Transmit(&huart1,(uint8_t*)&g_cmd_format,g_cmd_format.len+6,1000);
+	HAL_UART_Transmit(&huart1,(uint8_t*)&g_cmd_format,g_cmd_format.len+9,1000);
 	
 	return OPERATE_SUCCESS;
 }

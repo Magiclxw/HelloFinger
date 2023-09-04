@@ -166,7 +166,7 @@ int Key_Protocol_Mode_RecData_Handle(uint8_t data)	//协议传输数据处理
 					else if(g_key_data_ctl.rec_data_size == 5)
 					{
 						g_key_data_ctl.data_state = DATA_RECV_STATE_GET;
-						g_key_data_ctl.data_length = g_key_data_format.len+CH9329_CHECKSUM_LEN;
+						g_key_data_ctl.data_length = g_key_data_format.len;
 						g_key_data_ctl.rec_data_size++;
 						if(g_key_data_ctl.data_length > 64) KeyResetData();
 					}
@@ -180,6 +180,7 @@ int Key_Protocol_Mode_RecData_Handle(uint8_t data)	//协议传输数据处理
 						}
 						else
 						{
+							*g_key_data_ctl.pData = data;
 							int result = Key_CMP_Checksum((uint8_t*)g_key_data_format.head,g_key_data_format.len+5);
 							if(result == OPERATE_SUCCESS)
 							{
@@ -288,7 +289,8 @@ static void Key_Func_Exec(void)
 
 int HID_Data_Handle(void)
 {
-	 if(g_key_data_format.data[0] == 0xFE && (Key_CMP_Checksum((uint8_t*)&g_key_data_format.data,g_key_data_format.data[1]+2) == OPERATE_SUCCESS))	//判断是否为自定义USB通信协议头
+	uint8_t result = Key_CMP_Checksum((uint8_t*)&g_key_data_format.data,g_key_data_format.data[1]+2);
+	 if((g_key_data_format.data[0] == 0xFE) && (result == (uint8_t)OPERATE_SUCCESS))	//判断是否为自定义USB通信协议头
 	 {
 		 
 		 switch (g_key_data_format.data[2])		//判断指令类型

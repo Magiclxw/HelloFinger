@@ -2,8 +2,9 @@
 #define MSGHANDLER_H
 
 #include <QWidget>
+#include "usbthread.h"
 
-extern uint8_t rec_buffer[20];
+extern uint8_t rec_buffer[REC_BUFFER_LEN];
 
 #define TABLESTATE  0x10    //索引表状态标志
 #define ENROLL      0x11    //注册指纹标志

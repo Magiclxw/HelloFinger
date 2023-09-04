@@ -206,7 +206,7 @@ extern FUNC_USARTRECVTCB USART2RECVCallback;
 
 extern DMA_HandleTypeDef hdma_adc1;
 
-void USART1_IRQHandler(void)
+void USART1_IRQHandler(void)	//ch9329
 {
 	uint8_t recByte = 0;
 	HAL_UART_IRQHandler(&huart1);
@@ -218,7 +218,7 @@ void USART1_IRQHandler(void)
 	huart1.Instance->CR1 |= USART_CR1_RXNEIE;
 }
 
-void USART2_IRQHandler(void)
+void USART2_IRQHandler(void)	//FPM383C
 {
 	uint8_t recByte = 0;
 	HAL_UART_IRQHandler(&huart2);

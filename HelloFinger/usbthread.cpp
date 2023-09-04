@@ -19,7 +19,7 @@ extern uint8_t runningstate;
 
 
 uint8_t rec;
-uint8_t rec_buffer[20]; //接收缓冲区
+uint8_t rec_buffer[REC_BUFFER_LEN]; //接收缓冲区
 uint8_t returnFlag=0;
 QByteArray rec_buffer_arry;
 
@@ -47,8 +47,8 @@ void USBTHREAD::run()
                 qDebug() << "stopped=" << stopped;
             }
 
-            rec = hid_read_timeout(handle,rec_buffer,20,1000);     //接收的第一字节为后续数据长度
-            rec_buffer_arry = QByteArray((char*)rec_buffer,20);
+            rec = hid_read_timeout(handle,rec_buffer,50,100);     //接收的第一字节为后续数据长度
+            rec_buffer_arry = QByteArray((char*)rec_buffer,50);
 
             if(!CalcCheckSum(rec_buffer)){  //判断校验位
                 qDebug()<<"CheckSum Error!";
@@ -72,7 +72,7 @@ void USBTHREAD::run()
                     break;
                 }
 
-                memset(rec_buffer,0,20);
+                memset(rec_buffer,0,REC_BUFFER_LEN);
             }
 
     }else if(runningstate == TRANSMISSIONSTATE){    //当前处于透传状态
@@ -96,8 +96,8 @@ void USBTHREAD::run()
                     msleep(5000);
                 }
             }
-            rec = hid_read_timeout(transhandle,rec_buffer,20,1000);     //接收的第一字节为后续数据长度
-            rec_buffer_arry = QByteArray((char*)rec_buffer,20);
+            rec = hid_read_timeout(transhandle,rec_buffer,REC_BUFFER_LEN,1000);     //接收的第一字节为后续数据长度
+            rec_buffer_arry = QByteArray((char*)rec_buffer,REC_BUFFER_LEN);
 
             if(!CalcCheckSum(rec_buffer)){  //判断校验位
                 continue;
@@ -120,7 +120,7 @@ void USBTHREAD::run()
                     break;
                 }
 
-                memset(rec_buffer,0,20);
+                memset(rec_buffer,0,REC_BUFFER_LEN);
             }
         }
     }

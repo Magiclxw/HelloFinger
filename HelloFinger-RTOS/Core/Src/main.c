@@ -109,7 +109,7 @@ int main(void)
 	
 	delay_init(72);
 	FPM383C_Init();
-	//CH9329_Init();
+	CH9329_Init();
 	delay_ms(1000);
 	ENCODER_Init();
 	id = Flash_Read_id(); /* ∂¡»°FLASH ID */

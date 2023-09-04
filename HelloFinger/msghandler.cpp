@@ -4,15 +4,17 @@
 #include "entrance.h"
 #include "mainwindow.h"
 #include "hidapi.h"
-
+#include "usbthread.h"
+#include "string.h"
 /* 处理USB接收数据 */
+
+REC_DATA_FORMAT_t g_rec_data_format = {0};
 
 extern uint8_t g_enroll_state;  //注册状态
 extern struct hid_device_ *transhandle;
 uint8_t Command[20];
 
-uint8_t length; //数据长度
-uint8_t head;   //指令码
+uint8_t datalength; //hid数据长度
 uint8_t checksum = 0;   //校验和
 uint8_t TableState[8];  //数据：索引表存储状态
 
@@ -35,11 +37,11 @@ uint8_t CalcCheckSum(uint8_t *msg)
         checksum += msg[i];
     }
     if(checksum == msg[length]){
-        //qDebug() << "验证成功" ;
+        qDebug() << "compare ok" ;
         checksum = 0;
         return 1;
     }else{
-        qDebug() << "验证失败" ;
+        qDebug() << "compare error" ;
         checksum = 0;
         return 0;
     }
@@ -57,14 +59,21 @@ uint8_t CalcCheckSum(uint8_t *msg)
 uint8_t Handler(uint8_t *msg)
 {
     qDebug() << "handler" ;
-    length = msg[0];
-    head = msg[1];
-    qDebug() << "length= " << length;
-    qDebug() << "head= " << head;
-    switch (head) {
+    datalength = msg[0];
+    g_rec_data_format.cmd = msg[1];
+    g_rec_data_format.data_len = msg[2];
+    g_rec_data_format.type = msg[3];
+    g_rec_data_format.result = msg[4];
+    //g_rec_data_format.data = &msg[4];
+    memcpy((uint8_t*)&g_rec_data_format.data, (uint8_t*)&msg[5],g_rec_data_format.data_len);
+    g_rec_data_format.checksum = msg[g_rec_data_format.data_len];
+    qDebug() << "length= " << datalength;
+    qDebug() << "cmd= " << g_rec_data_format.cmd;
+
+    switch (g_rec_data_format.type) {
     case TABLESTATE:    //数据为索引表信息
         for(int i=0;i<8;i++){
-            TableState [i] = msg[i+3];  //+3：byte 0 是接收长度，byte 1 是指令码，byte 2是数据长度，byte 3 开始是数据
+            TableState [i] = g_rec_data_format.data[i];  //+3：byte 0 是接收长度，byte 1 是指令码，byte 2是数据长度，byte 3 开始是数据
         }
         qDebug() << "tablestate" ;
         return TABLESTATE;

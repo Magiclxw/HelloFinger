@@ -258,7 +258,7 @@ static void Finger_Func_Exec(void)
 						g_usb_response.type = USB_PROTOCOL_FORMAT_GET_INDEX_LIST;
 						g_usb_response.result = CONFIRM_OK;
 						memcpy((uint8_t*)&g_usb_response.data,(uint8_t*)&g_data_format.data[1],32);
-						g_usb_response.data[36] = CH9329_CAL_SUM((uint8_t*)&g_usb_response,0x22);
+						g_usb_response.data[32] = CH9329_CAL_SUM((uint8_t*)&g_usb_response,36);
 						Send_HID_Data((uint8_t*)&g_usb_response,37);
 					}
 					if(event_status & EVENT_AUTO_ENROLL)

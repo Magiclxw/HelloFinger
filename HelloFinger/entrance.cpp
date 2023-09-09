@@ -141,8 +141,8 @@ Entrance::Entrance(QWidget *parent)
 
     connect(usbthread,&USBTHREAD::SI_TableStateUpdate,m,&MainWindow::SL_TableStateUpdate);
     connect(usbthread,&USBTHREAD::SI_EnrollStateUpdate,m,&MainWindow::SL_EnrollStateUpdate);
-    connect(m,&MainWindow::SI_AddFinger,this,[=](uint8_t id,uint8_t times,uint8_t *param){
-        uint8_t cmd[6] = {USB_ENROLL,0x00,id,times,param[0],param[1]};
+    connect(m,&MainWindow::SI_AddFinger,this,[=](uint8_t id,uint8_t times,uint8_t param1,uint8_t param2){
+        uint8_t cmd[6] = {USB_PROTOCOL_FORMAT_ENROLL_FINGER,0x00,id,times,param1,param2};
         GenerateCmd(cmd,6);
         hid_write(handle,Command,11);  //cmd:6 + head:4 + tail:1
         memset(Command,0,20);

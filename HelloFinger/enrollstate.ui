@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>State:</string>
+    <string>请按下手指</string>
    </property>
   </widget>
  </widget>

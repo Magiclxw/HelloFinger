@@ -8,9 +8,11 @@
 #include "string.h"
 /* 处理USB接收数据 */
 
+REC_DATA_CTL_t g_rec_data_ctl = {0};
 REC_DATA_FORMAT_t g_rec_data_format = {0};
 
-extern uint8_t g_enroll_state;  //注册状态
+
+extern uint8_t g_enroll_param[2];
 extern struct hid_device_ *transhandle;
 uint8_t Command[20];
 
@@ -37,11 +39,12 @@ uint8_t CalcCheckSum(uint8_t *msg)
         checksum += msg[i];
     }
     if(checksum == msg[length]){
-        qDebug() << "compare ok" ;
+
+        qDebug() << "compare ok"  << "calc checksum = " << checksum << "rec checksum = " << msg[length];;
         checksum = 0;
         return 1;
     }else{
-        qDebug() << "compare error" ;
+        qDebug() << "compare error" << "calc checksum = " << checksum << "rec checksum = " << msg[length];
         checksum = 0;
         return 0;
     }
@@ -71,24 +74,25 @@ uint8_t Handler(uint8_t *msg)
     qDebug() << "cmd= " << g_rec_data_format.cmd;
 
     switch (g_rec_data_format.type) {
-    case TABLESTATE:    //数据为索引表信息
+    case USB_PROTOCOL_FORMAT_GET_INDEX_LIST:    //数据为索引表信息
         for(int i=0;i<8;i++){
-            TableState [i] = g_rec_data_format.data[i];  //+3：byte 0 是接收长度，byte 1 是指令码，byte 2是数据长度，byte 3 开始是数据
+            TableState [i] = g_rec_data_format.data[i];  //FPM383C索引表仅前8byte有效
         }
         qDebug() << "tablestate" ;
-        return TABLESTATE;
-    case ENROLL:    //数据为指纹注册状态信息
+        return USB_PROTOCOL_FORMAT_GET_INDEX_LIST;
+    case USB_PROTOCOL_FORMAT_ENROLL_FINGER:    //数据为指纹注册状态信息
     {
-        g_enroll_state = msg[3];
-        qDebug()<<"enroll_state:"<<g_enroll_state;
-        return ENROLL;
-    }
-    case HEARTBEAT:
-    {
-        uint8_t cmd = USB_HEARTBEAT;
-        GenerateCmd(&cmd,1);
-        hid_write(transhandle,Command,CMDLEN);
+        if(g_rec_data_format.result == CONFIRM_OK)  //执行结果正确
+        {
+            memcpy(g_enroll_param,(uint8_t*)&g_rec_data_format.data,2);
 
+        }
+        else    //执行结果错误
+        {
+
+        }
+        qDebug()<<"enroll_state:"<<g_enroll_param;
+        return USB_PROTOCOL_FORMAT_ENROLL_FINGER;
     }
     default:
         return 0;
@@ -105,12 +109,12 @@ void GenerateCmd(uint8_t *data,uint8_t dataLen)
     uint8_t len = 0;
     Command[0] = 0x00;  //HID通信固定起始字节
     Command[1] = dataLen + 3;   //HID通信固定字节，通信数据长度
-    Command[2] = RECEIVE;   //协议指令头
+    Command[2] = HID_CMD_HEAD;   //协议指令头
     Command[3] = dataLen;
-    for(uint8_t i=4;i<dataLen+4;i++){
-        Command[i] = data[i-4];
-    }
-    checksum = GenerateChecksum(Command,dataLen+3);     //获取校验位
+
+    memcpy(&Command[4],data,dataLen);
+
+    checksum = GenerateChecksum(&Command[2],dataLen+2);     //获取校验位
     Command[dataLen+4] = checksum;
 
 }
@@ -119,8 +123,62 @@ void GenerateCmd(uint8_t *data,uint8_t dataLen)
 uint8_t GenerateChecksum(uint8_t *cmd,uint8_t cmdLen) //cmdLen:指令长度，不包括固定头和固定长度（cmd[0]、cmd[1]）
 {
     uint8_t checksum = 0;
-    for(int i=2;i<cmdLen+2;i++){
+    for(int i=0;i<cmdLen;i++){
         checksum += cmd[i];
     }
     return checksum;
+}
+
+void Reset_Rec_Data(void)
+{
+    memset(&g_rec_data_ctl,0,sizeof(REC_DATA_CTL_t));
+    g_rec_data_ctl.pData = (uint8_t*)&g_rec_data_format;
+}
+
+int Rec_Data_Handle(uint8_t * msg)
+{
+    uint8_t data = msg[1];  //msg[0]为数据长度，msg[1]为数据
+    if(g_rec_data_ctl.cmd_state == DATA_RECV_STATE_NO_GET)
+    {
+        if(data == HID_CMD_HEAD)
+        {
+            g_rec_data_ctl.cmd_state = DATA_RECV_STATE_GET;
+            *g_rec_data_ctl.pData = data;
+            g_rec_data_ctl.pData ++;
+            g_rec_data_ctl.rec_data_size++;
+        }
+        else
+        {
+            Reset_Rec_Data();
+        }
+    }
+    else
+    {
+        if(g_rec_data_ctl.rec_data_size < 4)
+        {
+            *g_rec_data_ctl.pData = data;
+            g_rec_data_ctl.pData ++;
+            g_rec_data_ctl.rec_data_size++;
+        }
+        else if(g_rec_data_ctl.rec_data_size == 4)
+        {
+            g_rec_data_ctl.data_state = DATA_RECV_STATE_GET;
+            g_rec_data_ctl.data_length = g_rec_data_format.data_len;
+            g_rec_data_ctl.rec_data_size++;
+        }
+        if( g_rec_data_ctl.data_state == DATA_RECV_STATE_GET)
+        {
+            if(g_rec_data_ctl.data_length)
+            {
+                g_rec_data_ctl.data_length--;
+                *g_rec_data_ctl.pData = data;
+                g_rec_data_ctl.pData++;
+            }
+            else
+            {
+                *g_rec_data_ctl.pData = data;
+
+            }
+        }
+    }
 }

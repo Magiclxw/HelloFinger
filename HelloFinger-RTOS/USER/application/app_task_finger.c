@@ -180,7 +180,7 @@ int Finger_RecData_Handle(uint8_t data)
 							}
 							if(g_finger_data_ctl.data_state == DATA_RECV_STATE_GET)
 							{
-								if(g_finger_data_ctl.data_length)
+								if(g_finger_data_ctl.data_length-1)
 								{
 									g_finger_data_ctl.data_length--;
 									*g_finger_data_ctl.pData = data;
@@ -188,6 +188,7 @@ int Finger_RecData_Handle(uint8_t data)
 								}
 								else
 								{
+									*g_finger_data_ctl.pData = data;
 									int result = CMP_Checksum((uint8_t*)&g_data_format.type,(g_data_format.len[0]<<8|g_data_format.len[1])+1);	//校验和是从包标识至校验和之间所有字节之和，包含包标识不包含校验和
 									if(result == OPERATE_SUCCESS)
 									{
@@ -229,7 +230,7 @@ static int CMP_Checksum(uint8_t *data,uint8_t len)		//比较校验和
 
 static void Finger_Func_Exec(void)
 {
-	EventBits_t event_status = 0;
+	static EventBits_t event_status = 0;
 	switch (g_data_format.type)
 	{
 		case ID_CMD:	//命令包
@@ -251,16 +252,19 @@ static void Finger_Func_Exec(void)
 				case CONFIRM_OK:
 				{
 					event_status = xEventGroupGetBits(FingerEvent_Handle);
+					//event_status = xEventGroupWaitBits(FingerEvent_Handle,EVENT_INDEX_LIST,pdTRUE,pdFALSE,100);
 					if(event_status & EVENT_INDEX_LIST)	//已发送读取索引表指令，当前返回的是索引表信息
 					{
 						g_usb_response.head = USB_RESPONSE_HEAD;
-						g_usb_response.len = 0x22;
+						g_usb_response.len = 34;
 						g_usb_response.type = USB_PROTOCOL_FORMAT_GET_INDEX_LIST;
 						g_usb_response.result = CONFIRM_OK;
 						memcpy((uint8_t*)&g_usb_response.data,(uint8_t*)&g_data_format.data[1],32);
 						g_usb_response.data[32] = CH9329_CAL_SUM((uint8_t*)&g_usb_response,36);
 						Send_HID_Data((uint8_t*)&g_usb_response,37);
+						xEventGroupClearBits(FingerEvent_Handle,EVENT_INDEX_LIST);
 					}
+					//event_status = xEventGroupWaitBits(FingerEvent_Handle,EVENT_AUTO_ENROLL,pdFALSE,pdFALSE,100);
 					if(event_status & EVENT_AUTO_ENROLL)
 					{
 						g_usb_response.head = USB_RESPONSE_HEAD;
@@ -269,8 +273,16 @@ static void Finger_Func_Exec(void)
 						g_usb_response.result = CONFIRM_OK;
 						g_usb_response.data[0] = g_data_format.data[1];	//参数1
 						g_usb_response.data[1] = g_data_format.data[2];	//参数2
-						g_usb_response.data[2] = CH9329_CAL_SUM((uint8_t*)&g_usb_response,4);
-						Send_HID_Data((uint8_t*)&g_usb_response,8);
+						g_usb_response.data[2] = CH9329_CAL_SUM((uint8_t*)&g_usb_response,6);
+						if(g_usb_response.data[0] == 0x03 || g_usb_response.data[0] == 0x01)	//重新按下手指
+						{
+							Send_HID_Data((uint8_t*)&g_usb_response,7);
+						}
+						if(g_usb_response.data[0] == 0x06 && g_usb_response.data[1] == 0xF2)	//流程结束,置位标志
+						{
+							Send_HID_Data((uint8_t*)&g_usb_response,7);
+							xEventGroupClearBits(FingerEvent_Handle,EVENT_AUTO_ENROLL);
+						}
 					}
 					break;
 				}

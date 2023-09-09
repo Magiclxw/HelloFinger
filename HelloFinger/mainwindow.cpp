@@ -22,7 +22,7 @@ extern uint8_t TableState[8];
 
 uint8_t lwIndex = 0;
 uint8_t rowIndex = 0;
-uint8_t g_enroll_state = 0;
+uint8_t g_enroll_param[2] = {0};    //注册指纹过程返回参数
 /* RGB三色控制 */
 uint8_t color_R = 0;
 uint8_t color_G = 0;
@@ -84,7 +84,7 @@ MainWindow::MainWindow(QWidget *parent) :
         enroll->show(); //弹出注册状态窗口
         uint8_t times = 4;
         uint8_t param[2] = {0x00,0x00};
-        emit SI_AddFinger(checkedRow,times,param);
+        emit SI_AddFinger(checkedRow,times,param[0],param[1]);
     });
 
     connect(RefreshAction,&QAction::triggered,this,[=](){

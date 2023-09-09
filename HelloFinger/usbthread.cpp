@@ -32,6 +32,7 @@ void USBTHREAD::run()
 {
     qDebug() << "IN Thread";
     stopped = false;
+    Reset_Rec_Data();
     while(!stopped){
         if(runningstate == PROTOCOLSTATE){      //当前处于协议传输状态
             qDebug()<<"In protocol state";
@@ -47,26 +48,28 @@ void USBTHREAD::run()
                 qDebug() << "stopped=" << stopped;
             }
 
-            rec = hid_read_timeout(handle,rec_buffer,50,100);     //接收的第一字节为后续数据长度
-            rec_buffer_arry = QByteArray((char*)rec_buffer,50);
+            rec = hid_read_timeout(handle,rec_buffer,REC_BUFFER_LEN,300);     //接收的第一字节为后续数据长度
+            rec_buffer_arry = QByteArray((char*)rec_buffer,REC_BUFFER_LEN);
 
-            if(!CalcCheckSum(rec_buffer)){  //判断校验位
-                qDebug()<<"CheckSum Error!";
-                continue;
-            }
+
 
             if(rec != 0){       //接受数据非空
                 qDebug() << "Receive num:" << rec;
-                qDebug() << "rec_buffer:" << rec_buffer[0];
+                qDebug() << "rec_buffer:" << rec_buffer[1];
                 qDebug() << "Receive data" << rec_buffer_arry.toHex();
+
+                if(!CalcCheckSum(rec_buffer)){  //判断校验位
+                    qDebug()<<"CheckSum Error!";
+                    continue;
+                }
 
                 returnFlag = Handler(rec_buffer);   //判断指令类型
                 switch (returnFlag){
-                case TABLESTATE:
+                case USB_PROTOCOL_FORMAT_GET_INDEX_LIST:
                     emit SI_TableStateUpdate();
                     table_state_flag = 1;
                     break;
-                case ENROLL:
+                case USB_PROTOCOL_FORMAT_ENROLL_FINGER:
                     emit SI_EnrollStateUpdate();
                 default:
                     break;
@@ -110,11 +113,11 @@ void USBTHREAD::run()
 
                 returnFlag = Handler(rec_buffer);   //判断指令类型
                 switch (returnFlag){
-                case TABLESTATE:
+                case USB_PROTOCOL_FORMAT_GET_INDEX_LIST:
                     emit SI_TableStateUpdate();
                     table_state_flag = 1;
                     break;
-                case ENROLL:
+                case USB_PROTOCOL_FORMAT_ENROLL_FINGER:
                     emit SI_EnrollStateUpdate();
                 default:
                     break;

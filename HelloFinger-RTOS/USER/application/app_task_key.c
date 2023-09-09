@@ -314,6 +314,7 @@ int HID_Data_Handle(void)
 				 Generate_AutoEnroll(id,enroll_times,param);
 				 HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_autoenroll,g_autoenroll.LEN[0]<<8|g_autoenroll.LEN[1]+FIXED_CMD_LEN,1000);
 				 xEventGroupSetBits((EventGroupHandle_t)FingerEvent_Handle,(EventBits_t)EVENT_AUTO_ENROLL);
+				 break;
 			 }
 			 case USB_PROTOCOL_FORMAT_SET_FINGER_COLOR:	//设置指纹模块颜色
 			 {
@@ -323,6 +324,7 @@ int HID_Data_Handle(void)
 				 uint8_t cycle_time = g_key_data_format.data[6];
 				 Generate_ControlBLN(func,start_color,end_color,cycle_time);
 				 HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_control_bln,g_control_bln.LEN[0]<<8|g_control_bln.LEN[1]+FIXED_CMD_LEN,1000);
+				 break;
 			 }
 			 case USB_PROTOCOL_FORMAT_SET_FINGER_COLOR_PRO:
 			 {
@@ -335,6 +337,7 @@ int HID_Data_Handle(void)
 				 uint8_t cycle = g_key_data_format.data[9];
 				 Generate_ControlBLN_Program(time,color1,color2,color3,color4,color5,cycle);
 				 HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_control_bln_pro,g_control_bln_pro.LEN[0]<<8|g_control_bln_pro.LEN[1]+FIXED_CMD_LEN,1000);
+				 break;
 			 }
 			 default : break;
 		 }

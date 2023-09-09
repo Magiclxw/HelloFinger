@@ -4,7 +4,7 @@
 #include <QPropertyAnimation>
 #include "entrance.h"
 
-extern uint8_t g_enroll_state;
+extern uint8_t g_enroll_param[2];
 extern uint8_t table_state_flag;
 
 QPropertyAnimation *animation;
@@ -46,14 +46,14 @@ void enrollstate::SL_InterfaceUpdate(void)
 {
     qDebug() << "InterfaceUpdate";
 
-    switch (g_enroll_state) {
-        case 0x01:
+    switch (g_enroll_param[0]) {
+        case 0x03:
             ui->state->setText("手指移开");
             break;
-        case 0x02:
+        case 0x01:
             ui->state->setText("放下手指");
             break;
-        case 0x03:
+        case 0x06:
             ui->state->setText("录入成功");
 //            animation = new QPropertyAnimation(this,"windowOpacity");
 //            animation->setDuration(2000);
@@ -64,12 +64,12 @@ void enrollstate::SL_InterfaceUpdate(void)
             delay_timer->start(1000);
             //this->hide();
             break;
-        case 0x04:
-            ui->state->setText("指纹重复");
-            break;
-        case 0x05:
-            ui->state->setText("超时");
-            break;
+        //case 0x04:
+        //    ui->state->setText("指纹重复");
+        //    break;
+        //case 0x05:
+        //    ui->state->setText("超时");
+        //    break;
         default: break;
     }
 

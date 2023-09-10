@@ -25,7 +25,7 @@ typedef enum{
     TYPE_Password,
     TYPE_Account_Password,
     TYPE_Shortcut
-}CMD_TYPE;
+}CMD_TYPE_e;
 
 
 QT_BEGIN_NAMESPACE

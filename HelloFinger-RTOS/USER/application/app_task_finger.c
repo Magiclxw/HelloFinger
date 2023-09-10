@@ -284,6 +284,26 @@ static void Finger_Func_Exec(void)
 							xEventGroupClearBits(FingerEvent_Handle,EVENT_AUTO_ENROLL);
 						}
 					}
+					if(event_status & EVENT_DELETE_CHAR)
+					{
+						g_usb_response.head = USB_RESPONSE_HEAD;
+						g_usb_response.len = 2;
+						g_usb_response.type = USB_PROTOCOL_FORMAT_DELETE_FINGER;
+						g_usb_response.result = CONFIRM_OK;
+						g_usb_response.data[0] = CH9329_CAL_SUM((uint8_t*)&g_usb_response,4);
+						Send_HID_Data((uint8_t*)&g_usb_response,5);
+						xEventGroupClearBits(FingerEvent_Handle,EVENT_DELETE_CHAR);
+					}
+					if(event_status & EVENT_TOUCH_DETECT)	//指纹验证结果
+					{
+						if(g_data_format.data[1] == 0x05)
+						{
+							Generate_Sleep();
+							HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_sleep,g_sleep.LEN[0]<<8|g_sleep.LEN[1]+FIXED_CMD_LEN,1000);
+							xEventGroupClearBits(FingerEvent_Handle,EVENT_TOUCH_DETECT);
+							
+						}
+					}
 					break;
 				}
 				case CONFIRM_REC_ERROR:

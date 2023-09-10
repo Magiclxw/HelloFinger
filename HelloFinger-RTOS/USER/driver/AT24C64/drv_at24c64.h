@@ -22,8 +22,6 @@
 #define EEPROM_SIZE	0xFFFF
 #define EEPROM_BUFFER_SIZE	100
 
-#define FINGER_FUNC_ADDR	0x0401	//指纹功能存储基地址
-
 extern uint8_t EEPROM_RX_BUF[];
 void IIC_Init(void);
 uint8_t AT24C64_ReadOneByte(uint16_t ReadAddr);

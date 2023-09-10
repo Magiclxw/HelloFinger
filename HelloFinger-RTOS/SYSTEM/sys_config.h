@@ -22,8 +22,10 @@
 #define OPERATE_ERROR_TIMEOUT 										(-7)
 #define OPERATE_ERROR_BUFFNOTENOUGH 							(-8) 
 
-#define EVENT_INDEX_LIST	0x00001
-#define EVENT_AUTO_ENROLL	0x00002
+#define EVENT_INDEX_LIST		0x00001
+#define EVENT_AUTO_ENROLL		0x00002
+#define EVENT_DELETE_CHAR		0x00004
+#define EVENT_TOUCH_DETECT	0x00008
 
 extern EventGroupHandle_t FingerEvent_Handle;
 

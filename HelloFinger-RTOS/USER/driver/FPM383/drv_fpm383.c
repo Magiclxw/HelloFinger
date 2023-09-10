@@ -1,5 +1,5 @@
 #include "drv_fpm383.h"
-
+#include "app_task_key.h"
 static void CMD_Init(void);
 static uint16_t Generate_CMD_Checksum(uint8_t * cmd,uint16_t len);
 
@@ -83,10 +83,15 @@ void FPM383C_Init(void)
 	gpio.Speed = GPIO_SPEED_FREQ_HIGH;
 	HAL_GPIO_Init(GPIOA,&gpio);
 
-	HAL_NVIC_SetPriority(EXTI4_IRQn,1,1);
+	HAL_NVIC_SetPriority(EXTI4_IRQn,7,0);
 	HAL_NVIC_EnableIRQ(EXTI4_IRQn);
 	
 	CMD_Init();
+	
+	Generate_Sleep();
+	
+	HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_sleep,g_sleep.LEN[0]<<8|g_sleep.LEN[1]+FIXED_CMD_LEN,1000);
+	
 }
 
 static void CMD_Init(void)	//初始化包头和设备地址，后期可从EEPROM中读取

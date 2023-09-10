@@ -112,7 +112,7 @@ int main(void)
 	CH9329_Init();
 	delay_ms(1000);
 	ENCODER_Init();
-	id = Flash_Read_id(); /* 读取FLASH ID */
+	id = SPI_FLASH_ReadID(); /* 读取FLASH ID */
 
     while ((id == 0) || (id == 0XFFFF)) /* 检测不到FLASH芯片 */
     {

@@ -1,8 +1,12 @@
 #include "drv_encoder.h"
 #include "drv_ch9329.h"
+#include "app_task_finger.h"
+#include "drv_fpm383.h"
+#include "app_task_key.h"
 
 __IO uint8_t signal_a = 0;
 __IO uint8_t signal_b = 0;
+
 
 void ENCODER_Init(void)
 {
@@ -71,6 +75,11 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 		case GPIO_PIN_4:
 		{
 			//g_finger_rec_flag = 1;
+			Generate_AutoIdentify(0x03,0xFFFF,0x0007);
+			HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_autoidentify,g_autoidentify.LEN[0]<<8|g_autoidentify.LEN[1]+FIXED_CMD_LEN,1000);
+			portBASE_TYPE xHigherPriorityTaskWoken = pdTRUE;
+			xEventGroupSetBitsFromISR((EventGroupHandle_t)FingerEvent_Handle,(EventBits_t)EVENT_TOUCH_DETECT,&xHigherPriorityTaskWoken);
+			portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 		}
 		
 		break;

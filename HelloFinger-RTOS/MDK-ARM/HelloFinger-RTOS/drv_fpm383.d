@@ -53,3 +53,5 @@ hellofinger-rtos\drv_fpm383.o: ../FreeRTOS/include/timers.h
 hellofinger-rtos\drv_fpm383.o: ../Core/Inc/adc.h
 hellofinger-rtos\drv_fpm383.o: ../SYSTEM/sys_config.h
 hellofinger-rtos\drv_fpm383.o: ../Core/Inc/dma.h
+hellofinger-rtos\drv_fpm383.o: ../USER/application/app_task_key.h
+hellofinger-rtos\drv_fpm383.o: ../USER/driver/CH9329/drv_ch9329.h

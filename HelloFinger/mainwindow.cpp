@@ -112,7 +112,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->pushButton_windowspassword,&QPushButton::clicked,this,[=](){
         QString windows_password = ui->lineedit_windowsPassword->text();
-        emit SI_USB_SEND_WindowsPassword(windows_password);
+        emit SI_USB_SEND_WindowsPassword(windows_password,ui->listWidget->currentIndex().row());
         qDebug()<<windows_password;
     });
 

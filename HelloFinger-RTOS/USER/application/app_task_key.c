@@ -1,6 +1,8 @@
 #include "app_task_key.h"
 #include "drv_fpm383.h"
 #include "usart.h"
+#include "string.h"
+#include "..\USER\driver\W25Q128\drv_w25q128.h"
 
 static void vTaskKeyProcessing(void);
 int Key_Protocol_Mode_RecData_Handle(uint8_t data);
@@ -9,27 +11,7 @@ static void KeyResetData(void);
 static int Key_CMP_Checksum(uint8_t *data,uint8_t len);
 static void Key_Func_Exec(void);
 
-extern CMD_AutoEnroll_t 				g_autoenroll;
-extern CMD_AutoIdentify_t 			g_autoidentify;
-extern CMD_DeleteChar_t 				g_deletechar;
-extern CMD_Cancel_t							g_cancel;
-extern CMD_Sleep_t							g_sleep;
-extern CMD_ValidTempleteNum_t 	g_valid_num;
-extern CMD_ReadIndexTable_t	 		g_read_index_table;
-extern CMD_SetPwd_t							g_set_pwd;
-extern CMD_VfyPwd_t							g_vfy_pwd;
-extern CMD_HandShake_t					g_hand_shake;
-extern CMD_CheckSensor_t				g_check_sensor;
-extern CMD_SetChipAddr_t				g_set_chip_addr;
-extern CMD_WriteNotePad_t				g_write_notepad;
-extern CMD_ReadNotepad_t   			g_read_notepad;
-extern CMD_GetImage_t						g_get_image;
-extern CMD_GenChar_t						g_gen_char;
-extern CMD_RegModel_t						g_reg_model;
-extern CMD_StoreChar_t					g_store_char;
-extern CMD_Match_t							g_match;
-extern CMD_ControlBLN_t					g_control_bln;
-extern CMD_ControlBLN_PRO_t			g_control_bln_pro;
+
 
 TaskHandle_t Task_Key_Handle = NULL;
 QueueHandle_t Queue_KeyProcessing_Handle = NULL;
@@ -308,35 +290,99 @@ int HID_Data_Handle(void)
 			 }
 			 case USB_PROTOCOL_FORMAT_ENROLL_FINGER:	//注册指纹
 			 {
-				 uint16_t id = g_key_data_format.data[3]<<8|g_key_data_format.data[4];
-				 uint8_t enroll_times = g_key_data_format.data[5];
-				 uint16_t param = g_key_data_format.data[6]<<8|g_key_data_format.data[7];
+				 uint16_t id = g_key_data_format.data[5]<<8|g_key_data_format.data[6];
+				 uint8_t enroll_times = g_key_data_format.data[7];
+				 uint16_t param = g_key_data_format.data[8]<<8|g_key_data_format.data[9];
 				 Generate_AutoEnroll(id,enroll_times,param);
 				 HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_autoenroll,g_autoenroll.LEN[0]<<8|g_autoenroll.LEN[1]+FIXED_CMD_LEN,1000);
 				 xEventGroupSetBits((EventGroupHandle_t)FingerEvent_Handle,(EventBits_t)EVENT_AUTO_ENROLL);
 				 break;
 			 }
+			 case USB_PROTOCOL_FORMAT_DELETE_FINGER:	//删除指纹
+			 {
+				 uint16_t id = g_key_data_format.data[5]<<8|g_key_data_format.data[6];
+				 uint16_t num = g_key_data_format.data[7]<<8|g_key_data_format.data[8];
+				 Generate_DeletChar(id,num);
+				 HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_deletechar,g_deletechar.LEN[0]<<8|g_deletechar.LEN[1]+FIXED_CMD_LEN,1000);
+				 xEventGroupSetBits((EventGroupHandle_t)FingerEvent_Handle,(EventBits_t)EVENT_DELETE_CHAR);
+				 break;
+			 }
 			 case USB_PROTOCOL_FORMAT_SET_FINGER_COLOR:	//设置指纹模块颜色
 			 {
-				 uint8_t func = g_key_data_format.data[3];
-				 uint8_t start_color = g_key_data_format.data[4];
-				 uint8_t end_color = g_key_data_format.data[5];
-				 uint8_t cycle_time = g_key_data_format.data[6];
+				 uint8_t func = g_key_data_format.data[5];
+				 uint8_t start_color = g_key_data_format.data[6];
+				 uint8_t end_color = g_key_data_format.data[7];
+				 uint8_t cycle_time = g_key_data_format.data[8];
 				 Generate_ControlBLN(func,start_color,end_color,cycle_time);
 				 HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_control_bln,g_control_bln.LEN[0]<<8|g_control_bln.LEN[1]+FIXED_CMD_LEN,1000);
 				 break;
 			 }
 			 case USB_PROTOCOL_FORMAT_SET_FINGER_COLOR_PRO:
 			 {
-				 uint8_t time = g_key_data_format.data[3];
-				 uint8_t color1 = g_key_data_format.data[4];
-				 uint8_t color2 = g_key_data_format.data[5];
-				 uint8_t color3 = g_key_data_format.data[6];
-				 uint8_t color4 = g_key_data_format.data[7];
-				 uint8_t color5 = g_key_data_format.data[8];
-				 uint8_t cycle = g_key_data_format.data[9];
+				 uint8_t time = g_key_data_format.data[5];
+				 uint8_t color1 = g_key_data_format.data[6];
+				 uint8_t color2 = g_key_data_format.data[7];
+				 uint8_t color3 = g_key_data_format.data[8];
+				 uint8_t color4 = g_key_data_format.data[9];
+				 uint8_t color5 = g_key_data_format.data[10];
+				 uint8_t cycle = g_key_data_format.data[11];
 				 Generate_ControlBLN_Program(time,color1,color2,color3,color4,color5,cycle);
 				 HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_control_bln_pro,g_control_bln_pro.LEN[0]<<8|g_control_bln_pro.LEN[1]+FIXED_CMD_LEN,1000);
+				 break;
+			 }
+			 case USB_PROTOCOL_FORMAT_FUNC_STORE:	//存储指纹验证成功执行功能
+			 {
+				 static uint16_t packNum = 0;	//后续包个数
+				 static uint8_t seqLen1 = 0;
+				 static uint8_t seqLen2 = 0;
+				 static uint8_t index = 0;
+				 packNum = g_key_data_format.data[5]<<8|g_key_data_format.data[6];
+				 if(g_key_data_format.data[7] == TYPE_Windows_Password)	//开机密码
+				 {
+					 if(packNum == 1)
+					 {
+						 index = g_key_data_format.data[8];
+						 seqLen1 = g_key_data_format.data[9];
+						 //seqLen2 = g_key_data_format.data[10];
+					 }
+					 if(packNum == 0 && index == g_key_data_format.data[8])
+					 {
+						 uint8_t *password = (uint8_t *)pvPortMalloc(seqLen1);
+						 SPI_FLASH_BufferWrite(password,FINGER_FUNC_BASE_ADDR+index*FINGER_FUNC_BASE_SIZE,seqLen1);
+						 index = 0;
+						 seqLen1 = 0;
+						 seqLen2 = 0;
+						 packNum = 0;
+						 vPortFree((uint8_t*)password);
+					 }
+				 }
+				 if(g_key_data_format.data[7] == TYPE_Password)	//密码
+				 {
+					 if(packNum == 1)
+					 {
+						 index = g_key_data_format.data[8];
+						 seqLen1 = g_key_data_format.data[9];
+						 //seqLen2 = g_key_data_format.data[10];
+					 }
+					 if(packNum == 0 && index == g_key_data_format.data[8])
+					 {
+						 uint8_t *password = (uint8_t *)pvPortMalloc(seqLen1);
+						 SPI_FLASH_BufferWrite(password,FINGER_FUNC_BASE_ADDR+index*FINGER_FUNC_BASE_SIZE,seqLen1);
+						 index = 0;
+						 seqLen1 = 0;
+						 seqLen2 = 0;
+						 packNum = 0;
+						 vPortFree((uint8_t*)password);
+					 }
+				 }
+				 if(g_key_data_format.data[7] == TYPE_Account_Password)	//账号密码
+				 {
+					 
+				 }
+				 if(g_key_data_format.data[7] == TYPE_Shortcut)	//快捷键
+				 {
+					 
+				 }
 				 break;
 			 }
 			 default : break;

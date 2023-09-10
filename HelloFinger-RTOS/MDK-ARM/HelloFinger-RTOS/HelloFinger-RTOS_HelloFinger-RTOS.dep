@@ -1,6 +1,6 @@
 Dependencies for Project 'HelloFinger-RTOS', Target 'HelloFinger-RTOS': (DO NOT MODIFY !)
 F (startup_stm32f103xb.s)(0x64D75CAB)(--cpu Cortex-M3 -g --apcs=interwork --pd "__MICROLIB SETA 1"-I.\RTE\_HelloFinger-RTOS-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include--pd "__UVISION_VERSION SETA 526" --pd "_RTE_ SETA 1" --pd "STM32F10X_MD SETA 1"--list startup_stm32f103xb.lst --xref -o hellofinger-rtos\startup_stm32f103xb.o --depend hellofinger-rtos\startup_stm32f103xb.d)
-F (../Core/Src/main.c)(0x64F2A97A)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../FreeRTOS/include -I ../FreeRTOS/portable/RVDS/ARM_CM3 -I ../SYSTEM/delay -I ../SYSTEM/sys -I ../SYSTEM/usart -I ../USER/application -I ../USER/driver -I ../SYSTEM -I ../USER/driver/FPM383 -I ../USER/driver/AT24C64 -I ../USER/driver/CH9329 -I ../USER/driver/SIQ-02FVS3-I.\RTE\_HelloFinger-RTOS-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger-rtos\main.o --omf_browse hellofinger-rtos\main.crf --depend hellofinger-rtos\main.d)
+F (../Core/Src/main.c)(0x64FC38FA)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../FreeRTOS/include -I ../FreeRTOS/portable/RVDS/ARM_CM3 -I ../SYSTEM/delay -I ../SYSTEM/sys -I ../SYSTEM/usart -I ../USER/application -I ../USER/driver -I ../SYSTEM -I ../USER/driver/FPM383 -I ../USER/driver/AT24C64 -I ../USER/driver/CH9329 -I ../USER/driver/SIQ-02FVS3-I.\RTE\_HelloFinger-RTOS-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger-rtos\main.o --omf_browse hellofinger-rtos\main.crf --depend hellofinger-rtos\main.d)
 I (../Core/Inc/main.h)(0x64A17440)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x64606658)
 I (../Core/Inc/stm32f1xx_hal_conf.h)(0x64DCB709)
@@ -32,8 +32,8 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h)(0x64606658)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x64606658)
 I (../Core/Inc/usart.h)(0x64E5FEDC)
 I (../Core/Inc/gpio.h)(0x64A1743F)
-I (../USER/application/app_task_finger.h)(0x64F2A8A8)
-I (../SYSTEM/sys_config.h)(0x64DCCFDA)
+I (../USER/application/app_task_finger.h)(0x64FC8C57)
+I (../SYSTEM/sys_config.h)(0x64FD150D)
 I (E:\SOFTWARE\Environment\Keil\ARM\ARMCC\include\string.h)(0x599EDB3C)
 I (../FreeRTOS/include/FreeRTOS.h)(0x624120B7)
 I (../FreeRTOS/include/FreeRTOSConfig.h)(0x64A179CD)
@@ -54,15 +54,15 @@ I (../FreeRTOS/include/event_groups.h)(0x624120B7)
 I (../FreeRTOS/include/timers.h)(0x624120B7)
 I (../Core/Inc/adc.h)(0x64E064F7)
 I (../Core/Inc/dma.h)(0x64DCB7D6)
-I (../USER/driver/FPM383/drv_fpm383.h)(0x64F728E6)
-I (../USER/application/app_task_key.h)(0x64EB2338)
+I (../USER/driver/FPM383/drv_fpm383.h)(0x64FD1B8A)
+I (../USER/application/app_task_key.h)(0x64FC8CD0)
 I (../USER/driver/CH9329/drv_ch9329.h)(0x64E969A5)
-I (../USER/driver/AT24C64/drv_at24c64.h)(0x64C114D9)
+I (../USER/driver/AT24C64/drv_at24c64.h)(0x64FC8C13)
 I (../USER/driver/SIQ-02FVS3/drv_encoder.h)(0x64D8A544)
 I (../SYSTEM/..\USER\driver\WS2812\drv_ws2812b.h)(0x64D8B977)
 I (../USER/application/app_task_rgb.h)(0x64EB233B)
 I (../USER/application/app_task_joystick.h)(0x64E3624B)
-I (../SYSTEM/..\USER\driver\W25Q128\drv_w25q128.h)(0x64E16A94)
+I (../SYSTEM/..\USER\driver\W25Q128\drv_w25q128.h)(0x64FC381F)
 F (../Core/Src/gpio.c)(0x64A1743F)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../FreeRTOS/include -I ../FreeRTOS/portable/RVDS/ARM_CM3 -I ../SYSTEM/delay -I ../SYSTEM/sys -I ../SYSTEM/usart -I ../USER/application -I ../USER/driver -I ../SYSTEM -I ../USER/driver/FPM383 -I ../USER/driver/AT24C64 -I ../USER/driver/CH9329 -I ../USER/driver/SIQ-02FVS3-I.\RTE\_HelloFinger-RTOS-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger-rtos\gpio.o --omf_browse hellofinger-rtos\gpio.crf --depend hellofinger-rtos\gpio.d)
 I (../Core/Inc/gpio.h)(0x64A1743F)
 I (../Core/Inc/main.h)(0x64A17440)
@@ -94,7 +94,7 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h)(0x64606658)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h)(0x64606658)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h)(0x64606658)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x64606658)
-F (../Core/Src/usart.c)(0x64F88497)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../FreeRTOS/include -I ../FreeRTOS/portable/RVDS/ARM_CM3 -I ../SYSTEM/delay -I ../SYSTEM/sys -I ../SYSTEM/usart -I ../USER/application -I ../USER/driver -I ../SYSTEM -I ../USER/driver/FPM383 -I ../USER/driver/AT24C64 -I ../USER/driver/CH9329 -I ../USER/driver/SIQ-02FVS3-I.\RTE\_HelloFinger-RTOS-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger-rtos\usart.o --omf_browse hellofinger-rtos\usart.crf --depend hellofinger-rtos\usart.d)
+F (../Core/Src/usart.c)(0x64FD1CD8)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../FreeRTOS/include -I ../FreeRTOS/portable/RVDS/ARM_CM3 -I ../SYSTEM/delay -I ../SYSTEM/sys -I ../SYSTEM/usart -I ../USER/application -I ../USER/driver -I ../SYSTEM -I ../USER/driver/FPM383 -I ../USER/driver/AT24C64 -I ../USER/driver/CH9329 -I ../USER/driver/SIQ-02FVS3-I.\RTE\_HelloFinger-RTOS-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger-rtos\usart.o --omf_browse hellofinger-rtos\usart.crf --depend hellofinger-rtos\usart.d)
 I (../Core/Inc/usart.h)(0x64E5FEDC)
 I (../Core/Inc/main.h)(0x64A17440)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x64606658)
@@ -126,7 +126,7 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h)(0x64606658)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h)(0x64606658)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x64606658)
 I (E:\SOFTWARE\Environment\Keil\ARM\ARMCC\include\stdio.h)(0x599EDB3C)
-I (../SYSTEM/sys_config.h)(0x64DCCFDA)
+I (../SYSTEM/sys_config.h)(0x64FD150D)
 I (E:\SOFTWARE\Environment\Keil\ARM\ARMCC\include\string.h)(0x599EDB3C)
 I (../FreeRTOS/include/FreeRTOS.h)(0x624120B7)
 I (../FreeRTOS/include/FreeRTOSConfig.h)(0x64A179CD)
@@ -179,7 +179,7 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x64606658)
 I (../Core/Inc/stm32f1xx_it.h)(0x64A17440)
 I (../Core/Inc/usart.h)(0x64E5FEDC)
 I (../Core/Inc/dma.h)(0x64DCB7D6)
-I (../SYSTEM/sys_config.h)(0x64DCCFDA)
+I (../SYSTEM/sys_config.h)(0x64FD150D)
 I (E:\SOFTWARE\Environment\Keil\ARM\ARMCC\include\string.h)(0x599EDB3C)
 I (../FreeRTOS/include/FreeRTOS.h)(0x624120B7)
 I (../FreeRTOS/include/FreeRTOSConfig.h)(0x64A179CD)
@@ -231,7 +231,7 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h)(0x64606658)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x64606658)
 F (..\Core\Src\adc.c)(0x64E069F3)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../FreeRTOS/include -I ../FreeRTOS/portable/RVDS/ARM_CM3 -I ../SYSTEM/delay -I ../SYSTEM/sys -I ../SYSTEM/usart -I ../USER/application -I ../USER/driver -I ../SYSTEM -I ../USER/driver/FPM383 -I ../USER/driver/AT24C64 -I ../USER/driver/CH9329 -I ../USER/driver/SIQ-02FVS3-I.\RTE\_HelloFinger-RTOS-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger-rtos\adc.o --omf_browse hellofinger-rtos\adc.crf --depend hellofinger-rtos\adc.d)
 I (../Core/Inc/adc.h)(0x64E064F7)
-I (../SYSTEM/sys_config.h)(0x64DCCFDA)
+I (../SYSTEM/sys_config.h)(0x64FD150D)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h)(0x64606658)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h)(0x64D75D73)
 I (../Drivers/CMSIS/Include/core_cm3.h)(0x64606652)
@@ -285,7 +285,7 @@ I (../USER/application/app_task_joystick.h)(0x64E3624B)
 I (../USER/driver/CH9329/drv_ch9329.h)(0x64E969A5)
 F (..\Core\Src\dma.c)(0x64E03AA9)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../FreeRTOS/include -I ../FreeRTOS/portable/RVDS/ARM_CM3 -I ../SYSTEM/delay -I ../SYSTEM/sys -I ../SYSTEM/usart -I ../USER/application -I ../USER/driver -I ../SYSTEM -I ../USER/driver/FPM383 -I ../USER/driver/AT24C64 -I ../USER/driver/CH9329 -I ../USER/driver/SIQ-02FVS3-I.\RTE\_HelloFinger-RTOS-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger-rtos\dma.o --omf_browse hellofinger-rtos\dma.crf --depend hellofinger-rtos\dma.d)
 I (../Core/Inc/dma.h)(0x64DCB7D6)
-I (../SYSTEM/sys_config.h)(0x64DCCFDA)
+I (../SYSTEM/sys_config.h)(0x64FD150D)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h)(0x64606658)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h)(0x64D75D73)
 I (../Drivers/CMSIS/Include/core_cm3.h)(0x64606652)
@@ -1316,8 +1316,8 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h)(0x64606658)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h)(0x64606658)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h)(0x64606658)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x64606658)
-I (../USER/application/app_task_key.h)(0x64EB2338)
-I (../SYSTEM/sys_config.h)(0x64DCCFDA)
+I (../USER/application/app_task_key.h)(0x64FC8CD0)
+I (../SYSTEM/sys_config.h)(0x64FD150D)
 I (E:\SOFTWARE\Environment\Keil\ARM\ARMCC\include\string.h)(0x599EDB3C)
 I (../FreeRTOS/include/FreeRTOS.h)(0x624120B7)
 I (../FreeRTOS/include/FreeRTOSConfig.h)(0x64A179CD)
@@ -1340,14 +1340,14 @@ I (../FreeRTOS/include/timers.h)(0x624120B7)
 I (../Core/Inc/adc.h)(0x64E064F7)
 I (../Core/Inc/dma.h)(0x64DCB7D6)
 I (../USER/driver/CH9329/drv_ch9329.h)(0x64E969A5)
-I (../USER/application/app_task_finger.h)(0x64F2A8A8)
-I (../USER/driver/FPM383/drv_fpm383.h)(0x64F728E6)
+I (../USER/application/app_task_finger.h)(0x64FC8C57)
+I (../USER/driver/FPM383/drv_fpm383.h)(0x64FD1B8A)
 I (../USER/application/app_task_rgb.h)(0x64EB233B)
 I (../SYSTEM/..\USER\driver\WS2812\drv_ws2812b.h)(0x64D8B977)
 I (../USER/application/app_task_joystick.h)(0x64E3624B)
-F (..\USER\driver\FPM383\drv_fpm383.c)(0x64E74C58)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../FreeRTOS/include -I ../FreeRTOS/portable/RVDS/ARM_CM3 -I ../SYSTEM/delay -I ../SYSTEM/sys -I ../SYSTEM/usart -I ../USER/application -I ../USER/driver -I ../SYSTEM -I ../USER/driver/FPM383 -I ../USER/driver/AT24C64 -I ../USER/driver/CH9329 -I ../USER/driver/SIQ-02FVS3-I.\RTE\_HelloFinger-RTOS-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger-rtos\drv_fpm383.o --omf_browse hellofinger-rtos\drv_fpm383.crf --depend hellofinger-rtos\drv_fpm383.d)
-I (..\USER\driver\FPM383\drv_fpm383.h)(0x64F728E6)
-I (../SYSTEM/sys_config.h)(0x64DCCFDA)
+F (..\USER\driver\FPM383\drv_fpm383.c)(0x64FD1CCE)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../FreeRTOS/include -I ../FreeRTOS/portable/RVDS/ARM_CM3 -I ../SYSTEM/delay -I ../SYSTEM/sys -I ../SYSTEM/usart -I ../USER/application -I ../USER/driver -I ../SYSTEM -I ../USER/driver/FPM383 -I ../USER/driver/AT24C64 -I ../USER/driver/CH9329 -I ../USER/driver/SIQ-02FVS3-I.\RTE\_HelloFinger-RTOS-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger-rtos\drv_fpm383.o --omf_browse hellofinger-rtos\drv_fpm383.crf --depend hellofinger-rtos\drv_fpm383.d)
+I (..\USER\driver\FPM383\drv_fpm383.h)(0x64FD1B8A)
+I (../SYSTEM/sys_config.h)(0x64FD150D)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h)(0x64606658)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h)(0x64D75D73)
 I (../Drivers/CMSIS/Include/core_cm3.h)(0x64606652)
@@ -1398,8 +1398,10 @@ I (../FreeRTOS/include/event_groups.h)(0x624120B7)
 I (../FreeRTOS/include/timers.h)(0x624120B7)
 I (../Core/Inc/adc.h)(0x64E064F7)
 I (../Core/Inc/dma.h)(0x64DCB7D6)
+I (../USER/application/app_task_key.h)(0x64FC8CD0)
+I (../USER/driver/CH9329/drv_ch9329.h)(0x64E969A5)
 F (..\USER\driver\AT24C64\drv_at24c64.c)(0x64BFD254)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../FreeRTOS/include -I ../FreeRTOS/portable/RVDS/ARM_CM3 -I ../SYSTEM/delay -I ../SYSTEM/sys -I ../SYSTEM/usart -I ../USER/application -I ../USER/driver -I ../SYSTEM -I ../USER/driver/FPM383 -I ../USER/driver/AT24C64 -I ../USER/driver/CH9329 -I ../USER/driver/SIQ-02FVS3-I.\RTE\_HelloFinger-RTOS-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger-rtos\drv_at24c64.o --omf_browse hellofinger-rtos\drv_at24c64.crf --depend hellofinger-rtos\drv_at24c64.d)
-I (..\USER\driver\AT24C64\drv_at24c64.h)(0x64C114D9)
+I (..\USER\driver\AT24C64\drv_at24c64.h)(0x64FC8C13)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h)(0x64606658)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h)(0x64D75D73)
 I (../Drivers/CMSIS/Include/core_cm3.h)(0x64606652)
@@ -1432,7 +1434,7 @@ I (../SYSTEM/delay/delay.h)(0x64BFD236)
 I (../SYSTEM/sys/sys.h)(0x64BFCE8C)
 F (..\USER\driver\CH9329\drv_ch9329.c)(0x64EB39CA)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../FreeRTOS/include -I ../FreeRTOS/portable/RVDS/ARM_CM3 -I ../SYSTEM/delay -I ../SYSTEM/sys -I ../SYSTEM/usart -I ../USER/application -I ../USER/driver -I ../SYSTEM -I ../USER/driver/FPM383 -I ../USER/driver/AT24C64 -I ../USER/driver/CH9329 -I ../USER/driver/SIQ-02FVS3-I.\RTE\_HelloFinger-RTOS-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger-rtos\drv_ch9329.o --omf_browse hellofinger-rtos\drv_ch9329.crf --depend hellofinger-rtos\drv_ch9329.d)
 I (..\USER\driver\CH9329\drv_ch9329.h)(0x64E969A5)
-I (../SYSTEM/sys_config.h)(0x64DCCFDA)
+I (../SYSTEM/sys_config.h)(0x64FD150D)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h)(0x64606658)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h)(0x64D75D73)
 I (../Drivers/CMSIS/Include/core_cm3.h)(0x64606652)
@@ -1483,9 +1485,9 @@ I (../FreeRTOS/include/event_groups.h)(0x624120B7)
 I (../FreeRTOS/include/timers.h)(0x624120B7)
 I (../Core/Inc/adc.h)(0x64E064F7)
 I (../Core/Inc/dma.h)(0x64DCB7D6)
-F (..\USER\driver\SIQ-02FVS3\drv_encoder.c)(0x64D8A3F7)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../FreeRTOS/include -I ../FreeRTOS/portable/RVDS/ARM_CM3 -I ../SYSTEM/delay -I ../SYSTEM/sys -I ../SYSTEM/usart -I ../USER/application -I ../USER/driver -I ../SYSTEM -I ../USER/driver/FPM383 -I ../USER/driver/AT24C64 -I ../USER/driver/CH9329 -I ../USER/driver/SIQ-02FVS3-I.\RTE\_HelloFinger-RTOS-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger-rtos\drv_encoder.o --omf_browse hellofinger-rtos\drv_encoder.crf --depend hellofinger-rtos\drv_encoder.d)
+F (..\USER\driver\SIQ-02FVS3\drv_encoder.c)(0x64FD1BD4)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../FreeRTOS/include -I ../FreeRTOS/portable/RVDS/ARM_CM3 -I ../SYSTEM/delay -I ../SYSTEM/sys -I ../SYSTEM/usart -I ../USER/application -I ../USER/driver -I ../SYSTEM -I ../USER/driver/FPM383 -I ../USER/driver/AT24C64 -I ../USER/driver/CH9329 -I ../USER/driver/SIQ-02FVS3-I.\RTE\_HelloFinger-RTOS-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger-rtos\drv_encoder.o --omf_browse hellofinger-rtos\drv_encoder.crf --depend hellofinger-rtos\drv_encoder.d)
 I (..\USER\driver\SIQ-02FVS3\drv_encoder.h)(0x64D8A544)
-I (../SYSTEM/sys_config.h)(0x64DCCFDA)
+I (../SYSTEM/sys_config.h)(0x64FD150D)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h)(0x64606658)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h)(0x64D75D73)
 I (../Drivers/CMSIS/Include/core_cm3.h)(0x64606652)
@@ -1537,9 +1539,12 @@ I (../FreeRTOS/include/timers.h)(0x624120B7)
 I (../Core/Inc/adc.h)(0x64E064F7)
 I (../Core/Inc/dma.h)(0x64DCB7D6)
 I (../USER/driver/CH9329/drv_ch9329.h)(0x64E969A5)
+I (../USER/application/app_task_finger.h)(0x64FC8C57)
+I (../USER/driver/FPM383/drv_fpm383.h)(0x64FD1B8A)
+I (../USER/application/app_task_key.h)(0x64FC8CD0)
 F (..\USER\driver\WS2812\drv_ws2812b.c)(0x64E16959)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../FreeRTOS/include -I ../FreeRTOS/portable/RVDS/ARM_CM3 -I ../SYSTEM/delay -I ../SYSTEM/sys -I ../SYSTEM/usart -I ../USER/application -I ../USER/driver -I ../SYSTEM -I ../USER/driver/FPM383 -I ../USER/driver/AT24C64 -I ../USER/driver/CH9329 -I ../USER/driver/SIQ-02FVS3-I.\RTE\_HelloFinger-RTOS-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger-rtos\drv_ws2812b.o --omf_browse hellofinger-rtos\drv_ws2812b.crf --depend hellofinger-rtos\drv_ws2812b.d)
 I (../SYSTEM/..\USER\driver\WS2812\drv_ws2812b.h)(0x64D8B977)
-I (../SYSTEM/sys_config.h)(0x64DCCFDA)
+I (../SYSTEM/sys_config.h)(0x64FD150D)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h)(0x64606658)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h)(0x64D75D73)
 I (../Drivers/CMSIS/Include/core_cm3.h)(0x64606652)
@@ -1590,9 +1595,9 @@ I (../FreeRTOS/include/event_groups.h)(0x624120B7)
 I (../FreeRTOS/include/timers.h)(0x624120B7)
 I (../Core/Inc/adc.h)(0x64E064F7)
 I (../Core/Inc/dma.h)(0x64DCB7D6)
-F (..\USER\driver\W25Q128\drv_w25q128.c)(0x64E366D8)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../FreeRTOS/include -I ../FreeRTOS/portable/RVDS/ARM_CM3 -I ../SYSTEM/delay -I ../SYSTEM/sys -I ../SYSTEM/usart -I ../USER/application -I ../USER/driver -I ../SYSTEM -I ../USER/driver/FPM383 -I ../USER/driver/AT24C64 -I ../USER/driver/CH9329 -I ../USER/driver/SIQ-02FVS3-I.\RTE\_HelloFinger-RTOS-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger-rtos\drv_w25q128.o --omf_browse hellofinger-rtos\drv_w25q128.crf --depend hellofinger-rtos\drv_w25q128.d)
-I (../SYSTEM/..\USER\driver\W25Q128\drv_w25q128.h)(0x64E16A94)
-I (../SYSTEM/sys_config.h)(0x64DCCFDA)
+F (..\USER\driver\W25Q128\drv_w25q128.c)(0x64FC37D5)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../FreeRTOS/include -I ../FreeRTOS/portable/RVDS/ARM_CM3 -I ../SYSTEM/delay -I ../SYSTEM/sys -I ../SYSTEM/usart -I ../USER/application -I ../USER/driver -I ../SYSTEM -I ../USER/driver/FPM383 -I ../USER/driver/AT24C64 -I ../USER/driver/CH9329 -I ../USER/driver/SIQ-02FVS3-I.\RTE\_HelloFinger-RTOS-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger-rtos\drv_w25q128.o --omf_browse hellofinger-rtos\drv_w25q128.crf --depend hellofinger-rtos\drv_w25q128.d)
+I (../SYSTEM/..\USER\driver\W25Q128\drv_w25q128.h)(0x64FC381F)
+I (../SYSTEM/sys_config.h)(0x64FD150D)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h)(0x64606658)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h)(0x64D75D73)
 I (../Drivers/CMSIS/Include/core_cm3.h)(0x64606652)
@@ -1686,9 +1691,9 @@ I (../FreeRTOS/include/mpu_wrappers.h)(0x624120B7)
 I (../FreeRTOS/include/task.h)(0x624120B7)
 I (../FreeRTOS/include/list.h)(0x624120B7)
 I (../FreeRTOS/include/queue.h)(0x624120B7)
-F (..\USER\application\app_task_finger.c)(0x64FBDA86)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../FreeRTOS/include -I ../FreeRTOS/portable/RVDS/ARM_CM3 -I ../SYSTEM/delay -I ../SYSTEM/sys -I ../SYSTEM/usart -I ../USER/application -I ../USER/driver -I ../SYSTEM -I ../USER/driver/FPM383 -I ../USER/driver/AT24C64 -I ../USER/driver/CH9329 -I ../USER/driver/SIQ-02FVS3-I.\RTE\_HelloFinger-RTOS-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger-rtos\app_task_finger.o --omf_browse hellofinger-rtos\app_task_finger.crf --depend hellofinger-rtos\app_task_finger.d)
-I (..\USER\application\app_task_finger.h)(0x64F2A8A8)
-I (../SYSTEM/sys_config.h)(0x64DCCFDA)
+F (..\USER\application\app_task_finger.c)(0x64FD1D3B)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../FreeRTOS/include -I ../FreeRTOS/portable/RVDS/ARM_CM3 -I ../SYSTEM/delay -I ../SYSTEM/sys -I ../SYSTEM/usart -I ../USER/application -I ../USER/driver -I ../SYSTEM -I ../USER/driver/FPM383 -I ../USER/driver/AT24C64 -I ../USER/driver/CH9329 -I ../USER/driver/SIQ-02FVS3-I.\RTE\_HelloFinger-RTOS-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger-rtos\app_task_finger.o --omf_browse hellofinger-rtos\app_task_finger.crf --depend hellofinger-rtos\app_task_finger.d)
+I (..\USER\application\app_task_finger.h)(0x64FC8C57)
+I (../SYSTEM/sys_config.h)(0x64FD150D)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h)(0x64606658)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h)(0x64D75D73)
 I (../Drivers/CMSIS/Include/core_cm3.h)(0x64606652)
@@ -1739,12 +1744,12 @@ I (../FreeRTOS/include/event_groups.h)(0x624120B7)
 I (../FreeRTOS/include/timers.h)(0x624120B7)
 I (../Core/Inc/adc.h)(0x64E064F7)
 I (../Core/Inc/dma.h)(0x64DCB7D6)
-I (../USER/driver/FPM383/drv_fpm383.h)(0x64F728E6)
+I (../USER/driver/FPM383/drv_fpm383.h)(0x64FD1B8A)
 I (../USER/driver/CH9329/drv_ch9329.h)(0x64E969A5)
-I (..\USER\application\app_task_key.h)(0x64EB2338)
-F (..\USER\application\app_task_key.c)(0x64F87165)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../FreeRTOS/include -I ../FreeRTOS/portable/RVDS/ARM_CM3 -I ../SYSTEM/delay -I ../SYSTEM/sys -I ../SYSTEM/usart -I ../USER/application -I ../USER/driver -I ../SYSTEM -I ../USER/driver/FPM383 -I ../USER/driver/AT24C64 -I ../USER/driver/CH9329 -I ../USER/driver/SIQ-02FVS3-I.\RTE\_HelloFinger-RTOS-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger-rtos\app_task_key.o --omf_browse hellofinger-rtos\app_task_key.crf --depend hellofinger-rtos\app_task_key.d)
-I (..\USER\application\app_task_key.h)(0x64EB2338)
-I (../SYSTEM/sys_config.h)(0x64DCCFDA)
+I (..\USER\application\app_task_key.h)(0x64FC8CD0)
+F (..\USER\application\app_task_key.c)(0x64FD1B41)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../FreeRTOS/include -I ../FreeRTOS/portable/RVDS/ARM_CM3 -I ../SYSTEM/delay -I ../SYSTEM/sys -I ../SYSTEM/usart -I ../USER/application -I ../USER/driver -I ../SYSTEM -I ../USER/driver/FPM383 -I ../USER/driver/AT24C64 -I ../USER/driver/CH9329 -I ../USER/driver/SIQ-02FVS3-I.\RTE\_HelloFinger-RTOS-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger-rtos\app_task_key.o --omf_browse hellofinger-rtos\app_task_key.crf --depend hellofinger-rtos\app_task_key.d)
+I (..\USER\application\app_task_key.h)(0x64FC8CD0)
+I (../SYSTEM/sys_config.h)(0x64FD150D)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h)(0x64606658)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h)(0x64D75D73)
 I (../Drivers/CMSIS/Include/core_cm3.h)(0x64606652)
@@ -1796,10 +1801,11 @@ I (../FreeRTOS/include/timers.h)(0x624120B7)
 I (../Core/Inc/adc.h)(0x64E064F7)
 I (../Core/Inc/dma.h)(0x64DCB7D6)
 I (../USER/driver/CH9329/drv_ch9329.h)(0x64E969A5)
-I (../USER/driver/FPM383/drv_fpm383.h)(0x64F728E6)
+I (../USER/driver/FPM383/drv_fpm383.h)(0x64FD1B8A)
+I (../SYSTEM/..\USER\driver\W25Q128\drv_w25q128.h)(0x64FC381F)
 F (..\USER\application\app_task_rgb.c)(0x64EB1A3E)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../FreeRTOS/include -I ../FreeRTOS/portable/RVDS/ARM_CM3 -I ../SYSTEM/delay -I ../SYSTEM/sys -I ../SYSTEM/usart -I ../USER/application -I ../USER/driver -I ../SYSTEM -I ../USER/driver/FPM383 -I ../USER/driver/AT24C64 -I ../USER/driver/CH9329 -I ../USER/driver/SIQ-02FVS3-I.\RTE\_HelloFinger-RTOS-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger-rtos\app_task_rgb.o --omf_browse hellofinger-rtos\app_task_rgb.crf --depend hellofinger-rtos\app_task_rgb.d)
 I (..\USER\application\app_task_rgb.h)(0x64EB233B)
-I (../SYSTEM/sys_config.h)(0x64DCCFDA)
+I (../SYSTEM/sys_config.h)(0x64FD150D)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h)(0x64606658)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h)(0x64D75D73)
 I (../Drivers/CMSIS/Include/core_cm3.h)(0x64606652)
@@ -1853,7 +1859,7 @@ I (../Core/Inc/dma.h)(0x64DCB7D6)
 I (../SYSTEM/..\USER\driver\WS2812\drv_ws2812b.h)(0x64D8B977)
 F (..\USER\application\app_task_joystick.c)(0x64E0DFC3)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../FreeRTOS/include -I ../FreeRTOS/portable/RVDS/ARM_CM3 -I ../SYSTEM/delay -I ../SYSTEM/sys -I ../SYSTEM/usart -I ../USER/application -I ../USER/driver -I ../SYSTEM -I ../USER/driver/FPM383 -I ../USER/driver/AT24C64 -I ../USER/driver/CH9329 -I ../USER/driver/SIQ-02FVS3-I.\RTE\_HelloFinger-RTOS-IE:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IE:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o hellofinger-rtos\app_task_joystick.o --omf_browse hellofinger-rtos\app_task_joystick.crf --depend hellofinger-rtos\app_task_joystick.d)
 I (..\USER\application\app_task_joystick.h)(0x64E3624B)
-I (../SYSTEM/sys_config.h)(0x64DCCFDA)
+I (../SYSTEM/sys_config.h)(0x64FD150D)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h)(0x64606658)
 I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h)(0x64D75D73)
 I (../Drivers/CMSIS/Include/core_cm3.h)(0x64606652)

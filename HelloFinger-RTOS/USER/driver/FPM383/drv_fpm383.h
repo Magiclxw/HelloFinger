@@ -357,11 +357,35 @@ typedef struct _CMD_ControlBLN_PRO_
 	volatile uint8_t CHECKSUM[2];
 }CMD_ControlBLN_PRO_t;
 
+extern CMD_AutoEnroll_t 				g_autoenroll;
+extern CMD_AutoIdentify_t 			g_autoidentify;
+extern CMD_DeleteChar_t 				g_deletechar;
+extern CMD_Cancel_t							g_cancel;
+extern CMD_Sleep_t							g_sleep;
+extern CMD_ValidTempleteNum_t 	g_valid_num;
+extern CMD_ReadIndexTable_t	 		g_read_index_table;
+extern CMD_SetPwd_t							g_set_pwd;
+extern CMD_VfyPwd_t							g_vfy_pwd;
+extern CMD_HandShake_t					g_hand_shake;
+extern CMD_CheckSensor_t				g_check_sensor;
+extern CMD_SetChipAddr_t				g_set_chip_addr;
+extern CMD_WriteNotePad_t				g_write_notepad;
+extern CMD_ReadNotepad_t   			g_read_notepad;
+extern CMD_GetImage_t						g_get_image;
+extern CMD_GenChar_t						g_gen_char;
+extern CMD_RegModel_t						g_reg_model;
+extern CMD_StoreChar_t					g_store_char;
+extern CMD_Match_t							g_match;
+extern CMD_ControlBLN_t					g_control_bln;
+extern CMD_ControlBLN_PRO_t			g_control_bln_pro;
+
 void FPM383C_Init(void);
 void Generate_AutoEnroll(uint16_t ID,uint8_t enrollTimes,uint16_t PARAM);
+void Generate_AutoIdentify(uint8_t secureleval,uint16_t ID,uint16_t PARAM);
 void Generate_StoreChar(uint8_t BufferID,uint16_t PageID);
+void Generate_Sleep(void);
 void Generate_ReadIndexTable(uint8_t page);
-
+void Generate_DeletChar(uint16_t PageID,uint16_t number);
 void Generate_ControlBLN(_LED_Function_t func,uint8_t startColor,uint8_t endColor,uint8_t cycle);
 void Generate_ControlBLN_Program(uint8_t time,uint8_t color_1,uint8_t color_2,uint8_t color_3,uint8_t color_4,uint8_t color_5,uint8_t cycle);
 #endif

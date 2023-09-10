@@ -94,6 +94,11 @@ uint8_t Handler(uint8_t *msg)
         qDebug()<<"enroll_state:"<<g_enroll_param;
         return USB_PROTOCOL_FORMAT_ENROLL_FINGER;
     }
+    case USB_PROTOCOL_FORMAT_DELETE_FINGER:
+    {
+        qDebug() << "finger delete ok";
+        return USB_PROTOCOL_FORMAT_DELETE_FINGER;
+    }
     default:
         return 0;
     }
@@ -106,7 +111,7 @@ void TableStateUpdate();
 void GenerateCmd(uint8_t *data,uint8_t dataLen)
 {
     uint8_t checksum = 0;
-    uint8_t len = 0;
+
     Command[0] = 0x00;  //HID通信固定起始字节
     Command[1] = dataLen + 3;   //HID通信固定字节，通信数据长度
     Command[2] = HID_CMD_HEAD;   //协议指令头

@@ -14,7 +14,7 @@
 
 /*板子上电默认处于协议传输模式*/
 
-extern uint8_t Command[20];
+extern uint8_t Command[64];
 
 struct hid_device_ *handle = NULL;
 struct hid_device_ *transhandle = NULL;    //透传句柄
@@ -142,9 +142,9 @@ Entrance::Entrance(QWidget *parent)
     connect(usbthread,&USBTHREAD::SI_TableStateUpdate,m,&MainWindow::SL_TableStateUpdate);
     connect(usbthread,&USBTHREAD::SI_EnrollStateUpdate,m,&MainWindow::SL_EnrollStateUpdate);
     connect(m,&MainWindow::SI_AddFinger,this,[=](uint8_t id,uint8_t times,uint8_t param1,uint8_t param2){
-        uint8_t cmd[6] = {USB_PROTOCOL_FORMAT_ENROLL_FINGER,0x00,id,times,param1,param2};
-        GenerateCmd(cmd,6);
-        hid_write(handle,Command,11);  //cmd:6 + head:4 + tail:1
+        uint8_t cmd[8] = {USB_PROTOCOL_FORMAT_ENROLL_FINGER,0x00,0x00,0x00,id,times,param1,param2};
+        GenerateCmd(cmd,8);
+        hid_write(handle,Command,13);  //cmd:8 + head:4 + tail:1
         memset(Command,0,20);
         //table_state_flag = 0;
         //cmdtimer->start(1000);
@@ -152,9 +152,9 @@ Entrance::Entrance(QWidget *parent)
     });
 
     connect(m,&MainWindow::SI_FingerDelete,this,[=](uint8_t ID){
-        uint8_t cmd[5] = {USB_DELETE,0x00,ID,0x00,0x01};
-        GenerateCmd(cmd,5);
-        hid_write(handle,Command,10);
+        uint8_t cmd[7] = {USB_PROTOCOL_FORMAT_DELETE_FINGER,0x00,0x00,0x00,ID,0x00,0x01};
+        GenerateCmd(cmd,7);
+        hid_write(handle,Command,12);
         memset(Command,0,20);
         table_state_flag = 0;
         cmdtimer->start(1000);
@@ -166,30 +166,50 @@ Entrance::Entrance(QWidget *parent)
         cmdtimer->start(1000);
     });
 
-    connect(m,&MainWindow::SI_USB_SEND_WindowsPassword,this,[=](QString password){
+    connect(m,&MainWindow::SI_USB_SEND_WindowsPassword,this,[=](QString password,uint8_t index){
         /* 转换为字符数组 */
         QByteArray ba_password = password.toLatin1();
         char *c_password = ba_password.data();
-
-        uint8_t flag = USB_FUNC_STORE;
+        uint8_t flag = USB_PROTOCOL_FORMAT_FUNC_STORE;
         uint8_t type = TYPE_Windows_Password;
         uint8_t len = password.length();    //获取密码长度
-        uint8_t cmdLen = len+3+1;
-        uint8_t *cmd = new uint8_t[cmdLen];
-        cmd[0] = flag;
-        cmd[1] = type;
-        cmd[2] = len;
+        qDebug() << "len = " << len;
+        uint8_t *cmd_pack1 = new uint8_t[7];
+        cmd_pack1[0] = flag;
+        //后续包个数
+        cmd_pack1[1] = 0x00;
+        cmd_pack1[2] = 0x01;
 
-        for (uint8_t i=3;i < len+3 ; i++) {
-            cmd[i] = c_password[i-3];
-        }
+        cmd_pack1[3] = type;
+        cmd_pack1[4] = index;
 
-        GenerateCmd(cmd,cmdLen);
+        cmd_pack1[5] = len;
+        cmd_pack1[6] = 0;
+        GenerateCmd(cmd_pack1,7);
+        hid_write(handle,Command,10);
+
+        Sleep(100);
+
+
+        uint8_t *cmd_pack2 = new uint8_t[len+5];
+        cmd_pack2[0] = flag;
+        //后续包个数
+        cmd_pack2[1] = 0x00;
+        cmd_pack2[2] = 0x00;
+
+        cmd_pack2[3] = type;
+        cmd_pack2[4] = index;
+
+        memcpy(&cmd_pack2[5],c_password,len);
+
+        GenerateCmd(cmd_pack2,5+len);
+        hid_write(handle,Command,len+10);
+
 
         //hid_write(handle,Command,cmdLen+5);
 
-        QByteArray tmp = QByteArray((char*)Command,cmdLen+5);
-        qDebug() << "command = " << tmp.toHex();
+        //QByteArray tmp = QByteArray((char*)Command,cmdLen+5);
+        //qDebug() << "command = " << tmp.toHex();
         //qDebug()<<"len" << len;
         //hid_write(handle,,)
     });
@@ -230,13 +250,13 @@ void Entrance::SL_GetTableState()
 {
     if(handle != NULL){
         qDebug() << "cmdtimer";
-        uint8_t cmd[1] = {USB_TABLESTATE};
-        GenerateCmd(cmd,1);
+        uint8_t cmd[3] = {USB_PROTOCOL_FORMAT_GET_INDEX_LIST,0x00,0x00};
+        GenerateCmd(cmd,3);
         if(table_state_flag == 1){
             cmdtimer->stop();
             return;
         }
-        hid_write(handle,Command,6);   //发送获取索引表状态指令
+        hid_write(handle,Command,8);   //发送获取索引表状态指令
         memset(Command,0,20);
     }
 }

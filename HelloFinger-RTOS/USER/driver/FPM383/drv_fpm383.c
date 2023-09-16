@@ -83,7 +83,7 @@ void FPM383C_Init(void)
 	gpio.Speed = GPIO_SPEED_FREQ_HIGH;
 	HAL_GPIO_Init(GPIOA,&gpio);
 
-	HAL_NVIC_SetPriority(EXTI4_IRQn,7,0);
+	HAL_NVIC_SetPriority(EXTI4_IRQn,6,0);
 	HAL_NVIC_EnableIRQ(EXTI4_IRQn);
 	
 	CMD_Init();

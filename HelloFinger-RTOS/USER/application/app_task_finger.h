@@ -55,5 +55,6 @@ typedef struct USB_RESPONSE
 
 int Task_Finger_DataCTLCreate(void);
 int Finger_GiveNotifyFromISR(uint8_t *recData,uint8_t dataSize);
+static void Finger_Function(uint16_t id,uint16_t score);
 #endif
 

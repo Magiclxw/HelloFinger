@@ -56,3 +56,4 @@ hellofinger-rtos\app_task_finger.o: ../Core/Inc/dma.h
 hellofinger-rtos\app_task_finger.o: ../USER/driver/FPM383/drv_fpm383.h
 hellofinger-rtos\app_task_finger.o: ../USER/driver/CH9329/drv_ch9329.h
 hellofinger-rtos\app_task_finger.o: ..\USER\application\app_task_key.h
+hellofinger-rtos\app_task_finger.o: ../SYSTEM/..\USER\driver\W25Q128\drv_w25q128.h

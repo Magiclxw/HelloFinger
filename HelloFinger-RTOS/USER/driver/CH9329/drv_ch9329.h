@@ -292,9 +292,10 @@ typedef struct CMD_FORMAT
 
 typedef enum KEY_TYPE
 {
-	KEY_TYPE_GENERAL_KEY = 0,
+	KEY_TYPE_ASCII_KEY = 0,
 	KEY_TYPE_MEDIA_KEY,
-	KEY_TYPE_POWER_KEY
+	KEY_TYPE_POWER_KEY,
+	KEY_TYPR_FUNC_KEY,
 }KEY_TYPE_e;
 
 #define CMD_GENERAL_KEY_LEN	8				//普通按键结构体长度
@@ -422,7 +423,8 @@ void CH9329_Set_Cfg(void);
 
 void CH9329_Index_to_Ascii(uint8_t *ascii);
 void CH9329_Generate_KEY_CMD(KEY_TYPE_e type,char key_value);
-void CH9329_Input_Ascii(char *ascii);
+void CH9329_Input_Ascii(char *ascii,uint8_t len);
+void CH9329_Input_Fuc_Key(uint8_t func_key);
 uint8_t CH9329_CAL_SUM(uint8_t *cmd,uint8_t len);
 int Send_HID_Data(uint8_t *data,uint8_t len);
 int ABD_Mouse_Ctrl(uint8_t step,uint8_t* pos_x,uint8_t* pos_y,BUTTON_VALUE_e button);

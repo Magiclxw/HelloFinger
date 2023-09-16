@@ -413,7 +413,7 @@ void CH9329_Generate_KEY_CMD(KEY_TYPE_e type,char key_value)
 {
 	switch (type)
 	{
-		case KEY_TYPE_GENERAL_KEY:	//普通按键
+		case KEY_TYPE_ASCII_KEY:	//普通按键
 		{
 			g_cmd_format.cmd = CMD_SEND_KB_GENERAL_DATA;
 			g_cmd_format.len = 0x08;
@@ -454,6 +454,21 @@ void CH9329_Generate_KEY_CMD(KEY_TYPE_e type,char key_value)
 			g_cmd_format.data[g_cmd_format.len] = CH9329_CAL_SUM((uint8_t*)&g_cmd_format,g_cmd_format.len+5);
 			break;
 		}
+		case KEY_TYPR_FUNC_KEY:
+		{
+			g_cmd_format.cmd = CMD_SEND_KB_GENERAL_DATA;
+			g_cmd_format.len = 0x08;
+			g_general_key.key_ctrl = (uint8_t)NO_CTRL;
+			g_general_key.key1 = (uint8_t)key_value;
+			g_general_key.key2 = 0x00;
+			g_general_key.key3 = 0x00;
+			g_general_key.key4 = 0x00;
+			g_general_key.key5 = 0x00;
+			g_general_key.key6 = 0x00;
+			memcpy((uint8_t*)&g_cmd_format.data,(uint8_t*)&g_general_key,CMD_GENERAL_KEY_LEN);
+			g_cmd_format.data[g_cmd_format.len] = CH9329_CAL_SUM((uint8_t*)&g_cmd_format,g_cmd_format.len+5);
+			break;
+		}
 		default : break;
 	}
 	
@@ -461,16 +476,27 @@ void CH9329_Generate_KEY_CMD(KEY_TYPE_e type,char key_value)
 
 
 /* 输入字符串 */
-void CH9329_Input_Ascii(char *ascii)
+void CH9329_Input_Ascii(char *ascii,uint8_t len)
 {
-	uint16_t len = strlen(ascii);	//获取字符个数
+	//uint16_t len = strlen(ascii);	//获取字符个数
 	for(uint16_t i=0;i<len;i++)
 	{
-		CH9329_Generate_KEY_CMD(KEY_TYPE_GENERAL_KEY,ascii[i]);
+		CH9329_Generate_KEY_CMD(KEY_TYPE_ASCII_KEY,ascii[i]);
 		HAL_UART_Transmit(&huart1,(uint8_t*)&g_cmd_format,g_cmd_format.len+6,1000);
 		delay_ms(1);
 		HAL_UART_Transmit(&huart1,KeyRelease,14,1000);	//释放按键
+		delay_ms(1);
 	}
+}
+
+/* 输入功能键 */
+void CH9329_Input_Fuc_Key(uint8_t func_key)
+{
+	CH9329_Generate_KEY_CMD(KEY_TYPR_FUNC_KEY,func_key);
+	HAL_UART_Transmit(&huart1,(uint8_t*)&g_cmd_format,g_cmd_format.len+6,1000);
+	delay_ms(1);
+	HAL_UART_Transmit(&huart1,KeyRelease,14,1000);	//释放按键
+	delay_ms(1);
 }
 
 /**

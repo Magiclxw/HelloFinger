@@ -3,6 +3,7 @@
 #include "sys_config.h"
 #include "drv_ch9329.h"
 #include "app_task_key.h"
+#include "..\USER\driver\W25Q128\drv_w25q128.h"
 
 static void vTaskFingerProcessing(void);	//指纹接收数据处理任务
 static void FingerResetData(void);	//复位接受结构体
@@ -50,7 +51,7 @@ static void vTaskFingerProcessing(void)
 	FingerEvent_Handle = xEventGroupCreate();	//初始化事件标志组
 	while(1)
 	{
-		BaseType_t ret = xQueueReceive(Queue_FingerProcessing_Handle,&rec_data,portMAX_DELAY);
+		BaseType_t ret = xQueueReceive(Queue_FingerProcessing_Handle,&rec_data,2000);
 		if(ret == pdTRUE)
 		{
 			Finger_RecData_Handle(rec_data);
@@ -58,7 +59,14 @@ static void vTaskFingerProcessing(void)
 		else
 		{
 			FingerResetData();
+			if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_4) == GPIO_PIN_SET)
+			{
+				Generate_Sleep();
+				HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_sleep,g_sleep.LEN[0]<<8|g_sleep.LEN[1]+FIXED_CMD_LEN,1000);
+			}
 		}
+		
+					
 	}
 }
 
@@ -249,6 +257,7 @@ static void Finger_Func_Exec(void)
 		{
 			switch(g_data_format.data[0])	//判断确认码
 			{
+				
 				case CONFIRM_OK:
 				{
 					event_status = xEventGroupGetBits(FingerEvent_Handle);
@@ -298,11 +307,14 @@ static void Finger_Func_Exec(void)
 					{
 						if(g_data_format.data[1] == 0x05)
 						{
-							Generate_Sleep();
-							HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_sleep,g_sleep.LEN[0]<<8|g_sleep.LEN[1]+FIXED_CMD_LEN,1000);
-							xEventGroupClearBits(FingerEvent_Handle,EVENT_TOUCH_DETECT);
-							
+							uint16_t id = g_data_format.data[2]<<8|g_data_format.data[3];
+							uint16_t score = g_data_format.data[4]<<8|g_data_format.data[5];
+							Finger_Function(id,score);
 						}
+						Generate_Sleep();
+						HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_sleep,g_sleep.LEN[0]<<8|g_sleep.LEN[1]+FIXED_CMD_LEN,1000);
+						
+						xEventGroupClearBits(FingerEvent_Handle,EVENT_TOUCH_DETECT);
 					}
 					break;
 				}
@@ -338,8 +350,16 @@ static void Finger_Func_Exec(void)
 				{
 					break;
 				}
-				case CONFIRM_FINGER_SEARCH_FAIL:
+				case CONFIRM_FINGER_SEARCH_FAIL:	//没有搜索到指纹	
 				{
+					//if(event_status & EVENT_TOUCH_DETECT)	//指纹验证结果
+					//{
+						Generate_Sleep();
+						
+						HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_sleep,g_sleep.LEN[0]<<8|g_sleep.LEN[1]+FIXED_CMD_LEN,1000);
+						
+						xEventGroupClearBits(FingerEvent_Handle,EVENT_TOUCH_DETECT);
+					//}
 					break;
 				}
 				case CONFIRM_FEATURE_MATCH_FAIL:
@@ -448,6 +468,8 @@ static void Finger_Func_Exec(void)
 				}
 				case CONFIRM_LIBRARY_EMPTY:
 				{
+					//Generate_Sleep();
+					//HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_sleep,g_sleep.LEN[0]<<8|g_sleep.LEN[1]+FIXED_CMD_LEN,1000);
 					break;
 				}
 				case CONFIRM_ENROLL_TIMES_ERROR:
@@ -516,8 +538,43 @@ static void Finger_Func_Exec(void)
 		}
 		default : break;
 	}
+	//Generate_Sleep();
+	//HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_sleep,g_sleep.LEN[0]<<8|g_sleep.LEN[1]+FIXED_CMD_LEN,1000);
 }
 
+static void Finger_Function(uint16_t id,uint16_t score)
+{
+	uint8_t func_type = 0;
+	Flash_read(&func_type,FINGER_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE,1);
+	switch (func_type)
+	{
+		case TYPE_Windows_Password:
+		{
+			uint8_t len = 0;
+			Flash_read(&len,FINGER_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE+FINGER_FUNC_LEN1_OFFSET,1);
+			if(len == 0) break;
+			uint8_t *password = (uint8_t*)pvPortMalloc(len);
+			Flash_read(password,FINGER_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE+FINGER_FUNC_LEN1_OFFSET+2,len);
+			CH9329_Input_Ascii((char*)password,len);
+			CH9329_Input_Fuc_Key(KEY_LeftEnter);
+			vPortFree(password);
+			break;
+		}
+		case TYPE_Password:
+		{
+			break;
+			
+		}
+		case TYPE_Account_Password:
+		{
+			break;
+		}
+		case TYPE_Shortcut:
+		{
+			break;
+		}
+	}
+}
 
 
 

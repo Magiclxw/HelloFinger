@@ -78,8 +78,13 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 			Generate_AutoIdentify(0x03,0xFFFF,0x0007);
 			HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_autoidentify,g_autoidentify.LEN[0]<<8|g_autoidentify.LEN[1]+FIXED_CMD_LEN,1000);
 			portBASE_TYPE xHigherPriorityTaskWoken = pdTRUE;
-			xEventGroupSetBitsFromISR((EventGroupHandle_t)FingerEvent_Handle,(EventBits_t)EVENT_TOUCH_DETECT,&xHigherPriorityTaskWoken);
-			portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+			if(FingerEvent_Handle != NULL)
+			{
+				
+				xEventGroupSetBitsFromISR((EventGroupHandle_t)FingerEvent_Handle,(EventBits_t)EVENT_TOUCH_DETECT,&xHigherPriorityTaskWoken);
+				portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+			}
+			
 		}
 		
 		break;

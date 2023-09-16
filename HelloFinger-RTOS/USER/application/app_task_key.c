@@ -336,50 +336,60 @@ int HID_Data_Handle(void)
 				 static uint8_t seqLen1 = 0;
 				 static uint8_t seqLen2 = 0;
 				 static uint8_t index = 0;
-				 packNum = g_key_data_format.data[5]<<8|g_key_data_format.data[6];
-				 if(g_key_data_format.data[7] == TYPE_Windows_Password)	//¿ª»úÃÜÂë
+				 packNum = g_key_data_format.data[3]<<8|g_key_data_format.data[4];
+				 if(g_key_data_format.data[5] == TYPE_Windows_Password)	//¿ª»úÃÜÂë
 				 {
 					 if(packNum == 1)
 					 {
-						 index = g_key_data_format.data[8];
-						 seqLen1 = g_key_data_format.data[9];
+						 index = g_key_data_format.data[6];
+						 seqLen1 = g_key_data_format.data[7];
 						 //seqLen2 = g_key_data_format.data[10];
 					 }
-					 if(packNum == 0 && index == g_key_data_format.data[8])
+					 if(packNum == 0 && index == g_key_data_format.data[6])
 					 {
-						 uint8_t *password = (uint8_t *)pvPortMalloc(seqLen1);
-						 SPI_FLASH_BufferWrite(password,FINGER_FUNC_BASE_ADDR+index*FINGER_FUNC_BASE_SIZE,seqLen1);
+						 uint8_t *store_msg = (uint8_t *)pvPortMalloc(seqLen1+3);
+						 store_msg[0] = TYPE_Windows_Password;
+						 store_msg[1] = seqLen1;
+						 store_msg[2] = (uint8_t)FINGER_FUNC_RESERVED_DATA;
+						 for(uint8_t i=0; i<seqLen1; i++)
+						 {
+							 store_msg[3+i] = g_key_data_format.data[7+i];
+						 }
+						 Flash_write(store_msg,FINGER_FUNC_BASE_ADDR+index*FINGER_FUNC_BASE_SIZE,seqLen1+3);
 						 index = 0;
 						 seqLen1 = 0;
 						 seqLen2 = 0;
 						 packNum = 0;
-						 vPortFree((uint8_t*)password);
+						 vPortFree((uint8_t*)store_msg);
 					 }
 				 }
-				 if(g_key_data_format.data[7] == TYPE_Password)	//ÃÜÂë
+				 if(g_key_data_format.data[5] == TYPE_Password)	//ÃÜÂë
 				 {
 					 if(packNum == 1)
 					 {
-						 index = g_key_data_format.data[8];
-						 seqLen1 = g_key_data_format.data[9];
+						 index = g_key_data_format.data[6];
+						 seqLen1 = g_key_data_format.data[7];
 						 //seqLen2 = g_key_data_format.data[10];
 					 }
-					 if(packNum == 0 && index == g_key_data_format.data[8])
+					 if(packNum == 0 && index == g_key_data_format.data[6])
 					 {
-						 uint8_t *password = (uint8_t *)pvPortMalloc(seqLen1);
-						 SPI_FLASH_BufferWrite(password,FINGER_FUNC_BASE_ADDR+index*FINGER_FUNC_BASE_SIZE,seqLen1);
+						 uint8_t *store_msg = (uint8_t *)pvPortMalloc(seqLen1+3);
+						 store_msg[0] = TYPE_Password;
+						 store_msg[1] = seqLen1;
+						 store_msg[2] = (uint8_t)FINGER_FUNC_RESERVED_DATA;
+						 Flash_write(store_msg,FINGER_FUNC_BASE_ADDR+index*FINGER_FUNC_BASE_SIZE,seqLen1+3);
 						 index = 0;
 						 seqLen1 = 0;
 						 seqLen2 = 0;
 						 packNum = 0;
-						 vPortFree((uint8_t*)password);
+						 vPortFree((uint8_t*)store_msg);
 					 }
 				 }
-				 if(g_key_data_format.data[7] == TYPE_Account_Password)	//ÕËºÅÃÜÂë
+				 if(g_key_data_format.data[5] == TYPE_Account_Password)	//ÕËºÅÃÜÂë
 				 {
 					 
 				 }
-				 if(g_key_data_format.data[7] == TYPE_Shortcut)	//¿ì½İ¼ü
+				 if(g_key_data_format.data[5] == TYPE_Shortcut)	//¿ì½İ¼ü
 				 {
 					 
 				 }

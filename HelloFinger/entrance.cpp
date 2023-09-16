@@ -186,7 +186,7 @@ Entrance::Entrance(QWidget *parent)
         cmd_pack1[5] = len;
         cmd_pack1[6] = 0;
         GenerateCmd(cmd_pack1,7);
-        hid_write(handle,Command,10);
+        hid_write(handle,Command,12);
 
         Sleep(100);
 

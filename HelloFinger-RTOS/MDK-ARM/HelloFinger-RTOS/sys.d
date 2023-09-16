@@ -24,6 +24,7 @@ hellofinger-rtos\sys.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma_ex
 hellofinger-rtos\sys.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h
 hellofinger-rtos\sys.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc.h
 hellofinger-rtos\sys.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h
+hellofinger-rtos\sys.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_crc.h
 hellofinger-rtos\sys.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h
 hellofinger-rtos\sys.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
 hellofinger-rtos\sys.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
@@ -34,7 +35,8 @@ hellofinger-rtos\sys.o: ../SYSTEM/sys_config.h
 hellofinger-rtos\sys.o: E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin\..\include\string.h
 hellofinger-rtos\sys.o: ../FreeRTOS/include/FreeRTOS.h
 hellofinger-rtos\sys.o: ../FreeRTOS/include/FreeRTOSConfig.h
-hellofinger-rtos\sys.o: ../SYSTEM/usart/f_usart.h
+hellofinger-rtos\sys.o: ../Core/Inc/usart.h
+hellofinger-rtos\sys.o: ../Core/Inc/main.h
 hellofinger-rtos\sys.o: E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin\..\include\stdio.h
 hellofinger-rtos\sys.o: ../FreeRTOS/include/projdefs.h
 hellofinger-rtos\sys.o: ../FreeRTOS/include/portable.h
@@ -45,14 +47,13 @@ hellofinger-rtos\sys.o: ../FreeRTOS/include/task.h
 hellofinger-rtos\sys.o: ../FreeRTOS/include/list.h
 hellofinger-rtos\sys.o: ../FreeRTOS/include/queue.h
 hellofinger-rtos\sys.o: ../SYSTEM/delay/delay.h
-hellofinger-rtos\sys.o: ../Core/Inc/usart.h
-hellofinger-rtos\sys.o: ../Core/Inc/main.h
 hellofinger-rtos\sys.o: ../FreeRTOS/include/semphr.h
 hellofinger-rtos\sys.o: ../FreeRTOS/include/event_groups.h
 hellofinger-rtos\sys.o: ../FreeRTOS/include/timers.h
 hellofinger-rtos\sys.o: ../Core/Inc/adc.h
 hellofinger-rtos\sys.o: ../SYSTEM/sys_config.h
 hellofinger-rtos\sys.o: ../Core/Inc/dma.h
+hellofinger-rtos\sys.o: ../SYSTEM/crc.h
 hellofinger-rtos\sys.o: ../USER/driver/CH9329/drv_ch9329.h
 hellofinger-rtos\sys.o: ../USER/application/app_task_finger.h
 hellofinger-rtos\sys.o: ../USER/driver/FPM383/drv_fpm383.h

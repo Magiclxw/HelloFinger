@@ -26,12 +26,14 @@ hellofinger-rtos\croutine.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_d
 hellofinger-rtos\croutine.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h
 hellofinger-rtos\croutine.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc.h
 hellofinger-rtos\croutine.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h
+hellofinger-rtos\croutine.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_crc.h
 hellofinger-rtos\croutine.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h
 hellofinger-rtos\croutine.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
 hellofinger-rtos\croutine.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 hellofinger-rtos\croutine.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h
 hellofinger-rtos\croutine.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
-hellofinger-rtos\croutine.o: ../SYSTEM/usart/f_usart.h
+hellofinger-rtos\croutine.o: ../Core/Inc/usart.h
+hellofinger-rtos\croutine.o: ../Core/Inc/main.h
 hellofinger-rtos\croutine.o: E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin\..\include\stdio.h
 hellofinger-rtos\croutine.o: ../FreeRTOS/include/projdefs.h
 hellofinger-rtos\croutine.o: ../FreeRTOS/include/portable.h

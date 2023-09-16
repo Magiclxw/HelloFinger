@@ -1,6 +1,7 @@
 #include "..\USER\driver\WS2812\drv_ws2812b.h"
 
 SPI_HandleTypeDef hspi2;
+DMA_HandleTypeDef hdma_spi2_tx;
 
 /* SPI2 init function */
 void MX_SPI2_Init(void)
@@ -15,7 +16,7 @@ void MX_SPI2_Init(void)
   /* USER CODE END SPI2_Init 1 */
   hspi2.Instance = SPI2;
   hspi2.Init.Mode = SPI_MODE_MASTER;
-  hspi2.Init.Direction = SPI_DIRECTION_1LINE;
+  hspi2.Init.Direction = SPI_DIRECTION_2LINES;
   hspi2.Init.DataSize = SPI_DATASIZE_8BIT;
   hspi2.Init.CLKPolarity = SPI_POLARITY_HIGH;
   hspi2.Init.CLKPhase = SPI_PHASE_2EDGE;
@@ -30,74 +31,9 @@ void MX_SPI2_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN SPI2_Init 2 */
-
+	__HAL_SPI_ENABLE(&hspi2);
   /* USER CODE END SPI2_Init 2 */
 
-}
-
-void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
-{
-
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
-	
-	if(spiHandle->Instance == SPI1)
-	{
-		GPIO_InitTypeDef gpio_init_struct;
-    
-    __HAL_RCC_GPIOA_CLK_ENABLE();
-
-    gpio_init_struct.Pin = GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7;
-    gpio_init_struct.Mode = GPIO_MODE_AF_PP;
-    gpio_init_struct.Pull = GPIO_PULLUP;
-    gpio_init_struct.Speed = GPIO_SPEED_FREQ_HIGH;
-    HAL_GPIO_Init(GPIOA, &gpio_init_struct);
-	}
-	
-  if(spiHandle->Instance==SPI2)
-  {
-  /* USER CODE BEGIN SPI2_MspInit 0 */
-
-  /* USER CODE END SPI2_MspInit 0 */
-    /* SPI2 clock enable */
-    __HAL_RCC_SPI2_CLK_ENABLE();
-
-    __HAL_RCC_GPIOB_CLK_ENABLE();
-    /**SPI2 GPIO Configuration
-    PB13     ------> SPI2_SCK
-    PB15     ------> SPI2_MOSI
-    */
-    GPIO_InitStruct.Pin = GPIO_PIN_13|GPIO_PIN_15;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-  /* USER CODE BEGIN SPI2_MspInit 1 */
-
-  /* USER CODE END SPI2_MspInit 1 */
-  }
-}
-
-void HAL_SPI_MspDeInit(SPI_HandleTypeDef* spiHandle)
-{
-
-  if(spiHandle->Instance==SPI2)
-  {
-  /* USER CODE BEGIN SPI2_MspDeInit 0 */
-
-  /* USER CODE END SPI2_MspDeInit 0 */
-    /* Peripheral clock disable */
-    __HAL_RCC_SPI2_CLK_DISABLE();
-
-    /**SPI2 GPIO Configuration
-    PB13     ------> SPI2_SCK
-    PB15     ------> SPI2_MOSI
-    */
-    HAL_GPIO_DeInit(GPIOB, GPIO_PIN_13|GPIO_PIN_15);
-
-  /* USER CODE BEGIN SPI2_MspDeInit 1 */
-
-  /* USER CODE END SPI2_MspDeInit 1 */
-  }
 }
 
 
@@ -181,15 +117,16 @@ int WS25812B_write(uint32_t *rgb, uint32_t len, uint8_t *temp)
     
     memset(temp,0,288);
 	
-    HAL_SPI_Transmit(&hspi2, temp, 288, 1000);              /* write command */
+    //HAL_SPI_Transmit_DMA(&hspi2, temp, 288);              /* write command */
                                                    /* set the bit size */
-
+		//HAL_SPI_Transmit(&hspi2, temp, 288,1000);
     for (i = 0; i < len; i++)                                               /* set the color frame */
     {
         WS2812B_Write_One_Frame(rgb[i], &temp[i * 48]);                   /* set color */
     }
-    
-    HAL_SPI_Transmit(&hspi2, temp, 288, 1000);               /* write command */
+		
+    HAL_SPI_Transmit_DMA(&hspi2, temp, 288);               /* write command */
+		//HAL_SPI_Transmit(&hspi2, temp, 288,1000);
 }
 
 /**

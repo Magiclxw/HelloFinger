@@ -551,12 +551,21 @@ static void Finger_Function(uint16_t id,uint16_t score)
 		case TYPE_Windows_Password:
 		{
 			uint8_t len = 0;
+			uint32_t crc_value = 0;
+			uint32_t rec_crc = 0;
 			Flash_read(&len,FINGER_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE+FINGER_FUNC_LEN1_OFFSET,1);
 			if(len == 0) break;
-			uint8_t *password = (uint8_t*)pvPortMalloc(len);
-			Flash_read(password,FINGER_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE+FINGER_FUNC_LEN1_OFFSET+2,len);
-			CH9329_Input_Ascii((char*)password,len);
-			CH9329_Input_Fuc_Key(KEY_LeftEnter);
+			uint8_t *password = (uint8_t*)pvPortMalloc(len+3);
+			Flash_read(password,FINGER_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE,len+3);
+			crc_value = Calc_CRC(password,len+3);
+			printf("crc_value = %d\r\n",crc_value);
+			Flash_read((uint8_t *)&rec_crc,FINGER_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE+len+3,4);
+			printf("rec_crc = %d",rec_crc);
+			if(rec_crc == crc_value)		//crc校验通过
+			{
+				CH9329_Input_Ascii((char*)&password[3],len);
+				CH9329_Input_Fuc_Key(KEY_LeftEnter);
+			}
 			vPortFree(password);
 			break;
 		}

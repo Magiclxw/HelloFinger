@@ -57,9 +57,9 @@ static void vTaskKeyProcessing(void)
 	//Generate_ReadIndexTable(0);
 	//HAL_UART_Transmit(&huart2,(uint8_t*)&g_read_index_table,g_read_index_table.LEN[0]<<8|g_read_index_table.LEN[1]+FIXED_CMD_LEN,1000);
 	//taskEXIT_CRITICAL();
-	uint8_t func = 1;
-	uint8_t start_color = LED_COLOR_RED;
-	uint8_t end_color = LED_COLOR_RED;
+	_LED_Function_t func = LED_FUNC_BREATHE;
+	uint8_t start_color = LED_COLOR_RED|LED_COLOR_GREEN;
+	uint8_t end_color = LED_COLOR_RED|LED_COLOR_GREEN;
 	uint8_t cycle_time = 0;
 	Generate_ControlBLN(func,start_color,end_color,cycle_time);
 	HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_control_bln,g_control_bln.LEN[0]<<8|g_control_bln.LEN[1]+FIXED_CMD_LEN,1000);
@@ -313,7 +313,7 @@ int HID_Data_Handle(void)
 				 uint8_t start_color = g_key_data_format.data[6];
 				 uint8_t end_color = g_key_data_format.data[7];
 				 uint8_t cycle_time = g_key_data_format.data[8];
-				 Generate_ControlBLN(func,start_color,end_color,cycle_time);
+				 Generate_ControlBLN((_LED_Function_t)func,start_color,end_color,cycle_time);
 				 HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_control_bln,g_control_bln.LEN[0]<<8|g_control_bln.LEN[1]+FIXED_CMD_LEN,1000);
 				 break;
 			 }
@@ -347,7 +347,9 @@ int HID_Data_Handle(void)
 					 }
 					 if(packNum == 0 && index == g_key_data_format.data[6])
 					 {
+						 uint32_t crc_value = 0;
 						 uint8_t *store_msg = (uint8_t *)pvPortMalloc(seqLen1+3);
+						 memset((uint8_t*)store_msg,0,seqLen1+3);	//初始化申请空间，防止未知数据影响crc结果
 						 store_msg[0] = TYPE_Windows_Password;
 						 store_msg[1] = seqLen1;
 						 store_msg[2] = (uint8_t)FINGER_FUNC_RESERVED_DATA;
@@ -355,7 +357,10 @@ int HID_Data_Handle(void)
 						 {
 							 store_msg[3+i] = g_key_data_format.data[7+i];
 						 }
+						 crc_value = Calc_CRC(store_msg,seqLen1+3);
+						 printf("crc_value = %d\r\n",crc_value);
 						 Flash_write(store_msg,FINGER_FUNC_BASE_ADDR+index*FINGER_FUNC_BASE_SIZE,seqLen1+3);
+						 Flash_write((uint8_t*)&crc_value,FINGER_FUNC_BASE_ADDR+index*FINGER_FUNC_BASE_SIZE+seqLen1+3,4);
 						 index = 0;
 						 seqLen1 = 0;
 						 seqLen2 = 0;

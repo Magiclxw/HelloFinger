@@ -24,12 +24,14 @@ hellofinger-rtos\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma_e
 hellofinger-rtos\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h
 hellofinger-rtos\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc.h
 hellofinger-rtos\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h
+hellofinger-rtos\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_crc.h
 hellofinger-rtos\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h
 hellofinger-rtos\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
 hellofinger-rtos\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 hellofinger-rtos\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h
 hellofinger-rtos\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 hellofinger-rtos\main.o: ../Core/Inc/usart.h
+hellofinger-rtos\main.o: E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin\..\include\stdio.h
 hellofinger-rtos\main.o: ../Core/Inc/gpio.h
 hellofinger-rtos\main.o: ../USER/application/app_task_finger.h
 hellofinger-rtos\main.o: ../SYSTEM/sys_config.h
@@ -37,8 +39,6 @@ hellofinger-rtos\main.o: E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin\..\include\s
 hellofinger-rtos\main.o: ../FreeRTOS/include/FreeRTOS.h
 hellofinger-rtos\main.o: ../FreeRTOS/include/FreeRTOSConfig.h
 hellofinger-rtos\main.o: ../SYSTEM/sys/sys.h
-hellofinger-rtos\main.o: ../SYSTEM/usart/f_usart.h
-hellofinger-rtos\main.o: E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin\..\include\stdio.h
 hellofinger-rtos\main.o: ../FreeRTOS/include/projdefs.h
 hellofinger-rtos\main.o: ../FreeRTOS/include/portable.h
 hellofinger-rtos\main.o: ../FreeRTOS/include/deprecated_definitions.h
@@ -54,6 +54,7 @@ hellofinger-rtos\main.o: ../FreeRTOS/include/timers.h
 hellofinger-rtos\main.o: ../Core/Inc/adc.h
 hellofinger-rtos\main.o: ../SYSTEM/sys_config.h
 hellofinger-rtos\main.o: ../Core/Inc/dma.h
+hellofinger-rtos\main.o: ../SYSTEM/crc.h
 hellofinger-rtos\main.o: ../USER/driver/FPM383/drv_fpm383.h
 hellofinger-rtos\main.o: ../USER/application/app_task_key.h
 hellofinger-rtos\main.o: ../USER/driver/CH9329/drv_ch9329.h

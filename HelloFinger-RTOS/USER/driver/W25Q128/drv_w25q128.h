@@ -66,6 +66,6 @@ void Flash_Write_SR(uint8_t regno, uint8_t sr);
 uint16_t Flash_Read_id(void);
 void Flash_read(uint8_t *pbuf, uint32_t addr, uint16_t datalen);
 void Flash_write(uint8_t *pbuf, uint32_t addr, uint16_t datalen);
-
+void Flash_Read_DMA(uint8_t *pbuf, uint32_t addr, uint16_t datalen);
 
 #endif

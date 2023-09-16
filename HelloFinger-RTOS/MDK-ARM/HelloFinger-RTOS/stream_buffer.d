@@ -27,12 +27,14 @@ hellofinger-rtos\stream_buffer.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_
 hellofinger-rtos\stream_buffer.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h
 hellofinger-rtos\stream_buffer.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc.h
 hellofinger-rtos\stream_buffer.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h
+hellofinger-rtos\stream_buffer.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_crc.h
 hellofinger-rtos\stream_buffer.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h
 hellofinger-rtos\stream_buffer.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
 hellofinger-rtos\stream_buffer.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 hellofinger-rtos\stream_buffer.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h
 hellofinger-rtos\stream_buffer.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
-hellofinger-rtos\stream_buffer.o: ../SYSTEM/usart/f_usart.h
+hellofinger-rtos\stream_buffer.o: ../Core/Inc/usart.h
+hellofinger-rtos\stream_buffer.o: ../Core/Inc/main.h
 hellofinger-rtos\stream_buffer.o: E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin\..\include\stdio.h
 hellofinger-rtos\stream_buffer.o: ../FreeRTOS/include/projdefs.h
 hellofinger-rtos\stream_buffer.o: ../FreeRTOS/include/portable.h

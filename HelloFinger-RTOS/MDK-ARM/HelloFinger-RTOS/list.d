@@ -27,12 +27,14 @@ hellofinger-rtos\list.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma_e
 hellofinger-rtos\list.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h
 hellofinger-rtos\list.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc.h
 hellofinger-rtos\list.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h
+hellofinger-rtos\list.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_crc.h
 hellofinger-rtos\list.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h
 hellofinger-rtos\list.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
 hellofinger-rtos\list.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 hellofinger-rtos\list.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h
 hellofinger-rtos\list.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
-hellofinger-rtos\list.o: ../SYSTEM/usart/f_usart.h
+hellofinger-rtos\list.o: ../Core/Inc/usart.h
+hellofinger-rtos\list.o: ../Core/Inc/main.h
 hellofinger-rtos\list.o: E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin\..\include\stdio.h
 hellofinger-rtos\list.o: ../FreeRTOS/include/projdefs.h
 hellofinger-rtos\list.o: ../FreeRTOS/include/portable.h

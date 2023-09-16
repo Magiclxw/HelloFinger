@@ -67,7 +67,7 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+uint8_t rx[10] = {0};
 /* USER CODE END 0 */
 
 /**
@@ -102,11 +102,11 @@ int main(void)
   MX_USART2_UART_Init();
 	MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
+	
+	MX_DMA_Init();	//dma初始化要在其他使用dma外设之前
+	//MX_ADC1_Init();
 	Flash_Init();
 	MX_SPI2_Init();
-	//MX_DMA_Init();
-	//MX_ADC1_Init();
-	
 	delay_init(72);
 	FPM383C_Init();
 	CH9329_Init();
@@ -125,12 +125,15 @@ int main(void)
 	//uint8_t data[10] = {0,1,2,3,4,5,6,7,8,9};
 	//Flash_write(data,0x10000,10);
 	//delay_ms(1000);
-	uint8_t rx[10] = {0};
-	Flash_read(rx,0x100000,10);
+	
+	//Flash_read(rx,0x100000,10);
+	Flash_Read_DMA(rx,0x100000,10);
+	//delay_ms(1000);
 	for(uint8_t i=0;i<10;i++)
 	{
 		printf("data : %d\r\n",rx[i]);
 	}
+	
 	//char hello[15] = {"hello world!!!"};
 	//CH9329_Input_Ascii(hello);
 	RegisterUsart1ReceiveCallBack(Key_GiveNotifyFromISR);

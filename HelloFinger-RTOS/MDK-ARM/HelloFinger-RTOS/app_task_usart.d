@@ -27,12 +27,14 @@ hellofinger-rtos\app_task_usart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx
 hellofinger-rtos\app_task_usart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h
 hellofinger-rtos\app_task_usart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc.h
 hellofinger-rtos\app_task_usart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h
+hellofinger-rtos\app_task_usart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_crc.h
 hellofinger-rtos\app_task_usart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h
 hellofinger-rtos\app_task_usart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
 hellofinger-rtos\app_task_usart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 hellofinger-rtos\app_task_usart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h
 hellofinger-rtos\app_task_usart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
-hellofinger-rtos\app_task_usart.o: ../SYSTEM/usart/f_usart.h
+hellofinger-rtos\app_task_usart.o: ../Core/Inc/usart.h
+hellofinger-rtos\app_task_usart.o: ../Core/Inc/main.h
 hellofinger-rtos\app_task_usart.o: E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin\..\include\stdio.h
 hellofinger-rtos\app_task_usart.o: ../FreeRTOS/include/projdefs.h
 hellofinger-rtos\app_task_usart.o: ../FreeRTOS/include/portable.h

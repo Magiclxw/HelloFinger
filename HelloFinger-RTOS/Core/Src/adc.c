@@ -174,8 +174,8 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 	//	portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 	//	//xQueueSend(Queue_JOYSTICKProcessing_Handle,move_dist_x_y,0);
 	//}
-	uint8_t move_dist_x = 0;	//x方向移动距离
-	uint8_t move_dist_y = 0;	//y方向移动距离
+	//uint8_t move_dist_x = 0;	//x方向移动距离
+	//uint8_t move_dist_y = 0;	//y方向移动距离
 	uint8_t move_dist_x_y[2] = {0};
 	move_dist_x_y[0] = value_X_Y[0]/50;
 	move_dist_x_y[1] = value_X_Y[1]/50;

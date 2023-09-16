@@ -7,6 +7,8 @@
 #define TASK_RGB_PROCESS_SIZE	(200)
 #define TASK_RGB_PROCESS_PRIORITY	(7)
 
+#define EVENT_RGB_TRANS_OVER	0x01
+
 int Task_RGB_ProcessCreate(void);
 
 

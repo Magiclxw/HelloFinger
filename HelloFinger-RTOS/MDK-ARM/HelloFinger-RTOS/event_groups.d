@@ -27,12 +27,14 @@ hellofinger-rtos\event_groups.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_h
 hellofinger-rtos\event_groups.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h
 hellofinger-rtos\event_groups.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc.h
 hellofinger-rtos\event_groups.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h
+hellofinger-rtos\event_groups.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_crc.h
 hellofinger-rtos\event_groups.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h
 hellofinger-rtos\event_groups.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
 hellofinger-rtos\event_groups.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 hellofinger-rtos\event_groups.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h
 hellofinger-rtos\event_groups.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
-hellofinger-rtos\event_groups.o: ../SYSTEM/usart/f_usart.h
+hellofinger-rtos\event_groups.o: ../Core/Inc/usart.h
+hellofinger-rtos\event_groups.o: ../Core/Inc/main.h
 hellofinger-rtos\event_groups.o: E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin\..\include\stdio.h
 hellofinger-rtos\event_groups.o: ../FreeRTOS/include/projdefs.h
 hellofinger-rtos\event_groups.o: ../FreeRTOS/include/portable.h

@@ -22,19 +22,21 @@ Dialog DLL:      TCM.DLL V1.36.1.0
  
 <h2>Project:</h2>
 E:\WORK\PersonalProject\HelloKey\root\HelloFinger-RTOS\MDK-ARM\HelloFinger-RTOS.uvprojx
-Project File Date:  09/10/2023
+Project File Date:  09/16/2023
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin'
 Build target 'HelloFinger-RTOS'
-compiling drv_ch9329.c...
-..\USER\driver\CH9329\drv_ch9329.c(385): warning:  #550-D: variable "ascii_value"  was set but never used
-  	static uint8_t ascii_value[100] = {0};
-..\USER\driver\CH9329\drv_ch9329.c: 1 warning, 0 errors
+compiling app_task_key.c...
+..\USER\application\app_task_key.c(188): warning:  #940-D: missing return statement at end of non-void function "Key_Trans_Mode_RecData_Handle" 
+  }
+..\USER\application\app_task_key.c(337): warning:  #550-D: variable "seqLen2"  was set but never used
+  				 static uint8_t seqLen2 = 0;
+..\USER\application\app_task_key.c: 2 warnings, 0 errors
 linking...
-Program Size: Code=27844 RO-data=804 RW-data=292 ZI-data=18604  
+Program Size: Code=29816 RO-data=804 RW-data=312 ZI-data=18016  
 FromELF: creating hex file...
-"HelloFinger-RTOS\HelloFinger-RTOS.axf" - 0 Error(s), 1 Warning(s).
+"HelloFinger-RTOS\HelloFinger-RTOS.axf" - 0 Error(s), 2 Warning(s).
 
 <h2>Software Packages used:</h2>
 

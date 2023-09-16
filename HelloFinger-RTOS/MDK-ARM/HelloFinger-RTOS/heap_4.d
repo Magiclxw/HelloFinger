@@ -27,12 +27,14 @@ hellofinger-rtos\heap_4.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma
 hellofinger-rtos\heap_4.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h
 hellofinger-rtos\heap_4.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc.h
 hellofinger-rtos\heap_4.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h
+hellofinger-rtos\heap_4.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_crc.h
 hellofinger-rtos\heap_4.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h
 hellofinger-rtos\heap_4.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
 hellofinger-rtos\heap_4.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 hellofinger-rtos\heap_4.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h
 hellofinger-rtos\heap_4.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
-hellofinger-rtos\heap_4.o: ../SYSTEM/usart/f_usart.h
+hellofinger-rtos\heap_4.o: ../Core/Inc/usart.h
+hellofinger-rtos\heap_4.o: ../Core/Inc/main.h
 hellofinger-rtos\heap_4.o: E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin\..\include\stdio.h
 hellofinger-rtos\heap_4.o: ../FreeRTOS/include/projdefs.h
 hellofinger-rtos\heap_4.o: ../FreeRTOS/include/portable.h

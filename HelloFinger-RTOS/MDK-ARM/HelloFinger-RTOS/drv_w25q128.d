@@ -25,6 +25,7 @@ hellofinger-rtos\drv_w25q128.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ha
 hellofinger-rtos\drv_w25q128.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h
 hellofinger-rtos\drv_w25q128.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc.h
 hellofinger-rtos\drv_w25q128.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h
+hellofinger-rtos\drv_w25q128.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_crc.h
 hellofinger-rtos\drv_w25q128.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h
 hellofinger-rtos\drv_w25q128.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
 hellofinger-rtos\drv_w25q128.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
@@ -34,7 +35,8 @@ hellofinger-rtos\drv_w25q128.o: E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin\..\in
 hellofinger-rtos\drv_w25q128.o: ../FreeRTOS/include/FreeRTOS.h
 hellofinger-rtos\drv_w25q128.o: ../FreeRTOS/include/FreeRTOSConfig.h
 hellofinger-rtos\drv_w25q128.o: ../SYSTEM/sys/sys.h
-hellofinger-rtos\drv_w25q128.o: ../SYSTEM/usart/f_usart.h
+hellofinger-rtos\drv_w25q128.o: ../Core/Inc/usart.h
+hellofinger-rtos\drv_w25q128.o: ../Core/Inc/main.h
 hellofinger-rtos\drv_w25q128.o: E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin\..\include\stdio.h
 hellofinger-rtos\drv_w25q128.o: ../FreeRTOS/include/projdefs.h
 hellofinger-rtos\drv_w25q128.o: ../FreeRTOS/include/portable.h
@@ -45,11 +47,10 @@ hellofinger-rtos\drv_w25q128.o: ../FreeRTOS/include/task.h
 hellofinger-rtos\drv_w25q128.o: ../FreeRTOS/include/list.h
 hellofinger-rtos\drv_w25q128.o: ../FreeRTOS/include/queue.h
 hellofinger-rtos\drv_w25q128.o: ../SYSTEM/delay/delay.h
-hellofinger-rtos\drv_w25q128.o: ../Core/Inc/usart.h
-hellofinger-rtos\drv_w25q128.o: ../Core/Inc/main.h
 hellofinger-rtos\drv_w25q128.o: ../FreeRTOS/include/semphr.h
 hellofinger-rtos\drv_w25q128.o: ../FreeRTOS/include/event_groups.h
 hellofinger-rtos\drv_w25q128.o: ../FreeRTOS/include/timers.h
 hellofinger-rtos\drv_w25q128.o: ../Core/Inc/adc.h
 hellofinger-rtos\drv_w25q128.o: ../SYSTEM/sys_config.h
 hellofinger-rtos\drv_w25q128.o: ../Core/Inc/dma.h
+hellofinger-rtos\drv_w25q128.o: ../SYSTEM/crc.h

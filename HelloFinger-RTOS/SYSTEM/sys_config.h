@@ -11,6 +11,7 @@
 #include "event_groups.h"
 #include "adc.h"
 #include "dma.h"
+#include "crc.h"
 
 #define OPERATE_SUCCESS 													(0)
 #define OPERATE_ERROR_INVALID_PARAMETERS 					(-1)

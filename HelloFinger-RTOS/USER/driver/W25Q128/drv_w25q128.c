@@ -1,6 +1,7 @@
 #include "..\USER\driver\W25Q128\drv_w25q128.h"
 
-DMA_HandleTypeDef hdma_spi1;
+DMA_HandleTypeDef hdma_spi1_tx;
+DMA_HandleTypeDef hdma_spi1_rx;
 SPI_HandleTypeDef hspi1;
 
 static __IO uint32_t  SPITimeout = SPIT_LONG_TIMEOUT;   
@@ -18,7 +19,7 @@ void SPI1_Init(void)
     hspi1.Init.CLKPolarity = SPI_POLARITY_HIGH;               
     hspi1.Init.CLKPhase = SPI_PHASE_2EDGE;                    
     hspi1.Init.NSS = SPI_NSS_SOFT;                            
-    hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_256; 
+    hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_16; 
     hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;                   
     hspi1.Init.TIMode = SPI_TIMODE_DISABLE;                   
     hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;   
@@ -38,15 +39,6 @@ void Flash_Init(void)
   gpio_init_struct.Pull = GPIO_PULLUP;
   gpio_init_struct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(GPIOB, &gpio_init_struct);
-	
-	hdma_spi1.Instance = DMA1_Channel2;
-	hdma_spi1.Init.Direction = DMA_PERIPH_TO_MEMORY;
-	hdma_spi1.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
-	hdma_spi1.Init.MemInc = DMA_MINC_ENABLE;
-	hdma_spi1.Init.Mode = DMA_CIRCULAR;
-	hdma_spi1.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
-	hdma_spi1.Init.PeriphInc = DMA_PINC_DISABLE;
-	hdma_spi1.Init.Priority = DMA_PRIORITY_LOW;
 	
 	SPI1_Init();
 }
@@ -411,10 +403,19 @@ void Flash_Erase_Sector(uint32_t saddr)
 
 void Flash_Read_DMA(uint8_t *pbuf, uint32_t addr, uint16_t datalen)
 {
-	//SPI_FLASH_CS_LOW();
-  Flash_Read_Write_Byte(addr);
+	SPI_FLASH_CS_LOW();
+	Flash_Read_Write_Byte(FLASH_ReadData);
+  Flash_Send_Address(addr);
 	HAL_SPI_Receive_DMA(&hspi1,pbuf,datalen);
-	SPI_FLASH_CS_HIGH();
+	//delay_ms(1000);
+	//SPI_FLASH_CS_HIGH();	//dma传输完成后拉高片选
 }
 
-
+void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi)
+{
+	if(hspi->Instance == SPI1)
+	{
+		SPI_FLASH_CS_HIGH();
+		printf("spi dma rec ok\r\n");
+	}
+}

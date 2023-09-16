@@ -25,6 +25,7 @@ hellofinger-rtos\dma.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma_ex
 hellofinger-rtos\dma.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h
 hellofinger-rtos\dma.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc.h
 hellofinger-rtos\dma.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h
+hellofinger-rtos\dma.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_crc.h
 hellofinger-rtos\dma.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h
 hellofinger-rtos\dma.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
 hellofinger-rtos\dma.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
@@ -34,7 +35,8 @@ hellofinger-rtos\dma.o: E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin\..\include\st
 hellofinger-rtos\dma.o: ../FreeRTOS/include/FreeRTOS.h
 hellofinger-rtos\dma.o: ../FreeRTOS/include/FreeRTOSConfig.h
 hellofinger-rtos\dma.o: ../SYSTEM/sys/sys.h
-hellofinger-rtos\dma.o: ../SYSTEM/usart/f_usart.h
+hellofinger-rtos\dma.o: ../Core/Inc/usart.h
+hellofinger-rtos\dma.o: ../Core/Inc/main.h
 hellofinger-rtos\dma.o: E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin\..\include\stdio.h
 hellofinger-rtos\dma.o: ../FreeRTOS/include/projdefs.h
 hellofinger-rtos\dma.o: ../FreeRTOS/include/portable.h
@@ -45,11 +47,10 @@ hellofinger-rtos\dma.o: ../FreeRTOS/include/task.h
 hellofinger-rtos\dma.o: ../FreeRTOS/include/list.h
 hellofinger-rtos\dma.o: ../FreeRTOS/include/queue.h
 hellofinger-rtos\dma.o: ../SYSTEM/delay/delay.h
-hellofinger-rtos\dma.o: ../Core/Inc/usart.h
-hellofinger-rtos\dma.o: ../Core/Inc/main.h
 hellofinger-rtos\dma.o: ../FreeRTOS/include/semphr.h
 hellofinger-rtos\dma.o: ../FreeRTOS/include/event_groups.h
 hellofinger-rtos\dma.o: ../FreeRTOS/include/timers.h
 hellofinger-rtos\dma.o: ../Core/Inc/adc.h
 hellofinger-rtos\dma.o: ../SYSTEM/sys_config.h
 hellofinger-rtos\dma.o: ../Core/Inc/dma.h
+hellofinger-rtos\dma.o: ../SYSTEM/crc.h

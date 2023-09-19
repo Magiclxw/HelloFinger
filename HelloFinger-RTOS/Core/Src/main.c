@@ -67,7 +67,7 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-uint8_t rx[10] = {0};
+uint8_t rx[20] = {0};
 /* USER CODE END 0 */
 
 /**
@@ -127,9 +127,9 @@ int main(void)
 	//delay_ms(1000);
 	
 	//Flash_read(rx,0x100000,10);
-	Flash_Read_DMA(rx,0x100000,10);
+	Flash_Read_DMA(rx,0x100000+100*2,20);
 	//delay_ms(1000);
-	for(uint8_t i=0;i<10;i++)
+	for(uint8_t i=0;i<20;i++)
 	{
 		printf("data : %d\r\n",rx[i]);
 	}

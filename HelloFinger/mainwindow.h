@@ -31,6 +31,8 @@ signals:
     void SI_FingerRefresh(void);
     void SI_TableStateUpdata_T(void);
     void SI_USB_SEND_WindowsPassword(QString password,uint8_t index);
+    void SI_USB_SEND_Password(QString password,uint8_t index);
+    void SI_USB_SEND_Account_Password(QString account,QString password,uint8_t index);
 };
 
 #endif // MAINWINDOW_H

@@ -559,27 +559,85 @@ static void Finger_Function(uint16_t id,uint16_t score)
 			Flash_read(password,FINGER_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE,len+3);
 			crc_value = Calc_CRC(password,len+3);
 			printf("crc_value = %d\r\n",crc_value);
+			vTaskDelay(10);
+			Flash_read((uint8_t *)&rec_crc,FINGER_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE+len+3,4);
+			printf("rec_crc = %d",rec_crc);
+			if(rec_crc == crc_value)		//crc校验通过
+			{
+				CH9329_Input_Fuc_Key(NO_CTRL,KEY_LeftCtrl);
+				vTaskDelay(400);
+				CH9329_Input_Ascii((char*)&password[3],len);
+				CH9329_Input_Fuc_Key(NO_CTRL,KEY_LeftEnter);
+			}
+			vPortFree(password);
+			break;
+		}
+		case TYPE_Password:			//密码
+		{
+			uint8_t len = 0;
+			uint32_t crc_value = 0;
+			uint32_t rec_crc = 0;
+			Flash_read(&len,FINGER_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE+FINGER_FUNC_LEN1_OFFSET,1);
+			if(len == 0) break;
+			uint8_t *password = (uint8_t*)pvPortMalloc(len+3);
+			Flash_read(password,FINGER_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE,len+3);
+			crc_value = Calc_CRC(password,len+3);
+			printf("crc_value = %d\r\n",crc_value);
+			vTaskDelay(10);
 			Flash_read((uint8_t *)&rec_crc,FINGER_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE+len+3,4);
 			printf("rec_crc = %d",rec_crc);
 			if(rec_crc == crc_value)		//crc校验通过
 			{
 				CH9329_Input_Ascii((char*)&password[3],len);
-				CH9329_Input_Fuc_Key(KEY_LeftEnter);
+				CH9329_Input_Fuc_Key(NO_CTRL,KEY_LeftEnter);
 			}
 			vPortFree(password);
 			break;
-		}
-		case TYPE_Password:
-		{
-			break;
 			
 		}
-		case TYPE_Account_Password:
+		case TYPE_Account_Password:		//账号+密码
 		{
+			uint8_t account_len = 0;
+			uint8_t password_len = 0;
+			uint32_t crc_value = 0;
+			uint32_t rec_crc = 0;
+			Flash_read(&account_len,FINGER_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE+FINGER_FUNC_LEN1_OFFSET,1);
+			if(account_len == 0) break;
+			printf("account len = %d\r\n",account_len);
+			Flash_read(&password_len,FINGER_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE+FINGER_FUNC_LEN1_OFFSET+2+account_len,1);
+			if(password_len == 0) break;
+			printf("password len = %d\r\n",password_len);
+			uint8_t *account_password = (uint8_t *)pvPortMalloc(account_len+password_len+3+1+1);
+			Flash_read(account_password,FINGER_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE,account_len+password_len+3+1+1);
+			crc_value = Calc_CRC(account_password,account_len+password_len+3+1+1);
+			printf("crc_value = %x\r\n",crc_value);
+			vTaskDelay(10);
+			Flash_read((uint8_t *)&rec_crc,FINGER_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE+account_len+password_len+3+1+1,4);
+			printf("rec_crc = %x",rec_crc);
+			if(rec_crc == crc_value)		//crc校验通过
+			{
+				uint8_t *account = (uint8_t *)pvPortMalloc(account_len);
+				uint8_t *password = (uint8_t *)pvPortMalloc(password_len);
+				memcpy(account,(uint8_t*)&account_password[3],account_len);
+				memcpy(password,(uint8_t*)&account_password[2+account_len+2],password_len);
+				CH9329_Input_Ascii((char*)account,account_len);
+				vTaskDelay(10);
+				CH9329_Input_Fuc_Key(NO_CTRL,KEY_Tab);
+				vTaskDelay(10);
+				CH9329_Input_Ascii((char*)password,password_len);
+				vTaskDelay(50);
+				CH9329_Input_Fuc_Key(NO_CTRL,KEY_LeftEnter);
+				vTaskDelay(10);
+				vPortFree(account);
+				vPortFree(password);
+				
+			}
+			vPortFree(account_password);
 			break;
 		}
-		case TYPE_Shortcut:
+		case TYPE_Shortcut:		//快捷键
 		{
+			
 			break;
 		}
 	}

@@ -157,9 +157,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>566</LineNumber>
+          <LineNumber>617</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134221206</Address>
+          <Address>134221688</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -168,7 +168,23 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\USER\application\app_task_finger.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\HelloFinger_RTOS\../USER/application/app_task_finger.c\566</Expression>
+          <Expression>\\HelloFinger_RTOS\../USER/application/app_task_finger.c\617</Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
+          <LineNumber>604</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134221460</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\USER\application\app_task_finger.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\HelloFinger_RTOS\../USER/application/app_task_finger.c\604</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -216,6 +232,11 @@
           <count>8</count>
           <WinNumber>1</WinNumber>
           <ItemText>pBuffer</ItemText>
+        </Ww>
+        <Ww>
+          <count>9</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>store_msg</ItemText>
         </Ww>
       </WatchWindow1>
       <MemoryWindow1>

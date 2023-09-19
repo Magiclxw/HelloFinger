@@ -9,6 +9,7 @@
 #define KEY_CMD_ADDR		0x00
 
 #define FIXED_CMD_LEN (9)	//固定指令包长度(包头+设备地址+包标识+包长度)
+#define CRC_LEN	(4)
 
 #define TASK_KEY_CONTROL_SIZE	(200)
 #define TASK_KEY_CONTROL_PRIORITY	(5)

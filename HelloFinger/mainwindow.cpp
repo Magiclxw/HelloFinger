@@ -64,8 +64,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     bar->setVisible(false);
     ui->lineedit_windowsPassword->setEchoMode(QLineEdit::Password);
+    ui->lineEdit_ap_password->setEchoMode(QLineEdit::Password);
     ui->lineEdit_password->setEchoMode(QLineEdit::Password);
-    ui->lineEdit_password_o->setEchoMode(QLineEdit::Password);
 
     enroll = new enrollstate;
 
@@ -114,6 +114,12 @@ MainWindow::MainWindow(QWidget *parent) :
         QString windows_password = ui->lineedit_windowsPassword->text();
         emit SI_USB_SEND_WindowsPassword(windows_password,ui->listWidget->currentIndex().row());
         qDebug()<<windows_password;
+    });
+
+    connect(ui->pushButton_account_password,&QPushButton::clicked,this,[=](){
+        QString account = ui->lineEdit_ap_account->text();
+        QString password = ui->lineEdit_ap_password->text();
+        emit SI_USB_SEND_Account_Password(account,password,ui->listWidget->currentIndex().row());
     });
 
     QFile file("hello.ini");

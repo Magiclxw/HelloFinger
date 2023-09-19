@@ -213,6 +213,44 @@ Entrance::Entrance(QWidget *parent)
         //qDebug()<<"len" << len;
         //hid_write(handle,,)
     });
+    connect(m,&MainWindow::SI_USB_SEND_Account_Password,this,[=](QString account,QString password,uint8_t index){
+        char * char_account = account.toLatin1().data();
+        char * char_password = password.toLatin1().data();
+        uint8_t flag = USB_PROTOCOL_FORMAT_FUNC_STORE;
+        uint8_t type = TYPE_Account_Password;
+        uint8_t account_len = account.length();
+        uint8_t password_len = password.length();
+        uint8_t *cmd_pack1 = new uint8_t[7];
+        cmd_pack1[0] = flag;
+        cmd_pack1[1] = 0x00;
+        cmd_pack1[2] = 0x02;
+        cmd_pack1[3] = type;
+        cmd_pack1[4] = index;
+        cmd_pack1[5] = account_len;
+        cmd_pack1[6] = password_len;
+        GenerateCmd(cmd_pack1,7);
+        hid_write(handle,Command,12);
+        Sleep(100);
+        uint8_t *cmd_pack2 = new uint8_t[account_len+5];
+        cmd_pack2[0] = flag;
+        cmd_pack2[1] = 0x00;
+        cmd_pack2[2] = 0x01;
+        cmd_pack2[3] = type;
+        cmd_pack2[4] = index;
+        memcpy(&cmd_pack2[5],char_account,account_len);
+        GenerateCmd(cmd_pack2,5+account_len);
+        hid_write(handle,Command,account_len+10);
+        Sleep(100);
+        uint8_t *cmd_pack3 = new uint8_t[password_len+5];
+        cmd_pack3[0] = flag;
+        cmd_pack3[1] = 0x00;
+        cmd_pack3[2] = 0x00;
+        cmd_pack3[3] = type;
+        cmd_pack3[4] = index;
+        memcpy(&cmd_pack3[5],char_password,password_len);
+        GenerateCmd(cmd_pack3,5+password_len);
+        hid_write(handle,Command,password_len+10);
+    });
 
 }
 

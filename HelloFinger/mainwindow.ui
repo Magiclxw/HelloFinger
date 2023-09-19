@@ -607,7 +607,7 @@ QLineEdit[echoMode=&quot;2&quot;] {
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="lineEdit"/>
+               <widget class="QLineEdit" name="lineEdit_ap_account"/>
               </item>
              </layout>
             </widget>
@@ -623,13 +623,13 @@ QLineEdit[echoMode=&quot;2&quot;] {
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="lineEdit_password"/>
+               <widget class="QLineEdit" name="lineEdit_ap_password"/>
               </item>
              </layout>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_2">
+            <widget class="QPushButton" name="pushButton_account_password">
              <property name="text">
               <string>确定</string>
              </property>
@@ -660,13 +660,13 @@ QLineEdit[echoMode=&quot;2&quot;] {
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="lineEdit_password_o"/>
+               <widget class="QLineEdit" name="lineEdit_password"/>
               </item>
              </layout>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_3">
+            <widget class="QPushButton" name="pushButton_password">
              <property name="text">
               <string>PushButton</string>
              </property>
@@ -806,7 +806,7 @@ QLineEdit[echoMode=&quot;2&quot;] {
      <x>0</x>
      <y>0</y>
      <width>700</width>
-     <height>25</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

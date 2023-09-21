@@ -260,6 +260,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->G_Slider,&QSlider::sliderMoved,this,&MainWindow::SL_UpdateRGB);
     connect(ui->B_Slider,&QSlider::sliderMoved,this,&MainWindow::SL_UpdateRGB);
 
+    connect(ui->pushButton_RGB_SET,&QPushButton::clicked,this,[=](){
+        uint8_t interval = ui->interval_Slider->value();
+        SI_USB_SEND_Breath_RGB(color_R,color_G,color_B,interval);
+    });
+
     GlobalKeyEvent::installKeyEvent();
     connect(GlobalKeyEvent::getInstance(),&GlobalKeyEvent::keyEvent,this,&MainWindow::on_keyEvent);
 

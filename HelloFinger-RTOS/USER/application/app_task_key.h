@@ -4,6 +4,8 @@
 #include "sys_config.h"
 #include "drv_ch9329.h"
 
+extern QueueHandle_t RGB_Queue_Handle;
+
 #define KEY_CMD_HEAD_H	0x57
 #define KEY_CMD_HEAD_L	0xAB
 #define KEY_CMD_ADDR		0x00
@@ -41,6 +43,7 @@ typedef enum USB_PROTOCOL_FORMAT
     USB_PROTOCOL_FORMAT_SET_FINGER_COLOR_PRO, //0x0F
     USB_PROTOCOL_FORMAT_GET_INDEX_LIST,		  	//0x10
     USB_PROTOCOL_FORMAT_FUNC_STORE,           //0x11
+		USB_PROTOCOL_FORMAT_SET_RGB,              //0x12
 
 }USB_PROTOCOL_FORMAT_e;
 

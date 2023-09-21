@@ -31,7 +31,6 @@
 extern EventGroupHandle_t FingerEvent_Handle;
 
 
-
 typedef enum DATA_RECV_STATE
 {
 	DATA_RECV_STATE_NO_GET,

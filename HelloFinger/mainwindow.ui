@@ -72,7 +72,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <property name="iconSize">
      <size>
@@ -734,6 +734,9 @@ QLineEdit[echoMode=&quot;2&quot;] {
             <property name="text">
              <string>R</string>
             </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
            </widget>
           </item>
           <item>
@@ -741,12 +744,25 @@ QLineEdit[echoMode=&quot;2&quot;] {
             <property name="text">
              <string>G</string>
             </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
            </widget>
           </item>
           <item>
            <widget class="QLabel" name="label_4">
             <property name="text">
              <string>B</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_9">
+            <property name="text">
+             <string> 频率</string>
             </property>
            </widget>
           </item>
@@ -792,10 +808,36 @@ QLineEdit[echoMode=&quot;2&quot;] {
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QSlider" name="interval_Slider">
+            <property name="minimum">
+             <number>10</number>
+            </property>
+            <property name="maximum">
+             <number>255</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
       </layout>
+     </widget>
+     <widget class="QPushButton" name="pushButton_RGB_SET">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>260</y>
+        <width>80</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>设置</string>
+      </property>
      </widget>
     </widget>
    </widget>
@@ -806,7 +848,7 @@ QLineEdit[echoMode=&quot;2&quot;] {
      <x>0</x>
      <y>0</y>
      <width>700</width>
-     <height>22</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>

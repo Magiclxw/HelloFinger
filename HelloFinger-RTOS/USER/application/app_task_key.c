@@ -452,6 +452,17 @@ int HID_Data_Handle(void)
 				 }
 				 break;
 			 }
+			 case USB_PROTOCOL_FORMAT_SET_RGB:
+			 {
+				 uint8_t color_R = g_key_data_format.data[5];
+				 uint8_t color_G = g_key_data_format.data[6];
+				 uint8_t color_B = g_key_data_format.data[7];
+				 uint8_t interval = g_key_data_format.data[8];
+				 uint32_t rgbi = color_R<<24|color_G<<16|color_B<<8|interval;
+				 xQueueSend(RGB_Queue_Handle,&rgbi,0);
+				 
+				 break;
+			 }
 			 default : break;
 		 }
 	 }

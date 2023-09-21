@@ -252,6 +252,19 @@ Entrance::Entrance(QWidget *parent)
         hid_write(handle,Command,password_len+10);
     });
 
+    connect(m,&MainWindow::SI_USB_SEND_Breath_RGB,this,[=](uint8_t color_R,uint8_t color_G,uint8_t color_B,uint8_t interval){
+        uint8_t flag = USB_PROTOCOL_FORMAT_SET_RGB;
+        uint8_t *cmd_pack = new uint8_t[7];
+        cmd_pack[0] = flag;
+        cmd_pack[1] = 0x00;
+        cmd_pack[2] = 0x00;
+        cmd_pack[3] = color_R;
+        cmd_pack[4] = color_G;
+        cmd_pack[5] = color_B;
+        cmd_pack[6] = interval;
+        GenerateCmd(cmd_pack,7);
+        hid_write(handle,Command,12);
+    });
 }
 
 void Entrance::ProgressCtrl()

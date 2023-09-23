@@ -780,8 +780,17 @@ QLineEdit[echoMode=&quot;2&quot;] {
          <layout class="QVBoxLayout" name="verticalLayout">
           <item>
            <widget class="QSlider" name="R_Slider">
+            <property name="minimum">
+             <number>0</number>
+            </property>
             <property name="maximum">
              <number>255</number>
+            </property>
+            <property name="singleStep">
+             <number>5</number>
+            </property>
+            <property name="value">
+             <number>0</number>
             </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -790,8 +799,17 @@ QLineEdit[echoMode=&quot;2&quot;] {
           </item>
           <item>
            <widget class="QSlider" name="G_Slider">
+            <property name="minimum">
+             <number>0</number>
+            </property>
             <property name="maximum">
              <number>255</number>
+            </property>
+            <property name="singleStep">
+             <number>5</number>
+            </property>
+            <property name="value">
+             <number>0</number>
             </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -800,8 +818,17 @@ QLineEdit[echoMode=&quot;2&quot;] {
           </item>
           <item>
            <widget class="QSlider" name="B_Slider">
+            <property name="minimum">
+             <number>0</number>
+            </property>
             <property name="maximum">
              <number>255</number>
+            </property>
+            <property name="singleStep">
+             <number>5</number>
+            </property>
+            <property name="value">
+             <number>0</number>
             </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -810,10 +837,16 @@ QLineEdit[echoMode=&quot;2&quot;] {
           </item>
           <item>
            <widget class="QSlider" name="interval_Slider">
+            <property name="layoutDirection">
+             <enum>Qt::RightToLeft</enum>
+            </property>
             <property name="minimum">
              <number>10</number>
             </property>
             <property name="maximum">
+             <number>255</number>
+            </property>
+            <property name="value">
              <number>255</number>
             </property>
             <property name="orientation">

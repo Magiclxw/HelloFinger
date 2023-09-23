@@ -26,9 +26,9 @@ static void vTaskRGBProcessing(void)
 	static uint32_t gs_rgb[6]; 
 	//static uint8_t gs_temp[1024];
 	uint32_t rgb = 0;
-	__IO uint8_t r,g,b;
-	__IO uint8_t r_tmp,g_tmp,b_tmp;
-	__IO uint8_t dir = 0;
+	__IO float r,g,b;
+	__IO float r_tmp,g_tmp,b_tmp;
+	__IO uint32_t dir = 0;
 	uint32_t rec_rgbi = 0;;
 	r = 0x00;                               /* set red */
 	g = 0x00;                                /* set green */
@@ -36,38 +36,35 @@ static void vTaskRGBProcessing(void)
 	r_tmp = r;
 	g_tmp = g;
 	b_tmp = b;	/* set blue */
-	uint8_t R_decrease = 0;
-	uint8_t G_decrease = 0;
-	uint8_t B_decrease = 5;
-	uint8_t interval = 0;
+	float R_decrease = 0;
+	float G_decrease = 0;
+	float B_decrease = 5;
+	uint8_t interval = 30;
 	
 	RGB_Queue_Handle = xQueueCreate((UBaseType_t)QUEUE_RGB_PROCESS_LEN,(UBaseType_t)QUEUE_RGB_PROCESS_SIZE);
-	vTaskDelay(500);
-	WS25812B_write(gs_rgb, 6, gs_temp);
+	//vTaskDelay(500);
+	//WS25812B_write(gs_rgb, 6, gs_temp);
 	
 	while(1)
 	{
-		BaseType_t ret = xQueueReceive(RGB_Queue_Handle,&rec_rgbi,30);
+		BaseType_t ret = xQueueReceive(RGB_Queue_Handle,&rec_rgbi,interval);
 		if(ret == pdTRUE)
 		{
 			r = rec_rgbi>>24;
-			g = rec_rgbi>>16;
-			b = rec_rgbi>>8;
+			g = (rec_rgbi>>16)&0xFF;
+			b = (rec_rgbi>>8)&0xFF;
 			r_tmp = r;
 			g_tmp = g;
 			b_tmp = b;
 			interval = (uint8_t)rec_rgbi;
-			R_decrease = r_tmp/interval;
-			G_decrease = g_tmp/interval;
-			B_decrease = b_tmp/interval;
+			if(interval < 10) interval = 30;
+			R_decrease = r_tmp/40;
+			G_decrease = g_tmp/40;
+			B_decrease = b_tmp/40;
+			//printf("R_decrease = %f,G_decrease = %f,B_decrease = %f\r\n",R_decrease,G_decrease,B_decrease);
 		}
 
-		rgb = ((uint32_t)(r) << 16) | ((uint32_t)(g) << 8) | b;
-			
-			for (uint8_t i = 0; i < 6; i++)
-			{
-				gs_rgb[i] = rgb;//0xE0;
-			}
+		
 			/* write data */
 			
 			if(dir == 0)
@@ -78,9 +75,14 @@ static void vTaskRGBProcessing(void)
 				if(r < R_decrease || g < G_decrease || b < B_decrease)
 				{
 					dir = 1;
+					r = 0;
+					g = 0;
+					b = 0;
 				}
+				//printf("0:r = %f,g = %f,b = %f\r\n",r,g,b);
+
 			}
-			if(dir == 1)
+			else if(dir == 1)
 			{
 				r += R_decrease;
 				g += G_decrease;
@@ -88,10 +90,19 @@ static void vTaskRGBProcessing(void)
 				if(r > r_tmp-R_decrease || g > g_tmp-G_decrease || b > b_tmp-B_decrease)
 				{
 					dir = 0;
+					r = r_tmp;
+					g = g_tmp;
+					b = b_tmp;
 				}
+				//printf("1:r = %f,g = %f,b = %f\r\n",r,g,b);
 			}
+
+			rgb = ((uint32_t)(r) << 16) | ((uint32_t)(g) << 8) | (uint8_t)b;
 			
-			
+			for (uint8_t i = 0; i < 6; i++)
+			{
+				gs_rgb[i] = rgb;//0xE0;
+			}
 			
 			WS25812B_write(gs_rgb, 6, gs_temp);
 	}

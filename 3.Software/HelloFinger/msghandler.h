@@ -8,7 +8,7 @@ extern uint8_t rec_buffer[REC_BUFFER_LEN];
 
 #define HID_CMD_HEAD 0xFE
 
-#define CONFIRM_OK													(0x00)	//表示指令执行完毕或OK
+#define CONFIRM_OK												(0x00)	//表示指令执行完毕或OK
 #define	CONFIRM_REC_ERROR										(0x01)	//表示数据包接收错误
 #define CONFIRM_NO_FINGER										(0x02)	//表示传感器上没有手指
 #define CONFIRM_RECORD_FAIL 								(0x03)	//表示录入指纹图像失败

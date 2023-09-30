@@ -31,6 +31,7 @@
 extern DMA_HandleTypeDef hdma_spi1_tx;
 extern DMA_HandleTypeDef hdma_spi1_rx;
 extern DMA_HandleTypeDef hdma_spi2_tx;;
+extern TIM_HandleTypeDef rgb_timer_handler;
 /* USER CODE END TD */
 
 /* Private define ------------------------------------------------------------*/
@@ -301,4 +302,8 @@ void DMA1_Channel5_IRQHandler(void)
   /* USER CODE END DMA1_Channel5_IRQn 1 */
 }
 
+void TIM2_IRQHandler(void)
+{
+	HAL_TIM_IRQHandler(&rgb_timer_handler);
+}
 /* USER CODE END 1 */

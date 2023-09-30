@@ -1,3 +1,4 @@
+debug/form_enrollstate.o
 debug/form_entrance.o
 debug/form_mainwindow.o
 debug/hid_function.o
@@ -9,6 +10,7 @@ debug/globalkeyevent_win.o
 debug/globalkeyevent_x11.o
 debug/globalmouseevent_win.o
 debug/globalmouseevent_x11.o
+debug/moc_form_enrollstate.o
 debug/moc_form_entrance.o
 debug/moc_form_mainwindow.o
 debug/moc_hid_function.o

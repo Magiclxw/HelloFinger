@@ -17,7 +17,6 @@
 #define FINGER_DATA_HANDLE_QUEUE_SIZE	(1)
 
 
-
 typedef struct FINGER_DATA_CONTROLLER
 {
 	volatile uint8_t *pData;
@@ -52,6 +51,8 @@ typedef struct USB_RESPONSE
 	volatile uint8_t result;
 	volatile uint8_t data[61];
 }USB_RESPONSE_t;
+
+extern USB_RESPONSE_t g_usb_response;
 
 int Task_Finger_DataCTLCreate(void);
 int Finger_GiveNotifyFromISR(uint8_t *recData,uint8_t dataSize);

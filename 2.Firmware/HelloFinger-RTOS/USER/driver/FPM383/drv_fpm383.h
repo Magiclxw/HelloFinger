@@ -384,6 +384,7 @@ void Generate_AutoEnroll(uint16_t ID,uint8_t enrollTimes,uint16_t PARAM);
 void Generate_AutoIdentify(uint8_t secureleval,uint16_t ID,uint16_t PARAM);
 void Generate_StoreChar(uint8_t BufferID,uint16_t PageID);
 void Generate_Sleep(void);
+void Generate_Cancel(void);
 void Generate_ReadIndexTable(uint8_t page);
 void Generate_DeletChar(uint16_t PageID,uint16_t number);
 void Generate_ControlBLN(_LED_Function_t func,uint8_t startColor,uint8_t endColor,uint8_t cycle);

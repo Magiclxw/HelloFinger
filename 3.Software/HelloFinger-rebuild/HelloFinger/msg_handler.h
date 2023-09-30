@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+extern  uint8_t TableState[8];
+
 #define HID_CMD_HEAD 0xFE
 #define FINGER_MAX_NUM  64
 
@@ -63,7 +65,7 @@ typedef enum USB_PROTOCOL_FORMAT
 {
     USB_PROTOCOL_FORMAT_NOUSE0,				  //0x00
     USB_PROTOCOL_FORMAT_MODE_SWITCH,		  //0x01
-    USB_PROTOCOL_FORMAT_NOUSE1,               //0x02
+    USB_PROTOCOL_FORMAT_GET_FW_HW,            //0x02
     USB_PROTOCOL_FORMAT_NOUSE2,               //0x03
     USB_PROTOCOL_FORMAT_NOUSE3,               //0x04
     USB_PROTOCOL_FORMAT_NOUSE4,               //0x05
@@ -102,8 +104,8 @@ public:
 
 
 signals:
-    void Signal_Update_TableState(uint8_t *tableState);
-    void Signal_Update_EnrollState(uint8_t *enrollState);
+    void Signal_Update_TableState();
+    void Signal_Update_EnrollState(uint8_t state1,uint8_t state2);
 };
 
 #endif // MSG_HANDLER_H

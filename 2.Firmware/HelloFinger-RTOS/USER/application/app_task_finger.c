@@ -283,7 +283,8 @@ static void Finger_Func_Exec(void)
 						g_usb_response.data[0] = g_data_format.data[1];	//参数1
 						g_usb_response.data[1] = g_data_format.data[2];	//参数2
 						g_usb_response.data[2] = CH9329_CAL_SUM((uint8_t*)&g_usb_response,6);
-						if(g_usb_response.data[0] == 0x03 || g_usb_response.data[0] == 0x01)	//重新按下手指
+
+						if(g_usb_response.data[0] == 0x01 || g_usb_response.data[0] == 0x02 ||g_usb_response.data[0] == 0x03)	//重新按下手指
 						{
 							Send_HID_Data((uint8_t*)&g_usb_response,7);
 						}
@@ -291,6 +292,10 @@ static void Finger_Func_Exec(void)
 						{
 							Send_HID_Data((uint8_t*)&g_usb_response,7);
 							xEventGroupClearBits(FingerEvent_Handle,EVENT_AUTO_ENROLL);
+							/* 指纹注册成功后重新获取索引表信息发送给上位机 */
+							xEventGroupSetBits(FingerEvent_Handle,EVENT_INDEX_LIST);
+							Generate_ReadIndexTable(0);
+							HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_read_index_table,g_read_index_table.LEN[0]<<8|g_read_index_table.LEN[1]+FIXED_CMD_LEN,1000);
 						}
 					}
 					if(event_status & EVENT_DELETE_CHAR)
@@ -300,8 +305,12 @@ static void Finger_Func_Exec(void)
 						g_usb_response.type = USB_PROTOCOL_FORMAT_DELETE_FINGER;
 						g_usb_response.result = CONFIRM_OK;
 						g_usb_response.data[0] = CH9329_CAL_SUM((uint8_t*)&g_usb_response,4);
-						Send_HID_Data((uint8_t*)&g_usb_response,5);
+						Send_HID_Data((uint8_t*)&g_usb_response,5);           
 						xEventGroupClearBits(FingerEvent_Handle,EVENT_DELETE_CHAR);
+						/* 删除指纹完成后重新获取索引表信息发送给上位机 */
+						xEventGroupSetBits(FingerEvent_Handle,EVENT_INDEX_LIST);
+						Generate_ReadIndexTable(0);
+						HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_read_index_table,g_read_index_table.LEN[0]<<8|g_read_index_table.LEN[1]+FIXED_CMD_LEN,1000);
 					}
 					if(event_status & EVENT_TOUCH_DETECT)	//指纹验证结果
 					{
@@ -320,6 +329,7 @@ static void Finger_Func_Exec(void)
 				}
 				case CONFIRM_REC_ERROR:
 				{
+					
 					break;
 				}
 				case CONFIRM_NO_FINGER:
@@ -478,6 +488,8 @@ static void Finger_Func_Exec(void)
 				}
 				case CONFIRM_TIMEOUT:
 				{
+					//Generate_Cancel();
+					//HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_cancel,g_cancel.LEN[0]<<8|g_cancel.LEN[1]+FIXED_CMD_LEN,1000);
 					break;
 				}
 				case CONFIRM_FINGER_EXIST:

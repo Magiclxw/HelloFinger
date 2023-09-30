@@ -41,7 +41,8 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
+const char *Firmware_Version	= "1.0.0_beta";
+#define Compile_time	__DATE__","__TIME__
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -50,7 +51,7 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
+_SYSTEM_INFO_t g_sys_info;	//系统信息
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -113,6 +114,9 @@ int main(void)
 	delay_ms(1000);
 	ENCODER_Init();
 	printf("hello finger\r\n");
+	
+	memcpy(g_sys_info.firmware_version,Firmware_Version,strlen(Firmware_Version));
+
 	id = Flash_Read_id(); /* 读取FLASH ID */
 	
     while ((id == 0) || (id == 0XFFFF)) /* 检测不到FLASH芯片 */

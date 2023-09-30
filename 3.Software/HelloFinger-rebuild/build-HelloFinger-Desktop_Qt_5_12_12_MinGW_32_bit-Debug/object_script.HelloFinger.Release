@@ -1,3 +1,4 @@
+release/form_enrollstate.o
 release/form_entrance.o
 release/form_mainwindow.o
 release/hid_function.o
@@ -9,6 +10,7 @@ release/globalkeyevent_win.o
 release/globalkeyevent_x11.o
 release/globalmouseevent_win.o
 release/globalmouseevent_x11.o
+release/moc_form_enrollstate.o
 release/moc_form_entrance.o
 release/moc_form_mainwindow.o
 release/moc_hid_function.o

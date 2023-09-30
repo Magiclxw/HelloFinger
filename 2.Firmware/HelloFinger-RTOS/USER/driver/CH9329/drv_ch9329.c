@@ -283,11 +283,11 @@ void CH9329_Init(void)		//CH9329引脚初始化
 	gpio.Speed=GPIO_SPEED_FREQ_HIGH;
 	HAL_GPIO_Init(GPIOB,&gpio);
 	/* 工作模式配置为协议传输 */
-	SET_EN;
-	CH9329_WorkMode_Config(CFG_WORKMODE_SOFT_0);
-	CH9329_SerialMode_Config(CFG_SERIALMODE_SOFT_0);
-	CH9329_Set_Cfg();
-	SET_DEN;
+	//SET_EN;
+	//CH9329_WorkMode_Config(CFG_WORKMODE_SOFT_0);
+	//CH9329_SerialMode_Config(CFG_SERIALMODE_SOFT_0);
+	//CH9329_Set_Cfg();
+	//SET_DEN;
 	
 	CH9329_Data_Format_Init();
 }

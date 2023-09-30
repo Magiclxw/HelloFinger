@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Msg_Handler_t {
     QByteArrayData data[7];
-    char stringdata0[96];
+    char stringdata0[86];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -34,15 +34,15 @@ static const qt_meta_stringdata_Msg_Handler_t qt_meta_stringdata_Msg_Handler = {
 QT_MOC_LITERAL(0, 0, 11), // "Msg_Handler"
 QT_MOC_LITERAL(1, 12, 24), // "Signal_Update_TableState"
 QT_MOC_LITERAL(2, 37, 0), // ""
-QT_MOC_LITERAL(3, 38, 8), // "uint8_t*"
-QT_MOC_LITERAL(4, 47, 10), // "tableState"
-QT_MOC_LITERAL(5, 58, 25), // "Signal_Update_EnrollState"
-QT_MOC_LITERAL(6, 84, 11) // "enrollState"
+QT_MOC_LITERAL(3, 38, 25), // "Signal_Update_EnrollState"
+QT_MOC_LITERAL(4, 64, 7), // "uint8_t"
+QT_MOC_LITERAL(5, 72, 6), // "state1"
+QT_MOC_LITERAL(6, 79, 6) // "state2"
 
     },
     "Msg_Handler\0Signal_Update_TableState\0"
-    "\0uint8_t*\0tableState\0Signal_Update_EnrollState\0"
-    "enrollState"
+    "\0Signal_Update_EnrollState\0uint8_t\0"
+    "state1\0state2"
 };
 #undef QT_MOC_LITERAL
 
@@ -60,12 +60,12 @@ static const uint qt_meta_data_Msg_Handler[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   24,    2, 0x06 /* Public */,
-       5,    1,   27,    2, 0x06 /* Public */,
+       1,    0,   24,    2, 0x06 /* Public */,
+       3,    2,   25,    2, 0x06 /* Public */,
 
  // signals: parameters
-    QMetaType::Void, 0x80000000 | 3,    4,
-    QMetaType::Void, 0x80000000 | 3,    6,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 4, 0x80000000 | 4,    5,    6,
 
        0        // eod
 };
@@ -76,21 +76,21 @@ void Msg_Handler::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         auto *_t = static_cast<Msg_Handler *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->Signal_Update_TableState((*reinterpret_cast< uint8_t*(*)>(_a[1]))); break;
-        case 1: _t->Signal_Update_EnrollState((*reinterpret_cast< uint8_t*(*)>(_a[1]))); break;
+        case 0: _t->Signal_Update_TableState(); break;
+        case 1: _t->Signal_Update_EnrollState((*reinterpret_cast< uint8_t(*)>(_a[1])),(*reinterpret_cast< uint8_t(*)>(_a[2]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _t = void (Msg_Handler::*)(uint8_t * );
+            using _t = void (Msg_Handler::*)();
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&Msg_Handler::Signal_Update_TableState)) {
                 *result = 0;
                 return;
             }
         }
         {
-            using _t = void (Msg_Handler::*)(uint8_t * );
+            using _t = void (Msg_Handler::*)(uint8_t , uint8_t );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&Msg_Handler::Signal_Update_EnrollState)) {
                 *result = 1;
                 return;
@@ -140,16 +140,15 @@ int Msg_Handler::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void Msg_Handler::Signal_Update_TableState(uint8_t * _t1)
+void Msg_Handler::Signal_Update_TableState()
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
-    QMetaObject::activate(this, &staticMetaObject, 0, _a);
+    QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
 }
 
 // SIGNAL 1
-void Msg_Handler::Signal_Update_EnrollState(uint8_t * _t1)
+void Msg_Handler::Signal_Update_EnrollState(uint8_t _t1, uint8_t _t2)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 1, _a);
 }
 QT_WARNING_POP

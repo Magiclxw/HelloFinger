@@ -3,6 +3,7 @@
 #include "usart.h"
 #include "string.h"
 #include "..\USER\driver\W25Q128\drv_w25q128.h"
+#include "app_task_finger.h"
 
 static void vTaskKeyProcessing(void);
 int Key_Protocol_Mode_RecData_Handle(uint8_t data);
@@ -65,7 +66,7 @@ static void vTaskKeyProcessing(void)
 	Generate_ControlBLN(func,start_color,end_color,cycle_time);
 	HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_control_bln,g_control_bln.LEN[0]<<8|g_control_bln.LEN[1]+FIXED_CMD_LEN,1000);
 	
-	//uint8_t time = 0x24;
+	//uint8_t time = 36;
 	//uint8_t color1 = 0x99;
 	//uint8_t color2 = 0x00;
 	//uint8_t color3 = 0x00;
@@ -461,6 +462,28 @@ int HID_Data_Handle(void)
 				 uint32_t rgbi = color_R<<24|color_G<<16|color_B<<8|interval;
 				 xQueueSend(RGB_Queue_Handle,&rgbi,0);
 				 
+				 break;
+			 }
+			 case USB_PROTOCOL_FORMAT_GET_FW_HW:
+			 {
+				 char compile_date[11] = {0};
+				 char compile_time[8] = {0};
+				 char firmware_version[15] = {0};
+				 strcpy(compile_time,__TIME__);
+				 printf("%s\r\n",compile_time);
+				 strcpy(compile_date,__DATE__);
+				 printf("%s\r\n",compile_date);
+				 
+				 g_usb_response.head = USB_RESPONSE_HEAD;
+				 g_usb_response.len = 21;
+				 g_usb_response.type = USB_PROTOCOL_FORMAT_GET_FW_HW;
+				 g_usb_response.result = CONFIRM_OK;
+				 
+				 memcpy((uint8_t*)&g_usb_response.data[0],(uint8_t*)compile_date,11);
+				 memcpy((uint8_t*)&g_usb_response.data[11],(uint8_t*)compile_time,8);
+				 
+				 g_usb_response.data[19] = CH9329_CAL_SUM((uint8_t*)&g_usb_response,23);
+				 Send_HID_Data((uint8_t*)&g_usb_response,24);
 				 break;
 			 }
 			 default : break;

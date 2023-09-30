@@ -56,7 +56,7 @@ Entrance::Entrance(QWidget *parent)
     usbdevice->registerDevice(this->winId());
     qApp->installNativeEventFilter(usbdevice);
 
-    connect(usbdevice,SIGNAL(deviceIn(QString,QString)),this,SLOT(onDeviceIn(QString,QString)));
+    connect(usbdevice,SIGNAL(devi ceIn(QString,QString)),this,SLOT(onDeviceIn(QString,QString)));
     connect(usbdevice,SIGNAL(deviceOut(QString,QString)),this,SLOT(onDeviceOut(QString,QString)));
 
 /* 若进度条满，则隐藏进度条窗口 */

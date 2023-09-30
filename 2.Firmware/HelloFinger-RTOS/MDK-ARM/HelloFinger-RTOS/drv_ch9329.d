@@ -30,6 +30,8 @@ hellofinger-rtos\drv_ch9329.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal
 hellofinger-rtos\drv_ch9329.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
 hellofinger-rtos\drv_ch9329.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 hellofinger-rtos\drv_ch9329.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h
+hellofinger-rtos\drv_ch9329.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
+hellofinger-rtos\drv_ch9329.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 hellofinger-rtos\drv_ch9329.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 hellofinger-rtos\drv_ch9329.o: E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin\..\include\string.h
 hellofinger-rtos\drv_ch9329.o: ../FreeRTOS/include/FreeRTOS.h

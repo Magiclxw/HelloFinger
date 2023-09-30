@@ -1,7 +1,6 @@
 #include "interface.h"
 #include <QtDebug>
 #include "msg_handler.h"
-#include "form_mainwindow.h"
 #include "hid_function.h"
 
 hid_device *usb_handle = NULL;
@@ -12,14 +11,45 @@ uint8_t rec_buffer[REC_LEN] = {0};
 uint8_t hid_command[SEND_LEN] = {0};
 
 
-Msg_Handler *msgHandler = new Msg_Handler;
+Msg_Handler *msgHandler = NULL;
+Form_MainWindow *mainwindow = NULL;
 
 Interface::Interface(QObject *parent) : QThread(parent)
 {
+    qRegisterMetaType<uint8_t>("uint8_t");
+
     stopped = false;
-    Form_MainWindow *mainwindow = new Form_MainWindow;
+    mainwindow = new Form_MainWindow;
     mainwindow->show();
-    connect(msgHandler,&Msg_Handler::Signal_Update_TableState,mainwindow,&Form_MainWindow::Slot_Updata_TableState);
+    msgHandler = new Msg_Handler;
+
+    /* 更新索引表 */
+    connect(msgHandler,&Msg_Handler::Signal_Update_TableState,mainwindow,&Form_MainWindow::Slot_UpdateIndexTable);
+    /* 添加指纹 */
+    connect(mainwindow,&Form_MainWindow::Signal_AddFinger,this,[=](uint8_t id,uint8_t times,uint8_t param1,uint8_t param2){
+        HID_Add_Finger(usb_handle,id,param1,param2,times);
+    });
+    /* 删除指纹 */
+    connect(mainwindow,&Form_MainWindow::Signal_DeleteFinger,this,[=](uint8_t id){
+        HID_Delete_Finger(usb_handle,id);
+    });
+    /* 刷新指纹列表 */
+    connect(mainwindow,&Form_MainWindow::Signal_RefreshFinger,this,[=](){
+        HID_Get_TableState(usb_handle);
+    });
+    /* 设置设置呼吸灯效 */
+    connect(mainwindow,&Form_MainWindow::Signal_SetBreathRGB,this,[=](uint8_t color_R,uint8_t color_G,uint8_t color_B,uint8_t interval){
+        HID_Send_Breath_RGB(usb_handle,color_R,color_G,color_B,interval);
+    });
+    /* 设置开机密码 */
+    connect(mainwindow,&Form_MainWindow::Signal_SetWindowsPassword,this,[=](QString password,uint8_t id){
+        HID_Send_WindowsPassword(usb_handle,password,id);
+    });
+    /* 设置密码 */
+    connect(mainwindow,&Form_MainWindow::Signal_SetPassword,this,[=](QString password,uint8_t id){
+        HID_Send_Password(usb_handle,password,id);
+    });
+    connect(msgHandler,&Msg_Handler::Signal_Update_EnrollState,mainwindow,&Form_MainWindow::Slot_EnrollState);
 }
 
 void Interface::run()
@@ -43,7 +73,9 @@ void Interface::run()
                        {
                            qDebug("interface_number:%s",usb_info->path);//打印地址
                            usb_handle = hid_open_path(usb_info->path);
-                           HID_Send_Breath_RGB(usb_handle,0xFF,0xFF,0xFF,30);
+                           //HID_Send_Breath_RGB(usb_handle,0xFF,0xFF,0xFF,30);
+                           //HID_Get_FW_HW_Msg(usb_handle);
+                           HID_Get_TableState(usb_handle);
                            break;
                        }
                 }
@@ -56,11 +88,11 @@ void Interface::run()
         {
             qDebug() << "connect ok";
             rec_num = hid_read_timeout(usb_handle,rec_buffer,REC_LEN,200);
-            if(rec_num != -1)
+            if(rec_num > 0)
             {
                 msgHandler->Data_Resolve(rec_buffer);
             }
         }
-        msleep(1000);
+        //msleep(1000);
     }
 }

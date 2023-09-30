@@ -3,6 +3,7 @@
 
 #include <QThread>
 #include "lib/hidapi.h"
+#include "form_mainwindow.h"
 
 #define PROTOCOL_VID    0x1A86
 #define PROTOCOL_PID    0xE129
@@ -14,6 +15,7 @@ extern uint8_t rec_buffer[REC_LEN];
 extern uint8_t hid_command[SEND_LEN];
 extern hid_device *usb_handle;
 extern hid_device_info *usb_info;
+extern Form_MainWindow *mainwindow;
 
 class Interface : public QThread
 {

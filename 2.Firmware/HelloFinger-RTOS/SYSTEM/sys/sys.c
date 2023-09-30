@@ -3,6 +3,8 @@
 #include "app_task_finger.h"
 #include "app_task_rgb.h"
 #include "app_task_joystick.h"
+
+
 /**
  * @brief       设置中断向量表偏移地址
  * @param       baseaddr: 基址

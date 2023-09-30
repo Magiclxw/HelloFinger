@@ -1,33 +1,7 @@
-/**
- ****************************************************************************************************
- * @file        sys.h
- * @author      正点原子团队(ALIENTEK)
- * @version     V1.0
- * @date        2020-04-20
- * @brief       系统初始化代码(包括时钟配置/中断管理/GPIO设置等)
- * @license     Copyright (c) 2020-2032, 广州市星翼电子科技有限公司
- ****************************************************************************************************
- * @attention
- *
- * 实验平台:正点原子 STM32F103开发板
- * 在线视频:www.yuanzige.com
- * 技术论坛:www.openedv.com
- * 公司网址:www.alientek.com
- * 购买地址:openedv.taobao.com
- *
- * 修改说明
- * V1.0 20211103
- * 第一次发布
- *
- ****************************************************************************************************
- */
-
 #ifndef __SYS_H
 #define __SYS_H
 
 #include "stm32f1xx.h"
-//#include "app_task_key.h"
-//#include "app_task_finger.h"
 
 /**
  * SYS_SUPPORT_OS用于定义系统文件夹是否支持OS
@@ -36,8 +10,12 @@
  */
 #define SYS_SUPPORT_OS          1
 
-
-/*函数申明*******************************************************************************************/
+typedef struct _SYSTEM_INFO_
+{
+	char *compile_date;
+	char *compile_time;
+	char firmware_version[10];
+}_SYSTEM_INFO_t;
 
 void sys_nvic_set_vector_table(uint32_t baseaddr, uint32_t offset);             /* 设置中断偏移量 */
 void sys_standby(void);                                                         /* 进入待机模式 */

@@ -72,7 +72,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <property name="iconSize">
      <size>
@@ -85,7 +85,7 @@
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="icon">
-      <iconset resource="res.qrc">
+      <iconset>
        <normaloff>:/Icon.jpg</normaloff>:/Icon.jpg</iconset>
      </attribute>
      <attribute name="title">
@@ -172,7 +172,7 @@
              </brush>
             </property>
             <property name="icon">
-             <iconset resource="res.qrc">
+             <iconset>
               <normaloff>:/Icon.jpg</normaloff>:/Icon.jpg</iconset>
             </property>
            </item>
@@ -881,13 +881,11 @@ QLineEdit[echoMode=&quot;2&quot;] {
      <x>0</x>
      <y>0</y>
      <width>700</width>
-     <height>25</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
  </widget>
- <resources>
-  <include location="res.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

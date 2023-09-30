@@ -4,7 +4,7 @@
 #include <QDebug>
 
 REC_DATA_FORMAT_t g_rec_data_format;
-
+uint8_t TableState[8] = {0};
 
 Msg_Handler::Msg_Handler(QObject *parent) : QObject(parent)
 {
@@ -25,6 +25,7 @@ int Msg_Handler::Comp_CheckSum(uint8_t *msg)
         qDebug() << "compare error" << "calc checksum = " << checkSum << "rec checksum = " << msg[length];
         return OPERATE_ERROR_INVALID_PARAMETERS;
     }
+
 }
 
 
@@ -44,15 +45,16 @@ int Msg_Handler::Data_Resolve(uint8_t *data)
     qDebug() << "length= " << datalength;
     qDebug() << "cmd= " << g_rec_data_format.cmd;
 
-    switch (g_rec_data_format.type) {
+    switch (g_rec_data_format.type)
+    {
     case USB_PROTOCOL_FORMAT_GET_INDEX_LIST:    //数据为索引表信息
     {
-        uint8_t TableState[8] = {0};
+        //uint8_t *TableState = new uint8_t[8];
         for(int i=0;i<8;i++){
             TableState [i] = g_rec_data_format.data[i];  //FPM383C索引表仅前8byte有效
         }
         qDebug() << "tablestate" ;
-        emit Signal_Update_TableState(TableState);
+        emit Signal_Update_TableState();
         break;
     }
     case USB_PROTOCOL_FORMAT_ENROLL_FINGER:    //数据为指纹注册状态信息
@@ -62,7 +64,7 @@ int Msg_Handler::Data_Resolve(uint8_t *data)
             uint8_t enrollState[2] = {0};
             memcpy(enrollState,(uint8_t*)&g_rec_data_format.data,2);
             qDebug()<<"enroll_state:"<<enrollState;
-            emit Signal_Update_EnrollState(enrollState);
+            emit Signal_Update_EnrollState(enrollState[0],enrollState[1]);
         }
         else    //执行结果错误
         {
@@ -73,10 +75,32 @@ int Msg_Handler::Data_Resolve(uint8_t *data)
     case USB_PROTOCOL_FORMAT_DELETE_FINGER:
     {
         qDebug() << "finger delete ok";
+        //emit mainwindow->Signal_RefreshFinger();
+        break;
+    }
+    case USB_PROTOCOL_FORMAT_GET_FW_HW:
+    {
+        if(g_rec_data_format.result == CONFIRM_OK)  //执行结果正确
+        {
+            char compile_date[12] = {0};
+            char compile_time[9] = {0};
+            memcpy(compile_date,(uint8_t*)&g_rec_data_format.data[0],11);
+            compile_date[11] = 0;
+            qDebug()<<"date:"<<compile_date;
+            memcpy(compile_time,(uint8_t*)&g_rec_data_format.data[11],8);
+            compile_time[8] = 0;
+            qDebug()<<"time:"<<compile_time;
+        }
+        else    //执行结果错误
+        {
+
+        }
+        break;
     }
     default:
         return OPERATE_ERROR_INVALID_PARAMETERS;
     }
+    memset(rec_buffer,0,REC_LEN);
     return OPERATE_SUCCESS;
 }
 

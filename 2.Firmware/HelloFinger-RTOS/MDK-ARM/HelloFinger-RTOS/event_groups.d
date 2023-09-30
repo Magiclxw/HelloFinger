@@ -32,6 +32,8 @@ hellofinger-rtos\event_groups.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_h
 hellofinger-rtos\event_groups.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
 hellofinger-rtos\event_groups.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 hellofinger-rtos\event_groups.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h
+hellofinger-rtos\event_groups.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
+hellofinger-rtos\event_groups.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 hellofinger-rtos\event_groups.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 hellofinger-rtos\event_groups.o: ../Core/Inc/usart.h
 hellofinger-rtos\event_groups.o: ../Core/Inc/main.h

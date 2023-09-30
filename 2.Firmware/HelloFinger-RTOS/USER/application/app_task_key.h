@@ -3,8 +3,11 @@
 
 #include "sys_config.h"
 #include "drv_ch9329.h"
+#include "sys.h"
 
 extern QueueHandle_t RGB_Queue_Handle;
+
+
 
 #define KEY_CMD_HEAD_H	0x57
 #define KEY_CMD_HEAD_L	0xAB
@@ -25,9 +28,9 @@ extern QueueHandle_t RGB_Queue_Handle;
 
 typedef enum USB_PROTOCOL_FORMAT
 {
-    USB_PROTOCOL_FORMAT_NOUSE0,				  			//0x00
-    USB_PROTOCOL_FORMAT_MODE_SWITCH,		  		//0x01
-    USB_PROTOCOL_FORMAT_NOUSE1,               //0x02
+    USB_PROTOCOL_FORMAT_NOUSE0,				  //0x00
+    USB_PROTOCOL_FORMAT_MODE_SWITCH,		  //0x01
+    USB_PROTOCOL_FORMAT_GET_FW_HW,            //0x02
     USB_PROTOCOL_FORMAT_NOUSE2,               //0x03
     USB_PROTOCOL_FORMAT_NOUSE3,               //0x04
     USB_PROTOCOL_FORMAT_NOUSE4,               //0x05
@@ -39,11 +42,11 @@ typedef enum USB_PROTOCOL_FORMAT
     USB_PROTOCOL_FORMAT_ENROLL_FINGER,        //0x0B
     USB_PROTOCOL_FORMAT_DELETE_FINGER,    	  //0x0C
     USB_PROTOCOL_FORMAT_SET_FINGER_COLOR,     //0x0D
-    USB_PROTOCOL_FORMAT_NOUSE11,			  			//0x0E
+    USB_PROTOCOL_FORMAT_NOUSE11,			  //0x0E
     USB_PROTOCOL_FORMAT_SET_FINGER_COLOR_PRO, //0x0F
-    USB_PROTOCOL_FORMAT_GET_INDEX_LIST,		  	//0x10
+    USB_PROTOCOL_FORMAT_GET_INDEX_LIST,		  //0x10
     USB_PROTOCOL_FORMAT_FUNC_STORE,           //0x11
-		USB_PROTOCOL_FORMAT_SET_RGB,              //0x12
+    USB_PROTOCOL_FORMAT_SET_RGB,              //0x12
 
 }USB_PROTOCOL_FORMAT_e;
 

@@ -301,14 +301,14 @@ typedef enum KEY_TYPE
 #define CMD_GENERAL_KEY_LEN	8				//普通按键结构体长度
 typedef struct CMD_GENERAL_KEY_DATA	//普通按键
 {
-	volatile uint8_t key_ctrl;
-	volatile uint8_t null;
-	volatile uint8_t key1;
-	volatile uint8_t key2;
-	volatile uint8_t key3;
-	volatile uint8_t key4;
-	volatile uint8_t key5;
-	volatile uint8_t key6;
+	uint8_t key_ctrl;
+	uint8_t null;
+	uint8_t key1;
+	uint8_t key2;
+	uint8_t key3;
+	uint8_t key4;
+	uint8_t key5;
+	uint8_t key6;
 }CMD_GENERAL_KEY_DATA_t;
 
 typedef enum MEDIA_KEY_TYPE
@@ -424,6 +424,7 @@ void CH9329_Set_Cfg(void);
 void CH9329_Index_to_Ascii(uint8_t *ascii);
 void CH9329_Generate_KEY_CMD(KEY_TYPE_e type,uint8_t key_contral,char key_value);
 void CH9329_Input_Ascii(char *ascii,uint8_t len);
+void CH9329_Input_Shortcut(uint8_t func_key,char *key,uint8_t key_len);
 void CH9329_Input_Fuc_Key(uint8_t key_contral,uint8_t func_key);
 uint8_t CH9329_CAL_SUM(uint8_t *cmd,uint8_t len);
 int Send_HID_Data(uint8_t *data,uint8_t len);

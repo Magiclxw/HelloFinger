@@ -12,31 +12,37 @@ CONFIG += c++11
 SOURCES += \
     form_enrollstate.cpp \
     form_entrance.cpp \
+    form_hidewindow.cpp \
     form_mainwindow.cpp \
     hid_function.cpp \
     interface.cpp \
     main.cpp \
     msg_handler.cpp \
+    system/system_init.cpp \
     usb_listener.cpp
 
 HEADERS += \
     config/sys_config.h \
     form_enrollstate.h \
     form_entrance.h \
+    form_hidewindow.h \
     form_mainwindow.h \
     hid_function.h \
     hidapi.h \
     interface.h \
     lib/hidapi.h \
     msg_handler.h \
+    system/system_init.h \
     usb_listener.h
 
 FORMS += \
     form_enrollstate.ui \
     form_entrance.ui \
+    form_hidewindow.ui \
     form_mainwindow.ui
 
 include($$PWD/lib/GlobalMouseKey/GlobalMouseKey.pri)
+include($$PWD/lib/qxtglobalshortcut5/qxt.pri)
 
 
 # Default rules for deployment.

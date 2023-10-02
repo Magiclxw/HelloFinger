@@ -2,8 +2,12 @@
 #define INTERFACE_H
 
 #include <QThread>
+#include <QDebug>
 #include "lib/hidapi.h"
 #include "form_mainwindow.h"
+#include "msg_handler.h"
+#include "hid_function.h"
+#include "form_hidewindow.h"
 
 #define PROTOCOL_VID    0x1A86
 #define PROTOCOL_PID    0xE129

@@ -224,6 +224,40 @@ int HID_Send_Account_Password(hid_device *usb_handle,QString account,QString pas
     return OPERATE_SUCCESS;
 }
 
+int HID_Send_Shortcut(hid_device *usb_handle,uint8_t func,char* key,uint8_t key_len,uint8_t index)
+{
+    if(usb_handle == NULL || index > FINGER_MAX_NUM || key_len>6)
+    {
+        return OPERATE_ERROR_INVALID_PARAMETERS;
+    }
+    uint8_t flag = USB_PROTOCOL_FORMAT_FUNC_STORE;
+    uint8_t type = TYPE_Shortcut;
+    uint8_t *cmd_pack1 = new uint8_t[7];
+    cmd_pack1[0] = flag;
+    cmd_pack1[1] = 0x00;
+    cmd_pack1[2] = 0x01;
+    cmd_pack1[3] = type;
+    cmd_pack1[4] = index;
+    cmd_pack1[5] = key_len+1;
+    cmd_pack1[6] = 0x00;
+    GenerateCmd(cmd_pack1,7);
+    delete [] cmd_pack1;
+    hid_write(usb_handle,hid_command,7+HID_FIXED_LEN);
+
+    uint8_t *cmd_pack2 = new uint8_t[key_len+6];
+    cmd_pack2[0] = flag;
+    cmd_pack2[1] = 0x00;
+    cmd_pack2[2] = 0x00;
+    cmd_pack2[3] = type;
+    cmd_pack2[4] = index;
+    cmd_pack2[5] = func;
+    memcpy(&cmd_pack2[6],key,key_len);
+    GenerateCmd(cmd_pack2,6+key_len);
+    delete [] cmd_pack2;
+    hid_write(usb_handle,hid_command,key_len+6+HID_FIXED_LEN);
+    return OPERATE_SUCCESS;
+}
+
 int HID_Send_Breath_RGB(hid_device *usb_handle,uint8_t color_R,uint8_t color_G,uint8_t color_B,uint8_t interval)
 {
     if(usb_handle == NULL)

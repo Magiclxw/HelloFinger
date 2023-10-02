@@ -474,6 +474,34 @@ void CH9329_Generate_KEY_CMD(KEY_TYPE_e type,uint8_t key_contral,char key_value)
 	
 }
 
+/* 生成快捷键指令 */
+static int CH9329_Generate_Shortcut(uint8_t func_key,char *key,uint8_t key_len)
+{
+	if(key_len > 6)
+	{
+		return OPERATE_ERROR_INVALID_PARAMETERS;
+	}
+	uint8_t *addr = &g_general_key.key1;
+	g_cmd_format.cmd = CMD_SEND_KB_GENERAL_DATA;
+	g_cmd_format.len = 0x08;
+	g_general_key.key_ctrl = func_key;
+	g_general_key.key1 = 0x00;
+	g_general_key.key2 = 0x00;
+	g_general_key.key3 = 0x00;
+	g_general_key.key4 = 0x00;
+	g_general_key.key5 = 0x00;
+	g_general_key.key6 = 0x00;
+	for(uint8_t i=0;i<key_len;i++)
+	{
+		*addr = ASCII_SEQ[key[i]][1];
+		addr ++;
+	}
+	memcpy((uint8_t*)&g_cmd_format.data,(uint8_t*)&g_general_key,CMD_GENERAL_KEY_LEN);
+	g_cmd_format.data[g_cmd_format.len] = CH9329_CAL_SUM((uint8_t*)&g_cmd_format,g_cmd_format.len+5);
+	
+	return OPERATE_SUCCESS;
+}
+
 
 /* 输入字符串 */
 void CH9329_Input_Ascii(char *ascii,uint8_t len)
@@ -487,6 +515,16 @@ void CH9329_Input_Ascii(char *ascii,uint8_t len)
 		HAL_UART_Transmit(&huart1,KeyRelease,14,1000);	//释放按键
 		delay_ms(1);
 	}
+}
+
+/* 输入快捷键 */
+void CH9329_Input_Shortcut(uint8_t func_key,char *key,uint8_t key_len)
+{
+	CH9329_Generate_Shortcut(func_key,key,key_len);
+	HAL_UART_Transmit(&huart1,(uint8_t*)&g_cmd_format,g_cmd_format.len+6,1000);
+	delay_ms(1);
+	HAL_UART_Transmit(&huart1,KeyRelease,14,1000);	//释放按键
+	delay_ms(1);
 }
 
 /* 输入功能键 */

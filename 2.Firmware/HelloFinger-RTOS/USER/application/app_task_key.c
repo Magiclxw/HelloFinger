@@ -65,7 +65,7 @@ static void vTaskKeyProcessing(void)
 	uint8_t cycle_time = 0;
 	Generate_ControlBLN(func,start_color,end_color,cycle_time);
 	HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_control_bln,g_control_bln.LEN[0]<<8|g_control_bln.LEN[1]+FIXED_CMD_LEN,1000);
-	
+
 	//uint8_t time = 36;
 	//uint8_t color1 = 0x99;
 	//uint8_t color2 = 0x00;
@@ -447,11 +447,27 @@ int HID_Data_Handle(void)
 						 Flash_write((uint8_t*)&crc_value,FINGER_FUNC_BASE_ADDR+index*FINGER_FUNC_BASE_SIZE+seqLen1+seqLen2+3+2,4);
 					 }
 				 }
-				 if(g_key_data_format.data[5] == TYPE_Shortcut)	//快捷键
-				 {
-					 
-				 }
-				 break;
+					if(g_key_data_format.data[5] == TYPE_Shortcut)	//快捷键
+					{
+						if(packNum == 1)
+						{
+							index = g_key_data_format.data[6];	//指纹号
+							seqLen1 = g_key_data_format.data[7];	//快捷键长度
+						}
+						if(packNum == 0 && index == g_key_data_format.data[6])
+						{
+							uint32_t crc_value = 0;
+							store_msg[0] = TYPE_Shortcut;
+							store_msg[1] = seqLen1;
+							store_msg[2] = (uint8_t)FINGER_FUNC_RESERVED_DATA;;
+							memcpy((uint8_t*)&store_msg[3],(uint8_t*)&g_key_data_format.data[8],seqLen1);
+							crc_value = Calc_CRC(store_msg,seqLen1+3);
+							Flash_write(store_msg,FINGER_FUNC_BASE_ADDR+index*FINGER_FUNC_BASE_SIZE,seqLen1+3);
+							vTaskDelay(10);
+							Flash_write((uint8_t*)&crc_value,FINGER_FUNC_BASE_ADDR+index*FINGER_FUNC_BASE_SIZE+seqLen1+3,4);
+						}
+					}
+					break;
 			 }
 			 case USB_PROTOCOL_FORMAT_SET_RGB:
 			 {

@@ -1,7 +1,4 @@
 #include "interface.h"
-#include <QtDebug>
-#include "msg_handler.h"
-#include "hid_function.h"
 
 hid_device *usb_handle = NULL;
 hid_device_info *usb_info = NULL;
@@ -49,7 +46,17 @@ Interface::Interface(QObject *parent) : QThread(parent)
     connect(mainwindow,&Form_MainWindow::Signal_SetPassword,this,[=](QString password,uint8_t id){
         HID_Send_Password(usb_handle,password,id);
     });
+    /* 设置账号+密码 */
+    connect(mainwindow,&Form_MainWindow::Signal_SetAccount_Password,this,[=](QString account,QString password,uint8_t id){
+        HID_Send_Account_Password(usb_handle,account,password,id);
+    });
+    /* 更新指纹注册状态 */
     connect(msgHandler,&Msg_Handler::Signal_Update_EnrollState,mainwindow,&Form_MainWindow::Slot_EnrollState);
+
+    connect(mainwindow,&Form_MainWindow::Signal_SetShortcut,this,[=](uint8_t func,char* key,uint8_t key_len,uint8_t index){
+        HID_Send_Shortcut(usb_handle,func,key,key_len,index);
+    });
+
 }
 
 void Interface::run()
@@ -86,7 +93,7 @@ void Interface::run()
         }
         else    //已连接
         {
-            qDebug() << "connect ok";
+            //qDebug() << "connect ok";
             rec_num = hid_read_timeout(usb_handle,rec_buffer,REC_LEN,200);
             if(rec_num > 0)
             {

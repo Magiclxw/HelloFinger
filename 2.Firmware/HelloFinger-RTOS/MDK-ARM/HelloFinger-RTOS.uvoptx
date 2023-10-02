@@ -157,25 +157,25 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>368</LineNumber>
+          <LineNumber>499</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134221386</Address>
+          <Address>134219788</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\USER\application\app_task_finger.c</Filename>
+          <Filename>..\USER\driver\CH9329\drv_ch9329.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\HelloFinger_RTOS\../USER/application/app_task_finger.c\368</Expression>
+          <Expression>\\HelloFinger_RTOS\../USER/driver/CH9329/drv_ch9329.c\499</Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
           <LineNumber>80</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134246882</Address>
+          <Address>134247082</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -191,7 +191,7 @@
           <Type>0</Type>
           <LineNumber>59</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134246732</Address>
+          <Address>134246932</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -207,6 +207,22 @@
           <Type>0</Type>
           <LineNumber>367</LineNumber>
           <EnabledFlag>1</EnabledFlag>
+          <Address>134221570</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\USER\application\app_task_finger.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\HelloFinger_RTOS\../USER/application/app_task_finger.c\367</Expression>
+        </Bp>
+        <Bp>
+          <Number>4</Number>
+          <Type>0</Type>
+          <LineNumber>500</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
@@ -214,7 +230,7 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>0</BreakIfRCount>
-          <Filename>..\USER\application\app_task_finger.c</Filename>
+          <Filename>..\USER\driver\CH9329\drv_ch9329.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
         </Bp>
@@ -274,6 +290,16 @@
           <count>10</count>
           <WinNumber>1</WinNumber>
           <ItemText>g_control_bln_pro</ItemText>
+        </Ww>
+        <Ww>
+          <count>11</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>g_cmd_format</ItemText>
+        </Ww>
+        <Ww>
+          <count>12</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>g_general_key</ItemText>
         </Ww>
       </WatchWindow1>
       <MemoryWindow1>

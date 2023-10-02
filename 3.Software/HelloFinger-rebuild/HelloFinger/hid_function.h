@@ -30,6 +30,7 @@ int HID_Delete_Finger(hid_device *usb_handle,uint8_t id);
 int HID_Send_WindowsPassword(hid_device *usb_handle,QString password,uint8_t index);
 int HID_Send_Password(hid_device *usb_handle,QString password,uint8_t index);
 int HID_Send_Account_Password(hid_device *usb_handle,QString account,QString password,uint8_t index);
+int HID_Send_Shortcut(hid_device *usb_handle,uint8_t func,char* key,uint8_t key_len,uint8_t index);
 int HID_Send_Breath_RGB(hid_device *usb_handle,uint8_t color_R,uint8_t color_G,uint8_t color_B,uint8_t interval);
 int HID_Get_FW_HW_Msg(hid_device *usb_handle);
 #endif // HID_FUNCTION_H

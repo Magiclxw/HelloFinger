@@ -25,8 +25,9 @@ public:
     uint8_t Set_color_B;
     Form_MainWindow(QWidget *parent = nullptr);
     ~Form_MainWindow();
-
-
+    void on_keyEvent(QKeyEvent* event);
+    void File_Update_TableContent(QString path);
+    void File_Save_Shortcut();
 private:
     Ui::Form_MainWindow *ui;
 
@@ -41,6 +42,10 @@ public slots:
     void Slot_SetAccount_Password(void);
     void Slot_SetBreathRGB(void);
     void Slot_RGB_Display(void);
+    void Slot_ChangeItemValue(void);
+    void Slot_SaveItemValue(void);
+    void Slot_SetShortcut(void);
+
 signals:
     void Signal_AddFinger(uint8_t pos,uint8_t times,uint8_t param1,uint8_t param2);
     void Signal_DeleteFinger(uint8_t id);
@@ -50,6 +55,7 @@ signals:
     void Signal_SetPassword(QString password,uint8_t index);
     void Signal_SetAccount_Password(QString account,QString password,uint8_t index);
     void Signal_SetBreathRGB(uint8_t color_R,uint8_t color_G,uint8_t color_B,uint8_t interval);
+    void Signal_SetShortcut(uint8_t func,char* key,uint8_t key_len,uint8_t index);
 private slots:
     void on_listWidget_table_state_customContextMenuRequested(const QPoint &pos);
 };

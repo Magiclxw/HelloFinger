@@ -649,7 +649,15 @@ static void Finger_Function(uint16_t id,uint16_t score)
 		}
 		case TYPE_Shortcut:		//快捷键
 		{
+			uint8_t func_key = 0;
+			char key[6] = {0};
+			uint8_t key_len = 0;	//功能键+按键总长度
+			Flash_read(&key_len,FINGER_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE+FINGER_FUNC_LEN1_OFFSET,1);
+			if(key_len == 0) break;
+			Flash_read(&func_key,FINGER_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE+FINGER_FUNC_LEN1_OFFSET+2,1);
+			Flash_read((uint8_t*)key,FINGER_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE+FINGER_FUNC_LEN1_OFFSET+3,key_len-1);
 			
+			CH9329_Input_Shortcut(func_key,key,key_len-1);
 			break;
 		}
 	}

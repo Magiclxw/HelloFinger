@@ -215,6 +215,7 @@ Makefile: ../HelloFinger/HelloFinger.pro C:/Qt/Qt5.12.12/5.12.12/mingw73_32/mksp
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/mkspecs/features/default_pre.prf \
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/mkspecs/features/win32/default_pre.prf \
 		../HelloFinger/lib/GlobalMouseKey/GlobalMouseKey.pri \
+		../HelloFinger/lib/qxtglobalshortcut5/qxt.pri \
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/mkspecs/features/resolve_config.prf \
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/mkspecs/features/exclusive_builds_post.prf \
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/mkspecs/features/default_post.prf \
@@ -238,6 +239,7 @@ Makefile: ../HelloFinger/HelloFinger.pro C:/Qt/Qt5.12.12/5.12.12/mingw73_32/mksp
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/lib/Qt5Widgets.prl \
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/lib/Qt5Gui.prl \
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/lib/Qt5Concurrent.prl \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/lib/Qt5Network.prl \
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/lib/Qt5Core.prl \
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/lib/qtmain.prl
 	$(QMAKE) -o Makefile ..\HelloFinger\HelloFinger.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug"
@@ -393,6 +395,7 @@ C:/Qt/Qt5.12.12/5.12.12/mingw73_32/mkspecs/features/toolchain.prf:
 C:/Qt/Qt5.12.12/5.12.12/mingw73_32/mkspecs/features/default_pre.prf:
 C:/Qt/Qt5.12.12/5.12.12/mingw73_32/mkspecs/features/win32/default_pre.prf:
 ../HelloFinger/lib/GlobalMouseKey/GlobalMouseKey.pri:
+../HelloFinger/lib/qxtglobalshortcut5/qxt.pri:
 C:/Qt/Qt5.12.12/5.12.12/mingw73_32/mkspecs/features/resolve_config.prf:
 C:/Qt/Qt5.12.12/5.12.12/mingw73_32/mkspecs/features/exclusive_builds_post.prf:
 C:/Qt/Qt5.12.12/5.12.12/mingw73_32/mkspecs/features/default_post.prf:
@@ -416,6 +419,7 @@ C:/Qt/Qt5.12.12/5.12.12/mingw73_32/lib/Qt5WinExtras.prl:
 C:/Qt/Qt5.12.12/5.12.12/mingw73_32/lib/Qt5Widgets.prl:
 C:/Qt/Qt5.12.12/5.12.12/mingw73_32/lib/Qt5Gui.prl:
 C:/Qt/Qt5.12.12/5.12.12/mingw73_32/lib/Qt5Concurrent.prl:
+C:/Qt/Qt5.12.12/5.12.12/mingw73_32/lib/Qt5Network.prl:
 C:/Qt/Qt5.12.12/5.12.12/mingw73_32/lib/Qt5Core.prl:
 C:/Qt/Qt5.12.12/5.12.12/mingw73_32/lib/qtmain.prl:
 qmake: FORCE

@@ -1202,15 +1202,7 @@ debug/form_enrollstate.o: ../HelloFinger/form_enrollstate.cpp ../HelloFinger/for
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/qfiledevice.h \
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtGui/qvector2d.h \
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtGui/qtouchdevice.h \
-		ui_form_enrollstate.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/QVariant \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/QApplication \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qapplication.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/qcoreapplication.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/qeventloop.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qdesktopwidget.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtGui/qguiapplication.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtGui/qinputmethod.h
+		ui_form_enrollstate.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\form_enrollstate.o ..\HelloFinger\form_enrollstate.cpp
 
 debug/form_entrance.o: ../HelloFinger/form_entrance.cpp ../HelloFinger/form_entrance.h \
@@ -1318,17 +1310,6 @@ debug/form_entrance.o: ../HelloFinger/form_entrance.cpp ../HelloFinger/form_entr
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtGui/qvector2d.h \
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtGui/qtouchdevice.h \
 		ui_form_entrance.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/QVariant \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/QApplication \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qapplication.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/qcoreapplication.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/qeventloop.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qdesktopwidget.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtGui/qguiapplication.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtGui/qinputmethod.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/QProgressBar \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qprogressbar.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qframe.h \
 		../HelloFinger/lib/hidapi.h \
 		../HelloFinger/lib/GlobalMouseKey/globalmouseevent.h \
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/QObject \
@@ -1348,6 +1329,10 @@ debug/form_entrance.o: ../HelloFinger/form_entrance.cpp ../HelloFinger/form_entr
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/QtDebug \
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/QRect \
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtGui/QGuiApplication \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtGui/qguiapplication.h \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/qcoreapplication.h \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/qeventloop.h \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtGui/qinputmethod.h \
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/QPropertyAnimation \
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/qpropertyanimation.h \
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/qvariantanimation.h \
@@ -1602,58 +1587,6 @@ debug/form_mainwindow.o: ../HelloFinger/form_mainwindow.cpp ../HelloFinger/form_
 		../HelloFinger/msg_handler.h \
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/QObject \
 		ui_form_mainwindow.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/QVariant \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/QApplication \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qapplication.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/qcoreapplication.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/qeventloop.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qdesktopwidget.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtGui/qguiapplication.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtGui/qinputmethod.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/QFrame \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qframe.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/QGridLayout \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qgridlayout.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qlayout.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qlayoutitem.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qboxlayout.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/QHBoxLayout \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/QLabel \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qlabel.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/QLineEdit \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qlineedit.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtGui/qtextcursor.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtGui/qtextformat.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtGui/qpen.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtGui/qtextoption.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/QListWidget \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qlistwidget.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qlistview.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qabstractitemview.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qabstractscrollarea.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/qabstractitemmodel.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/qitemselectionmodel.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qabstractitemdelegate.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qstyleoption.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qabstractspinbox.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtGui/qvalidator.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/qregularexpression.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qslider.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qabstractslider.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qstyle.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qtabbar.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qrubberband.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/QProgressBar \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qprogressbar.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/QPushButton \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qpushbutton.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qabstractbutton.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/QSlider \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/QStackedWidget \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qstackedwidget.h \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/QTabWidget \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/QVBoxLayout \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/QWidget \
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/QMenu \
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qmenu.h \
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qaction.h \
@@ -1675,7 +1608,39 @@ debug/form_mainwindow.o: ../HelloFinger/form_mainwindow.cpp ../HelloFinger/form_
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/QMetaEnum \
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/qmetaobject.h \
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtGui/QKeyEvent \
-		../HelloFinger/lib/GlobalMouseKey/globalkeyevent.h
+		../HelloFinger/lib/GlobalMouseKey/globalkeyevent.h \
+		../HelloFinger/form_hidewindow.h \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/QWidget \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/QtDebug \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/QRect \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtGui/QGuiApplication \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtGui/qguiapplication.h \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/qcoreapplication.h \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/qeventloop.h \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtGui/qinputmethod.h \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/QPropertyAnimation \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/qpropertyanimation.h \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/qvariantanimation.h \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/qeasingcurve.h \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/qabstractanimation.h \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtGui/QScreen \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtGui/qscreen.h \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/QList \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/QSize \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/QSizeF \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtGui/QTransform \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtGui/QMouseEvent \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtGui/QDragEnterEvent \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/QMimeData \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/qmimedata.h \
+		../HelloFinger/system/system_init.h \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/QFileInfo \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/qfileinfo.h \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/QFileIconProvider \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qfileiconprovider.h \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/QLabel \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qlabel.h \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qframe.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\form_mainwindow.o ..\HelloFinger\form_mainwindow.cpp
 
 debug/hid_function.o: ../HelloFinger/hid_function.cpp ../HelloFinger/hid_function.h \
@@ -2378,7 +2343,18 @@ debug/system_init.o: ../HelloFinger/system/system_init.cpp ../HelloFinger/system
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/QSize \
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/QSizeF \
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtGui/QTransform \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtGui/QMouseEvent
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtGui/QMouseEvent \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/QSettings \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/qsettings.h \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/QFileInfo \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/qfileinfo.h \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/QFileIconProvider \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qfileiconprovider.h \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/QLabel \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qlabel.h \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qframe.h \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/QJsonArray \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/qjsonarray.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\system_init.o ..\HelloFinger\system\system_init.cpp
 
 debug/usb_listener.o: ../HelloFinger/usb_listener.cpp ../HelloFinger/usb_listener.h \

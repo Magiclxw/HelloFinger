@@ -14,6 +14,12 @@
 #include "lib/GlobalMouseKey/globalkeyevent.h"
 #include "qcoreevent.h"
 #include "form_hidewindow.h"
+#include <QDragEnterEvent>
+#include <QMimeData>
+#include "system/system_init.h"
+#include <QFileInfo>
+#include <QFileIconProvider>
+#include <QLabel>
 
 QColor colCheck(0,255,255);       //指纹有效颜色
 QColor colUncheck(255,255,255);   //指纹无效颜色
@@ -61,6 +67,14 @@ Form_MainWindow::Form_MainWindow(QWidget *parent)
     QMenu *Menu = bar->addMenu("MENU");
     bar->setVisible(false);
 
+    //File_FastStart_Save(1,1,1,"你好");
+    //uint8_t check;
+    //QString s = File_FastStart_Read(1,1,&check);
+    //qDebug() << "url = " <<s;
+    //File_TableName_Init();
+    File_Update_QuickStart_Content();
+
+
     rgb_timer = new QTimer; //初始化rgb显示定时器
 
     Action_Add = Menu->addAction("增加");
@@ -76,6 +90,7 @@ Form_MainWindow::Form_MainWindow(QWidget *parent)
 
     File_Update_TableContent(tableContent);
 
+
     ui->listWidget_table_state->setContextMenuPolicy(Qt::CustomContextMenu);
     this->setContextMenuPolicy(Qt::NoContextMenu);
 
@@ -83,6 +98,7 @@ Form_MainWindow::Form_MainWindow(QWidget *parent)
     connect(Action_Delete,SIGNAL(triggered()),this,SLOT(Slot_DeleteFinger()));   //连接删除指纹槽函数
     connect(Action_Refresh,SIGNAL(triggered()),this,SLOT(Slot_RefreshFinger()));    //连接刷新指纹列表槽函数
     connect(Action_unlock,&QAction::triggered,this,[=](){ui->stackedWidget->setCurrentWidget(ui->page_windows_password);}); //修改当前显示界面
+    connect(Action_shortcut,&QAction::triggered,this,[=](){ui->stackedWidget->setCurrentWidget(ui->page_shortcut);});
     connect(ui->pushButton_save_windows_password,&QPushButton::clicked,this,&Form_MainWindow::Slot_SetWindowsPassword);     //连接windows解锁功能槽函数
     connect(Action_enterAccount_Password,&QAction::triggered,this,[=](){ui->stackedWidget->setCurrentWidget(ui->page_account_password);});    //修改当前显示界面
     connect(ui->pushButton_save_account_password,&QPushButton::clicked,this,&Form_MainWindow::Slot_SetAccount_Password);    //连接输入账号密码槽函数
@@ -325,27 +341,27 @@ void Form_MainWindow::on_keyEvent(QKeyEvent* event)  //全局按键事件
         str += QString("\t字符：[%1]").arg(event->text());
     }
     qDebug() << "字符" << str;
-    QString key_type = type.valueToKey(event->type());
-    QString key_value = key.valueToKey(event->key());
-    QString key_modify = keyboard.valueToKeys(int(event->modifiers()));
-    qDebug() << "字符" << key_type << key_value << key_modify;
-//    if(event->type() == QEvent::KeyPress){
-//        if(event->key() == Qt::Key_Up)
-//        {
-//            if(event->modifiers() == (Qt::ShiftModifier|Qt::ControlModifier|Qt::AltModifier))
-//            {
-//                qDebug() << "hot key up";
-//            }
-//        }
-//        if(event->key() == Qt::Key_Down)
-//        {
-//            if(event->modifiers() == (Qt::ShiftModifier|Qt::ControlModifier|Qt::AltModifier))
-//            {
-//                qDebug() << "hot key Down";
-//            }
-//        }
+//    QString key_type = type.valueToKey(event->type());
+//    QString key_value = key.valueToKey(event->key());
+//    QString key_modify = keyboard.valueToKeys(int(event->modifiers()));
+//    qDebug() << "字符" << key_type << key_value << key_modify;
+    if(event->type() == QEvent::KeyPress){
+        if(event->key() == Qt::Key_Up)
+        {
+            if(event->modifiers() == (Qt::ShiftModifier|Qt::ControlModifier|Qt::AltModifier))
+            {
+                qDebug() << "hot key up";
+            }
+        }
+        if(event->key() == Qt::Key_Down)
+        {
+            if(event->modifiers() == (Qt::ShiftModifier|Qt::ControlModifier|Qt::AltModifier))
+            {
+                qDebug() << "hot key Down";
+            }
+        }
 
-//    }
+    }
     //if(key_type == "KeyPress")
     //{
     //    if(key_value == "Key_Up")
@@ -403,6 +419,44 @@ void Form_MainWindow::File_Update_TableContent(QString path)
     }
 }
 
+void Form_MainWindow::File_Update_QuickStart_Content()
+{
+
+    for (uint8_t i=0; i<6; i++ )
+    {
+        uint8_t item = 0;
+        while(1)
+        {
+            uint8_t checkState = 0;
+            QString path = File_FastStart_Read(i,item,&checkState);
+            item++;
+            if(path == NULL)
+            {
+                break;
+            }
+            else
+            {
+                QListWidgetItem *item = new QListWidgetItem;
+                QFileInfo fileInfo(path);
+                QFileIconProvider iconProvider;
+                QString fileName = fileInfo.fileName();
+                QIcon icon = iconProvider.icon(fileInfo);
+                QLabel label;
+                label.setPixmap(icon.pixmap(32,32));
+                item->setIcon(icon);
+
+                item->setText(fileName);
+                ui->listWidget_task_1->addItem(item);
+
+//                if(checkState == true)
+//                {
+//                    item->setCheckState(Qt::Checked);
+//                }
+            }
+        }
+    }
+}
+
 void Form_MainWindow::File_Save_Shortcut()
 {
 
@@ -415,6 +469,7 @@ void Form_MainWindow::Slot_SetShortcut()
     uint8_t key[6] = {0};
     uint8_t key_len = 0;
     uint8_t index = 0;
+
     if(sfunc_key.contains("Ctrl"))
     {
         func_key |= Qt::ControlModifier >> 26;
@@ -438,38 +493,59 @@ void Form_MainWindow::Slot_SetShortcut()
     if(ui->comboBox_key_1->currentText()!="空")
     {
         key_len ++;
-        key[0] = ui->comboBox_key_1->currentText().toUtf8().toHex().toUInt();
+        key[0] = ui->comboBox_key_1->currentText().toLatin1().at(0);
     }
     if(ui->comboBox_key_2->currentText()!="空")
     {
         key_len ++;
-        key[1] = ui->comboBox_key_2->currentText().toUtf8().toHex().toUInt();
+        key[1] = ui->comboBox_key_2->currentText().toLatin1().at(0);
     }
     if(ui->comboBox_key_3->currentText()!="空")
     {
         key_len ++;
-        key[2] = ui->comboBox_key_3->currentText().toUtf8().toHex().toUInt();
+        key[2] = ui->comboBox_key_3->currentText().toLatin1().at(0);
     }
     if(ui->comboBox_key_4->currentText()!="空")
     {
         key_len ++;
-        key[3] = ui->comboBox_key_4->currentText().toUtf8().toHex().toUInt();
+        key[3] = ui->comboBox_key_4->currentText().toLatin1().at(0);
     }
     if(ui->comboBox_key_5->currentText()!="空")
     {
         key_len ++;
-        key[4] = ui->comboBox_key_5->currentText().toUtf8().toHex().toUInt();
+        key[4] = ui->comboBox_key_5->currentText().toLatin1().at(0);
     }
     if(ui->comboBox_key_6->currentText()!="空")
     {
         key_len ++;
-        key[5] = ui->comboBox_key_6->currentText().toUtf8().toHex().toUInt();
+        key[5] = ui->comboBox_key_6->currentText().toLatin1().at(0);
     }
 
     index = ui->listWidget_table_state->currentIndex().row();
     emit Signal_SetShortcut(func_key,(char*)key,key_len,index);
-    qDebug() << "key = " << key_len;
+    qDebug() << "key = " << key[0];
 
+}
+
+void Form_MainWindow::dropEvent(QDropEvent *event)           // 放下事件
+{
+    uint8_t page_index = 0; //文件拖入页索引
+    const QMimeData *mimeData = event->mimeData();      // 获取MIME数据
+    if(mimeData->hasUrls()){                            // 如果数据中包含URL
+        QList<QUrl> urlList = mimeData->urls();         // 获取URL列表
+        // 将其中第一个URL表示为本地文件路径
+        QString fileName = urlList.at(0).toLocalFile();
+        qDebug() << "url:" << fileName;
+    }
+    page_index = ui->toolBox->currentIndex();
+
+}
+
+void Form_MainWindow::dragEnterEvent(QDragEnterEvent *event) // 拖动进入事件
+{
+    if(event->mimeData()->hasUrls())                    // 数据中是否包含URL
+        event->acceptProposedAction();                  // 如果是则接收动作
+    else event->ignore();                               // 否则忽略该事件
 }
 
 /* 监听窗口是否进入最小化状态 */

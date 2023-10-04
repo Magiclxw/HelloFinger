@@ -349,7 +349,7 @@ void CH9329_Vid_Pid_Config(uint16_t vid,uint16_t pid)
 
 void CH9329_Get_Cfg(void)	//CH9329获取配置信息
 {
-	uint8_t cmd[6] = {0x57,0xAB,0x00,0x08,0x00};
+	uint8_t cmd[6] = {0x57,0xAB,0x00,CMD_GET_PARA_CFG,0x00};
 	uint8_t checksum = 0;
 	for(uint8_t i=0;i<5;i++){
 		checksum+=cmd[i];
@@ -364,7 +364,7 @@ void CH9329_Get_Cfg(void)	//CH9329获取配置信息
 
 void CH9329_Set_Cfg(void)	//CH9329参数配置
 {
-	uint8_t cmd[56] = {0x57,0xAB,0x00,0x09,0x32};
+	uint8_t cmd[56] = {0x57,0xAB,0x00,CMD_SET_PARA_CFG,0x32};
 	uint8_t checksum = 0;
 	for(uint8_t i=0;i<55;i++){
 		cmd[i+5] = CH9329_CONFIG[i];
@@ -374,6 +374,15 @@ void CH9329_Set_Cfg(void)	//CH9329参数配置
 	HAL_UART_Transmit(&huart1,cmd,56,1000);
 	delay_ms(2000);
 	CH9329_Reset();
+}
+
+void CH9329_Get_Info(void)
+{
+	uint8_t cmd[6] = {0x57,0xAB,0x00,CMD_GET_INFO,0x00};
+	uint8_t checksum = 0;
+	checksum = CH9329_CAL_SUM(cmd,4);
+	cmd[5] = checksum;
+	HAL_UART_Transmit(&huart1,cmd,6,1000);
 }
 
 

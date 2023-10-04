@@ -12,7 +12,13 @@
 
 #define EVENT_RGB_TRANS_OVER	0x01
 
+typedef enum RESULT_
+{
+	RESULT_SUCCESS,
+	RESULT_FAILED,
+}RESULT_e;
+
 int Task_RGB_ProcessCreate(void);
-
-
+void RGB_Effect(uint8_t r,uint8_t g,uint8_t b,uint16_t delay,uint8_t times);
+void Display_Result(uint8_t result);
 #endif

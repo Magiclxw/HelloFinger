@@ -4,6 +4,7 @@
 #include "drv_ch9329.h"
 #include "app_task_key.h"
 #include "..\USER\driver\W25Q128\drv_w25q128.h"
+#include "app_task_rgb.h"
 
 static void vTaskFingerProcessing(void);	//指纹接收数据处理任务
 static void FingerResetData(void);	//复位接受结构体
@@ -576,10 +577,22 @@ static void Finger_Function(uint16_t id,uint16_t score)
 			printf("rec_crc = %d",rec_crc);
 			if(rec_crc == crc_value)		//crc校验通过
 			{
+				
+				uint8_t led_status = 0;
+				CH9329_Get_Info();
+				xQueueReceive(Queue_Computer_Info_Handle,&led_status,200);
+				if(led_status & LED_STATE_CAPS_LOCK)
+				{
+					CH9329_Input_Fuc_Key(NO_CTRL,KEY_CapsLock);
+				}
 				CH9329_Input_Fuc_Key(NO_CTRL,KEY_LeftCtrl);
 				vTaskDelay(400);
 				CH9329_Input_Ascii((char*)&password[3],len);
 				CH9329_Input_Fuc_Key(NO_CTRL,KEY_LeftEnter);
+				if(led_status & LED_STATE_CAPS_LOCK)
+				{
+					CH9329_Input_Fuc_Key(NO_CTRL,KEY_CapsLock);
+				}
 			}
 			vPortFree(password);
 			break;
@@ -600,8 +613,19 @@ static void Finger_Function(uint16_t id,uint16_t score)
 			printf("rec_crc = %d",rec_crc);
 			if(rec_crc == crc_value)		//crc校验通过
 			{
+				uint8_t led_status = 0;
+				CH9329_Get_Info();
+				xQueueReceive(Queue_Computer_Info_Handle,&led_status,200);
+				if(led_status & LED_STATE_CAPS_LOCK)
+				{
+					CH9329_Input_Fuc_Key(NO_CTRL,KEY_CapsLock);
+				}
 				CH9329_Input_Ascii((char*)&password[3],len);
 				CH9329_Input_Fuc_Key(NO_CTRL,KEY_LeftEnter);
+				if(led_status & LED_STATE_CAPS_LOCK)
+				{
+					CH9329_Input_Fuc_Key(NO_CTRL,KEY_CapsLock);
+				}
 			}
 			vPortFree(password);
 			break;
@@ -628,6 +652,13 @@ static void Finger_Function(uint16_t id,uint16_t score)
 			printf("rec_crc = %x",rec_crc);
 			if(rec_crc == crc_value)		//crc校验通过
 			{
+				uint8_t led_status = 0;
+				CH9329_Get_Info();
+				xQueueReceive(Queue_Computer_Info_Handle,&led_status,200);
+				if(led_status & LED_STATE_CAPS_LOCK)
+				{
+					CH9329_Input_Fuc_Key(NO_CTRL,KEY_CapsLock);
+				}
 				uint8_t *account = (uint8_t *)pvPortMalloc(account_len);
 				uint8_t *password = (uint8_t *)pvPortMalloc(password_len);
 				memcpy(account,(uint8_t*)&account_password[3],account_len);
@@ -640,6 +671,10 @@ static void Finger_Function(uint16_t id,uint16_t score)
 				vTaskDelay(50);
 				CH9329_Input_Fuc_Key(NO_CTRL,KEY_LeftEnter);
 				vTaskDelay(10);
+				if(led_status & LED_STATE_CAPS_LOCK)
+				{
+					CH9329_Input_Fuc_Key(NO_CTRL,KEY_CapsLock);
+				}
 				vPortFree(account);
 				vPortFree(password);
 				

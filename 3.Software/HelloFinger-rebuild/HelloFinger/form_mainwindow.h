@@ -28,8 +28,13 @@ public:
     void on_keyEvent(QKeyEvent* event);
     void File_Update_TableContent(QString path);
     void File_Save_Shortcut();
+    void File_Update_QuickStart_Content();
 private:
     Ui::Form_MainWindow *ui;
+
+protected:
+    void dragEnterEvent(QDragEnterEvent *event);
+    void dropEvent(QDropEvent *event);
 
 public slots:
     void Slot_AddFinger(void);

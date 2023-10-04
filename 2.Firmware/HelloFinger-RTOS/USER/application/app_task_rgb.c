@@ -96,6 +96,50 @@ void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi)
 	}
 }
 
+void RGB_Effect(uint8_t r,uint8_t g,uint8_t b,uint16_t delay,uint8_t times)	//RGB灯效，用于表示操作执行结果
+{
+	uint32_t rgb = 0;
+	
+	HAL_TIM_Base_Stop_IT(&rgb_timer_handler);
+	
+	for(uint8_t i=0;i<times;i++)
+	{
+		rgb = ((uint32_t)(r) << 16) | ((uint32_t)(g) << 8) | (uint8_t)b;
+		for (uint8_t i = 0; i < 6; i++)
+		{
+			gs_rgb[i] = rgb;
+		}
+		
+		WS25812B_write(gs_rgb, 6, gs_temp);
+		
+		vTaskDelay(delay);
+		rgb = 0;
+		for (uint8_t i = 0; i < 6; i++)
+		{
+			gs_rgb[i] = rgb;
+		}
+		WS25812B_write(gs_rgb, 6, gs_temp);
+		vTaskDelay(delay);
+	}
+	HAL_TIM_Base_Start_IT(&rgb_timer_handler);
+}
+
+void Display_Result(uint8_t result)
+{
+	switch (result)
+	{
+		case RESULT_SUCCESS:
+		{
+			RGB_Effect(0,255,0,200,2);
+			break;
+		}
+		case RESULT_FAILED:
+		{
+			RGB_Effect(255,0,0,200,2);
+		}
+	}
+}
+
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
 	if(dir == 0)

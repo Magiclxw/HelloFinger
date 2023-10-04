@@ -6,7 +6,7 @@
 #include "sys.h"
 
 extern QueueHandle_t RGB_Queue_Handle;
-
+extern QueueHandle_t Queue_Computer_Info_Handle;
 
 
 #define KEY_CMD_HEAD_H	0x57
@@ -20,6 +20,8 @@ extern QueueHandle_t RGB_Queue_Handle;
 #define TASK_KEY_CONTROL_PRIORITY	(5)
 #define KEY_DATA_HANDLE_QUEUE_LEN	(10)
 #define KEY_DATA_HANDLE_QUEUE_SIZE	(1)
+#define COMPUTER_INFO_QUEUE_LEN	(1)
+#define COMPUTER_INFO_QUEUE_SIZE	(1)
 
 #define FINGER_FUNC_BASE_ADDR	0x100000
 #define FINGER_FUNC_LEN1_OFFSET	0x01

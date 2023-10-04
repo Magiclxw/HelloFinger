@@ -4,6 +4,7 @@
 #include "string.h"
 #include "..\USER\driver\W25Q128\drv_w25q128.h"
 #include "app_task_finger.h"
+#include "app_task_rgb.h"
 
 static void vTaskKeyProcessing(void);
 int Key_Protocol_Mode_RecData_Handle(uint8_t data);
@@ -16,6 +17,7 @@ static void Key_Func_Exec(void);
 
 TaskHandle_t Task_Key_Handle = NULL;
 QueueHandle_t Queue_KeyProcessing_Handle = NULL;
+QueueHandle_t Queue_Computer_Info_Handle = NULL;
 
 KEY_DATA_CONTROLLR_t g_key_data_ctl = {0};
 KEY_DATA_FORMAT_t g_key_data_format = {0};
@@ -50,6 +52,7 @@ static void vTaskKeyProcessing(void)
 	uint8_t rec_data = 0;
 	KeyResetData();
 	Queue_KeyProcessing_Handle = xQueueCreate((UBaseType_t)KEY_DATA_HANDLE_QUEUE_LEN,(UBaseType_t)KEY_DATA_HANDLE_QUEUE_SIZE);
+	Queue_Computer_Info_Handle = xQueueCreate((UBaseType_t)COMPUTER_INFO_QUEUE_LEN,(UBaseType_t)COMPUTER_INFO_QUEUE_SIZE);
 	//uint16_t id = 0x00;
 	//uint8_t enroll_times = 0x02;
 	//uint16_t param = 0x0F;
@@ -65,7 +68,8 @@ static void vTaskKeyProcessing(void)
 	uint8_t cycle_time = 0;
 	Generate_ControlBLN(func,start_color,end_color,cycle_time);
 	HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_control_bln,g_control_bln.LEN[0]<<8|g_control_bln.LEN[1]+FIXED_CMD_LEN,1000);
-
+	CH9329_Get_Info();
+	RGB_Effect(255,0,0,500,2);
 	//uint8_t time = 36;
 	//uint8_t color1 = 0x99;
 	//uint8_t color2 = 0x00;
@@ -215,11 +219,18 @@ static int Key_CMP_Checksum(uint8_t *data,uint8_t len)
 
 static void Key_Func_Exec(void)
 {
-	switch (g_key_data_format.cmd)
+	switch ((g_key_data_format.cmd) & 0x0F)	//响应码会在原命令码基础上|0x80，为了匹配去除高位
 	{
 		case CMD_GET_INFO:
 		{
-			
+			uint8_t version = 0;
+			uint8_t connection = 0;
+			uint8_t led_state = 0;
+			version = g_key_data_format.data[0];
+			connection = g_key_data_format.data[1];
+			led_state = g_key_data_format.data[2];
+			printf("version = %x,connection = %x,led_state = %x\r\n",version,connection,led_state);
+			xQueueSend(Queue_Computer_Info_Handle,&led_state,0);
 			break;
 		}
 		case CMD_SEND_KB_GENERAL_DATA:
@@ -247,7 +258,7 @@ static void Key_Func_Exec(void)
 			
 			break;
 		}
-		case CMD_READ_MY_HID_DATA:
+		case CMD_READ_MY_HID_DATA & 0x0F:
 		{
 			HID_Data_Handle();
 			break;
@@ -367,6 +378,7 @@ int HID_Data_Handle(void)
 						 seqLen1 = 0;
 						 seqLen2 = 0;
 						 packNum = 0;
+						 Display_Result(RESULT_SUCCESS);
 						 //vPortFree((uint8_t*)store_msg);
 						 memset((uint8_t*)store_msg,0,100);
 					 }
@@ -398,6 +410,7 @@ int HID_Data_Handle(void)
 						 seqLen1 = 0;
 						 seqLen2 = 0;
 						 packNum = 0;
+						 Display_Result(RESULT_SUCCESS);
 						 //vPortFree((uint8_t*)store_msg);
 						 memset((uint8_t*)store_msg,0,100);
 					 }
@@ -445,6 +458,8 @@ int HID_Data_Handle(void)
 						 vTaskDelay(10);
 						 
 						 Flash_write((uint8_t*)&crc_value,FINGER_FUNC_BASE_ADDR+index*FINGER_FUNC_BASE_SIZE+seqLen1+seqLen2+3+2,4);
+						
+						 Display_Result(RESULT_SUCCESS);
 					 }
 				 }
 					if(g_key_data_format.data[5] == TYPE_Shortcut)	//快捷键
@@ -460,11 +475,12 @@ int HID_Data_Handle(void)
 							store_msg[0] = TYPE_Shortcut;
 							store_msg[1] = seqLen1;
 							store_msg[2] = (uint8_t)FINGER_FUNC_RESERVED_DATA;;
-							memcpy((uint8_t*)&store_msg[3],(uint8_t*)&g_key_data_format.data[8],seqLen1);
+							memcpy((uint8_t*)&store_msg[3],(uint8_t*)&g_key_data_format.data[7],seqLen1);
 							crc_value = Calc_CRC(store_msg,seqLen1+3);
 							Flash_write(store_msg,FINGER_FUNC_BASE_ADDR+index*FINGER_FUNC_BASE_SIZE,seqLen1+3);
 							vTaskDelay(10);
 							Flash_write((uint8_t*)&crc_value,FINGER_FUNC_BASE_ADDR+index*FINGER_FUNC_BASE_SIZE+seqLen1+3,4);
+							Display_Result(RESULT_SUCCESS);
 						}
 					}
 					break;

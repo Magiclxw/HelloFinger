@@ -82,6 +82,11 @@
 
 #define CFG_KEY_FLAST_UPLOAD_FLAG	0x00
 
+/* 键盘指示灯状态 */
+#define LED_STATE_NUM_LOCK	0x01
+#define LED_STATE_CAPS_LOCK	0x02
+#define LED_STATE_SCROLL_LOCK	0x04
+
 /* 按键对应键码，用于填充指令 */
 #define KEY_Pie									0x35	/*'`'						*/
 #define KEY_One									0x1E  /*'1'					  */
@@ -420,6 +425,7 @@ void CH9329_SerialAddr_Config(uint8_t addr);;
 void CH9329_SerialBaudRate_Config(uint8_t* baudrate);
 void CH9329_Get_Cfg(void);
 void CH9329_Set_Cfg(void);
+void CH9329_Get_Info(void);
 
 void CH9329_Index_to_Ascii(uint8_t *ascii);
 void CH9329_Generate_KEY_CMD(KEY_TYPE_e type,uint8_t key_contral,char key_value);

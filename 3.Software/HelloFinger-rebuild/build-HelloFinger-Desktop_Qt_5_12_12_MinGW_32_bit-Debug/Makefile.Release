@@ -2354,7 +2354,8 @@ release/system_init.o: ../HelloFinger/system/system_init.cpp ../HelloFinger/syst
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qlabel.h \
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtWidgets/qframe.h \
 		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/QJsonArray \
-		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/qjsonarray.h
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtCore/qjsonarray.h \
+		C:/Qt/Qt5.12.12/5.12.12/mingw73_32/include/QtGui/QInputMethod
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\system_init.o ..\HelloFinger\system\system_init.cpp
 
 release/usb_listener.o: ../HelloFinger/usb_listener.cpp ../HelloFinger/usb_listener.h \

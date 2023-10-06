@@ -50,6 +50,7 @@ public slots:
     void Slot_ChangeItemValue(void);
     void Slot_SaveItemValue(void);
     void Slot_SetShortcut(void);
+    void Slot_DeleteQuickStartItem(void);
 
 signals:
     void Signal_AddFinger(uint8_t pos,uint8_t times,uint8_t param1,uint8_t param2);
@@ -62,6 +63,12 @@ signals:
     void Signal_SetBreathRGB(uint8_t color_R,uint8_t color_G,uint8_t color_B,uint8_t interval);
     void Signal_SetShortcut(uint8_t func,char* key,uint8_t key_len,uint8_t index);
 private slots:
+    void on_listWidget_task_1_customContextMenuRequested(const QPoint &pos);
     void on_listWidget_table_state_customContextMenuRequested(const QPoint &pos);
+    void on_listWidget_task_2_customContextMenuRequested(const QPoint &pos);
+    void on_listWidget_task_3_customContextMenuRequested(const QPoint &pos);
+    void on_listWidget_task_4_customContextMenuRequested(const QPoint &pos);
+    void on_listWidget_task_5_customContextMenuRequested(const QPoint &pos);
+    void on_listWidget_task_6_customContextMenuRequested(const QPoint &pos);
 };
 #endif // FORM_MAINWINDOW_H

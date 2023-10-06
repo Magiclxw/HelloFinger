@@ -70,6 +70,7 @@ static void vTaskKeyProcessing(void)
 	HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_control_bln,g_control_bln.LEN[0]<<8|g_control_bln.LEN[1]+FIXED_CMD_LEN,1000);
 	CH9329_Get_Info();
 	RGB_Effect(255,0,0,500,2);
+	CH9329_Input_Media_Key(2);
 	//uint8_t time = 36;
 	//uint8_t color1 = 0x99;
 	//uint8_t color2 = 0x00;

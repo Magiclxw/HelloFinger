@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Form_MainWindow_t {
-    QByteArrayData data[44];
-    char stringdata0[640];
+    QByteArrayData data[51];
+    char stringdata0[954];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -74,7 +74,14 @@ QT_MOC_LITERAL(39, 513, 16), // "Slot_RGB_Display"
 QT_MOC_LITERAL(40, 530, 20), // "Slot_ChangeItemValue"
 QT_MOC_LITERAL(41, 551, 18), // "Slot_SaveItemValue"
 QT_MOC_LITERAL(42, 570, 16), // "Slot_SetShortcut"
-QT_MOC_LITERAL(43, 587, 52) // "on_listWidget_table_state_cus..."
+QT_MOC_LITERAL(43, 587, 25), // "Slot_DeleteQuickStartItem"
+QT_MOC_LITERAL(44, 613, 47), // "on_listWidget_task_1_customCo..."
+QT_MOC_LITERAL(45, 661, 52), // "on_listWidget_table_state_cus..."
+QT_MOC_LITERAL(46, 714, 47), // "on_listWidget_task_2_customCo..."
+QT_MOC_LITERAL(47, 762, 47), // "on_listWidget_task_3_customCo..."
+QT_MOC_LITERAL(48, 810, 47), // "on_listWidget_task_4_customCo..."
+QT_MOC_LITERAL(49, 858, 47), // "on_listWidget_task_5_customCo..."
+QT_MOC_LITERAL(50, 906, 47) // "on_listWidget_task_6_customCo..."
 
     },
     "Form_MainWindow\0Signal_AddFinger\0\0"
@@ -93,8 +100,14 @@ QT_MOC_LITERAL(43, 587, 52) // "on_listWidget_table_state_cus..."
     "Slot_SetPassword\0Slot_SetAccount_Password\0"
     "Slot_SetBreathRGB\0Slot_RGB_Display\0"
     "Slot_ChangeItemValue\0Slot_SaveItemValue\0"
-    "Slot_SetShortcut\0"
-    "on_listWidget_table_state_customContextMenuRequested"
+    "Slot_SetShortcut\0Slot_DeleteQuickStartItem\0"
+    "on_listWidget_task_1_customContextMenuRequested\0"
+    "on_listWidget_table_state_customContextMenuRequested\0"
+    "on_listWidget_task_2_customContextMenuRequested\0"
+    "on_listWidget_task_3_customContextMenuRequested\0"
+    "on_listWidget_task_4_customContextMenuRequested\0"
+    "on_listWidget_task_5_customContextMenuRequested\0"
+    "on_listWidget_task_6_customContextMenuRequested"
 };
 #undef QT_MOC_LITERAL
 
@@ -104,7 +117,7 @@ static const uint qt_meta_data_Form_MainWindow[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      23,   14, // methods
+      30,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -112,31 +125,38 @@ static const uint qt_meta_data_Form_MainWindow[] = {
        9,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    4,  129,    2, 0x06 /* Public */,
-       8,    1,  138,    2, 0x06 /* Public */,
-      10,    0,  141,    2, 0x06 /* Public */,
-      11,    0,  142,    2, 0x06 /* Public */,
-      12,    2,  143,    2, 0x06 /* Public */,
-      15,    2,  148,    2, 0x06 /* Public */,
-      16,    3,  153,    2, 0x06 /* Public */,
-      18,    4,  160,    2, 0x06 /* Public */,
-      23,    4,  169,    2, 0x06 /* Public */,
+       1,    4,  164,    2, 0x06 /* Public */,
+       8,    1,  173,    2, 0x06 /* Public */,
+      10,    0,  176,    2, 0x06 /* Public */,
+      11,    0,  177,    2, 0x06 /* Public */,
+      12,    2,  178,    2, 0x06 /* Public */,
+      15,    2,  183,    2, 0x06 /* Public */,
+      16,    3,  188,    2, 0x06 /* Public */,
+      18,    4,  195,    2, 0x06 /* Public */,
+      23,    4,  204,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      28,    0,  178,    2, 0x0a /* Public */,
-      29,    2,  179,    2, 0x0a /* Public */,
-      32,    0,  184,    2, 0x0a /* Public */,
-      33,    0,  185,    2, 0x0a /* Public */,
-      34,    0,  186,    2, 0x0a /* Public */,
-      35,    0,  187,    2, 0x0a /* Public */,
-      36,    0,  188,    2, 0x0a /* Public */,
-      37,    0,  189,    2, 0x0a /* Public */,
-      38,    0,  190,    2, 0x0a /* Public */,
-      39,    0,  191,    2, 0x0a /* Public */,
-      40,    0,  192,    2, 0x0a /* Public */,
-      41,    0,  193,    2, 0x0a /* Public */,
-      42,    0,  194,    2, 0x0a /* Public */,
-      43,    1,  195,    2, 0x08 /* Private */,
+      28,    0,  213,    2, 0x0a /* Public */,
+      29,    2,  214,    2, 0x0a /* Public */,
+      32,    0,  219,    2, 0x0a /* Public */,
+      33,    0,  220,    2, 0x0a /* Public */,
+      34,    0,  221,    2, 0x0a /* Public */,
+      35,    0,  222,    2, 0x0a /* Public */,
+      36,    0,  223,    2, 0x0a /* Public */,
+      37,    0,  224,    2, 0x0a /* Public */,
+      38,    0,  225,    2, 0x0a /* Public */,
+      39,    0,  226,    2, 0x0a /* Public */,
+      40,    0,  227,    2, 0x0a /* Public */,
+      41,    0,  228,    2, 0x0a /* Public */,
+      42,    0,  229,    2, 0x0a /* Public */,
+      43,    0,  230,    2, 0x0a /* Public */,
+      44,    1,  231,    2, 0x08 /* Private */,
+      45,    1,  234,    2, 0x08 /* Private */,
+      46,    1,  237,    2, 0x08 /* Private */,
+      47,    1,  240,    2, 0x08 /* Private */,
+      48,    1,  243,    2, 0x08 /* Private */,
+      49,    1,  246,    2, 0x08 /* Private */,
+      50,    1,  249,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3, 0x80000000 | 3, 0x80000000 | 3, 0x80000000 | 3,    4,    5,    6,    7,
@@ -163,6 +183,13 @@ static const uint qt_meta_data_Form_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QPoint,    4,
+    QMetaType::Void, QMetaType::QPoint,    4,
+    QMetaType::Void, QMetaType::QPoint,    4,
+    QMetaType::Void, QMetaType::QPoint,    4,
+    QMetaType::Void, QMetaType::QPoint,    4,
+    QMetaType::Void, QMetaType::QPoint,    4,
     QMetaType::Void, QMetaType::QPoint,    4,
 
        0        // eod
@@ -196,7 +223,14 @@ void Form_MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 19: _t->Slot_ChangeItemValue(); break;
         case 20: _t->Slot_SaveItemValue(); break;
         case 21: _t->Slot_SetShortcut(); break;
-        case 22: _t->on_listWidget_table_state_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 22: _t->Slot_DeleteQuickStartItem(); break;
+        case 23: _t->on_listWidget_task_1_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 24: _t->on_listWidget_table_state_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 25: _t->on_listWidget_task_2_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 26: _t->on_listWidget_task_3_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 27: _t->on_listWidget_task_4_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 28: _t->on_listWidget_task_5_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 29: _t->on_listWidget_task_6_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -296,13 +330,13 @@ int Form_MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 23)
+        if (_id < 30)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 23;
+        _id -= 30;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 23)
+        if (_id < 30)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 23;
+        _id -= 30;
     }
     return _id;
 }

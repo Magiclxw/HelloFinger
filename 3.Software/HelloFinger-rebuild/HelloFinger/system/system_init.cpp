@@ -8,8 +8,11 @@
 #include <QFileIconProvider>
 #include <QLabel>
 #include <QJsonArray>
+#include <QInputMethod>
 
-QString quick_start_file = "quick_start";
+
+
+QString quick_start_file = "config/quick_start";
 QString table_name_file = "table_name.json";
 
 
@@ -78,30 +81,58 @@ void File_FastStart_Save(uint8_t page,uint8_t index,uint8_t checkStete,QString p
 //    file.close();
 
     QString filePath;
-    QJsonObject obj;
     filePath = quick_start_file;
-
     filePath.append("_page"+QString::number(page)+".json");
-    QFile file(filePath);
-    if (!file.open(QIODevice::WriteOnly)) {
 
+    QFile file(filePath);
+
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        QByteArray jsonData = file.readAll();
+        file.close();
+
+        // 解析JSON数据
+        QJsonDocument doc = QJsonDocument::fromJson(jsonData);
+        QJsonObject obj = doc.object();
+        if(path == "")  //空 删除数据
+        {
+            uint8_t itemNum = 0;
+            //obj.remove("item"+QString::number(index));
+
+            itemNum = obj.size();
+
+            for(uint8_t i=index; i<itemNum-index-1; i++)
+            {
+                obj["item"+QString::number(i)] = obj.take("item"+QString::number(i+1));
+            }
+        }
+        else
+        {
+            // 修改数据
+            obj["item"+QString::number(index)] = path;
+        }
+        // 将修改后的数据写回JSON文件
+        if (file.open(QIODevice::WriteOnly | QIODevice::Text))
+        {
+            QJsonDocument newDoc(obj);
+            file.write(newDoc.toJson());
+            file.close();
+        }
     }
     else
     {
+        QJsonObject obj;
         QString item = "item"+QString::number(index);
-        //QJsonArray arr;
-        //arr.append(url);
-        //obj[item] = arr;
-        //QJsonDocument doc(obj);
         obj.insert(item,path);
         QJsonDocument doc(obj);
         QByteArray data = doc.toJson();
+        file.open(QIODevice::WriteOnly);
         file.write(data);
         file.close();
     }
 }
 
-QString File_FastStart_Read(uint8_t page,uint8_t index,uint8_t* checkState)
+QString File_FastStart_Read(uint8_t page,uint8_t index,uint8_t* itemNum)
 {
     QString path;
     QString filePath;
@@ -138,6 +169,8 @@ QString File_FastStart_Read(uint8_t page,uint8_t index,uint8_t* checkState)
                 QJsonObject obj = doc.object();
                 path = obj["item"+QString::number(index)].toString();
                 qDebug() << "path:" << path;
+                *itemNum = obj.size();
+                qDebug() << "item num= " << *itemNum;
             }
 
         }
@@ -159,5 +192,6 @@ void Get_Icon_From_Path(QString path)
     label.setPixmap(icon.pixmap(32,32));
 
 }
+
 
 

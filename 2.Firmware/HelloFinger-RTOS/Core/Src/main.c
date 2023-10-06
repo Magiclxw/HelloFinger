@@ -105,7 +105,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
 	
 	MX_DMA_Init();	//dma初始化要在其他使用dma外设之前
-	//MX_ADC1_Init();
+	MX_ADC1_Init();
 	Flash_Init();
 	MX_SPI2_Init();
 	delay_init(72);

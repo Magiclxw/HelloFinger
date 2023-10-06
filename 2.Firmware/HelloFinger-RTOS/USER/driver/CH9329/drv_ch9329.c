@@ -442,7 +442,7 @@ void CH9329_Generate_KEY_CMD(KEY_TYPE_e type,uint8_t key_contral,char key_value)
 		case KEY_TYPE_MEDIA_KEY:	//多媒体按键
 		{
 			uint32_t m_key = 0;
-			g_cmd_format.cmd = KEY_TYPE_MEDIA_KEY;
+			g_cmd_format.cmd = CMD_SEND_KB_MEDIA_DATA;
 			g_cmd_format.len = 4;
 			//g_cmd_format.data = (uint8_t*)&g_media_key;
 			m_key = MEDIA_KEY_SEQ[key_value];
@@ -463,7 +463,7 @@ void CH9329_Generate_KEY_CMD(KEY_TYPE_e type,uint8_t key_contral,char key_value)
 			g_cmd_format.data[g_cmd_format.len] = CH9329_CAL_SUM((uint8_t*)&g_cmd_format,g_cmd_format.len+5);
 			break;
 		}
-		case KEY_TYPR_FUNC_KEY:
+		case KEY_TYPE_FUNC_KEY:
 		{
 			g_cmd_format.cmd = CMD_SEND_KB_GENERAL_DATA;
 			g_cmd_format.len = 0x08;
@@ -539,7 +539,17 @@ void CH9329_Input_Shortcut(uint8_t func_key,char *key,uint8_t key_len)
 /* 输入功能键 */
 void CH9329_Input_Fuc_Key(uint8_t key_contral,uint8_t func_key)
 {
-	CH9329_Generate_KEY_CMD(KEY_TYPR_FUNC_KEY,key_contral,func_key);
+	CH9329_Generate_KEY_CMD(KEY_TYPE_FUNC_KEY,key_contral,func_key);
+	HAL_UART_Transmit(&huart1,(uint8_t*)&g_cmd_format,g_cmd_format.len+6,1000);
+	delay_ms(1);
+	HAL_UART_Transmit(&huart1,KeyRelease,14,1000);	//释放按键
+	delay_ms(1);
+}
+
+/* 输入多媒体按键 */
+void CH9329_Input_Media_Key(uint8_t key_index)
+{
+	CH9329_Generate_KEY_CMD(KEY_TYPE_MEDIA_KEY,0x00,key_index);
 	HAL_UART_Transmit(&huart1,(uint8_t*)&g_cmd_format,g_cmd_format.len+6,1000);
 	delay_ms(1);
 	HAL_UART_Transmit(&huart1,KeyRelease,14,1000);	//释放按键

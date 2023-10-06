@@ -20,6 +20,9 @@
 #include <QFileInfo>
 #include <QFileIconProvider>
 #include <QLabel>
+#include <QDesktopServices>
+#include <QProcess>
+#include <QTextCodec>
 
 QColor colCheck(0,255,255);       //指纹有效颜色
 QColor colUncheck(255,255,255);   //指纹无效颜色
@@ -32,6 +35,7 @@ QAction *Action_shortcut;               //快捷键
 QAction *Action_enterAccount_Password;  //输入账号
 QAction *Action_enterPassword;          //输入密码
 QAction *Action_openApp;                //快捷启动
+QAction *Action_listWidget_Delete_Item;
 
 /* RGB三色控制 */
 float color_R = 0;
@@ -59,12 +63,15 @@ Form_MainWindow::Form_MainWindow(QWidget *parent)
     this->setWindowTitle("HelloFinger");
     this->setFixedSize(this->width(),this->height());
 
+    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
+
     Form_HideWindow *hidewindow = new Form_HideWindow;
     hidewindow->show();
 
     QMenuBar *bar = menuBar();
     this->setMenuBar(bar);
     QMenu *Menu = bar->addMenu("MENU");
+    QMenu *ListWidgetMenu = bar->addMenu("MENU");
     bar->setVisible(false);
 
     //File_FastStart_Save(1,1,1,"你好");
@@ -84,6 +91,7 @@ Form_MainWindow::Form_MainWindow(QWidget *parent)
     Action_shortcut = Menu->addAction("快捷键");
     Action_enterPassword = Menu->addAction("输入密码");
     Action_enterAccount_Password = Menu->addAction("输入账号/密码");
+    Action_listWidget_Delete_Item = ListWidgetMenu->addAction("删除");
     /* 注册按键监听事件 */
     GlobalKeyEvent::installKeyEvent();
     connect(GlobalKeyEvent::getInstance(),&GlobalKeyEvent::keyEvent,this,&Form_MainWindow::on_keyEvent);
@@ -92,6 +100,12 @@ Form_MainWindow::Form_MainWindow(QWidget *parent)
 
 
     ui->listWidget_table_state->setContextMenuPolicy(Qt::CustomContextMenu);
+    ui->listWidget_task_1->setContextMenuPolicy(Qt::CustomContextMenu);
+    ui->listWidget_task_2->setContextMenuPolicy(Qt::CustomContextMenu);
+    ui->listWidget_task_3->setContextMenuPolicy(Qt::CustomContextMenu);
+    ui->listWidget_task_4->setContextMenuPolicy(Qt::CustomContextMenu);
+    ui->listWidget_task_5->setContextMenuPolicy(Qt::CustomContextMenu);
+    ui->listWidget_task_6->setContextMenuPolicy(Qt::CustomContextMenu);
     this->setContextMenuPolicy(Qt::NoContextMenu);
 
     connect(Action_Add,SIGNAL(triggered()),this,SLOT(Slot_AddFinger()));    //连接添加指纹槽函数
@@ -103,6 +117,7 @@ Form_MainWindow::Form_MainWindow(QWidget *parent)
     connect(Action_enterAccount_Password,&QAction::triggered,this,[=](){ui->stackedWidget->setCurrentWidget(ui->page_account_password);});    //修改当前显示界面
     connect(ui->pushButton_save_account_password,&QPushButton::clicked,this,&Form_MainWindow::Slot_SetAccount_Password);    //连接输入账号密码槽函数
     connect(Action_enterPassword,&QAction::triggered,this,[=](){ui->stackedWidget->setCurrentWidget(ui->page_account_password);});    //连接输入密码槽函数
+    connect(Action_listWidget_Delete_Item,&QAction::triggered,this,&Form_MainWindow::Slot_DeleteQuickStartItem);
     connect(ui->pushButton_password,&QPushButton::clicked,this,&Form_MainWindow::Slot_SetPassword);
     //connect(Action_openApp,SIGNAL(triggered()),this,SLOT());
     //connect(Action_shortcut,SIGNAL(triggered()),this,SLOT());
@@ -116,8 +131,6 @@ Form_MainWindow::Form_MainWindow(QWidget *parent)
     connect(ui->listWidget_table_state,&QListWidget::itemDoubleClicked,this,&Form_MainWindow::Slot_ChangeItemValue);
     connect(ui->pushButton_save_param,&QPushButton::clicked,this,&Form_MainWindow::Slot_SaveItemValue);
     connect(ui->pushButton_save_shortcut,&QPushButton::clicked,this,&Form_MainWindow::Slot_SetShortcut);  //保存快捷键功能
-
-    QFile file("hello.ini");
 
 }
 
@@ -327,6 +340,47 @@ void Form_MainWindow::Slot_SaveItemValue()
     ui->pushButton_save_param->hide();  //保存完成后隐藏保存按键
 }
 
+void Form_MainWindow::Slot_DeleteQuickStartItem()
+{
+    uint8_t page = ui->toolBox->currentIndex();
+    uint8_t item = 0;
+    switch (page)
+    {
+    case 0:
+    {
+        item = ui->listWidget_task_1->currentIndex().row();
+        break;
+    }
+    case 1:
+    {
+        item = ui->listWidget_task_2->currentIndex().row();
+        break;
+    }
+    case 2:
+    {
+        item = ui->listWidget_task_3->currentIndex().row();
+        break;
+    }
+    case 3:
+    {
+        item = ui->listWidget_task_4->currentIndex().row();
+        break;
+    }
+    case 4:
+    {
+        item = ui->listWidget_task_5->currentIndex().row();
+        break;
+    }
+    case 5:
+    {
+        item = ui->listWidget_task_6->currentIndex().row();
+        break;
+    }
+
+    }
+    File_FastStart_Save(page,item,0,"");
+    File_Update_QuickStart_Content();
+}
 
 void Form_MainWindow::on_keyEvent(QKeyEvent* event)  //全局按键事件
 {
@@ -340,7 +394,7 @@ void Form_MainWindow::on_keyEvent(QKeyEvent* event)  //全局按键事件
     {
         str += QString("\t字符：[%1]").arg(event->text());
     }
-    qDebug() << "字符" << str;
+    //qDebug() << "字符" << str;
 //    QString key_type = type.valueToKey(event->type());
 //    QString key_value = key.valueToKey(event->key());
 //    QString key_modify = keyboard.valueToKeys(int(event->modifiers()));
@@ -358,6 +412,102 @@ void Form_MainWindow::on_keyEvent(QKeyEvent* event)  //全局按键事件
             if(event->modifiers() == (Qt::ShiftModifier|Qt::ControlModifier|Qt::AltModifier))
             {
                 qDebug() << "hot key Down";
+            }
+        }
+        if(event->key() == Qt::Key_0)
+        {
+            if(event->modifiers() == (Qt::ControlModifier|Qt::MetaModifier))
+            {
+                qDebug() << "press key 0";
+                uint8_t page = 0;
+                uint8_t start_num = 0;
+                uint8_t checkState;
+                start_num = ui->listWidget_task_1->count();
+                for (uint8_t i=0; i<start_num; i++)
+                {
+                    QString path = File_FastStart_Read(page,i,&checkState).toLocal8Bit();
+                    QProcess::startDetached(path);
+                    //QDesktopServices::openUrl(QUrl(path));
+                }
+            }
+        }
+        if(event->key() == Qt::Key_1)
+        {
+            if(event->modifiers() == (Qt::MetaModifier|Qt::ControlModifier))
+            {
+                uint8_t page = 1;
+                uint8_t start_num = 0;
+                uint8_t checkState;
+                start_num = ui->listWidget_task_2->count();
+                for (uint8_t i=0; i<start_num; i++)
+                {
+                    QString path = File_FastStart_Read(page,i,&checkState).toLocal8Bit();
+                    QProcess::startDetached(path);
+                }
+            }
+        }
+        if(event->key() == Qt::Key_2)
+        {
+            if(event->modifiers() == (Qt::ControlModifier|Qt::MetaModifier))
+            {
+                uint8_t page = 2;
+                uint8_t start_num = 0;
+                uint8_t checkState;
+                start_num = ui->listWidget_task_3->count();
+                for (uint8_t i=0; i<start_num; i++)
+                {
+                    QString path = File_FastStart_Read(page,i,&checkState).toLocal8Bit();
+                    QProcess::startDetached(path);
+                    //QDesktopServices::openUrl(QUrl(path));
+                }
+            }
+        }
+        if(event->key() == Qt::Key_3)
+        {
+            if(event->modifiers() == (Qt::ControlModifier|Qt::MetaModifier))
+            {
+                uint8_t page = 3;
+                uint8_t start_num = 0;
+                uint8_t checkState;
+                start_num = ui->listWidget_task_4->count();
+                for (uint8_t i=0; i<start_num; i++)
+                {
+                    QString path = File_FastStart_Read(page,i,&checkState).toLocal8Bit();
+                    QProcess::startDetached(path);
+                    //QDesktopServices::openUrl(QUrl(path));
+                }
+            }
+        }
+        if(event->key() == Qt::Key_4)
+        {
+            if(event->modifiers() == (Qt::ControlModifier|Qt::MetaModifier))
+            {
+                uint8_t page = 4;
+                uint8_t start_num = 0;
+                uint8_t checkState;
+                start_num = ui->listWidget_task_5->count();
+                for (uint8_t i=0; i<start_num; i++)
+                {
+                    QString path = File_FastStart_Read(page,i,&checkState).toLocal8Bit();
+                    QProcess::startDetached(path);
+                    //QDesktopServices::openUrl(QUrl(path));
+                }
+            }
+        }
+        if(event->key() == Qt::Key_5)
+        {
+            if(event->modifiers() == (Qt::ControlModifier|Qt::MetaModifier))
+            {
+                uint8_t page = 5;
+                uint8_t start_num = 0;
+                uint8_t checkState;
+                start_num = ui->listWidget_task_6->count();
+                for (uint8_t i=0; i<start_num; i++)
+                {
+                    QString path = File_FastStart_Read(page,i,&checkState).toLocal8Bit();
+                    QProcess::startDetached(path);
+                    //QDesktopServices::openUrl(QUrl(path));
+                }
             }
         }
 
@@ -425,34 +575,99 @@ void Form_MainWindow::File_Update_QuickStart_Content()
     for (uint8_t i=0; i<6; i++ )
     {
         uint8_t item = 0;
+        uint8_t itemNum = 1;
+        uint8_t index = 0;
+        switch (i) {
+        case 0:
+        {
+            ui->listWidget_task_1->clear();
+            break;
+        }
+        case 1:
+        {
+            ui->listWidget_task_2->clear();
+            break;
+        }
+        case 2:
+        {
+            ui->listWidget_task_3->clear();
+            break;
+        }
+        case 3:
+        {
+            ui->listWidget_task_4->clear();
+            break;
+        }
+        case 4:
+        {
+            ui->listWidget_task_5->clear();
+            break;
+        }
+        case 5:
+        {
+            ui->listWidget_task_6->clear();
+            break;
+        }
+        }
+
         while(1)
         {
-            uint8_t checkState = 0;
-            QString path = File_FastStart_Read(i,item,&checkState);
-            item++;
-            if(path == NULL)
+            if(item == itemNum)
             {
                 break;
             }
-            else
+            QString path = File_FastStart_Read(i,item,&itemNum);
             {
-                QListWidgetItem *item = new QListWidgetItem;
+                QListWidgetItem *listwidgetitem = new QListWidgetItem;
                 QFileInfo fileInfo(path);
                 QFileIconProvider iconProvider;
                 QString fileName = fileInfo.fileName();
                 QIcon icon = iconProvider.icon(fileInfo);
                 QLabel label;
-                label.setPixmap(icon.pixmap(32,32));
-                item->setIcon(icon);
+                label.setPixmap(icon.pixmap(50,50));
+                listwidgetitem->setIcon(icon);
+                listwidgetitem->setText(fileName);
+                switch (i)
+                {
+                case 0:
+                {
+                    ui->listWidget_task_1->addItem(listwidgetitem);
+                    break;
+                }
+                case 1:
+                {
+                    ui->listWidget_task_2->addItem(listwidgetitem);
+                    break;
+                }
+                case 2:
+                {
+                    ui->listWidget_task_3->addItem(listwidgetitem);
+                    break;
+                }
+                case 3:
+                {
+                    ui->listWidget_task_4->addItem(listwidgetitem);
+                    break;
+                }
+                case 4:
+                {
+                    ui->listWidget_task_5->addItem(listwidgetitem);
+                    break;
+                }
+                case 5:
+                {
+                    ui->listWidget_task_6->addItem(listwidgetitem);
+                    break;
+                }
+                }
 
-                item->setText(fileName);
-                ui->listWidget_task_1->addItem(item);
 
 //                if(checkState == true)
 //                {
 //                    item->setCheckState(Qt::Checked);
 //                }
             }
+            item++;
         }
     }
 }
@@ -536,6 +751,45 @@ void Form_MainWindow::dropEvent(QDropEvent *event)           // 放下事件
         // 将其中第一个URL表示为本地文件路径
         QString fileName = urlList.at(0).toLocalFile();
         qDebug() << "url:" << fileName;
+        uint8_t page = ui->toolBox->currentIndex();
+        uint8_t index = 0;
+        switch (page)
+        {
+        case 0:
+        {
+            index = ui->listWidget_task_1->count();
+            break;
+        }
+        case 1:
+        {
+            index = ui->listWidget_task_2->count();
+            break;
+        }
+        case 2:
+        {
+            index = ui->listWidget_task_3->count();
+            break;
+        }
+        case 3:
+        {
+            index = ui->listWidget_task_4->count();
+            break;
+        }
+        case 4:
+        {
+            index = ui->listWidget_task_5->count();
+            break;
+        }
+        case 5:
+        {
+            index = ui->listWidget_task_6->count();
+            break;
+        }
+        default:break;
+        }
+        qDebug() << "page =" << page;
+        File_FastStart_Save(page,index,0,fileName);
+        File_Update_QuickStart_Content();
     }
     page_index = ui->toolBox->currentIndex();
 
@@ -587,6 +841,68 @@ void Form_MainWindow::on_listWidget_table_state_customContextMenuRequested(const
     // 在鼠标光标位置显示右键快捷菜单
     ptr->exec(QCursor::pos());
     // 手工创建的指针必须手工删除
+    delete ptr;
+}
+
+
+
+void Form_MainWindow::on_listWidget_task_1_customContextMenuRequested(const QPoint &pos)
+{
+    Q_UNUSED(pos);
+    QMenu *ptr = new QMenu(this);
+    ptr->addAction(Action_listWidget_Delete_Item);
+    ptr->exec(QCursor::pos());
+    delete ptr;
+
+}
+
+
+void Form_MainWindow::on_listWidget_task_2_customContextMenuRequested(const QPoint &pos)
+{
+    Q_UNUSED(pos);
+    QMenu *ptr = new QMenu(this);
+    ptr->addAction(Action_listWidget_Delete_Item);
+    ptr->exec(QCursor::pos());
+    delete ptr;
+}
+
+
+void Form_MainWindow::on_listWidget_task_3_customContextMenuRequested(const QPoint &pos)
+{
+    Q_UNUSED(pos);
+    QMenu *ptr = new QMenu(this);
+    ptr->addAction(Action_listWidget_Delete_Item);
+    ptr->exec(QCursor::pos());
+    delete ptr;
+}
+
+
+void Form_MainWindow::on_listWidget_task_4_customContextMenuRequested(const QPoint &pos)
+{
+    Q_UNUSED(pos);
+    QMenu *ptr = new QMenu(this);
+    ptr->addAction(Action_listWidget_Delete_Item);
+    ptr->exec(QCursor::pos());
+    delete ptr;
+}
+
+
+void Form_MainWindow::on_listWidget_task_5_customContextMenuRequested(const QPoint &pos)
+{
+    Q_UNUSED(pos);
+    QMenu *ptr = new QMenu(this);
+    ptr->addAction(Action_listWidget_Delete_Item);
+    ptr->exec(QCursor::pos());
+    delete ptr;
+}
+
+
+void Form_MainWindow::on_listWidget_task_6_customContextMenuRequested(const QPoint &pos)
+{
+    Q_UNUSED(pos);
+    QMenu *ptr = new QMenu(this);
+    ptr->addAction(Action_listWidget_Delete_Item);
+    ptr->exec(QCursor::pos());
     delete ptr;
 }
 

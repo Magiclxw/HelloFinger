@@ -100,11 +100,18 @@ void File_FastStart_Save(uint8_t page,uint8_t index,uint8_t checkStete,QString p
             //obj.remove("item"+QString::number(index));
 
             itemNum = obj.size();
-
-            for(uint8_t i=index; i<itemNum-index-1; i++)
+            if(index == itemNum-1)  //删除的时最后一个元素
             {
-                obj["item"+QString::number(i)] = obj.take("item"+QString::number(i+1));
+                obj.remove("item"+QString::number(index));
             }
+            else
+            {
+                for(uint8_t i=index; i<itemNum-index; i++)
+                {
+                    obj["item"+QString::number(i)] = obj.take("item"+QString::number(i+1));
+                }
+            }
+
         }
         else
         {
@@ -132,7 +139,7 @@ void File_FastStart_Save(uint8_t page,uint8_t index,uint8_t checkStete,QString p
     }
 }
 
-QString File_FastStart_Read(uint8_t page,uint8_t index,uint8_t* itemNum)
+QString File_FastStart_Read(uint8_t page,uint8_t index)
 {
     QString path;
     QString filePath;
@@ -169,8 +176,6 @@ QString File_FastStart_Read(uint8_t page,uint8_t index,uint8_t* itemNum)
                 QJsonObject obj = doc.object();
                 path = obj["item"+QString::number(index)].toString();
                 qDebug() << "path:" << path;
-                *itemNum = obj.size();
-                qDebug() << "item num= " << *itemNum;
             }
 
         }
@@ -181,6 +186,48 @@ QString File_FastStart_Read(uint8_t page,uint8_t index,uint8_t* itemNum)
 
     }
     return path;
+}
+
+uint8_t FIle_Fast_Start_Num_Get(uint8_t page,uint8_t index)
+{
+    uint8_t itemNum;
+    QString path;
+    QString filePath;
+    QJsonObject obj;
+    filePath = quick_start_file;
+    filePath.append("_page"+QString::number(page)+".json");
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly)) {
+
+    }
+    else
+    {
+        QByteArray data = file.readAll();
+        file.close();
+        QJsonDocument doc = QJsonDocument::fromJson(data);
+        if(!doc.isNull())
+        {
+            if(doc.isObject())
+            {
+                QJsonObject obj = doc.object();
+                path = obj["item"+QString::number(index)].toString();
+                qDebug() << "path:" << path;
+                itemNum = obj.count();
+                if(itemNum == 1 && path == "")
+                {
+                    itemNum = 0;
+                }
+                qDebug() << "item num= " << itemNum;
+            }
+
+        }
+        else
+        {
+
+        }
+
+    }
+    return itemNum;
 }
 
 void Get_Icon_From_Path(QString path)

@@ -20,6 +20,8 @@ Interface::Interface(QObject *parent) : QThread(parent)
     mainwindow->show();
     msgHandler = new Msg_Handler;
 
+
+
     /* 更新索引表 */
     connect(msgHandler,&Msg_Handler::Signal_Update_TableState,mainwindow,&Form_MainWindow::Slot_UpdateIndexTable);
     /* 添加指纹 */

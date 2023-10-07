@@ -1,13 +1,17 @@
 #include "form_hidewindow.h"
 #include "ui_form_hidewindow.h"
-
+#include "system/system_init.h"
+#include <QFileInfo>
+#include <QFileIconProvider>
+#include <QLabel>
 
 Form_HideWindow::Form_HideWindow(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Form_HideWindow)
 {
     ui->setupUi(this);
-    this->setFixedSize(this->width(),this->height());
+    //this->setFixedSize(this->width(),this->height());
+    this->setFixedSize(40,250);
     this->move(0,300);
 
     QRect rect = QGuiApplication::primaryScreen()->geometry();
@@ -22,6 +26,33 @@ Form_HideWindow::Form_HideWindow(QWidget *parent) :
     ui->listWidget_func->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_func->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
+}
+
+void Form_HideWindow::File_Update_Hidewindow_Content()
+{
+    uint8_t item = 0;
+    uint8_t itemNum = 1;
+    while(1)
+    {
+        itemNum = FIle_Fast_Start_Num_Get(7,item);
+        if(item == itemNum)
+        {
+            break;
+        }
+        QString path = File_FastStart_Read(7,item);
+        {
+            QListWidgetItem *listwidgetitem = new QListWidgetItem;
+            QFileInfo fileInfo(path);
+            QFileIconProvider iconProvider;
+            QIcon icon = iconProvider.icon(fileInfo);
+            QLabel label;
+            label.setPixmap(icon.pixmap(50,50));
+            listwidgetitem->setIcon(icon);
+            ui->listWidget_func->addItem(listwidgetitem);
+
+        }
+        item++;
+    }
 }
 
 bool Form_HideWindow::isWindowInScreen(QPoint pos)

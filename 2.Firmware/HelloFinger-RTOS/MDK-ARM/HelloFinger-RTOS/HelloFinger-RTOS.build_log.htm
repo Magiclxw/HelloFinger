@@ -27,14 +27,18 @@ Project File Date:  09/16/2023
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin'
 Build target 'HelloFinger-RTOS'
-compiling drv_ch9329.c...
-..\USER\driver\CH9329\drv_ch9329.c(394): warning:  #550-D: variable "ascii_value"  was set but never used
-  	static uint8_t ascii_value[100] = {0};
-..\USER\driver\CH9329\drv_ch9329.c: 1 warning, 0 errors
+compiling app_task_key.c...
+..\USER\application\app_task_key.c(195): warning:  #940-D: missing return statement at end of non-void function "Key_Trans_Mode_RecData_Handle" 
+  }
+..\USER\application\app_task_key.c(446): warning:  #177-D: variable "len"  was declared but never referenced
+  						 uint8_t len = 0;
+..\USER\application\app_task_key.c(504): warning:  #177-D: variable "firmware_version"  was declared but never referenced
+  				 char firmware_version[15] = {0};
+..\USER\application\app_task_key.c: 3 warnings, 0 errors
 linking...
 Program Size: Code=36148 RO-data=824 RW-data=372 ZI-data=18220  
 FromELF: creating hex file...
-"HelloFinger-RTOS\HelloFinger-RTOS.axf" - 0 Error(s), 1 Warning(s).
+"HelloFinger-RTOS\HelloFinger-RTOS.axf" - 0 Error(s), 3 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -57,7 +61,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.1.2
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:02
 </pre>
 </body>
 </html>

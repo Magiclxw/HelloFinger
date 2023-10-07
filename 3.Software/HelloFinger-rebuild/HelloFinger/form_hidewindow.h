@@ -33,7 +33,7 @@ public:
     bool isWindowInScreen(QPoint pos);
     void hideWindow();
     void showWindow();
-
+    void File_Update_Hidewindow_Content();
 protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;

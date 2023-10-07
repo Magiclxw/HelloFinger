@@ -56,3 +56,6 @@ else:unix: LIBS += -L$$PWD/lib/ -lhidapi
 
 INCLUDEPATH += $$PWD/.
 DEPENDPATH += $$PWD/.
+
+RESOURCES += \
+    icon.qrc

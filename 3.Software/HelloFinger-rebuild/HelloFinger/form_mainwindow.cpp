@@ -24,8 +24,10 @@
 #include <QProcess>
 #include <QTextCodec>
 
-QColor colCheck(0,255,255);       //指纹有效颜色
-QColor colUncheck(255,255,255);   //指纹无效颜色
+QColor itemValid(0,255,255);       //指纹有效颜色
+QColor itemUnValid(255,255,255);   //指纹无效颜色
+QColor itemkeyValid(0,255,0);       //指纹+按键有效颜色
+QColor itemkeyUnValid(255,255,255);   //指纹+按键无效颜色
 
 QAction *Action_Add;                    //添加指纹
 QAction *Action_Refresh;                //刷新列表
@@ -67,7 +69,7 @@ Form_MainWindow::Form_MainWindow(QWidget *parent)
 
     Form_HideWindow *hidewindow = new Form_HideWindow;
     hidewindow->show();
-
+    hidewindow->File_Update_Hidewindow_Content();
     QMenuBar *bar = menuBar();
     this->setMenuBar(bar);
     QMenu *Menu = bar->addMenu("MENU");
@@ -137,14 +139,19 @@ Form_MainWindow::Form_MainWindow(QWidget *parent)
 void Form_MainWindow::Slot_UpdateIndexTable()
 {
     uint8_t lwIndex = 0;
-    for (int i=0;i<8 ;i++ ) {
-        for(int j=0;j<8;j++){
-            if(TableState[i] & 0x01){
-                ui->listWidget_table_state->item(lwIndex)->setBackgroundColor(colCheck);
+    for (int i=0;i<8 ;i++ )
+    {
+        for(int j=0;j<8;j++)
+        {
+            if(TableState[i] & 0x01)
+            {
+                ui->listWidget_table_state->item(lwIndex)->setBackgroundColor(itemValid);
+                ui->listWidget_table_state_key->item(lwIndex)->setBackgroundColor(itemkeyValid);
                 lwIndex++;
                 TableState[i] >>= 1;
             }else{
-                ui->listWidget_table_state->item(lwIndex)->setBackgroundColor(colUncheck);
+                ui->listWidget_table_state->item(lwIndex)->setBackgroundColor(itemUnValid);
+                ui->listWidget_table_state_key->item(lwIndex)->setBackgroundColor(itemkeyUnValid);
                 lwIndex++;
                 TableState[i] >>= 1;
             }
@@ -400,18 +407,36 @@ void Form_MainWindow::on_keyEvent(QKeyEvent* event)  //全局按键事件
 //    QString key_modify = keyboard.valueToKeys(int(event->modifiers()));
 //    qDebug() << "字符" << key_type << key_value << key_modify;
     if(event->type() == QEvent::KeyPress){
-        if(event->key() == Qt::Key_Up)
+        if(event->key() == Qt::Key_Left)
         {
             if(event->modifiers() == (Qt::ShiftModifier|Qt::ControlModifier|Qt::AltModifier))
             {
-                qDebug() << "hot key up";
+                uint8_t currentIndex = ui->listWidget_table_state->currentIndex().row();
+                uint8_t nextIndex = currentIndex+1;
+
+                if(currentIndex == ui->listWidget_table_state->count()-1)
+                {
+
+                    nextIndex = 0;
+                }
+                ui->listWidget_table_state->setCurrentRow(nextIndex);
+                //ui->listWidget_table_state->item(nextIndex)->setSelected(true);
+                qDebug() << "current index = " << currentIndex << "next index = " << nextIndex;
             }
         }
-        if(event->key() == Qt::Key_Down)
+        if(event->key() == Qt::Key_Right)
         {
             if(event->modifiers() == (Qt::ShiftModifier|Qt::ControlModifier|Qt::AltModifier))
             {
-                qDebug() << "hot key Down";
+                uint8_t currentIndex = ui->listWidget_table_state->currentIndex().row();
+                uint8_t nextIndex = currentIndex-1;
+                if(currentIndex == 0 )
+                {
+                    nextIndex = ui->listWidget_table_state->count()-1;
+                }
+                ui->listWidget_table_state->setCurrentRow(nextIndex);
+                //ui->listWidget_table_state->item(nextIndex)->setSelected(true);
+                qDebug() << "current index = " << currentIndex << "next index = " << nextIndex;
             }
         }
         if(event->key() == Qt::Key_0)
@@ -421,11 +446,10 @@ void Form_MainWindow::on_keyEvent(QKeyEvent* event)  //全局按键事件
                 qDebug() << "press key 0";
                 uint8_t page = 0;
                 uint8_t start_num = 0;
-                uint8_t checkState;
                 start_num = ui->listWidget_task_1->count();
                 for (uint8_t i=0; i<start_num; i++)
                 {
-                    QString path = File_FastStart_Read(page,i,&checkState).toLocal8Bit();
+                    QString path = File_FastStart_Read(page,i).toLocal8Bit();
                     QProcess::startDetached(path);
                     //QDesktopServices::openUrl(QUrl(path));
                 }
@@ -437,11 +461,10 @@ void Form_MainWindow::on_keyEvent(QKeyEvent* event)  //全局按键事件
             {
                 uint8_t page = 1;
                 uint8_t start_num = 0;
-                uint8_t checkState;
                 start_num = ui->listWidget_task_2->count();
                 for (uint8_t i=0; i<start_num; i++)
                 {
-                    QString path = File_FastStart_Read(page,i,&checkState).toLocal8Bit();
+                    QString path = File_FastStart_Read(page,i).toLocal8Bit();
                     QProcess::startDetached(path);
                 }
             }
@@ -452,11 +475,10 @@ void Form_MainWindow::on_keyEvent(QKeyEvent* event)  //全局按键事件
             {
                 uint8_t page = 2;
                 uint8_t start_num = 0;
-                uint8_t checkState;
                 start_num = ui->listWidget_task_3->count();
                 for (uint8_t i=0; i<start_num; i++)
                 {
-                    QString path = File_FastStart_Read(page,i,&checkState).toLocal8Bit();
+                    QString path = File_FastStart_Read(page,i).toLocal8Bit();
                     QProcess::startDetached(path);
                     //QDesktopServices::openUrl(QUrl(path));
                 }
@@ -468,11 +490,10 @@ void Form_MainWindow::on_keyEvent(QKeyEvent* event)  //全局按键事件
             {
                 uint8_t page = 3;
                 uint8_t start_num = 0;
-                uint8_t checkState;
                 start_num = ui->listWidget_task_4->count();
                 for (uint8_t i=0; i<start_num; i++)
                 {
-                    QString path = File_FastStart_Read(page,i,&checkState).toLocal8Bit();
+                    QString path = File_FastStart_Read(page,i).toLocal8Bit();
                     QProcess::startDetached(path);
                     //QDesktopServices::openUrl(QUrl(path));
                 }
@@ -484,11 +505,10 @@ void Form_MainWindow::on_keyEvent(QKeyEvent* event)  //全局按键事件
             {
                 uint8_t page = 4;
                 uint8_t start_num = 0;
-                uint8_t checkState;
                 start_num = ui->listWidget_task_5->count();
                 for (uint8_t i=0; i<start_num; i++)
                 {
-                    QString path = File_FastStart_Read(page,i,&checkState).toLocal8Bit();
+                    QString path = File_FastStart_Read(page,i).toLocal8Bit();
                     QProcess::startDetached(path);
                     //QDesktopServices::openUrl(QUrl(path));
                 }
@@ -500,11 +520,10 @@ void Form_MainWindow::on_keyEvent(QKeyEvent* event)  //全局按键事件
             {
                 uint8_t page = 5;
                 uint8_t start_num = 0;
-                uint8_t checkState;
                 start_num = ui->listWidget_task_6->count();
                 for (uint8_t i=0; i<start_num; i++)
                 {
-                    QString path = File_FastStart_Read(page,i,&checkState).toLocal8Bit();
+                    QString path = File_FastStart_Read(page,i).toLocal8Bit();
                     QProcess::startDetached(path);
                     //QDesktopServices::openUrl(QUrl(path));
                 }
@@ -575,7 +594,7 @@ void Form_MainWindow::File_Update_QuickStart_Content()
     for (uint8_t i=0; i<6; i++ )
     {
         uint8_t item = 0;
-        uint8_t itemNum = 1;
+        uint8_t itemNum = 0;
         uint8_t index = 0;
         switch (i) {
         case 0:
@@ -609,14 +628,15 @@ void Form_MainWindow::File_Update_QuickStart_Content()
             break;
         }
         }
-
+        itemNum = FIle_Fast_Start_Num_Get(i,item);
         while(1)
         {
+
             if(item == itemNum)
             {
                 break;
             }
-            QString path = File_FastStart_Read(i,item,&itemNum);
+            QString path = File_FastStart_Read(i,item);
             {
                 QListWidgetItem *listwidgetitem = new QListWidgetItem;
                 QFileInfo fileInfo(path);
@@ -671,6 +691,7 @@ void Form_MainWindow::File_Update_QuickStart_Content()
         }
     }
 }
+
 
 void Form_MainWindow::File_Save_Shortcut()
 {

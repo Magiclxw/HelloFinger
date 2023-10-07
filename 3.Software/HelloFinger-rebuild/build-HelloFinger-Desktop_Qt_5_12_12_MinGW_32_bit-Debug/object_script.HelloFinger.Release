@@ -17,6 +17,7 @@ release/qxtwindowsystem.o
 release/qxtglobalshortcut.o
 release/qxtwindowsystem_win.o
 release/qxtglobalshortcut_win.o
+release/qrc_icon.o
 release/moc_form_enrollstate.o
 release/moc_form_entrance.o
 release/moc_form_hidewindow.o

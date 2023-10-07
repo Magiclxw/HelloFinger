@@ -184,7 +184,7 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\USER\application\app_task_key.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\HelloFinger_RTOS\../USER/application/app_task_key.c\480</Expression>
+          <Expression>\\\../USER/application/app_task_key.c\480</Expression>
         </Bp>
         <Bp>
           <Number>2</Number>
@@ -200,7 +200,7 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\USER\application\app_task_key.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\HelloFinger_RTOS\../USER/application/app_task_key.c\478</Expression>
+          <Expression>\\\../USER/application/app_task_key.c\478</Expression>
         </Bp>
         <Bp>
           <Number>3</Number>
@@ -216,7 +216,7 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\USER\application\app_task_key.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\HelloFinger_RTOS\../USER/application/app_task_key.c\476</Expression>
+          <Expression>\\\../USER/application/app_task_key.c\476</Expression>
         </Bp>
         <Bp>
           <Number>4</Number>
@@ -232,7 +232,23 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\USER\application\app_task_key.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\HelloFinger_RTOS\../USER/application/app_task_key.c\471</Expression>
+          <Expression>\\\../USER/application/app_task_key.c\471</Expression>
+        </Bp>
+        <Bp>
+          <Number>5</Number>
+          <Type>0</Type>
+          <LineNumber>448</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134219598</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\USER\driver\CH9329\drv_ch9329.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\HelloFinger_RTOS\../USER/driver/CH9329/drv_ch9329.c\448</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>

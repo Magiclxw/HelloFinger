@@ -17,6 +17,7 @@ debug/qxtwindowsystem.o
 debug/qxtglobalshortcut.o
 debug/qxtwindowsystem_win.o
 debug/qxtglobalshortcut_win.o
+debug/qrc_icon.o
 debug/moc_form_enrollstate.o
 debug/moc_form_entrance.o
 debug/moc_form_hidewindow.o

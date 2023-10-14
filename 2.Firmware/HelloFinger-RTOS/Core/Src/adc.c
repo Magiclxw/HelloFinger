@@ -186,7 +186,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 	}
 }
 
-int RegisterADC1ReceiveCallBack(FUNC_USARTRECVTCB ADC1READYVCBT)
+int RegisterADC1ReceiveCallBack(FUNC_ADCRECVTCB ADC1READYVCBT)
 {
 	ADCREADYCallback = ADC1READYVCBT;
 	return OPERATE_SUCCESS;

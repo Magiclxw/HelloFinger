@@ -212,6 +212,8 @@ void DebugMon_Handler(void)
 /* USER CODE BEGIN 1 */
 extern FUNC_USARTRECVTCB USART1RECVCallback;
 extern FUNC_USARTRECVTCB USART2RECVCallback;
+extern FUNC_TOUCHRECVTCB TOUCHRECVCallback;
+extern FUNC_ENCODERKEYRECVTCB ENCODERKeyRECVCallback;
 
 extern DMA_HandleTypeDef hdma_adc1;
 
@@ -249,7 +251,7 @@ void EXTI3_IRQHandler(void)
 	HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_3);
 }
 
-void EXTI4_IRQHandler(void)
+void EXTI4_IRQHandler(void)	// ÷÷∏¥•√˛–≈∫≈
 {
 	HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_4);
 }
@@ -354,6 +356,10 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 			//Delay_ms(20);
 			//REL_Mouse_Ctrl(0,0,0,button_NULL);
 			//Con_Sleep();
+			if(ENCODERKeyRECVCallback != NULL)
+			{
+				ENCODERKeyRECVCallback();
+			}
 			break;
 		}
 		
@@ -367,20 +373,14 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 		
 		case GPIO_PIN_4:
 		{
-			//g_finger_rec_flag = 1;
-			Generate_AutoIdentify(0x03,0xFFFF,0x0007);
-			HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_autoidentify,g_autoidentify.LEN[0]<<8|g_autoidentify.LEN[1]+9,1000);
-			portBASE_TYPE xHigherPriorityTaskWoken = pdTRUE;
-			if(FingerEvent_Handle != NULL)
+			if(TOUCHRECVCallback != NULL)
 			{
-				
-				xEventGroupSetBitsFromISR((EventGroupHandle_t)FingerEvent_Handle,(EventBits_t)EVENT_TOUCH_DETECT,&xHigherPriorityTaskWoken);
-				portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+				TOUCHRECVCallback();
 			}
-			
+			break;
 		}
 		
-		break;
+		
 	}
 }
 /* USER CODE END 1 */

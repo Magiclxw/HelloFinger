@@ -468,21 +468,23 @@ void Form_MainWindow::Slot_DeleteQuickStartItem()
 
 void Form_MainWindow::on_keyEvent(QKeyEvent* event)  //全局按键事件
 {
-    QMetaEnum type = QMetaEnum::fromType<QEvent::Type>();
-    QMetaEnum key = QMetaEnum::fromType<Qt::Key>();
-    QMetaEnum keyboard = QMetaEnum::fromType<Qt::KeyboardModifiers>();
-    QString str = QString("状态：[%1]\t按键：[%2]\t修饰：[%3]]").arg(type.valueToKey(event->type()),0)
-                                           .arg(key.valueToKey(event->key()),0)
-                                           .arg(QString(keyboard.valueToKeys(int(event->modifiers()))));
-    if(!event->text().isEmpty())
-    {
-        str += QString("\t字符：[%1]").arg(event->text());
-    }
-    qDebug() << "字符" << str;
+    /* 当前状态信息 */
+//    QMetaEnum type = QMetaEnum::fromType<QEvent::Type>();
+//    QMetaEnum key = QMetaEnum::fromType<Qt::Key>();
+//    QMetaEnum keyboard = QMetaEnum::fromType<Qt::KeyboardModifiers>();
+//    QString str = QString("状态：[%1]\t按键：[%2]\t修饰：[%3]]").arg(type.valueToKey(event->type()),0)
+//                                           .arg(key.valueToKey(event->key()),0)
+//                                           .arg(QString(keyboard.valueToKeys(int(event->modifiers()))));
+//    if(!event->text().isEmpty())
+//    {
+//        str += QString("\t字符：[%1]").arg(event->text());
+//    }
+//    qDebug() << "字符" << str;
 //    QString key_type = type.valueToKey(event->type());
 //    QString key_value = key.valueToKey(event->key());
 //    QString key_modify = keyboard.valueToKeys(int(event->modifiers()));
 //    qDebug() << "字符" << key_type << key_value << key_modify;
+
     if(event->type() == QEvent::KeyPress){
         if(event->key() == Qt::Key_Left)
         {
@@ -493,7 +495,6 @@ void Form_MainWindow::on_keyEvent(QKeyEvent* event)  //全局按键事件
 
                 if(currentIndex == ui->listWidget_table_state->count()-1)
                 {
-
                     nextIndex = 0;
                 }
                 ui->listWidget_table_state->setCurrentRow(nextIndex);
@@ -514,6 +515,14 @@ void Form_MainWindow::on_keyEvent(QKeyEvent* event)  //全局按键事件
                 ui->listWidget_table_state->setCurrentRow(nextIndex);
                 //ui->listWidget_table_state->item(nextIndex)->setSelected(true);
                 qDebug() << "current index = " << currentIndex << "next index = " << nextIndex;
+            }
+        }
+        if(event->key() == Qt::Key_F1)
+        {
+            if(event->modifiers() == (Qt::ShiftModifier|Qt::ControlModifier|Qt::AltModifier))
+            {
+
+                qDebug() << "encoder ";
             }
         }
         if(event->key() == Qt::Key_0)

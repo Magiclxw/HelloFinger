@@ -448,4 +448,5 @@ int Send_HID_Data(uint8_t *data,uint8_t len);
 int ABD_Mouse_Ctrl(uint8_t step,uint8_t* pos_x,uint8_t* pos_y,BUTTON_VALUE_e button);
 int REL_Mouse_Ctrl(uint8_t step,uint8_t dir_x,uint8_t dir_y,BUTTON_VALUE_e button);
 int Quick_Start(char key);
+int CH9329_Keyboard_Switch(void);
 #endif

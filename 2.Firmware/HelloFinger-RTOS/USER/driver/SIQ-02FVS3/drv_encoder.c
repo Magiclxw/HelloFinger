@@ -7,6 +7,13 @@
 __IO uint8_t signal_a = 0;
 __IO uint8_t signal_b = 0;
 
+FUNC_ENCODERKEYRECVTCB ENCODERKeyRECVCallback = NULL;
+
+int RegisterEncoderKeyCallBack(FUNC_ENCODERKEYRECVTCB TOUCHRECVCBT)
+{
+	ENCODERKeyRECVCallback = TOUCHRECVCBT;
+	return OPERATE_SUCCESS;
+}
 
 void ENCODER_Init(void)
 {
@@ -32,7 +39,5 @@ void ENCODER_Init(void)
 	HAL_NVIC_SetPriority(EXTI1_IRQn,11,0);
 	HAL_NVIC_EnableIRQ(EXTI1_IRQn);
 }
-
-
 
 

@@ -642,3 +642,13 @@ int Quick_Start(char key)
 	return OPERATE_SUCCESS;
 }
 
+/**
+* @brief	美式键盘、通用键盘切换
+* @date	2023-10-14 16:29:56
+* @return 
+*/
+int CH9329_Keyboard_Switch(void)
+{
+	CH9329_Input_Shortcut(R_SHIFT|R_ALT,NULL,0);
+	
+}

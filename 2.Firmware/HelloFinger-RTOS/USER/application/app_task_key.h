@@ -90,6 +90,7 @@ typedef struct KEY_DATA_FORMAT
 
 
 int Key_GiveNotifyFromISR(uint8_t *recData,uint8_t dataSize);
+int ENCODER_KeyNotifyFromISR(void);
 int Task_Key_DataCTLCreate(void);
 int HID_Data_Handle(void);
 #endif

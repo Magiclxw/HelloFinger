@@ -2,6 +2,8 @@
 #define __ADC_H
 #include "sys_config.h"
 
+typedef int(*FUNC_ADCRECVTCB)(uint8_t *pData, uint8_t Datasize);
+
 extern ADC_HandleTypeDef hadc1;
 
 extern uint16_t value_X_Y[2];

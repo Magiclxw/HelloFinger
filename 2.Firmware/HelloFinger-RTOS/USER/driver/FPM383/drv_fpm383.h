@@ -2,6 +2,8 @@
 #define __DRV_FPM383_H
 #include "sys_config.h"
 
+typedef int(*FUNC_TOUCHRECVTCB)(void);
+
 #define	ID_CMD			0x01							//包标识（命令包）
 #define	ID_DATA1		0x02							//包标识（数据包）
 #define	ID_DATA2	  0x08							//包标识（结束包）
@@ -379,6 +381,7 @@ extern CMD_Match_t							g_match;
 extern CMD_ControlBLN_t					g_control_bln;
 extern CMD_ControlBLN_PRO_t			g_control_bln_pro;
 
+int RegisterFingerTouchCallBack(FUNC_TOUCHRECVTCB TOUCHRECVCBT);
 void FPM383C_Init(void);
 void Generate_AutoEnroll(uint16_t ID,uint8_t enrollTimes,uint16_t PARAM);
 void Generate_AutoIdentify(uint8_t secureleval,uint16_t ID,uint16_t PARAM);

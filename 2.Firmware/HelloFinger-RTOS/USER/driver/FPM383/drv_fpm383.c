@@ -72,6 +72,14 @@ const uint8_t 			ReadNotepad						=				0x19;		/*¶Á¼ÇÊÂ±¾*/					const uint8_t				
 
 /************************************************************************************************************************************/
 
+FUNC_TOUCHRECVTCB TOUCHRECVCallback = NULL;
+
+int RegisterFingerTouchCallBack(FUNC_TOUCHRECVTCB TOUCHRECVCBT)
+{
+	TOUCHRECVCallback = TOUCHRECVCBT;
+	return OPERATE_SUCCESS;
+}
+
 void FPM383C_Init(void)
 {
 	GPIO_InitTypeDef gpio;

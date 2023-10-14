@@ -34,6 +34,19 @@ int Finger_GiveNotifyFromISR(uint8_t *recData,uint8_t dataSize)
 	return OPERATE_SUCCESS;
 }
 
+int Finger_TouchNotifyFromISR(void)
+{
+	Generate_AutoIdentify(0x03,0xFFFF,0x0007);
+	HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_autoidentify,g_autoidentify.LEN[0]<<8|g_autoidentify.LEN[1]+9,1000);
+	portBASE_TYPE xHigherPriorityTaskWoken = pdTRUE;
+	if(FingerEvent_Handle != NULL)
+	{
+		xEventGroupSetBitsFromISR((EventGroupHandle_t)FingerEvent_Handle,(EventBits_t)EVENT_TOUCH_DETECT,&xHigherPriorityTaskWoken);
+		portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+	}
+	return OPERATE_SUCCESS;
+}
+
 int Task_Finger_DataCTLCreate(void)
 {
 	xTaskCreate( (TaskFunction_t)vTaskFingerProcessing,
@@ -590,14 +603,16 @@ static void Finger_Function(uint16_t id,uint16_t score)
 				uint8_t led_status = 0;
 				CH9329_Get_Info();
 				xQueueReceive(Queue_Computer_Info_Handle,&led_status,200);
-				if(led_status & LED_STATE_CAPS_LOCK)
+				if(led_status & LED_STATE_CAPS_LOCK)	//当前是大写状态
 				{
 					CH9329_Input_Fuc_Key(NO_CTRL,KEY_CapsLock);
 				}
 				CH9329_Input_Fuc_Key(NO_CTRL,KEY_LeftCtrl);
 				vTaskDelay(400);
+				CH9329_Keyboard_Switch();
 				CH9329_Input_Ascii((char*)&password[3],len);
 				CH9329_Input_Fuc_Key(NO_CTRL,KEY_LeftEnter);
+				CH9329_Keyboard_Switch();
 				if(led_status & LED_STATE_CAPS_LOCK)
 				{
 					CH9329_Input_Fuc_Key(NO_CTRL,KEY_CapsLock);
@@ -893,32 +908,32 @@ static void Finger_Key_Function(uint16_t id,uint16_t score)
 			{
 				case QUICK_START_1:
 				{
-					Quick_Start('1');
+					Quick_Start('0');
 					break;
 				}
 				case QUICK_START_2:
 				{
-					Quick_Start('2');
+					Quick_Start('1');
 					break;
 				}
 				case QUICK_START_3:
 				{
-					Quick_Start('3');
+					Quick_Start('2');
 					break;
 				}
 				case QUICK_START_4:
 				{
-					Quick_Start('4');
+					Quick_Start('3');
 					break;
 				}
 				case QUICK_START_5:
 				{
-					Quick_Start('5');
+					Quick_Start('4');
 					break;
 				}
 				case QUICK_START_6:
 				{
-					Quick_Start('6');
+					Quick_Start('5');
 					break;
 				}
 				default : break;

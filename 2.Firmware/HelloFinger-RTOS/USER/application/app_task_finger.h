@@ -56,6 +56,7 @@ extern USB_RESPONSE_t g_usb_response;
 
 int Task_Finger_DataCTLCreate(void);
 int Finger_GiveNotifyFromISR(uint8_t *recData,uint8_t dataSize);
+int Finger_TouchNotifyFromISR(void);
 static void Finger_Function(uint16_t id,uint16_t score);
 #endif
 

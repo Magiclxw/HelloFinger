@@ -143,6 +143,8 @@ int main(void)
 	RegisterUsart1ReceiveCallBack(Key_GiveNotifyFromISR);
 	RegisterUsart2ReceiveCallBack(Finger_GiveNotifyFromISR);
 	RegisterADC1ReceiveCallBack(JoyStick_GiveNotifyFromISR);
+	RegisterFingerTouchCallBack(Finger_TouchNotifyFromISR);
+	RegisterEncoderKeyCallBack(ENCODER_KeyNotifyFromISR);
 	//Generate_StoreChar(0xAB,0x01);
 	Task_Create();
 	vTaskStartScheduler();

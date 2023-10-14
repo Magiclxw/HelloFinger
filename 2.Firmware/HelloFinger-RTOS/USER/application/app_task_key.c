@@ -34,6 +34,15 @@ int Key_GiveNotifyFromISR(uint8_t *recData,uint8_t dataSize)
 	return OPERATE_SUCCESS;
 }
 
+int ENCODER_KeyNotifyFromISR(void)	//±àÂëÆ÷°´¼ü¹¦ÄÜ
+{
+	//REL_Mouse_Ctrl(0,0,0,button_RIGHT);
+	//REL_Mouse_Ctrl(0,0,0,button_NULL);
+	CH9329_Input_Fuc_Key(R_ALT|R_SHIFT|R_CTRL,KEY_F1);
+	
+	return OPERATE_SUCCESS;
+}
+
 int Task_Key_DataCTLCreate(void)
 {
 	xTaskCreate( (TaskFunction_t)vTaskKeyProcessing,

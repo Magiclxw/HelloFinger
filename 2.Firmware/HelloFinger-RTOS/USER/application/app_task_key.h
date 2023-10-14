@@ -24,6 +24,7 @@ extern QueueHandle_t Queue_Computer_Info_Handle;
 #define COMPUTER_INFO_QUEUE_SIZE	(1)
 
 #define FINGER_FUNC_BASE_ADDR	0x100000
+#define FINGER_KEY_FUNC_BASE_ADDR	0x102710
 #define FINGER_FUNC_LEN1_OFFSET	0x01
 #define FINGER_FUNC_BASE_SIZE	100
 #define FINGER_FUNC_RESERVED_DATA	0x00
@@ -56,7 +57,13 @@ typedef enum{
     TYPE_Windows_Password = 0,
     TYPE_Password,
     TYPE_Account_Password,
-    TYPE_Shortcut
+    TYPE_Shortcut,
+		TYPE_QuickStart,
+    TYPE_KEY_Windows_Password,
+    TYPE_KEY_Password,
+    TYPE_KEY_Account_Password,
+    TYPE_KEY_Shortcut,
+		TYPE_KEY_QuickStart,
 }CMD_TYPE_e;
 
 typedef struct KEY_DATA_CONTROLLER
@@ -79,6 +86,7 @@ typedef struct KEY_DATA_FORMAT
 	volatile uint8_t data[CH9329_TRANS_MAX_DATA_LEN];
 	volatile uint8_t sum;	//sum = head[0] + head[1] + addr + cmd + len + data[...]
 }KEY_DATA_FORMAT_t;
+
 
 
 int Key_GiveNotifyFromISR(uint8_t *recData,uint8_t dataSize);

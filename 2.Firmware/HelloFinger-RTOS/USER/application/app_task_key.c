@@ -69,8 +69,8 @@ static void vTaskKeyProcessing(void)
 	Generate_ControlBLN(func,start_color,end_color,cycle_time);
 	HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_control_bln,g_control_bln.LEN[0]<<8|g_control_bln.LEN[1]+FIXED_CMD_LEN,1000);
 	CH9329_Get_Info();
-	RGB_Effect(255,0,0,500,2);
-	CH9329_Input_Media_Key(3);
+	//RGB_Effect(255,0,0,500,2);
+	//CH9329_Input_Media_Key(3);
 	//uint8_t time = 36;
 	//uint8_t color1 = 0x99;
 	//uint8_t color2 = 0x00;
@@ -475,7 +475,7 @@ int HID_Data_Handle(void)
 							uint32_t crc_value = 0;
 							store_msg[0] = TYPE_Shortcut;
 							store_msg[1] = seqLen1;
-							store_msg[2] = (uint8_t)FINGER_FUNC_RESERVED_DATA;;
+							store_msg[2] = (uint8_t)FINGER_FUNC_RESERVED_DATA;
 							memcpy((uint8_t*)&store_msg[3],(uint8_t*)&g_key_data_format.data[7],seqLen1);
 							crc_value = Calc_CRC(store_msg,seqLen1+3);
 							Flash_write(store_msg,FINGER_FUNC_BASE_ADDR+index*FINGER_FUNC_BASE_SIZE,seqLen1+3);
@@ -483,6 +483,169 @@ int HID_Data_Handle(void)
 							Flash_write((uint8_t*)&crc_value,FINGER_FUNC_BASE_ADDR+index*FINGER_FUNC_BASE_SIZE+seqLen1+3,4);
 							Display_Result(RESULT_SUCCESS);
 						}
+					}
+					if(g_key_data_format.data[5] == TYPE_QuickStart)
+					{
+						uint8_t startID = 0;
+						uint8_t index  = 0;
+						uint32_t crc_value = 0;
+						index = g_key_data_format.data[6];
+						startID = g_key_data_format.data[7];
+						store_msg[0] = TYPE_QuickStart;
+						store_msg[1] = startID;
+						store_msg[2] = (uint8_t)FINGER_FUNC_RESERVED_DATA;
+						crc_value = Calc_CRC(store_msg,3);
+						Flash_write(store_msg,FINGER_FUNC_BASE_ADDR+index*FINGER_FUNC_BASE_SIZE,3);
+						vTaskDelay(10);
+						Flash_write((uint8_t*)&crc_value,FINGER_FUNC_BASE_ADDR+index*FINGER_FUNC_BASE_SIZE+3,4);
+					}
+					if(g_key_data_format.data[5] == TYPE_KEY_Windows_Password)	//开机密码
+				 {
+					 if(packNum == 1)
+					 {
+						 index = g_key_data_format.data[6];
+						 seqLen1 = g_key_data_format.data[7];
+					 }
+					 if(packNum == 0 && index == g_key_data_format.data[6])
+					 {
+						 uint32_t crc_value = 0;
+						 //uint8_t *store_msg = (uint8_t *)pvPortMalloc(seqLen1+3);
+						 //memset((uint8_t*)store_msg,0,seqLen1+3);	//初始化申请空间，防止未知数据影响crc结果
+						 store_msg[0] = TYPE_KEY_Windows_Password;
+						 store_msg[1] = seqLen1;
+						 store_msg[2] = (uint8_t)FINGER_FUNC_RESERVED_DATA;
+						 for(uint8_t i=0; i<seqLen1; i++)
+						 {
+							 store_msg[3+i] = g_key_data_format.data[7+i];
+						 }
+						 crc_value = Calc_CRC(store_msg,seqLen1+3);
+						 printf("crc_value = %d\r\n",crc_value);
+						 Flash_write(store_msg,FINGER_KEY_FUNC_BASE_ADDR+index*FINGER_FUNC_BASE_SIZE,seqLen1+3);
+						 vTaskDelay(10);	//延时，防止前一次dma传输未完成
+						 Flash_write((uint8_t*)&crc_value,FINGER_KEY_FUNC_BASE_ADDR+index*FINGER_FUNC_BASE_SIZE+seqLen1+3,4);
+						 index = 0;
+						 seqLen1 = 0;
+						 seqLen2 = 0;
+						 packNum = 0;
+						 Display_Result(RESULT_SUCCESS);
+						 //vPortFree((uint8_t*)store_msg);
+						 memset((uint8_t*)store_msg,0,100);
+					 }
+				 }
+				 if(g_key_data_format.data[5] == TYPE_KEY_Password)	//密码
+				 {
+					 if(packNum == 1)
+					 {
+						 index = g_key_data_format.data[6];
+						 seqLen1 = g_key_data_format.data[7];
+					 }
+					 if(packNum == 0 && index == g_key_data_format.data[6])
+					 {
+						 uint32_t crc_value = 0;
+						 //uint8_t *store_msg = (uint8_t *)pvPortMalloc(seqLen1+3);
+						 //memset((uint8_t*)store_msg,0,seqLen1+3);	//初始化申请空间，防止未知数据影响crc结果
+						 store_msg[0] = TYPE_KEY_Password;
+						 store_msg[1] = seqLen1;
+						 store_msg[2] = (uint8_t)FINGER_FUNC_RESERVED_DATA;
+						 for(uint8_t i=0; i<seqLen1; i++)
+						 {
+							 store_msg[3+i] = g_key_data_format.data[7+i];
+						 }
+						 crc_value = Calc_CRC(store_msg,seqLen1+3);
+						 Flash_write(store_msg,FINGER_KEY_FUNC_BASE_ADDR+index*FINGER_FUNC_BASE_SIZE,seqLen1+3);
+						 vTaskDelay(10);
+						 Flash_write((uint8_t*)&crc_value,FINGER_KEY_FUNC_BASE_ADDR+index*FINGER_FUNC_BASE_SIZE+seqLen1+3,4);
+						 index = 0;
+						 seqLen1 = 0;
+						 seqLen2 = 0;
+						 packNum = 0;
+						 Display_Result(RESULT_SUCCESS);
+						 //vPortFree((uint8_t*)store_msg);
+						 memset((uint8_t*)store_msg,0,100);
+					 }
+				 }
+				 if(g_key_data_format.data[5] == TYPE_KEY_Account_Password)	//账号+密码
+				 {
+					 if(packNum == 2)	//第一包数据
+					 {
+						 index = g_key_data_format.data[6];
+						 seqLen1 = g_key_data_format.data[7];	//账号长度
+						 seqLen2 = g_key_data_format.data[8];	//密码长度
+					 }
+					 if(packNum == 1 && index == g_key_data_format.data[6])	//第二包数据
+					 {
+						 //uint32_t crc_value = 0;
+						 //uint8_t *store_msg = (uint8_t *)pvPortMalloc(seqLen1+3);
+						 //memset((uint8_t*)store_msg,0,seqLen1+3);	//初始化申请空间，防止未知数据影响crc结果
+						 store_msg[0] = TYPE_KEY_Account_Password;
+						 store_msg[1] = seqLen1;
+						 store_msg[2] = (uint8_t)FINGER_FUNC_RESERVED_DATA;
+						 for(uint8_t i=0; i<seqLen1; i++)
+						 {
+							 store_msg[3+i] = g_key_data_format.data[7+i];
+						 }
+						 //crc_value = Calc_CRC(store_msg,seqLen1+3);
+						 //Flash_write(store_msg,FINGER_FUNC_BASE_ADDR+index*FINGER_FUNC_BASE_SIZE,seqLen1+3);
+						 //vTaskDelay(10);
+						 //Flash_write((uint8_t*)&crc_value,FINGER_FUNC_BASE_ADDR+index*FINGER_FUNC_BASE_SIZE+seqLen1+3,4);
+					 }
+					 if(packNum == 0 && index == g_key_data_format.data[6])
+					 {
+						 uint8_t len = 0;
+						 uint32_t crc_value = 0;
+						 store_msg[seqLen1+3] = seqLen2;	//存储密码长度
+						 store_msg[seqLen1+3+1] = (uint8_t)FINGER_FUNC_RESERVED_DATA;//存储无效字节
+						 for(uint8_t i =0; i<seqLen2; i++)
+						 {
+							 store_msg[seqLen1+3+1+i] = g_key_data_format.data[7+i];
+						 }
+						 
+						 crc_value = Calc_CRC(store_msg,seqLen1+seqLen2+3+1);
+						 printf("store crc = %x\r\n",crc_value);
+						 Flash_write(store_msg,FINGER_KEY_FUNC_BASE_ADDR+index*FINGER_FUNC_BASE_SIZE,seqLen1+seqLen2+3+2);
+						 
+						 vTaskDelay(10);
+						 
+						 Flash_write((uint8_t*)&crc_value,FINGER_KEY_FUNC_BASE_ADDR+index*FINGER_FUNC_BASE_SIZE+seqLen1+seqLen2+3+2,4);
+						
+						 Display_Result(RESULT_SUCCESS);
+					 }
+				 }
+					if(g_key_data_format.data[5] == TYPE_KEY_Shortcut)	//快捷键
+					{
+						if(packNum == 1)
+						{
+							index = g_key_data_format.data[6];	//指纹号
+							seqLen1 = g_key_data_format.data[7];	//快捷键长度
+						}
+						if(packNum == 0 && index == g_key_data_format.data[6])
+						{
+							uint32_t crc_value = 0;
+							store_msg[0] = TYPE_KEY_Shortcut;
+							store_msg[1] = seqLen1;
+							store_msg[2] = (uint8_t)FINGER_FUNC_RESERVED_DATA;;
+							memcpy((uint8_t*)&store_msg[3],(uint8_t*)&g_key_data_format.data[7],seqLen1);
+							crc_value = Calc_CRC(store_msg,seqLen1+3);
+							Flash_write(store_msg,FINGER_KEY_FUNC_BASE_ADDR+index*FINGER_FUNC_BASE_SIZE,seqLen1+3);
+							vTaskDelay(10);
+							Flash_write((uint8_t*)&crc_value,FINGER_KEY_FUNC_BASE_ADDR+index*FINGER_FUNC_BASE_SIZE+seqLen1+3,4);
+							Display_Result(RESULT_SUCCESS);
+						}
+					}
+					if(g_key_data_format.data[5] == TYPE_KEY_QuickStart)
+					{
+						uint8_t startID = 0;
+						uint8_t index  = 0;
+						uint32_t crc_value = 0;
+						index = g_key_data_format.data[6];
+						startID = g_key_data_format.data[7];
+						store_msg[0] = TYPE_KEY_QuickStart;
+						store_msg[1] = startID;
+						store_msg[2] = (uint8_t)FINGER_FUNC_RESERVED_DATA;
+						crc_value = Calc_CRC(store_msg,3);
+						Flash_write(store_msg,FINGER_KEY_FUNC_BASE_ADDR+index*FINGER_FUNC_BASE_SIZE,3);
+						vTaskDelay(10);
+						Flash_write((uint8_t*)&crc_value,FINGER_KEY_FUNC_BASE_ADDR+index*FINGER_FUNC_BASE_SIZE+3,4);
 					}
 					break;
 			 }
@@ -527,4 +690,9 @@ int HID_Data_Handle(void)
 			return OPERATE_ERROR_INVALID_PARAMETERS;
 	 }
 	 return OPERATE_SUCCESS;
+}
+
+static void Store_FingerFunc()
+{
+	
 }

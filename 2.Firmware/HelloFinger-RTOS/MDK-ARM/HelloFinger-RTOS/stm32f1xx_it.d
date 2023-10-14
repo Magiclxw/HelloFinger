@@ -57,3 +57,6 @@ hellofinger-rtos\stm32f1xx_it.o: ../Core/Inc/adc.h
 hellofinger-rtos\stm32f1xx_it.o: ../SYSTEM/sys_config.h
 hellofinger-rtos\stm32f1xx_it.o: ../Core/Inc/dma.h
 hellofinger-rtos\stm32f1xx_it.o: ../SYSTEM/crc.h
+hellofinger-rtos\stm32f1xx_it.o: ../USER/driver/SIQ-02FVS3/drv_encoder.h
+hellofinger-rtos\stm32f1xx_it.o: ../USER/driver/CH9329/drv_ch9329.h
+hellofinger-rtos\stm32f1xx_it.o: ../USER/driver/FPM383/drv_fpm383.h

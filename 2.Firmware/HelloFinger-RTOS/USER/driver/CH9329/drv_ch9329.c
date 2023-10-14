@@ -628,3 +628,17 @@ int REL_Mouse_Ctrl(uint8_t step,uint8_t dir_x,uint8_t dir_y,BUTTON_VALUE_e butto
 	return OPERATE_SUCCESS;
 }
 
+int Quick_Start(char key)
+{
+	if(key < '0' || key > '5')
+	{
+		return OPERATE_ERROR_INVALID_PARAMETERS;
+	}
+	CH9329_Generate_Shortcut(R_WINDOWS|R_CTRL,&key,1);
+	HAL_UART_Transmit(&huart1,(uint8_t*)&g_cmd_format,g_cmd_format.len+6,1000);
+	delay_ms(1);
+	HAL_UART_Transmit(&huart1,KeyRelease,14,1000);	//ÊÍ·Å°´¼ü
+	delay_ms(1);
+	return OPERATE_SUCCESS;
+}
+

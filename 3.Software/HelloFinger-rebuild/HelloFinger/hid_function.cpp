@@ -85,7 +85,7 @@ int HID_Delete_Finger(hid_device *usb_handle,uint8_t id)
 *			- 0     发送成功
 *			- -1	发送失败
 */
-int HID_Send_WindowsPassword(hid_device *usb_handle,QString password,uint8_t index)
+int HID_Send_WindowsPassword(hid_device *usb_handle,Finger_Type_e fingertype,QString password,uint8_t index)
 {
     if(usb_handle == NULL || index > FINGER_MAX_NUM)
     {
@@ -94,7 +94,15 @@ int HID_Send_WindowsPassword(hid_device *usb_handle,QString password,uint8_t ind
     QByteArray ba_password = password.toLatin1();
     char *c_password = ba_password.data();
     uint8_t flag = USB_PROTOCOL_FORMAT_FUNC_STORE;
-    uint8_t type = TYPE_Windows_Password;
+    uint8_t type = 0;
+    if(fingertype == FINGER)
+    {
+        type = TYPE_Windows_Password;
+    }
+    else
+    {
+        type = TYPE_KEY_Windows_Password;
+    }
     uint8_t len = password.length();    //获取密码长度
     qDebug() << "len = " << len;
     uint8_t *cmd_pack1 = new uint8_t[7];
@@ -130,7 +138,7 @@ int HID_Send_WindowsPassword(hid_device *usb_handle,QString password,uint8_t ind
     return OPERATE_SUCCESS;
 }
 
-int HID_Send_Password(hid_device *usb_handle,QString password,uint8_t index)
+int HID_Send_Password(hid_device *usb_handle,Finger_Type_e fingertype,QString password,uint8_t index)
 {
     if(usb_handle == NULL || index > FINGER_MAX_NUM)
     {
@@ -139,7 +147,15 @@ int HID_Send_Password(hid_device *usb_handle,QString password,uint8_t index)
     QByteArray ba_password = password.toLatin1();
     char *c_password = ba_password.data();
     uint8_t flag = USB_PROTOCOL_FORMAT_FUNC_STORE;
-    uint8_t type = TYPE_Password;
+    uint8_t type = 0;
+    if(fingertype == FINGER)
+    {
+        type = TYPE_Password;
+    }
+    else
+    {
+        type = TYPE_KEY_Password;
+    }
     uint8_t len = password.length();    //获取密码长度
     qDebug() << "len = " << len;
     uint8_t *cmd_pack1 = new uint8_t[7];
@@ -175,7 +191,7 @@ int HID_Send_Password(hid_device *usb_handle,QString password,uint8_t index)
     return OPERATE_SUCCESS;
 }
 
-int HID_Send_Account_Password(hid_device *usb_handle,QString account,QString password,uint8_t index)
+int HID_Send_Account_Password(hid_device *usb_handle,Finger_Type_e fingertype,QString account,QString password,uint8_t index)
 {
     if(usb_handle == NULL || index > FINGER_MAX_NUM || account.length() == 0 || password.length() == 0)
     {
@@ -184,7 +200,16 @@ int HID_Send_Account_Password(hid_device *usb_handle,QString account,QString pas
     char * char_account = account.toLatin1().data();
     char * char_password = password.toLatin1().data();
     uint8_t flag = USB_PROTOCOL_FORMAT_FUNC_STORE;
-    uint8_t type = TYPE_Account_Password;
+    uint8_t type = 0;
+    if(fingertype == FINGER)
+    {
+        type = TYPE_Account_Password;
+    }
+    else
+    {
+        type = TYPE_KEY_Account_Password;
+    }
+
     uint8_t account_len = account.length();
     uint8_t password_len = password.length();
     uint8_t *cmd_pack1 = new uint8_t[7];
@@ -224,14 +249,22 @@ int HID_Send_Account_Password(hid_device *usb_handle,QString account,QString pas
     return OPERATE_SUCCESS;
 }
 
-int HID_Send_Shortcut(hid_device *usb_handle,uint8_t func,char* key,uint8_t key_len,uint8_t index)
+int HID_Send_Shortcut(hid_device *usb_handle,Finger_Type_e fingertype,uint8_t func,char* key,uint8_t key_len,uint8_t index)
 {
     if(usb_handle == NULL || index > FINGER_MAX_NUM || key_len>6)
     {
         return OPERATE_ERROR_INVALID_PARAMETERS;
     }
     uint8_t flag = USB_PROTOCOL_FORMAT_FUNC_STORE;
-    uint8_t type = TYPE_Shortcut;
+    uint8_t type = 0;
+    if(fingertype == FINGER)
+    {
+        type = TYPE_Shortcut;
+    }
+    else
+    {
+        type = TYPE_KEY_Shortcut;
+    }
     uint8_t *cmd_pack1 = new uint8_t[7];
     cmd_pack1[0] = flag;
     cmd_pack1[1] = 0x00;
@@ -255,6 +288,36 @@ int HID_Send_Shortcut(hid_device *usb_handle,uint8_t func,char* key,uint8_t key_
     GenerateCmd(cmd_pack2,6+key_len);
     delete [] cmd_pack2;
     hid_write(usb_handle,hid_command,key_len+6+HID_FIXED_LEN);
+    return OPERATE_SUCCESS;
+}
+
+int HID_Send_QuickStart(hid_device *usb_handle,Finger_Type_e fingertype,QUICK_START_e startID,uint8_t index)
+{
+    if(usb_handle == NULL || index > QUICK_START_MAX)
+    {
+        return OPERATE_ERROR_INVALID_PARAMETERS;
+    }
+    uint8_t flag = USB_PROTOCOL_FORMAT_FUNC_STORE;
+    uint8_t type = 0;
+    if(fingertype == FINGER)
+    {
+        type = TYPE_QuickStart;
+    }
+    else
+    {
+        type = TYPE_KEY_QuickStart;
+    }
+    uint8_t *cmd_pack1 = new uint8_t[7];
+    cmd_pack1[0] = flag;
+    cmd_pack1[1] = 0x00;
+    cmd_pack1[2] = 0x00;
+    cmd_pack1[3] = type;
+    cmd_pack1[4] = index;
+    cmd_pack1[5] = startID;
+    cmd_pack1[6] = 00;
+    GenerateCmd(cmd_pack1,7);
+    delete [] cmd_pack1;
+    hid_write(usb_handle,hid_command,7+HID_FIXED_LEN);
     return OPERATE_SUCCESS;
 }
 

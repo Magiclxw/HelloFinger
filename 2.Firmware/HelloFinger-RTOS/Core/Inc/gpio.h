@@ -34,6 +34,17 @@ extern "C" {
 
 /* USER CODE BEGIN Private defines */
 
+//GPIOA
+#define MCU_GPIO_KEY0_PIN	GPIO_PIN_11
+#define MCU_GPIO_KEY1_PIN	GPIO_PIN_8
+//GPIOB
+#define MCU_GPIO_KEY2_PIN	GPIO_PIN_14
+#define MCU_GPIO_KEY3_PIN	GPIO_PIN_13
+
+//GPIOC
+
+
+
 /* USER CODE END Private defines */
 
 void MX_GPIO_Init(void);

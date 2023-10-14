@@ -31,10 +31,11 @@ Form_HideWindow::Form_HideWindow(QWidget *parent) :
 void Form_HideWindow::File_Update_Hidewindow_Content()
 {
     uint8_t item = 0;
-    uint8_t itemNum = 1;
+    uint8_t itemNum = 0;
+    itemNum = File_Fast_Start_Num_Get(7,item);
     while(1)
     {
-        itemNum = FIle_Fast_Start_Num_Get(7,item);
+
         if(item == itemNum)
         {
             break;

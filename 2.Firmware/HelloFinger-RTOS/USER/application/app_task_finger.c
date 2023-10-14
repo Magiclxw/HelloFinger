@@ -11,6 +11,7 @@ static void FingerResetData(void);	//复位接受结构体
 static int CMP_Checksum(uint8_t *data,uint8_t len);
 int Finger_RecData_Handle(uint8_t data);
 static void Finger_Func_Exec(void);
+static void Finger_Key_Function(uint16_t id,uint16_t score);
 
 TaskHandle_t Task_Finger_Handle = NULL;
 TaskHandle_t Task_Finger_Rec_Handle = NULL;
@@ -319,7 +320,15 @@ static void Finger_Func_Exec(void)
 						{
 							uint16_t id = g_data_format.data[2]<<8|g_data_format.data[3];
 							uint16_t score = g_data_format.data[4]<<8|g_data_format.data[5];
-							Finger_Function(id,score);
+							if(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_13) == GPIO_PIN_SET)
+							{
+								Finger_Function(id,score);	//指纹匹配
+							}
+							else
+							{
+								Finger_Key_Function(id,score);	//指纹匹配且按键按下
+							}
+							
 						}
 						Generate_Sleep();
 						HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_sleep,g_sleep.LEN[0]<<8|g_sleep.LEN[1]+FIXED_CMD_LEN,1000);
@@ -695,10 +704,228 @@ static void Finger_Function(uint16_t id,uint16_t score)
 			CH9329_Input_Shortcut(func_key,key,key_len-1);
 			break;
 		}
+		case TYPE_QuickStart:
+		{
+			uint8_t quick_start = 0;
+			Flash_read(&quick_start,FINGER_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE+FINGER_FUNC_LEN1_OFFSET,1);
+			switch(quick_start)
+			{
+				case QUICK_START_1:
+				{
+					Quick_Start('0');
+					break;
+				}
+				case QUICK_START_2:
+				{
+					Quick_Start('1');
+					break;
+				}
+				case QUICK_START_3:
+				{
+					Quick_Start('2');
+					break;
+				}
+				case QUICK_START_4:
+				{
+					Quick_Start('3');
+					break;
+				}
+				case QUICK_START_5:
+				{
+					Quick_Start('4');
+					break;
+				}
+				case QUICK_START_6:
+				{
+					Quick_Start('5');
+					break;
+				}
+				default : break;
+			}
+		}
 	}
 }
 
-
+static void Finger_Key_Function(uint16_t id,uint16_t score)
+{
+	uint8_t func_type = 0;
+	Flash_read(&func_type,FINGER_KEY_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE,1);
+	switch (func_type)
+	{
+		case TYPE_KEY_Windows_Password:
+		{
+			uint8_t len = 0;
+			uint32_t crc_value = 0;
+			uint32_t rec_crc = 0;
+			Flash_read(&len,FINGER_KEY_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE+FINGER_FUNC_LEN1_OFFSET,1);
+			if(len == 0) break;
+			uint8_t *password = (uint8_t*)pvPortMalloc(len+3);
+			Flash_read(password,FINGER_KEY_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE,len+3);
+			crc_value = Calc_CRC(password,len+3);
+			printf("crc_value = %d\r\n",crc_value);
+			vTaskDelay(10);
+			Flash_read((uint8_t *)&rec_crc,FINGER_KEY_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE+len+3,4);
+			printf("rec_crc = %d",rec_crc);
+			if(rec_crc == crc_value)		//crc校验通过
+			{
+				uint8_t led_status = 0;
+				CH9329_Get_Info();
+				xQueueReceive(Queue_Computer_Info_Handle,&led_status,200);
+				if(led_status & LED_STATE_CAPS_LOCK)
+				{
+					CH9329_Input_Fuc_Key(NO_CTRL,KEY_CapsLock);
+				}
+				CH9329_Input_Fuc_Key(NO_CTRL,KEY_LeftCtrl);
+				vTaskDelay(400);
+				CH9329_Input_Ascii((char*)&password[3],len);
+				CH9329_Input_Fuc_Key(NO_CTRL,KEY_LeftEnter);
+				if(led_status & LED_STATE_CAPS_LOCK)
+				{
+					CH9329_Input_Fuc_Key(NO_CTRL,KEY_CapsLock);
+				}
+			}
+			vPortFree(password);
+			break;
+		}
+		case TYPE_KEY_Password:			//密码
+		{
+			uint8_t len = 0;
+			uint32_t crc_value = 0;
+			uint32_t rec_crc = 0;
+			Flash_read(&len,FINGER_KEY_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE+FINGER_FUNC_LEN1_OFFSET,1);
+			if(len == 0) break;
+			uint8_t *password = (uint8_t*)pvPortMalloc(len+3);
+			Flash_read(password,FINGER_KEY_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE,len+3);
+			crc_value = Calc_CRC(password,len+3);
+			printf("crc_value = %d\r\n",crc_value);
+			vTaskDelay(10);
+			Flash_read((uint8_t *)&rec_crc,FINGER_KEY_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE+len+3,4);
+			printf("rec_crc = %d",rec_crc);
+			if(rec_crc == crc_value)		//crc校验通过
+			{
+				uint8_t led_status = 0;
+				CH9329_Get_Info();
+				xQueueReceive(Queue_Computer_Info_Handle,&led_status,200);
+				if(led_status & LED_STATE_CAPS_LOCK)
+				{
+					CH9329_Input_Fuc_Key(NO_CTRL,KEY_CapsLock);
+				}
+				CH9329_Input_Ascii((char*)&password[3],len);
+				CH9329_Input_Fuc_Key(NO_CTRL,KEY_LeftEnter);
+				if(led_status & LED_STATE_CAPS_LOCK)
+				{
+					CH9329_Input_Fuc_Key(NO_CTRL,KEY_CapsLock);
+				}
+			}
+			vPortFree(password);
+			break;
+			
+		}
+		case TYPE_KEY_Account_Password:		//账号+密码
+		{
+			uint8_t account_len = 0;
+			uint8_t password_len = 0;
+			uint32_t crc_value = 0;
+			uint32_t rec_crc = 0;
+			Flash_read(&account_len,FINGER_KEY_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE+FINGER_FUNC_LEN1_OFFSET,1);
+			if(account_len == 0) break;
+			printf("account len = %d\r\n",account_len);
+			Flash_read(&password_len,FINGER_KEY_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE+FINGER_FUNC_LEN1_OFFSET+2+account_len,1);
+			if(password_len == 0) break;
+			printf("password len = %d\r\n",password_len);
+			uint8_t *account_password = (uint8_t *)pvPortMalloc(account_len+password_len+3+1+1);
+			Flash_read(account_password,FINGER_KEY_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE,account_len+password_len+3+1+1);
+			crc_value = Calc_CRC(account_password,account_len+password_len+3+1+1);
+			printf("crc_value = %x\r\n",crc_value);
+			vTaskDelay(10);
+			Flash_read((uint8_t *)&rec_crc,FINGER_KEY_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE+account_len+password_len+3+1+1,4);
+			printf("rec_crc = %x",rec_crc);
+			if(rec_crc == crc_value)		//crc校验通过
+			{
+				uint8_t led_status = 0;
+				CH9329_Get_Info();
+				xQueueReceive(Queue_Computer_Info_Handle,&led_status,200);
+				if(led_status & LED_STATE_CAPS_LOCK)
+				{
+					CH9329_Input_Fuc_Key(NO_CTRL,KEY_CapsLock);
+				}
+				uint8_t *account = (uint8_t *)pvPortMalloc(account_len);
+				uint8_t *password = (uint8_t *)pvPortMalloc(password_len);
+				memcpy(account,(uint8_t*)&account_password[3],account_len);
+				memcpy(password,(uint8_t*)&account_password[2+account_len+2],password_len);
+				CH9329_Input_Ascii((char*)account,account_len);
+				vTaskDelay(10);
+				CH9329_Input_Fuc_Key(NO_CTRL,KEY_Tab);
+				vTaskDelay(10);
+				CH9329_Input_Ascii((char*)password,password_len);
+				vTaskDelay(50);
+				CH9329_Input_Fuc_Key(NO_CTRL,KEY_LeftEnter);
+				vTaskDelay(10);
+				if(led_status & LED_STATE_CAPS_LOCK)
+				{
+					CH9329_Input_Fuc_Key(NO_CTRL,KEY_CapsLock);
+				}
+				vPortFree(account);
+				vPortFree(password);
+				
+			}
+			vPortFree(account_password);
+			break;
+		}
+		case TYPE_KEY_Shortcut:		//快捷键
+		{
+			uint8_t func_key = 0;
+			char key[6] = {0};
+			uint8_t key_len = 0;	//功能键+按键总长度
+			Flash_read(&key_len,FINGER_KEY_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE+FINGER_FUNC_LEN1_OFFSET,1);
+			if(key_len == 0) break;
+			Flash_read(&func_key,FINGER_KEY_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE+FINGER_FUNC_LEN1_OFFSET+2,1);
+			Flash_read((uint8_t*)key,FINGER_KEY_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE+FINGER_FUNC_LEN1_OFFSET+3,key_len-1);
+			
+			CH9329_Input_Shortcut(func_key,key,key_len-1);
+			break;
+		}
+		case TYPE_KEY_QuickStart:
+		{
+			uint8_t quick_start = 0;
+			Flash_read(&quick_start,FINGER_KEY_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE+FINGER_FUNC_LEN1_OFFSET,1);
+			switch(quick_start)
+			{
+				case QUICK_START_1:
+				{
+					Quick_Start('1');
+					break;
+				}
+				case QUICK_START_2:
+				{
+					Quick_Start('2');
+					break;
+				}
+				case QUICK_START_3:
+				{
+					Quick_Start('3');
+					break;
+				}
+				case QUICK_START_4:
+				{
+					Quick_Start('4');
+					break;
+				}
+				case QUICK_START_5:
+				{
+					Quick_Start('5');
+					break;
+				}
+				case QUICK_START_6:
+				{
+					Quick_Start('6');
+					break;
+				}
+				default : break;
+			}
+		}
+	}
+}
 
 
 

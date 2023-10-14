@@ -188,9 +188,9 @@ QString File_FastStart_Read(uint8_t page,uint8_t index)
     return path;
 }
 
-uint8_t FIle_Fast_Start_Num_Get(uint8_t page,uint8_t index)
+uint8_t File_Fast_Start_Num_Get(uint8_t page,uint8_t index)
 {
-    uint8_t itemNum;
+    uint8_t itemNum = 0;
     QString path;
     QString filePath;
     QJsonObject obj;

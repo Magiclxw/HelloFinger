@@ -23,7 +23,7 @@
 #include <QDesktopServices>
 #include <QProcess>
 #include <QTextCodec>
-
+#include "hid_function.h"
 QColor itemValid(0,255,255);       //指纹有效颜色
 QColor itemUnValid(255,255,255);   //指纹无效颜色
 QColor itemkeyValid(0,255,0);       //指纹+按键有效颜色
@@ -36,7 +36,12 @@ QAction *Action_unlock;                 //解锁功能
 QAction *Action_shortcut;               //快捷键
 QAction *Action_enterAccount_Password;  //输入账号
 QAction *Action_enterPassword;          //输入密码
-QAction *Action_openApp;                //快捷启动
+QAction *Action_setQuickStart1;                //快捷启动
+QAction *Action_setQuickStart2;                //快捷启动
+QAction *Action_setQuickStart3;                //快捷启动
+QAction *Action_setQuickStart4;                //快捷启动
+QAction *Action_setQuickStart5;                //快捷启动
+QAction *Action_setQuickStart6;                //快捷启动
 QAction *Action_listWidget_Delete_Item;
 
 /* RGB三色控制 */
@@ -61,7 +66,10 @@ Form_MainWindow::Form_MainWindow(QWidget *parent)
     , ui(new Ui::Form_MainWindow)
 {
     ui->setupUi(this);
+    /* 隐藏保存参数按键 */
     ui->pushButton_save_param->hide();
+    ui->pushButton_save_param_key->hide();
+
     this->setWindowTitle("HelloFinger");
     this->setFixedSize(this->width(),this->height());
 
@@ -93,6 +101,12 @@ Form_MainWindow::Form_MainWindow(QWidget *parent)
     Action_shortcut = Menu->addAction("快捷键");
     Action_enterPassword = Menu->addAction("输入密码");
     Action_enterAccount_Password = Menu->addAction("输入账号/密码");
+    Action_setQuickStart1 = Menu->addAction("快捷启动流程1");
+    Action_setQuickStart2 = Menu->addAction("快捷启动流程2");
+    Action_setQuickStart3 = Menu->addAction("快捷启动流程3");
+    Action_setQuickStart4 = Menu->addAction("快捷启动流程4");
+    Action_setQuickStart5 = Menu->addAction("快捷启动流程5");
+    Action_setQuickStart6 = Menu->addAction("快捷启动流程6");
     Action_listWidget_Delete_Item = ListWidgetMenu->addAction("删除");
     /* 注册按键监听事件 */
     GlobalKeyEvent::installKeyEvent();
@@ -102,6 +116,7 @@ Form_MainWindow::Form_MainWindow(QWidget *parent)
 
 
     ui->listWidget_table_state->setContextMenuPolicy(Qt::CustomContextMenu);
+    ui->listWidget_table_state_key->setContextMenuPolicy(Qt::CustomContextMenu);
     ui->listWidget_task_1->setContextMenuPolicy(Qt::CustomContextMenu);
     ui->listWidget_task_2->setContextMenuPolicy(Qt::CustomContextMenu);
     ui->listWidget_task_3->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -113,26 +128,35 @@ Form_MainWindow::Form_MainWindow(QWidget *parent)
     connect(Action_Add,SIGNAL(triggered()),this,SLOT(Slot_AddFinger()));    //连接添加指纹槽函数
     connect(Action_Delete,SIGNAL(triggered()),this,SLOT(Slot_DeleteFinger()));   //连接删除指纹槽函数
     connect(Action_Refresh,SIGNAL(triggered()),this,SLOT(Slot_RefreshFinger()));    //连接刷新指纹列表槽函数
-    connect(Action_unlock,&QAction::triggered,this,[=](){ui->stackedWidget->setCurrentWidget(ui->page_windows_password);}); //修改当前显示界面
-    connect(Action_shortcut,&QAction::triggered,this,[=](){ui->stackedWidget->setCurrentWidget(ui->page_shortcut);});
-    connect(ui->pushButton_save_windows_password,&QPushButton::clicked,this,&Form_MainWindow::Slot_SetWindowsPassword);     //连接windows解锁功能槽函数
-    connect(Action_enterAccount_Password,&QAction::triggered,this,[=](){ui->stackedWidget->setCurrentWidget(ui->page_account_password);});    //修改当前显示界面
-    connect(ui->pushButton_save_account_password,&QPushButton::clicked,this,&Form_MainWindow::Slot_SetAccount_Password);    //连接输入账号密码槽函数
-    connect(Action_enterPassword,&QAction::triggered,this,[=](){ui->stackedWidget->setCurrentWidget(ui->page_account_password);});    //连接输入密码槽函数
+    connect(Action_unlock,&QAction::triggered,this,[=](){ui->stackedWidget->setCurrentWidget(ui->page_windows_password);ui->stackedWidget_key->setCurrentWidget(ui->page_windows_password_key);}); //修改当前显示界面
+    connect(Action_shortcut,&QAction::triggered,this,[=](){ui->stackedWidget->setCurrentWidget(ui->page_shortcut);ui->stackedWidget_key->setCurrentWidget(ui->page_shortcut_key);});
+    connect(Action_enterAccount_Password,&QAction::triggered,this,[=](){ui->stackedWidget->setCurrentWidget(ui->page_account_password);ui->stackedWidget_key->setCurrentWidget(ui->page_account_password_key);});    //修改当前显示界面
+    connect(Action_enterPassword,&QAction::triggered,this,[=](){ui->stackedWidget->setCurrentWidget(ui->page_password);ui->stackedWidget_key->setCurrentWidget(ui->page_password_key);});    //连接输入密码槽函数
     connect(Action_listWidget_Delete_Item,&QAction::triggered,this,&Form_MainWindow::Slot_DeleteQuickStartItem);
-    connect(ui->pushButton_password,&QPushButton::clicked,this,&Form_MainWindow::Slot_SetPassword);
-    //connect(Action_openApp,SIGNAL(triggered()),this,SLOT());
-    //connect(Action_shortcut,SIGNAL(triggered()),this,SLOT());
+    connect(Action_setQuickStart1,&QAction::triggered,this,[=](){Slot_SetQuickStart(QUICK_START_1);});
+    connect(Action_setQuickStart2,&QAction::triggered,this,[=](){Slot_SetQuickStart(QUICK_START_2);});
+    connect(Action_setQuickStart3,&QAction::triggered,this,[=](){Slot_SetQuickStart(QUICK_START_3);});
+    connect(Action_setQuickStart4,&QAction::triggered,this,[=](){Slot_SetQuickStart(QUICK_START_4);});
+    connect(Action_setQuickStart5,&QAction::triggered,this,[=](){Slot_SetQuickStart(QUICK_START_5);});
+    connect(Action_setQuickStart6,&QAction::triggered,this,[=](){Slot_SetQuickStart(QUICK_START_6);});
     connect(ui->slider_R,&QSlider::valueChanged,this,&Form_MainWindow::Slot_SetBreathRGB);   //拖动滑动条后更新显示状态
     connect(ui->slider_G,&QSlider::valueChanged,this,&Form_MainWindow::Slot_SetBreathRGB);
     connect(ui->slider_B,&QSlider::valueChanged,this,&Form_MainWindow::Slot_SetBreathRGB);
     connect(ui->slider_interval,&QSlider::valueChanged,this,&Form_MainWindow::Slot_SetBreathRGB);
     connect(rgb_timer,&QTimer::timeout,this,&Form_MainWindow::Slot_RGB_Display);    //启动呼吸灯动画
     connect(ui->tabWidget,&QTabWidget::tabBarClicked,this,&Form_MainWindow::Slot_SetBreathRGB); //切换tabbar状态后启动呼吸灯动画
-    connect(ui->pushButton_save_rgb,&QPushButton::clicked,this,[=](){emit Signal_SetBreathRGB((uint8_t)tmp_R,(uint8_t)tmp_G,(uint8_t)tmp_B,interval);});
     connect(ui->listWidget_table_state,&QListWidget::itemDoubleClicked,this,&Form_MainWindow::Slot_ChangeItemValue);
+    connect(ui->pushButton_save_windows_password,&QPushButton::clicked,this,&Form_MainWindow::Slot_SetWindowsPassword);     //连接windows解锁功能槽函数
+    connect(ui->pushButton_save_account_password,&QPushButton::clicked,this,&Form_MainWindow::Slot_SetAccount_Password);    //连接输入账号密码槽函数
+    connect(ui->pushButton_password,&QPushButton::clicked,this,&Form_MainWindow::Slot_SetPassword);
     connect(ui->pushButton_save_param,&QPushButton::clicked,this,&Form_MainWindow::Slot_SaveItemValue);
     connect(ui->pushButton_save_shortcut,&QPushButton::clicked,this,&Form_MainWindow::Slot_SetShortcut);  //保存快捷键功能
+    connect(ui->pushButton_save_windows_password_key,&QPushButton::clicked,this,&Form_MainWindow::Slot_SetWindowsPassword);     //连接windows解锁功能槽函数
+    connect(ui->pushButton_save_account_password_key,&QPushButton::clicked,this,&Form_MainWindow::Slot_SetAccount_Password);    //连接输入账号密码槽函数
+    connect(ui->pushButton_password_key,&QPushButton::clicked,this,&Form_MainWindow::Slot_SetPassword);
+    connect(ui->pushButton_save_param_key,&QPushButton::clicked,this,&Form_MainWindow::Slot_SaveItemValue);
+    connect(ui->pushButton_save_shortcut_key,&QPushButton::clicked,this,&Form_MainWindow::Slot_SetShortcut);  //保存快捷键功能
+    connect(ui->pushButton_save_rgb,&QPushButton::clicked,this,[=](){emit Signal_SetBreathRGB((uint8_t)tmp_R,(uint8_t)tmp_G,(uint8_t)tmp_B,interval);});
 
 }
 
@@ -213,20 +237,7 @@ void Form_MainWindow::Slot_RefreshFinger()
     emit Signal_RefreshFinger();
 }
 
-void Form_MainWindow::Slot_SetAccount_Password()
-{
-    QString account = this->ui->lineEdit_ap_account->text();
-    QString password = this->ui->lineEdit_ap_password->text();
-    if(account.length() == 0 || password.length() == 0)
-    {
-        return;
-    }
-    else
-    {
-        emit Signal_SetAccount_Password(account,password,this->ui->listWidget_table_state->currentIndex().row());
-    }
 
-}
 
 void Form_MainWindow::Slot_SetBreathRGB()
 {
@@ -293,29 +304,95 @@ void Form_MainWindow::Slot_RGB_Display()
 
 void Form_MainWindow::Slot_SetPassword()
 {
-    QString password = ui->lineEdit_password->text();
-    if(password.length() == 0)
+    uint8_t finger_type = ui->tabWidget_finger_func->currentIndex();
     {
-        return;
-    }
-    else
-    {
-        emit Signal_SetPassword(password,this->ui->listWidget_table_state->currentIndex().row());
+        if(finger_type == FINGER)
+        {
+            QString password = ui->lineEdit_password->text();
+            if(password.length() == 0)
+            {
+                return;
+            }
+            emit Signal_SetPassword(password,finger_type,this->ui->listWidget_table_state->currentIndex().row());
+        }
+        else
+        {
+            QString password = ui->lineEdit_password_key->text();
+            if(password.length() == 0)
+            {
+                return;
+            }
+            emit Signal_SetPassword(password,finger_type,this->ui->listWidget_table_state_key->currentIndex().row());
+        }
+
     }
 }
 
 void Form_MainWindow::Slot_SetWindowsPassword()
 {
-    QString password = ui->lineEdit_windows_password->text();
-    if(password.length() == 0)
+    uint8_t finger_type = ui->tabWidget_finger_func->currentIndex();
+    if(finger_type == FINGER)
     {
-        return;
+        QString password = ui->lineEdit_windows_password->text();
+        if(password.length() == 0)
+        {
+            return;
+        }
+        emit Signal_SetWindowsPassword(password,finger_type,this->ui->listWidget_table_state->currentIndex().row());
     }
     else
     {
-        emit Signal_SetWindowsPassword(password,this->ui->listWidget_table_state->currentIndex().row());
+        QString password = ui->lineEdit_windows_password_key->text();
+        if(password.length() == 0)
+        {
+            return;
+        }
+        emit Signal_SetWindowsPassword(password,finger_type,this->ui->listWidget_table_state_key->currentIndex().row());
     }
 
+}
+
+void Form_MainWindow::Slot_SetAccount_Password()
+{
+    uint8_t finger_type = ui->tabWidget_finger_func->currentIndex();
+
+
+    if(finger_type == FINGER)
+    {
+        QString account = this->ui->lineEdit_ap_account->text();
+        QString password = this->ui->lineEdit_ap_password->text();
+        if(account.length() == 0 || password.length() == 0)
+        {
+            return;
+        }
+        emit Signal_SetAccount_Password(account,password,finger_type,this->ui->listWidget_table_state->currentIndex().row());
+    }
+    else
+    {
+        QString account = this->ui->lineEdit_ap_account_key->text();
+        QString password = this->ui->lineEdit_ap_password_key->text();
+        if(account.length() == 0 || password.length() == 0)
+        {
+            return;
+        }
+        emit Signal_SetAccount_Password(account,password,finger_type,this->ui->listWidget_table_state_key->currentIndex().row());
+    }
+
+}
+
+void Form_MainWindow::Slot_SetQuickStart(QUICK_START_e startID)
+{
+    uint8_t finger_type = ui->tabWidget_finger_func->currentIndex();
+    qDebug() << "quick start id = " << startID;
+    if(finger_type == FINGER)
+    {
+
+        emit Signal_SetQuickStart(finger_type,startID,this->ui->listWidget_table_state->currentIndex().row());
+    }
+    if(finger_type == FINGER_KEY)
+    {
+        emit Signal_SetQuickStart(finger_type,startID,this->ui->listWidget_table_state->currentIndex().row());
+    }
 }
 
 void Form_MainWindow::Slot_ChangeItemValue()
@@ -401,7 +478,7 @@ void Form_MainWindow::on_keyEvent(QKeyEvent* event)  //全局按键事件
     {
         str += QString("\t字符：[%1]").arg(event->text());
     }
-    //qDebug() << "字符" << str;
+    qDebug() << "字符" << str;
 //    QString key_type = type.valueToKey(event->type());
 //    QString key_value = key.valueToKey(event->key());
 //    QString key_modify = keyboard.valueToKeys(int(event->modifiers()));
@@ -588,6 +665,7 @@ void Form_MainWindow::File_Update_TableContent(QString path)
     }
 }
 
+//更新快捷启动列表
 void Form_MainWindow::File_Update_QuickStart_Content()
 {
 
@@ -628,7 +706,7 @@ void Form_MainWindow::File_Update_QuickStart_Content()
             break;
         }
         }
-        itemNum = FIle_Fast_Start_Num_Get(i,item);
+        itemNum = File_Fast_Start_Num_Get(i,item);
         while(1)
         {
 
@@ -700,66 +778,132 @@ void Form_MainWindow::File_Save_Shortcut()
 
 void Form_MainWindow::Slot_SetShortcut()
 {
-    QString sfunc_key = ui->comboBox_func_key->currentText();
-    uint8_t func_key = 0;
-    uint8_t key[6] = {0};
-    uint8_t key_len = 0;
-    uint8_t index = 0;
+    uint8_t fingertype = ui->tabWidget_finger_func->currentIndex();
 
-    if(sfunc_key.contains("Ctrl"))
+    if(fingertype == FINGER)
     {
-        func_key |= Qt::ControlModifier >> 26;
-        qDebug() << "conatins ctrl";
-    }
-    if(sfunc_key.contains("Shift"))
-    {
-        func_key |= Qt::ShiftModifier >> 24;
-        qDebug() << "conatins shift";
-    }
-    if(sfunc_key.contains("Win"))
-    {
-        func_key |= Qt::MetaModifier >> 25;
-        qDebug() << "conatins win";
-    }
-    if(sfunc_key.contains("Alt"))
-    {
-        func_key |= Qt::AltModifier >> 25;
-        qDebug() << "conatins alt";
-    }
-    if(ui->comboBox_key_1->currentText()!="空")
-    {
-        key_len ++;
-        key[0] = ui->comboBox_key_1->currentText().toLatin1().at(0);
-    }
-    if(ui->comboBox_key_2->currentText()!="空")
-    {
-        key_len ++;
-        key[1] = ui->comboBox_key_2->currentText().toLatin1().at(0);
-    }
-    if(ui->comboBox_key_3->currentText()!="空")
-    {
-        key_len ++;
-        key[2] = ui->comboBox_key_3->currentText().toLatin1().at(0);
-    }
-    if(ui->comboBox_key_4->currentText()!="空")
-    {
-        key_len ++;
-        key[3] = ui->comboBox_key_4->currentText().toLatin1().at(0);
-    }
-    if(ui->comboBox_key_5->currentText()!="空")
-    {
-        key_len ++;
-        key[4] = ui->comboBox_key_5->currentText().toLatin1().at(0);
-    }
-    if(ui->comboBox_key_6->currentText()!="空")
-    {
-        key_len ++;
-        key[5] = ui->comboBox_key_6->currentText().toLatin1().at(0);
-    }
+        QString sfunc_key = ui->comboBox_func_key->currentText();
+        uint8_t func_key = 0;
+        uint8_t key[6] = {0};
+        uint8_t key_len = 0;
+        uint8_t index = 0;
 
-    index = ui->listWidget_table_state->currentIndex().row();
-    emit Signal_SetShortcut(func_key,(char*)key,key_len,index);
-    qDebug() << "key = " << key[0];
+        if(sfunc_key.contains("Ctrl"))
+        {
+            func_key |= Qt::ControlModifier >> 26;
+            qDebug() << "conatins ctrl";
+        }
+        if(sfunc_key.contains("Shift"))
+        {
+            func_key |= Qt::ShiftModifier >> 24;
+            qDebug() << "conatins shift";
+        }
+        if(sfunc_key.contains("Win"))
+        {
+            func_key |= Qt::MetaModifier >> 25;
+            qDebug() << "conatins win";
+        }
+        if(sfunc_key.contains("Alt"))
+        {
+            func_key |= Qt::AltModifier >> 25;
+            qDebug() << "conatins alt";
+        }
+        if(ui->comboBox_key_1->currentText()!="空")
+        {
+            key_len ++;
+            key[0] = ui->comboBox_key_1->currentText().toLatin1().at(0);
+        }
+        if(ui->comboBox_key_2->currentText()!="空")
+        {
+            key_len ++;
+            key[1] = ui->comboBox_key_2->currentText().toLatin1().at(0);
+        }
+        if(ui->comboBox_key_3->currentText()!="空")
+        {
+            key_len ++;
+            key[2] = ui->comboBox_key_3->currentText().toLatin1().at(0);
+        }
+        if(ui->comboBox_key_4->currentText()!="空")
+        {
+            key_len ++;
+            key[3] = ui->comboBox_key_4->currentText().toLatin1().at(0);
+        }
+        if(ui->comboBox_key_5->currentText()!="空")
+        {
+            key_len ++;
+            key[4] = ui->comboBox_key_5->currentText().toLatin1().at(0);
+        }
+        if(ui->comboBox_key_6->currentText()!="空")
+        {
+            key_len ++;
+            key[5] = ui->comboBox_key_6->currentText().toLatin1().at(0);
+        }
+
+        index = ui->listWidget_table_state->currentIndex().row();
+        emit Signal_SetShortcut(fingertype,func_key,(char*)key,key_len,index);
+    }
+    if(fingertype == FINGER_KEY)
+    {
+        QString sfunc_key = ui->comboBox_func_key_key->currentText();
+        uint8_t func_key = 0;
+        uint8_t key[6] = {0};
+        uint8_t key_len = 0;
+        uint8_t index = 0;
+
+        if(sfunc_key.contains("Ctrl"))
+        {
+            func_key |= Qt::ControlModifier >> 26;
+            qDebug() << "conatins ctrl";
+        }
+        if(sfunc_key.contains("Shift"))
+        {
+            func_key |= Qt::ShiftModifier >> 24;
+            qDebug() << "conatins shift";
+        }
+        if(sfunc_key.contains("Win"))
+        {
+            func_key |= Qt::MetaModifier >> 25;
+            qDebug() << "conatins win";
+        }
+        if(sfunc_key.contains("Alt"))
+        {
+            func_key |= Qt::AltModifier >> 25;
+            qDebug() << "conatins alt";
+        }
+        if(ui->comboBox_key_with_key_1->currentText()!="空")
+        {
+            key_len ++;
+            key[0] = ui->comboBox_key_with_key_1->currentText().toLatin1().at(0);
+        }
+        if(ui->comboBox_key_with_key_2->currentText()!="空")
+        {
+            key_len ++;
+            key[1] = ui->comboBox_key_with_key_2->currentText().toLatin1().at(0);
+        }
+        if(ui->comboBox_key_with_key_3->currentText()!="空")
+        {
+            key_len ++;
+            key[2] = ui->comboBox_key_with_key_3->currentText().toLatin1().at(0);
+        }
+        if(ui->comboBox_key_with_key_4->currentText()!="空")
+        {
+            key_len ++;
+            key[3] = ui->comboBox_key_with_key_4->currentText().toLatin1().at(0);
+        }
+        if(ui->comboBox_key_with_key_5->currentText()!="空")
+        {
+            key_len ++;
+            key[4] = ui->comboBox_key_with_key_5->currentText().toLatin1().at(0);
+        }
+        if(ui->comboBox_key_with_key_6->currentText()!="空")
+        {
+            key_len ++;
+            key[5] = ui->comboBox_key_with_key_6->currentText().toLatin1().at(0);
+        }
+
+        index = ui->listWidget_table_state_key->currentIndex().row();
+        emit Signal_SetShortcut(fingertype,func_key,(char*)key,key_len,index);
+    }
 
 }
 
@@ -858,6 +1002,12 @@ void Form_MainWindow::on_listWidget_table_state_customContextMenuRequested(const
     functionMenu->addAction(Action_shortcut);
     functionMenu->addAction(Action_enterAccount_Password);
     functionMenu->addAction(Action_enterPassword);
+    functionMenu->addAction(Action_setQuickStart1);
+    functionMenu->addAction(Action_setQuickStart2);
+    functionMenu->addAction(Action_setQuickStart3);
+    functionMenu->addAction(Action_setQuickStart4);
+    functionMenu->addAction(Action_setQuickStart5);
+    functionMenu->addAction(Action_setQuickStart6);
     ptr->addMenu(functionMenu);
     // 在鼠标光标位置显示右键快捷菜单
     ptr->exec(QCursor::pos());
@@ -924,6 +1074,35 @@ void Form_MainWindow::on_listWidget_task_6_customContextMenuRequested(const QPoi
     QMenu *ptr = new QMenu(this);
     ptr->addAction(Action_listWidget_Delete_Item);
     ptr->exec(QCursor::pos());
+    delete ptr;
+}
+
+
+void Form_MainWindow::on_listWidget_table_state_key_customContextMenuRequested(const QPoint &pos)
+{
+    Q_UNUSED(pos);
+
+    // 新建Menu菜单
+    QMenu *ptr = new QMenu(this);
+    QMenu *functionMenu = new QMenu("功能");
+    //ptr->setFixedWidth(100);
+
+    // 添加Actions创建菜单项
+    functionMenu->addAction(Action_unlock);
+    functionMenu->addAction(Action_shortcut);
+    functionMenu->addAction(Action_enterAccount_Password);
+    functionMenu->addAction(Action_enterPassword);
+    functionMenu->addAction(Action_setQuickStart1);
+    functionMenu->addAction(Action_setQuickStart2);
+    functionMenu->addAction(Action_setQuickStart3);
+    functionMenu->addAction(Action_setQuickStart4);
+    functionMenu->addAction(Action_setQuickStart5);
+    functionMenu->addAction(Action_setQuickStart6);
+
+    ptr->addMenu(functionMenu);
+    // 在鼠标光标位置显示右键快捷菜单
+    ptr->exec(QCursor::pos());
+    // 手工创建的指针必须手工删除
     delete ptr;
 }
 

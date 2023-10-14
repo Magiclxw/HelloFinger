@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "msg_handler.h"
+#include "hid_function.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Form_MainWindow; }
@@ -46,6 +47,7 @@ public slots:
     void Slot_SetWindowsPassword(void);
     void Slot_SetPassword(void);
     void Slot_SetAccount_Password(void);
+    void Slot_SetQuickStart(QUICK_START_e startID);
     void Slot_SetBreathRGB(void);
     void Slot_RGB_Display(void);
     void Slot_ChangeItemValue(void);
@@ -58,11 +60,12 @@ signals:
     void Signal_DeleteFinger(uint8_t id);
     void Signal_RefreshFinger(void);
     void Signal_UpdateIndexTable(void);
-    void Signal_SetWindowsPassword(QString password,uint8_t index);
-    void Signal_SetPassword(QString password,uint8_t index);
-    void Signal_SetAccount_Password(QString account,QString password,uint8_t index);
+    void Signal_SetWindowsPassword(QString password,uint8_t fingertype,uint8_t index);
+    void Signal_SetPassword(QString password,uint8_t fingertype,uint8_t index);
+    void Signal_SetAccount_Password(QString account,QString password,uint8_t fingertype,uint8_t index);
+    void Signal_SetQuickStart(uint8_t fingertype,QUICK_START_e startID,uint8_t index);
     void Signal_SetBreathRGB(uint8_t color_R,uint8_t color_G,uint8_t color_B,uint8_t interval);
-    void Signal_SetShortcut(uint8_t func,char* key,uint8_t key_len,uint8_t index);
+    void Signal_SetShortcut(uint8_t fingertype,uint8_t func,char* key,uint8_t key_len,uint8_t index);
 private slots:
     void on_listWidget_task_1_customContextMenuRequested(const QPoint &pos);
     void on_listWidget_table_state_customContextMenuRequested(const QPoint &pos);
@@ -70,6 +73,7 @@ private slots:
     void on_listWidget_task_3_customContextMenuRequested(const QPoint &pos);
     void on_listWidget_task_4_customContextMenuRequested(const QPoint &pos);
     void on_listWidget_task_5_customContextMenuRequested(const QPoint &pos);
+    void on_listWidget_table_state_key_customContextMenuRequested(const QPoint &pos);
     void on_listWidget_task_6_customContextMenuRequested(const QPoint &pos);
 };
 #endif // FORM_MAINWINDOW_H

@@ -41,11 +41,30 @@
 */
 void MX_GPIO_Init(void)
 {
-
+	GPIO_InitTypeDef gpio;
   /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
-
+	__HAL_RCC_GPIOB_CLK_ENABLE();
+	__HAL_RCC_GPIOC_CLK_ENABLE();
+	__HAL_RCC_GPIOD_CLK_ENABLE();
+	
+	gpio.Pin = MCU_GPIO_KEY0_PIN;//|MCU_GPIO_KEY1_PIN;
+	gpio.Mode = GPIO_MODE_INPUT;
+	gpio.Pull = GPIO_PULLUP;
+	gpio.Speed = GPIO_SPEED_FREQ_MEDIUM;
+	HAL_GPIO_Init(GPIOA,&gpio);
+	
+	gpio.Pin = MCU_GPIO_KEY2_PIN|MCU_GPIO_KEY3_PIN;
+	gpio.Mode = GPIO_MODE_INPUT;
+	gpio.Pull = GPIO_PULLUP;
+	gpio.Speed = GPIO_SPEED_FREQ_MEDIUM;
+	HAL_GPIO_Init(GPIOB,&gpio);
+	
+	HAL_NVIC_SetPriority(EXTI9_5_IRQn,11,0);
+	HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+	
+	HAL_NVIC_SetPriority(EXTI15_10_IRQn,9,0);
+	HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 }
 
 /* USER CODE BEGIN 2 */

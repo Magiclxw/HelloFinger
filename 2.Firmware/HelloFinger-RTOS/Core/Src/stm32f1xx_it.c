@@ -24,6 +24,9 @@
 /* USER CODE BEGIN Includes */
 #include "usart.h"
 #include "dma.h"
+#include "drv_encoder.h"
+#include "drv_ch9329.h"
+#include "drv_fpm383.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -32,6 +35,9 @@ extern DMA_HandleTypeDef hdma_spi1_tx;
 extern DMA_HandleTypeDef hdma_spi1_rx;
 extern DMA_HandleTypeDef hdma_spi2_tx;;
 extern TIM_HandleTypeDef rgb_timer_handler;
+
+extern __IO uint8_t signal_a;
+extern __IO uint8_t signal_b;
 /* USER CODE END TD */
 
 /* Private define ------------------------------------------------------------*/
@@ -238,6 +244,11 @@ void EXTI1_IRQHandler(void)	//±àÂëÆ÷°´¼üÖÐ¶Ï
 	HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_1);
 }
 
+void EXTI3_IRQHandler(void)
+{
+	HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_3);
+}
+
 void EXTI4_IRQHandler(void)
 {
 	HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_4);
@@ -305,5 +316,71 @@ void DMA1_Channel5_IRQHandler(void)
 void TIM2_IRQHandler(void)
 {
 	HAL_TIM_IRQHandler(&rgb_timer_handler);
+}
+
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+	switch (GPIO_Pin){
+		case GPIO_PIN_8:
+		{
+			if(Signal_A_Read == GPIO_PIN_SET && Signal_B_Read == GPIO_PIN_RESET && signal_a == 0){
+				signal_a = 1;
+			}else if(Signal_A_Read == GPIO_PIN_RESET && Signal_B_Read == GPIO_PIN_SET && signal_a == 1){
+				REL_Mouse_Ctrl(0x01,0,0,button_NULL);
+				signal_a = 0;
+			}else{
+				signal_a = 0;
+			}
+			break;
+		}
+			
+		case GPIO_PIN_9:
+		{
+			if(Signal_B_Read == GPIO_PIN_SET && Signal_A_Read == GPIO_PIN_RESET && signal_b == 0){
+				signal_b = 1;
+			}else if(Signal_B_Read == GPIO_PIN_RESET && Signal_A_Read == GPIO_PIN_SET && signal_b == 1){
+				REL_Mouse_Ctrl(0xFF,0,0,button_NULL);
+				signal_b = 0;
+			}else{
+				signal_b = 0;
+			}
+			break;
+		}
+		
+		case GPIO_PIN_1:	//±àÂëÆ÷°´¼ü°´ÏÂ
+		{
+			//REL_Mouse_Ctrl(0,0,0,button_RIGHT);
+			//Delay_ms(20);
+			//REL_Mouse_Ctrl(0,0,0,button_NULL);
+			//Con_Sleep();
+			break;
+		}
+		
+		case GPIO_PIN_3:
+		{
+			REL_Mouse_Ctrl(0,0,0,button_RIGHT);
+			delay_ms(20);
+			REL_Mouse_Ctrl(0,0,0,button_NULL);
+			break;
+		}
+		
+		case GPIO_PIN_4:
+		{
+			//g_finger_rec_flag = 1;
+			Generate_AutoIdentify(0x03,0xFFFF,0x0007);
+			HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_autoidentify,g_autoidentify.LEN[0]<<8|g_autoidentify.LEN[1]+9,1000);
+			portBASE_TYPE xHigherPriorityTaskWoken = pdTRUE;
+			if(FingerEvent_Handle != NULL)
+			{
+				
+				xEventGroupSetBitsFromISR((EventGroupHandle_t)FingerEvent_Handle,(EventBits_t)EVENT_TOUCH_DETECT,&xHigherPriorityTaskWoken);
+				portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+			}
+			
+		}
+		
+		break;
+	}
 }
 /* USER CODE END 1 */

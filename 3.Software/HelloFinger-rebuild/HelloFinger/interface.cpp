@@ -41,22 +41,25 @@ Interface::Interface(QObject *parent) : QThread(parent)
         HID_Send_Breath_RGB(usb_handle,color_R,color_G,color_B,interval);
     });
     /* 设置开机密码 */
-    connect(mainwindow,&Form_MainWindow::Signal_SetWindowsPassword,this,[=](QString password,uint8_t id){
-        HID_Send_WindowsPassword(usb_handle,password,id);
+    connect(mainwindow,&Form_MainWindow::Signal_SetWindowsPassword,this,[=](QString password,uint8_t fingertype,uint8_t id){
+        HID_Send_WindowsPassword(usb_handle,(Finger_Type_e)fingertype,password,id);
     });
     /* 设置密码 */
-    connect(mainwindow,&Form_MainWindow::Signal_SetPassword,this,[=](QString password,uint8_t id){
-        HID_Send_Password(usb_handle,password,id);
+    connect(mainwindow,&Form_MainWindow::Signal_SetPassword,this,[=](QString password,uint8_t fingertype,uint8_t id){
+        HID_Send_Password(usb_handle,(Finger_Type_e)fingertype,password,id);
     });
     /* 设置账号+密码 */
-    connect(mainwindow,&Form_MainWindow::Signal_SetAccount_Password,this,[=](QString account,QString password,uint8_t id){
-        HID_Send_Account_Password(usb_handle,account,password,id);
+    connect(mainwindow,&Form_MainWindow::Signal_SetAccount_Password,this,[=](QString account,QString password,uint8_t fingertype,uint8_t id){
+        HID_Send_Account_Password(usb_handle,(Finger_Type_e)fingertype,account,password,id);
+    });
+    connect(mainwindow,&Form_MainWindow::Signal_SetQuickStart,this,[=](uint8_t fingertype,QUICK_START_e startID,uint8_t index){
+        HID_Send_QuickStart(usb_handle,(Finger_Type_e)fingertype,startID,index);
     });
     /* 更新指纹注册状态 */
     connect(msgHandler,&Msg_Handler::Signal_Update_EnrollState,mainwindow,&Form_MainWindow::Slot_EnrollState);
 
-    connect(mainwindow,&Form_MainWindow::Signal_SetShortcut,this,[=](uint8_t func,char* key,uint8_t key_len,uint8_t index){
-        HID_Send_Shortcut(usb_handle,func,key,key_len,index);
+    connect(mainwindow,&Form_MainWindow::Signal_SetShortcut,this,[=](uint8_t fingertype,uint8_t func,char* key,uint8_t key_len,uint8_t index){
+        HID_Send_Shortcut(usb_handle,(Finger_Type_e)fingertype,func,key,key_len,index);
     });
 
 }
@@ -84,6 +87,7 @@ void Interface::run()
                            usb_handle = hid_open_path(usb_info->path);
                            //HID_Send_Breath_RGB(usb_handle,0xFF,0xFF,0xFF,30);
                            //HID_Get_FW_HW_Msg(usb_handle);
+                           msleep(1000);
                            HID_Get_TableState(usb_handle);
                            break;
                        }

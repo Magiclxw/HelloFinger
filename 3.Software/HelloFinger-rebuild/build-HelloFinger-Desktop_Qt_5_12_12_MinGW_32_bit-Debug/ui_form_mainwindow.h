@@ -38,7 +38,7 @@ public:
     QTabWidget *tabWidget;
     QWidget *tab_Table;
     QVBoxLayout *verticalLayout;
-    QTabWidget *tabWidget_2;
+    QTabWidget *tabWidget_finger_func;
     QWidget *tab_finger;
     QVBoxLayout *verticalLayout_9;
     QPushButton *pushButton_save_param;
@@ -138,16 +138,16 @@ public:
     QComboBox *comboBox_func_key_key;
     QWidget *widget_18;
     QHBoxLayout *horizontalLayout_25;
-    QComboBox *comboBox_key_with_key;
     QComboBox *comboBox_key_with_key_1;
+    QComboBox *comboBox_key_with_key_2;
     QWidget *widget_19;
     QHBoxLayout *horizontalLayout_26;
     QComboBox *comboBox_key_with_key_3;
-    QComboBox *comboBox_key_with_key_2;
+    QComboBox *comboBox_key_with_key_4;
     QWidget *widget_20;
     QHBoxLayout *horizontalLayout_27;
-    QComboBox *comboBox_key_with_key_4;
     QComboBox *comboBox_key_with_key_5;
+    QComboBox *comboBox_key_with_key_6;
     QPushButton *pushButton_save_shortcut_key;
     QWidget *page_2;
     QVBoxLayout *verticalLayout_14;
@@ -234,8 +234,8 @@ public:
         tab_Table->setObjectName(QString::fromUtf8("tab_Table"));
         verticalLayout = new QVBoxLayout(tab_Table);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        tabWidget_2 = new QTabWidget(tab_Table);
-        tabWidget_2->setObjectName(QString::fromUtf8("tabWidget_2"));
+        tabWidget_finger_func = new QTabWidget(tab_Table);
+        tabWidget_finger_func->setObjectName(QString::fromUtf8("tabWidget_finger_func"));
         tab_finger = new QWidget();
         tab_finger->setObjectName(QString::fromUtf8("tab_finger"));
         verticalLayout_9 = new QVBoxLayout(tab_finger);
@@ -801,7 +801,7 @@ public:
 
         verticalLayout_9->addWidget(stackedWidget);
 
-        tabWidget_2->addTab(tab_finger, QString());
+        tabWidget_finger_func->addTab(tab_finger, QString());
         tab_finger_key = new QWidget();
         tab_finger_key->setObjectName(QString::fromUtf8("tab_finger_key"));
         verticalLayout_15 = new QVBoxLayout(tab_finger_key);
@@ -1062,51 +1062,6 @@ public:
         horizontalLayout_25->setSpacing(5);
         horizontalLayout_25->setObjectName(QString::fromUtf8("horizontalLayout_25"));
         horizontalLayout_25->setContentsMargins(0, 0, 0, 0);
-        comboBox_key_with_key = new QComboBox(widget_18);
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->addItem(QString());
-        comboBox_key_with_key->setObjectName(QString::fromUtf8("comboBox_key_with_key"));
-
-        horizontalLayout_25->addWidget(comboBox_key_with_key);
-
         comboBox_key_with_key_1 = new QComboBox(widget_18);
         comboBox_key_with_key_1->addItem(QString());
         comboBox_key_with_key_1->addItem(QString());
@@ -1151,6 +1106,51 @@ public:
         comboBox_key_with_key_1->setObjectName(QString::fromUtf8("comboBox_key_with_key_1"));
 
         horizontalLayout_25->addWidget(comboBox_key_with_key_1);
+
+        comboBox_key_with_key_2 = new QComboBox(widget_18);
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->addItem(QString());
+        comboBox_key_with_key_2->setObjectName(QString::fromUtf8("comboBox_key_with_key_2"));
+
+        horizontalLayout_25->addWidget(comboBox_key_with_key_2);
 
 
         verticalLayout_13->addWidget(widget_18);
@@ -1206,61 +1206,7 @@ public:
 
         horizontalLayout_26->addWidget(comboBox_key_with_key_3);
 
-        comboBox_key_with_key_2 = new QComboBox(widget_19);
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->addItem(QString());
-        comboBox_key_with_key_2->setObjectName(QString::fromUtf8("comboBox_key_with_key_2"));
-
-        horizontalLayout_26->addWidget(comboBox_key_with_key_2);
-
-
-        verticalLayout_13->addWidget(widget_19);
-
-        widget_20 = new QWidget(page_shortcut_key);
-        widget_20->setObjectName(QString::fromUtf8("widget_20"));
-        horizontalLayout_27 = new QHBoxLayout(widget_20);
-        horizontalLayout_27->setSpacing(5);
-        horizontalLayout_27->setObjectName(QString::fromUtf8("horizontalLayout_27"));
-        horizontalLayout_27->setContentsMargins(0, 0, 0, 0);
-        comboBox_key_with_key_4 = new QComboBox(widget_20);
+        comboBox_key_with_key_4 = new QComboBox(widget_19);
         comboBox_key_with_key_4->addItem(QString());
         comboBox_key_with_key_4->addItem(QString());
         comboBox_key_with_key_4->addItem(QString());
@@ -1303,8 +1249,17 @@ public:
         comboBox_key_with_key_4->addItem(QString());
         comboBox_key_with_key_4->setObjectName(QString::fromUtf8("comboBox_key_with_key_4"));
 
-        horizontalLayout_27->addWidget(comboBox_key_with_key_4);
+        horizontalLayout_26->addWidget(comboBox_key_with_key_4);
 
+
+        verticalLayout_13->addWidget(widget_19);
+
+        widget_20 = new QWidget(page_shortcut_key);
+        widget_20->setObjectName(QString::fromUtf8("widget_20"));
+        horizontalLayout_27 = new QHBoxLayout(widget_20);
+        horizontalLayout_27->setSpacing(5);
+        horizontalLayout_27->setObjectName(QString::fromUtf8("horizontalLayout_27"));
+        horizontalLayout_27->setContentsMargins(0, 0, 0, 0);
         comboBox_key_with_key_5 = new QComboBox(widget_20);
         comboBox_key_with_key_5->addItem(QString());
         comboBox_key_with_key_5->addItem(QString());
@@ -1350,6 +1305,51 @@ public:
 
         horizontalLayout_27->addWidget(comboBox_key_with_key_5);
 
+        comboBox_key_with_key_6 = new QComboBox(widget_20);
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->addItem(QString());
+        comboBox_key_with_key_6->setObjectName(QString::fromUtf8("comboBox_key_with_key_6"));
+
+        horizontalLayout_27->addWidget(comboBox_key_with_key_6);
+
 
         verticalLayout_13->addWidget(widget_20);
 
@@ -1367,9 +1367,9 @@ public:
 
         verticalLayout_15->addWidget(stackedWidget_key);
 
-        tabWidget_2->addTab(tab_finger_key, QString());
+        tabWidget_finger_func->addTab(tab_finger_key, QString());
 
-        verticalLayout->addWidget(tabWidget_2);
+        verticalLayout->addWidget(tabWidget_finger_func);
 
         tabWidget->addTab(tab_Table, QString());
         tab_RGB = new QWidget();
@@ -1543,7 +1543,7 @@ public:
         toolBox->addItem(page_task_1, QString::fromUtf8(" \345\220\257\345\212\250\344\273\273\345\212\241\344\270\200"));
         page_task_2 = new QWidget();
         page_task_2->setObjectName(QString::fromUtf8("page_task_2"));
-        page_task_2->setGeometry(QRect(0, 0, 88, 88));
+        page_task_2->setGeometry(QRect(0, 0, 98, 88));
         horizontalLayout_14 = new QHBoxLayout(page_task_2);
         horizontalLayout_14->setObjectName(QString::fromUtf8("horizontalLayout_14"));
         listWidget_task_2 = new QListWidget(page_task_2);
@@ -1555,7 +1555,7 @@ public:
         toolBox->addItem(page_task_2, QString::fromUtf8("\345\220\257\345\212\250\344\273\273\345\212\241\344\272\214"));
         page_task_3 = new QWidget();
         page_task_3->setObjectName(QString::fromUtf8("page_task_3"));
-        page_task_3->setGeometry(QRect(0, 0, 88, 88));
+        page_task_3->setGeometry(QRect(0, 0, 98, 88));
         horizontalLayout_15 = new QHBoxLayout(page_task_3);
         horizontalLayout_15->setObjectName(QString::fromUtf8("horizontalLayout_15"));
         listWidget_task_3 = new QListWidget(page_task_3);
@@ -1567,7 +1567,7 @@ public:
         toolBox->addItem(page_task_3, QString::fromUtf8("\345\220\257\345\212\250\344\273\273\345\212\241\344\270\211"));
         page_task_4 = new QWidget();
         page_task_4->setObjectName(QString::fromUtf8("page_task_4"));
-        page_task_4->setGeometry(QRect(0, 0, 88, 88));
+        page_task_4->setGeometry(QRect(0, 0, 98, 88));
         horizontalLayout_16 = new QHBoxLayout(page_task_4);
         horizontalLayout_16->setObjectName(QString::fromUtf8("horizontalLayout_16"));
         listWidget_task_4 = new QListWidget(page_task_4);
@@ -1579,7 +1579,7 @@ public:
         toolBox->addItem(page_task_4, QString::fromUtf8("\345\220\257\345\212\250\344\273\273\345\212\241\345\233\233"));
         page_task_5 = new QWidget();
         page_task_5->setObjectName(QString::fromUtf8("page_task_5"));
-        page_task_5->setGeometry(QRect(0, 0, 88, 88));
+        page_task_5->setGeometry(QRect(0, 0, 98, 88));
         horizontalLayout_17 = new QHBoxLayout(page_task_5);
         horizontalLayout_17->setObjectName(QString::fromUtf8("horizontalLayout_17"));
         listWidget_task_5 = new QListWidget(page_task_5);
@@ -1591,7 +1591,7 @@ public:
         toolBox->addItem(page_task_5, QString::fromUtf8("\345\220\257\345\212\250\344\273\273\345\212\241\344\272\224"));
         page_task_6 = new QWidget();
         page_task_6->setObjectName(QString::fromUtf8("page_task_6"));
-        page_task_6->setGeometry(QRect(0, 0, 88, 88));
+        page_task_6->setGeometry(QRect(0, 0, 98, 88));
         horizontalLayout_18 = new QHBoxLayout(page_task_6);
         horizontalLayout_18->setObjectName(QString::fromUtf8("horizontalLayout_18"));
         listWidget_task_6 = new QListWidget(page_task_6);
@@ -1616,9 +1616,9 @@ public:
         retranslateUi(Form_MainWindow);
 
         tabWidget->setCurrentIndex(0);
-        tabWidget_2->setCurrentIndex(1);
+        tabWidget_finger_func->setCurrentIndex(1);
         stackedWidget->setCurrentIndex(4);
-        stackedWidget_key->setCurrentIndex(5);
+        stackedWidget_key->setCurrentIndex(4);
         toolBox->setCurrentIndex(0);
 
 
@@ -2035,7 +2035,7 @@ public:
         comboBox_key_6->setItemText(39, QApplication::translate("Form_MainWindow", "/", nullptr));
 
         pushButton_save_shortcut->setText(QApplication::translate("Form_MainWindow", " \344\277\235\345\255\230", nullptr));
-        tabWidget_2->setTabText(tabWidget_2->indexOf(tab_finger), QApplication::translate("Form_MainWindow", "\346\214\207\347\272\271\345\212\237\350\203\275", nullptr));
+        tabWidget_finger_func->setTabText(tabWidget_finger_func->indexOf(tab_finger), QApplication::translate("Form_MainWindow", "\346\214\207\347\272\271\345\212\237\350\203\275", nullptr));
         pushButton_save_param_key->setText(QApplication::translate("Form_MainWindow", " \344\277\235\345\255\230\350\256\276\347\275\256", nullptr));
 
         const bool __sortingEnabled1 = listWidget_table_state_key->isSortingEnabled();
@@ -2196,47 +2196,6 @@ public:
         comboBox_func_key_key->setItemText(15, QApplication::translate("Form_MainWindow", "Alt+Win", nullptr));
         comboBox_func_key_key->setItemText(16, QApplication::translate("Form_MainWindow", "Alt+Shift", nullptr));
 
-        comboBox_key_with_key->setItemText(0, QApplication::translate("Form_MainWindow", "\347\251\272", nullptr));
-        comboBox_key_with_key->setItemText(1, QApplication::translate("Form_MainWindow", "1", nullptr));
-        comboBox_key_with_key->setItemText(2, QApplication::translate("Form_MainWindow", "2", nullptr));
-        comboBox_key_with_key->setItemText(3, QApplication::translate("Form_MainWindow", "3", nullptr));
-        comboBox_key_with_key->setItemText(4, QApplication::translate("Form_MainWindow", "4", nullptr));
-        comboBox_key_with_key->setItemText(5, QApplication::translate("Form_MainWindow", "5", nullptr));
-        comboBox_key_with_key->setItemText(6, QApplication::translate("Form_MainWindow", "6", nullptr));
-        comboBox_key_with_key->setItemText(7, QApplication::translate("Form_MainWindow", "7", nullptr));
-        comboBox_key_with_key->setItemText(8, QApplication::translate("Form_MainWindow", "8", nullptr));
-        comboBox_key_with_key->setItemText(9, QApplication::translate("Form_MainWindow", "9", nullptr));
-        comboBox_key_with_key->setItemText(10, QApplication::translate("Form_MainWindow", "A", nullptr));
-        comboBox_key_with_key->setItemText(11, QApplication::translate("Form_MainWindow", "B", nullptr));
-        comboBox_key_with_key->setItemText(12, QApplication::translate("Form_MainWindow", "C", nullptr));
-        comboBox_key_with_key->setItemText(13, QApplication::translate("Form_MainWindow", "D", nullptr));
-        comboBox_key_with_key->setItemText(14, QApplication::translate("Form_MainWindow", "E", nullptr));
-        comboBox_key_with_key->setItemText(15, QApplication::translate("Form_MainWindow", "F", nullptr));
-        comboBox_key_with_key->setItemText(16, QApplication::translate("Form_MainWindow", "G", nullptr));
-        comboBox_key_with_key->setItemText(17, QApplication::translate("Form_MainWindow", "H", nullptr));
-        comboBox_key_with_key->setItemText(18, QApplication::translate("Form_MainWindow", "I", nullptr));
-        comboBox_key_with_key->setItemText(19, QApplication::translate("Form_MainWindow", "J", nullptr));
-        comboBox_key_with_key->setItemText(20, QApplication::translate("Form_MainWindow", "K", nullptr));
-        comboBox_key_with_key->setItemText(21, QApplication::translate("Form_MainWindow", "L", nullptr));
-        comboBox_key_with_key->setItemText(22, QApplication::translate("Form_MainWindow", "M", nullptr));
-        comboBox_key_with_key->setItemText(23, QApplication::translate("Form_MainWindow", "N", nullptr));
-        comboBox_key_with_key->setItemText(24, QApplication::translate("Form_MainWindow", "O", nullptr));
-        comboBox_key_with_key->setItemText(25, QApplication::translate("Form_MainWindow", "P", nullptr));
-        comboBox_key_with_key->setItemText(26, QApplication::translate("Form_MainWindow", "Q", nullptr));
-        comboBox_key_with_key->setItemText(27, QApplication::translate("Form_MainWindow", "R", nullptr));
-        comboBox_key_with_key->setItemText(28, QApplication::translate("Form_MainWindow", "S", nullptr));
-        comboBox_key_with_key->setItemText(29, QApplication::translate("Form_MainWindow", "Y", nullptr));
-        comboBox_key_with_key->setItemText(30, QApplication::translate("Form_MainWindow", "U", nullptr));
-        comboBox_key_with_key->setItemText(31, QApplication::translate("Form_MainWindow", "V", nullptr));
-        comboBox_key_with_key->setItemText(32, QApplication::translate("Form_MainWindow", "W", nullptr));
-        comboBox_key_with_key->setItemText(33, QApplication::translate("Form_MainWindow", "X", nullptr));
-        comboBox_key_with_key->setItemText(34, QApplication::translate("Form_MainWindow", "Y", nullptr));
-        comboBox_key_with_key->setItemText(35, QApplication::translate("Form_MainWindow", "Z", nullptr));
-        comboBox_key_with_key->setItemText(36, QApplication::translate("Form_MainWindow", "+", nullptr));
-        comboBox_key_with_key->setItemText(37, QApplication::translate("Form_MainWindow", "-", nullptr));
-        comboBox_key_with_key->setItemText(38, QApplication::translate("Form_MainWindow", "*", nullptr));
-        comboBox_key_with_key->setItemText(39, QApplication::translate("Form_MainWindow", "/", nullptr));
-
         comboBox_key_with_key_1->setItemText(0, QApplication::translate("Form_MainWindow", "\347\251\272", nullptr));
         comboBox_key_with_key_1->setItemText(1, QApplication::translate("Form_MainWindow", "1", nullptr));
         comboBox_key_with_key_1->setItemText(2, QApplication::translate("Form_MainWindow", "2", nullptr));
@@ -2278,47 +2237,6 @@ public:
         comboBox_key_with_key_1->setItemText(38, QApplication::translate("Form_MainWindow", "*", nullptr));
         comboBox_key_with_key_1->setItemText(39, QApplication::translate("Form_MainWindow", "/", nullptr));
 
-        comboBox_key_with_key_3->setItemText(0, QApplication::translate("Form_MainWindow", "\347\251\272", nullptr));
-        comboBox_key_with_key_3->setItemText(1, QApplication::translate("Form_MainWindow", "1", nullptr));
-        comboBox_key_with_key_3->setItemText(2, QApplication::translate("Form_MainWindow", "2", nullptr));
-        comboBox_key_with_key_3->setItemText(3, QApplication::translate("Form_MainWindow", "3", nullptr));
-        comboBox_key_with_key_3->setItemText(4, QApplication::translate("Form_MainWindow", "4", nullptr));
-        comboBox_key_with_key_3->setItemText(5, QApplication::translate("Form_MainWindow", "5", nullptr));
-        comboBox_key_with_key_3->setItemText(6, QApplication::translate("Form_MainWindow", "6", nullptr));
-        comboBox_key_with_key_3->setItemText(7, QApplication::translate("Form_MainWindow", "7", nullptr));
-        comboBox_key_with_key_3->setItemText(8, QApplication::translate("Form_MainWindow", "8", nullptr));
-        comboBox_key_with_key_3->setItemText(9, QApplication::translate("Form_MainWindow", "9", nullptr));
-        comboBox_key_with_key_3->setItemText(10, QApplication::translate("Form_MainWindow", "A", nullptr));
-        comboBox_key_with_key_3->setItemText(11, QApplication::translate("Form_MainWindow", "B", nullptr));
-        comboBox_key_with_key_3->setItemText(12, QApplication::translate("Form_MainWindow", "C", nullptr));
-        comboBox_key_with_key_3->setItemText(13, QApplication::translate("Form_MainWindow", "D", nullptr));
-        comboBox_key_with_key_3->setItemText(14, QApplication::translate("Form_MainWindow", "E", nullptr));
-        comboBox_key_with_key_3->setItemText(15, QApplication::translate("Form_MainWindow", "F", nullptr));
-        comboBox_key_with_key_3->setItemText(16, QApplication::translate("Form_MainWindow", "G", nullptr));
-        comboBox_key_with_key_3->setItemText(17, QApplication::translate("Form_MainWindow", "H", nullptr));
-        comboBox_key_with_key_3->setItemText(18, QApplication::translate("Form_MainWindow", "I", nullptr));
-        comboBox_key_with_key_3->setItemText(19, QApplication::translate("Form_MainWindow", "J", nullptr));
-        comboBox_key_with_key_3->setItemText(20, QApplication::translate("Form_MainWindow", "K", nullptr));
-        comboBox_key_with_key_3->setItemText(21, QApplication::translate("Form_MainWindow", "L", nullptr));
-        comboBox_key_with_key_3->setItemText(22, QApplication::translate("Form_MainWindow", "M", nullptr));
-        comboBox_key_with_key_3->setItemText(23, QApplication::translate("Form_MainWindow", "N", nullptr));
-        comboBox_key_with_key_3->setItemText(24, QApplication::translate("Form_MainWindow", "O", nullptr));
-        comboBox_key_with_key_3->setItemText(25, QApplication::translate("Form_MainWindow", "P", nullptr));
-        comboBox_key_with_key_3->setItemText(26, QApplication::translate("Form_MainWindow", "Q", nullptr));
-        comboBox_key_with_key_3->setItemText(27, QApplication::translate("Form_MainWindow", "R", nullptr));
-        comboBox_key_with_key_3->setItemText(28, QApplication::translate("Form_MainWindow", "S", nullptr));
-        comboBox_key_with_key_3->setItemText(29, QApplication::translate("Form_MainWindow", "Y", nullptr));
-        comboBox_key_with_key_3->setItemText(30, QApplication::translate("Form_MainWindow", "U", nullptr));
-        comboBox_key_with_key_3->setItemText(31, QApplication::translate("Form_MainWindow", "V", nullptr));
-        comboBox_key_with_key_3->setItemText(32, QApplication::translate("Form_MainWindow", "W", nullptr));
-        comboBox_key_with_key_3->setItemText(33, QApplication::translate("Form_MainWindow", "X", nullptr));
-        comboBox_key_with_key_3->setItemText(34, QApplication::translate("Form_MainWindow", "Y", nullptr));
-        comboBox_key_with_key_3->setItemText(35, QApplication::translate("Form_MainWindow", "Z", nullptr));
-        comboBox_key_with_key_3->setItemText(36, QApplication::translate("Form_MainWindow", "+", nullptr));
-        comboBox_key_with_key_3->setItemText(37, QApplication::translate("Form_MainWindow", "-", nullptr));
-        comboBox_key_with_key_3->setItemText(38, QApplication::translate("Form_MainWindow", "*", nullptr));
-        comboBox_key_with_key_3->setItemText(39, QApplication::translate("Form_MainWindow", "/", nullptr));
-
         comboBox_key_with_key_2->setItemText(0, QApplication::translate("Form_MainWindow", "\347\251\272", nullptr));
         comboBox_key_with_key_2->setItemText(1, QApplication::translate("Form_MainWindow", "1", nullptr));
         comboBox_key_with_key_2->setItemText(2, QApplication::translate("Form_MainWindow", "2", nullptr));
@@ -2359,6 +2277,47 @@ public:
         comboBox_key_with_key_2->setItemText(37, QApplication::translate("Form_MainWindow", "-", nullptr));
         comboBox_key_with_key_2->setItemText(38, QApplication::translate("Form_MainWindow", "*", nullptr));
         comboBox_key_with_key_2->setItemText(39, QApplication::translate("Form_MainWindow", "/", nullptr));
+
+        comboBox_key_with_key_3->setItemText(0, QApplication::translate("Form_MainWindow", "\347\251\272", nullptr));
+        comboBox_key_with_key_3->setItemText(1, QApplication::translate("Form_MainWindow", "1", nullptr));
+        comboBox_key_with_key_3->setItemText(2, QApplication::translate("Form_MainWindow", "2", nullptr));
+        comboBox_key_with_key_3->setItemText(3, QApplication::translate("Form_MainWindow", "3", nullptr));
+        comboBox_key_with_key_3->setItemText(4, QApplication::translate("Form_MainWindow", "4", nullptr));
+        comboBox_key_with_key_3->setItemText(5, QApplication::translate("Form_MainWindow", "5", nullptr));
+        comboBox_key_with_key_3->setItemText(6, QApplication::translate("Form_MainWindow", "6", nullptr));
+        comboBox_key_with_key_3->setItemText(7, QApplication::translate("Form_MainWindow", "7", nullptr));
+        comboBox_key_with_key_3->setItemText(8, QApplication::translate("Form_MainWindow", "8", nullptr));
+        comboBox_key_with_key_3->setItemText(9, QApplication::translate("Form_MainWindow", "9", nullptr));
+        comboBox_key_with_key_3->setItemText(10, QApplication::translate("Form_MainWindow", "A", nullptr));
+        comboBox_key_with_key_3->setItemText(11, QApplication::translate("Form_MainWindow", "B", nullptr));
+        comboBox_key_with_key_3->setItemText(12, QApplication::translate("Form_MainWindow", "C", nullptr));
+        comboBox_key_with_key_3->setItemText(13, QApplication::translate("Form_MainWindow", "D", nullptr));
+        comboBox_key_with_key_3->setItemText(14, QApplication::translate("Form_MainWindow", "E", nullptr));
+        comboBox_key_with_key_3->setItemText(15, QApplication::translate("Form_MainWindow", "F", nullptr));
+        comboBox_key_with_key_3->setItemText(16, QApplication::translate("Form_MainWindow", "G", nullptr));
+        comboBox_key_with_key_3->setItemText(17, QApplication::translate("Form_MainWindow", "H", nullptr));
+        comboBox_key_with_key_3->setItemText(18, QApplication::translate("Form_MainWindow", "I", nullptr));
+        comboBox_key_with_key_3->setItemText(19, QApplication::translate("Form_MainWindow", "J", nullptr));
+        comboBox_key_with_key_3->setItemText(20, QApplication::translate("Form_MainWindow", "K", nullptr));
+        comboBox_key_with_key_3->setItemText(21, QApplication::translate("Form_MainWindow", "L", nullptr));
+        comboBox_key_with_key_3->setItemText(22, QApplication::translate("Form_MainWindow", "M", nullptr));
+        comboBox_key_with_key_3->setItemText(23, QApplication::translate("Form_MainWindow", "N", nullptr));
+        comboBox_key_with_key_3->setItemText(24, QApplication::translate("Form_MainWindow", "O", nullptr));
+        comboBox_key_with_key_3->setItemText(25, QApplication::translate("Form_MainWindow", "P", nullptr));
+        comboBox_key_with_key_3->setItemText(26, QApplication::translate("Form_MainWindow", "Q", nullptr));
+        comboBox_key_with_key_3->setItemText(27, QApplication::translate("Form_MainWindow", "R", nullptr));
+        comboBox_key_with_key_3->setItemText(28, QApplication::translate("Form_MainWindow", "S", nullptr));
+        comboBox_key_with_key_3->setItemText(29, QApplication::translate("Form_MainWindow", "Y", nullptr));
+        comboBox_key_with_key_3->setItemText(30, QApplication::translate("Form_MainWindow", "U", nullptr));
+        comboBox_key_with_key_3->setItemText(31, QApplication::translate("Form_MainWindow", "V", nullptr));
+        comboBox_key_with_key_3->setItemText(32, QApplication::translate("Form_MainWindow", "W", nullptr));
+        comboBox_key_with_key_3->setItemText(33, QApplication::translate("Form_MainWindow", "X", nullptr));
+        comboBox_key_with_key_3->setItemText(34, QApplication::translate("Form_MainWindow", "Y", nullptr));
+        comboBox_key_with_key_3->setItemText(35, QApplication::translate("Form_MainWindow", "Z", nullptr));
+        comboBox_key_with_key_3->setItemText(36, QApplication::translate("Form_MainWindow", "+", nullptr));
+        comboBox_key_with_key_3->setItemText(37, QApplication::translate("Form_MainWindow", "-", nullptr));
+        comboBox_key_with_key_3->setItemText(38, QApplication::translate("Form_MainWindow", "*", nullptr));
+        comboBox_key_with_key_3->setItemText(39, QApplication::translate("Form_MainWindow", "/", nullptr));
 
         comboBox_key_with_key_4->setItemText(0, QApplication::translate("Form_MainWindow", "\347\251\272", nullptr));
         comboBox_key_with_key_4->setItemText(1, QApplication::translate("Form_MainWindow", "1", nullptr));
@@ -2442,8 +2401,49 @@ public:
         comboBox_key_with_key_5->setItemText(38, QApplication::translate("Form_MainWindow", "*", nullptr));
         comboBox_key_with_key_5->setItemText(39, QApplication::translate("Form_MainWindow", "/", nullptr));
 
+        comboBox_key_with_key_6->setItemText(0, QApplication::translate("Form_MainWindow", "\347\251\272", nullptr));
+        comboBox_key_with_key_6->setItemText(1, QApplication::translate("Form_MainWindow", "1", nullptr));
+        comboBox_key_with_key_6->setItemText(2, QApplication::translate("Form_MainWindow", "2", nullptr));
+        comboBox_key_with_key_6->setItemText(3, QApplication::translate("Form_MainWindow", "3", nullptr));
+        comboBox_key_with_key_6->setItemText(4, QApplication::translate("Form_MainWindow", "4", nullptr));
+        comboBox_key_with_key_6->setItemText(5, QApplication::translate("Form_MainWindow", "5", nullptr));
+        comboBox_key_with_key_6->setItemText(6, QApplication::translate("Form_MainWindow", "6", nullptr));
+        comboBox_key_with_key_6->setItemText(7, QApplication::translate("Form_MainWindow", "7", nullptr));
+        comboBox_key_with_key_6->setItemText(8, QApplication::translate("Form_MainWindow", "8", nullptr));
+        comboBox_key_with_key_6->setItemText(9, QApplication::translate("Form_MainWindow", "9", nullptr));
+        comboBox_key_with_key_6->setItemText(10, QApplication::translate("Form_MainWindow", "A", nullptr));
+        comboBox_key_with_key_6->setItemText(11, QApplication::translate("Form_MainWindow", "B", nullptr));
+        comboBox_key_with_key_6->setItemText(12, QApplication::translate("Form_MainWindow", "C", nullptr));
+        comboBox_key_with_key_6->setItemText(13, QApplication::translate("Form_MainWindow", "D", nullptr));
+        comboBox_key_with_key_6->setItemText(14, QApplication::translate("Form_MainWindow", "E", nullptr));
+        comboBox_key_with_key_6->setItemText(15, QApplication::translate("Form_MainWindow", "F", nullptr));
+        comboBox_key_with_key_6->setItemText(16, QApplication::translate("Form_MainWindow", "G", nullptr));
+        comboBox_key_with_key_6->setItemText(17, QApplication::translate("Form_MainWindow", "H", nullptr));
+        comboBox_key_with_key_6->setItemText(18, QApplication::translate("Form_MainWindow", "I", nullptr));
+        comboBox_key_with_key_6->setItemText(19, QApplication::translate("Form_MainWindow", "J", nullptr));
+        comboBox_key_with_key_6->setItemText(20, QApplication::translate("Form_MainWindow", "K", nullptr));
+        comboBox_key_with_key_6->setItemText(21, QApplication::translate("Form_MainWindow", "L", nullptr));
+        comboBox_key_with_key_6->setItemText(22, QApplication::translate("Form_MainWindow", "M", nullptr));
+        comboBox_key_with_key_6->setItemText(23, QApplication::translate("Form_MainWindow", "N", nullptr));
+        comboBox_key_with_key_6->setItemText(24, QApplication::translate("Form_MainWindow", "O", nullptr));
+        comboBox_key_with_key_6->setItemText(25, QApplication::translate("Form_MainWindow", "P", nullptr));
+        comboBox_key_with_key_6->setItemText(26, QApplication::translate("Form_MainWindow", "Q", nullptr));
+        comboBox_key_with_key_6->setItemText(27, QApplication::translate("Form_MainWindow", "R", nullptr));
+        comboBox_key_with_key_6->setItemText(28, QApplication::translate("Form_MainWindow", "S", nullptr));
+        comboBox_key_with_key_6->setItemText(29, QApplication::translate("Form_MainWindow", "Y", nullptr));
+        comboBox_key_with_key_6->setItemText(30, QApplication::translate("Form_MainWindow", "U", nullptr));
+        comboBox_key_with_key_6->setItemText(31, QApplication::translate("Form_MainWindow", "V", nullptr));
+        comboBox_key_with_key_6->setItemText(32, QApplication::translate("Form_MainWindow", "W", nullptr));
+        comboBox_key_with_key_6->setItemText(33, QApplication::translate("Form_MainWindow", "X", nullptr));
+        comboBox_key_with_key_6->setItemText(34, QApplication::translate("Form_MainWindow", "Y", nullptr));
+        comboBox_key_with_key_6->setItemText(35, QApplication::translate("Form_MainWindow", "Z", nullptr));
+        comboBox_key_with_key_6->setItemText(36, QApplication::translate("Form_MainWindow", "+", nullptr));
+        comboBox_key_with_key_6->setItemText(37, QApplication::translate("Form_MainWindow", "-", nullptr));
+        comboBox_key_with_key_6->setItemText(38, QApplication::translate("Form_MainWindow", "*", nullptr));
+        comboBox_key_with_key_6->setItemText(39, QApplication::translate("Form_MainWindow", "/", nullptr));
+
         pushButton_save_shortcut_key->setText(QApplication::translate("Form_MainWindow", " \344\277\235\345\255\230", nullptr));
-        tabWidget_2->setTabText(tabWidget_2->indexOf(tab_finger_key), QApplication::translate("Form_MainWindow", "\346\214\207\347\272\271\346\214\211\351\224\256\345\212\237\350\203\275", nullptr));
+        tabWidget_finger_func->setTabText(tabWidget_finger_func->indexOf(tab_finger_key), QApplication::translate("Form_MainWindow", "\346\214\207\347\272\271\346\214\211\351\224\256\345\212\237\350\203\275", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_Table), QApplication::translate("Form_MainWindow", "\345\212\237\350\203\275", nullptr));
         label_R->setText(QApplication::translate("Form_MainWindow", "R", nullptr));
         label_R_value->setText(QApplication::translate("Form_MainWindow", "0", nullptr));

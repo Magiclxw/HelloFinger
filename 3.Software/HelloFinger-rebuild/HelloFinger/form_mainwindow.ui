@@ -95,7 +95,7 @@
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="QTabWidget" name="tabWidget_2">
+         <widget class="QTabWidget" name="tabWidget_finger_func">
           <property name="currentIndex">
            <number>1</number>
           </property>
@@ -2396,7 +2396,7 @@
             <item>
              <widget class="QStackedWidget" name="stackedWidget_key">
               <property name="currentIndex">
-               <number>5</number>
+               <number>4</number>
               </property>
               <widget class="QWidget" name="page_enrollState_key">
                <layout class="QHBoxLayout" name="horizontalLayout_20">
@@ -2719,7 +2719,7 @@
                     <number>0</number>
                    </property>
                    <item>
-                    <widget class="QComboBox" name="comboBox_key_with_key">
+                    <widget class="QComboBox" name="comboBox_key_with_key_1">
                      <item>
                       <property name="text">
                        <string>空</string>
@@ -2923,7 +2923,7 @@
                     </widget>
                    </item>
                    <item>
-                    <widget class="QComboBox" name="comboBox_key_with_key_1">
+                    <widget class="QComboBox" name="comboBox_key_with_key_2">
                      <item>
                       <property name="text">
                        <string>空</string>
@@ -3352,7 +3352,7 @@
                     </widget>
                    </item>
                    <item>
-                    <widget class="QComboBox" name="comboBox_key_with_key_2">
+                    <widget class="QComboBox" name="comboBox_key_with_key_4">
                      <item>
                       <property name="text">
                        <string>空</string>
@@ -3577,7 +3577,7 @@
                     <number>0</number>
                    </property>
                    <item>
-                    <widget class="QComboBox" name="comboBox_key_with_key_4">
+                    <widget class="QComboBox" name="comboBox_key_with_key_5">
                      <item>
                       <property name="text">
                        <string>空</string>
@@ -3781,7 +3781,7 @@
                     </widget>
                    </item>
                    <item>
-                    <widget class="QComboBox" name="comboBox_key_with_key_5">
+                    <widget class="QComboBox" name="comboBox_key_with_key_6">
                      <item>
                       <property name="text">
                        <string>空</string>
@@ -4347,7 +4347,7 @@ font: 9pt &quot;黑体&quot;;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>88</width>
+             <width>98</width>
              <height>88</height>
             </rect>
            </property>
@@ -4372,7 +4372,7 @@ font: 9pt &quot;黑体&quot;;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>88</width>
+             <width>98</width>
              <height>88</height>
             </rect>
            </property>
@@ -4397,7 +4397,7 @@ font: 9pt &quot;黑体&quot;;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>88</width>
+             <width>98</width>
              <height>88</height>
             </rect>
            </property>
@@ -4422,7 +4422,7 @@ font: 9pt &quot;黑体&quot;;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>88</width>
+             <width>98</width>
              <height>88</height>
             </rect>
            </property>
@@ -4447,7 +4447,7 @@ font: 9pt &quot;黑体&quot;;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>88</width>
+             <width>98</width>
              <height>88</height>
             </rect>
            </property>

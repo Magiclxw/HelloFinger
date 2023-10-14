@@ -418,6 +418,16 @@ typedef enum _BUTTON_VALUE_{
 	button_MID  = 4
 }BUTTON_VALUE_e;
 
+typedef enum
+{
+	QUICK_START_1,
+	QUICK_START_2,
+	QUICK_START_3,
+	QUICK_START_4,
+	QUICK_START_5,
+	QUICK_START_6,
+}QUICK_START_e;
+
 void CH9329_Init(void);
 void CH9329_WorkMode_Config(uint8_t workmode);
 void CH9329_SerialMode_Config(uint8_t serialmode);
@@ -437,4 +447,5 @@ uint8_t CH9329_CAL_SUM(uint8_t *cmd,uint8_t len);
 int Send_HID_Data(uint8_t *data,uint8_t len);
 int ABD_Mouse_Ctrl(uint8_t step,uint8_t* pos_x,uint8_t* pos_y,BUTTON_VALUE_e button);
 int REL_Mouse_Ctrl(uint8_t step,uint8_t dir_x,uint8_t dir_y,BUTTON_VALUE_e button);
+int Quick_Start(char key);
 #endif

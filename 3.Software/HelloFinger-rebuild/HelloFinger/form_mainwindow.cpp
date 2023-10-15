@@ -48,18 +48,21 @@ QAction *Action_listWidget_Delete_Item;
 float color_R = 0;
 float color_G = 0;
 float color_B = 0;
-uint8_t dir = 0;
+uint8_t dir = 0;    //亮度增减方向
 float tmp_R = 0;
 float tmp_G = 0;
 float tmp_B = 0;
 float R_decrease = 0;
 float G_decrease = 0;
 float B_decrease = 0;
-uint8_t interval = 0;
+uint8_t interval = 0;   //亮度改变间隔
 
-QString tableContent = "tableContent.json";
+QString table_1_Content = "table1Content.json";
+QString table_2_Content = "table2Content.json";
 
 QTimer *rgb_timer = NULL;
+
+Form_HideWindow *hidewindow = NULL;
 
 Form_MainWindow::Form_MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -75,22 +78,18 @@ Form_MainWindow::Form_MainWindow(QWidget *parent)
 
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 
-    Form_HideWindow *hidewindow = new Form_HideWindow;
+    hidewindow = new Form_HideWindow;
     hidewindow->show();
     hidewindow->File_Update_Hidewindow_Content();
+
     QMenuBar *bar = menuBar();
     this->setMenuBar(bar);
     QMenu *Menu = bar->addMenu("MENU");
     QMenu *ListWidgetMenu = bar->addMenu("MENU");
     bar->setVisible(false);
 
-    //File_FastStart_Save(1,1,1,"你好");
-    //uint8_t check;
-    //QString s = File_FastStart_Read(1,1,&check);
-    //qDebug() << "url = " <<s;
-    //File_TableName_Init();
-    File_Update_QuickStart_Content();
-
+    File_Update_QuickStart_Content();   //更新快捷启动列表
+    File_Update_HideWindow_List();      //更新侧边栏启动列表
 
     rgb_timer = new QTimer; //初始化rgb显示定时器
 
@@ -112,8 +111,8 @@ Form_MainWindow::Form_MainWindow(QWidget *parent)
     GlobalKeyEvent::installKeyEvent();
     connect(GlobalKeyEvent::getInstance(),&GlobalKeyEvent::keyEvent,this,&Form_MainWindow::on_keyEvent);
 
-    File_Update_TableContent(tableContent);
-
+    File_Update_TableContent(table_1_Content);
+    File_Update_TableContent(table_2_Content);
 
     ui->listWidget_table_state->setContextMenuPolicy(Qt::CustomContextMenu);
     ui->listWidget_table_state_key->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -123,6 +122,7 @@ Form_MainWindow::Form_MainWindow(QWidget *parent)
     ui->listWidget_task_4->setContextMenuPolicy(Qt::CustomContextMenu);
     ui->listWidget_task_5->setContextMenuPolicy(Qt::CustomContextMenu);
     ui->listWidget_task_6->setContextMenuPolicy(Qt::CustomContextMenu);
+    ui->listWidget_hidwindow->setContextMenuPolicy(Qt::CustomContextMenu);
     this->setContextMenuPolicy(Qt::NoContextMenu);
 
     connect(Action_Add,SIGNAL(triggered()),this,SLOT(Slot_AddFinger()));    //连接添加指纹槽函数
@@ -132,7 +132,7 @@ Form_MainWindow::Form_MainWindow(QWidget *parent)
     connect(Action_shortcut,&QAction::triggered,this,[=](){ui->stackedWidget->setCurrentWidget(ui->page_shortcut);ui->stackedWidget_key->setCurrentWidget(ui->page_shortcut_key);});
     connect(Action_enterAccount_Password,&QAction::triggered,this,[=](){ui->stackedWidget->setCurrentWidget(ui->page_account_password);ui->stackedWidget_key->setCurrentWidget(ui->page_account_password_key);});    //修改当前显示界面
     connect(Action_enterPassword,&QAction::triggered,this,[=](){ui->stackedWidget->setCurrentWidget(ui->page_password);ui->stackedWidget_key->setCurrentWidget(ui->page_password_key);});    //连接输入密码槽函数
-    connect(Action_listWidget_Delete_Item,&QAction::triggered,this,&Form_MainWindow::Slot_DeleteQuickStartItem);
+    connect(Action_listWidget_Delete_Item,&QAction::triggered,this,&Form_MainWindow::Slot_DeleteListWidgetItem);
     connect(Action_setQuickStart1,&QAction::triggered,this,[=](){Slot_SetQuickStart(QUICK_START_1);});
     connect(Action_setQuickStart2,&QAction::triggered,this,[=](){Slot_SetQuickStart(QUICK_START_2);});
     connect(Action_setQuickStart3,&QAction::triggered,this,[=](){Slot_SetQuickStart(QUICK_START_3);});
@@ -145,19 +145,22 @@ Form_MainWindow::Form_MainWindow(QWidget *parent)
     connect(ui->slider_interval,&QSlider::valueChanged,this,&Form_MainWindow::Slot_SetBreathRGB);
     connect(rgb_timer,&QTimer::timeout,this,&Form_MainWindow::Slot_RGB_Display);    //启动呼吸灯动画
     connect(ui->tabWidget,&QTabWidget::tabBarClicked,this,&Form_MainWindow::Slot_SetBreathRGB); //切换tabbar状态后启动呼吸灯动画
-    connect(ui->listWidget_table_state,&QListWidget::itemDoubleClicked,this,&Form_MainWindow::Slot_ChangeItemValue);
+    connect(ui->listWidget_table_state,&QListWidget::itemDoubleClicked,this,&Form_MainWindow::Slot_ChangeItemValue);    //连接listWidget双击信号槽
+    connect(ui->listWidget_table_state_key,&QListWidget::itemDoubleClicked,this,&Form_MainWindow::Slot_ChangeItemValue);
     connect(ui->pushButton_save_windows_password,&QPushButton::clicked,this,&Form_MainWindow::Slot_SetWindowsPassword);     //连接windows解锁功能槽函数
     connect(ui->pushButton_save_account_password,&QPushButton::clicked,this,&Form_MainWindow::Slot_SetAccount_Password);    //连接输入账号密码槽函数
     connect(ui->pushButton_password,&QPushButton::clicked,this,&Form_MainWindow::Slot_SetPassword);
     connect(ui->pushButton_save_param,&QPushButton::clicked,this,&Form_MainWindow::Slot_SaveItemValue);
+    connect(ui->pushButton_save_param_key,&QPushButton::clicked,this,&Form_MainWindow::Slot_SaveItemValue);
     connect(ui->pushButton_save_shortcut,&QPushButton::clicked,this,&Form_MainWindow::Slot_SetShortcut);  //保存快捷键功能
+    connect(ui->pushButton_save_shortcut_key,&QPushButton::clicked,this,&Form_MainWindow::Slot_SetShortcut);  //保存快捷键功能
     connect(ui->pushButton_save_windows_password_key,&QPushButton::clicked,this,&Form_MainWindow::Slot_SetWindowsPassword);     //连接windows解锁功能槽函数
     connect(ui->pushButton_save_account_password_key,&QPushButton::clicked,this,&Form_MainWindow::Slot_SetAccount_Password);    //连接输入账号密码槽函数
     connect(ui->pushButton_password_key,&QPushButton::clicked,this,&Form_MainWindow::Slot_SetPassword);
-    connect(ui->pushButton_save_param_key,&QPushButton::clicked,this,&Form_MainWindow::Slot_SaveItemValue);
-    connect(ui->pushButton_save_shortcut_key,&QPushButton::clicked,this,&Form_MainWindow::Slot_SetShortcut);  //保存快捷键功能
+
     connect(ui->pushButton_save_rgb,&QPushButton::clicked,this,[=](){emit Signal_SetBreathRGB((uint8_t)tmp_R,(uint8_t)tmp_G,(uint8_t)tmp_B,interval);});
 
+    connect(this,&Form_MainWindow::Signal_UpdateHideWindowCheckedItem,hidewindow,&Form_HideWindow::Slot_UpdateCheckedItem);
 }
 
 void Form_MainWindow::Slot_UpdateIndexTable()
@@ -397,73 +400,121 @@ void Form_MainWindow::Slot_SetQuickStart(QUICK_START_e startID)
 
 void Form_MainWindow::Slot_ChangeItemValue()
 {
-    ui->listWidget_table_state->currentItem()->setFlags(ui->listWidget_table_state->currentItem()->flags()|Qt::ItemIsEditable);
-    ui->pushButton_save_param->show();
+    uint8_t finger_type = ui->tabWidget_finger_func->currentIndex();
+    if(finger_type == FINGER)
+    {
+        ui->listWidget_table_state->currentItem()->setFlags(ui->listWidget_table_state->currentItem()->flags()|Qt::ItemIsEditable);
+        ui->pushButton_save_param->show();
+    }
+    if(finger_type == FINGER_KEY)
+    {
+        ui->listWidget_table_state_key->currentItem()->setFlags(ui->listWidget_table_state_key->currentItem()->flags()|Qt::ItemIsEditable);
+        ui->pushButton_save_param_key->show();
+    }
 }
 
 void Form_MainWindow::Slot_SaveItemValue()
 {
-    uint8_t rowIndex = ui->listWidget_table_state->currentIndex().row();
-    QString inputText = ui->listWidget_table_state->item(rowIndex)->text();
-    qDebug() << inputText;
-    QJsonObject mainObj;
-    QJsonObject subObj;
-    QString item = "item";
-    QFile file(tableContent);
-    file.open(QIODevice::ReadWrite);
-    QByteArray data = file.readAll();
-    QJsonDocument doc = QJsonDocument::fromJson(data);
-    mainObj = doc.object();
-    item.append(QString::number(rowIndex));
-    mainObj.insert(item,inputText);
-    QJsonDocument writeDoc(mainObj);
-    QByteArray writeArry = writeDoc.toJson();
-    file.seek(0);       //回到文件开头
-    file.write(writeArry);      //文件重写
-    file.close();
-    ui->pushButton_save_param->hide();  //保存完成后隐藏保存按键
+    uint8_t finger_type = ui->tabWidget_finger_func->currentIndex();
+    if(finger_type == FINGER)
+    {
+        uint8_t rowIndex = ui->listWidget_table_state->currentIndex().row();
+        QString inputText = ui->listWidget_table_state->item(rowIndex)->text();
+        qDebug() << inputText;
+        QJsonObject mainObj;
+        QJsonObject subObj;
+        QString item = "item";
+        QFile file(table_1_Content);
+        file.open(QIODevice::ReadWrite);
+        QByteArray data = file.readAll();
+        QJsonDocument doc = QJsonDocument::fromJson(data);
+        mainObj = doc.object();
+        item.append(QString::number(rowIndex));
+        mainObj.insert(item,inputText);
+        QJsonDocument writeDoc(mainObj);
+        QByteArray writeArry = writeDoc.toJson();
+        file.seek(0);       //回到文件开头
+        file.write(writeArry);      //文件重写
+        file.close();
+        ui->pushButton_save_param->hide();  //保存完成后隐藏保存按键
+    }
+    if(finger_type == FINGER_KEY)
+    {
+        uint8_t rowIndex = ui->listWidget_table_state_key->currentIndex().row();
+        QString inputText = ui->listWidget_table_state_key->item(rowIndex)->text();
+        qDebug() << inputText;
+        QJsonObject mainObj;
+        QJsonObject subObj;
+        QString item = "item";
+        QFile file(table_2_Content);
+        file.open(QIODevice::ReadWrite);
+        QByteArray data = file.readAll();
+        QJsonDocument doc = QJsonDocument::fromJson(data);
+        mainObj = doc.object();
+        item.append(QString::number(rowIndex));
+        mainObj.insert(item,inputText);
+        QJsonDocument writeDoc(mainObj);
+        QByteArray writeArry = writeDoc.toJson();
+        file.seek(0);       //回到文件开头
+        file.write(writeArry);      //文件重写
+        file.close();
+        ui->pushButton_save_param_key->hide();  //保存完成后隐藏保存按键
+    }
+
 }
 
-void Form_MainWindow::Slot_DeleteQuickStartItem()
+void Form_MainWindow::Slot_DeleteListWidgetItem()
 {
-    uint8_t page = ui->toolBox->currentIndex();
-    uint8_t item = 0;
-    switch (page)
+    QWidget *func_type = ui->tabWidget->currentWidget();
+    if(func_type == ui->tab_quickstart)
     {
-    case 0:
-    {
-        item = ui->listWidget_task_1->currentIndex().row();
-        break;
-    }
-    case 1:
-    {
-        item = ui->listWidget_task_2->currentIndex().row();
-        break;
-    }
-    case 2:
-    {
-        item = ui->listWidget_task_3->currentIndex().row();
-        break;
-    }
-    case 3:
-    {
-        item = ui->listWidget_task_4->currentIndex().row();
-        break;
-    }
-    case 4:
-    {
-        item = ui->listWidget_task_5->currentIndex().row();
-        break;
-    }
-    case 5:
-    {
-        item = ui->listWidget_task_6->currentIndex().row();
-        break;
-    }
+        uint8_t page = ui->toolBox->currentIndex();
+        uint8_t item = 0;
+        switch (page)
+        {
+        case 0:
+        {
+            item = ui->listWidget_task_1->currentIndex().row();
+            break;
+        }
+        case 1:
+        {
+            item = ui->listWidget_task_2->currentIndex().row();
+            break;
+        }
+        case 2:
+        {
+            item = ui->listWidget_task_3->currentIndex().row();
+            break;
+        }
+        case 3:
+        {
+            item = ui->listWidget_task_4->currentIndex().row();
+            break;
+        }
+        case 4:
+        {
+            item = ui->listWidget_task_5->currentIndex().row();
+            break;
+        }
+        case 5:
+        {
+            item = ui->listWidget_task_6->currentIndex().row();
+            break;
+        }
 
+        }
+        File_FastStart_Save(page,item,0,"");
+        File_Update_QuickStart_Content();
     }
-    File_FastStart_Save(page,item,0,"");
-    File_Update_QuickStart_Content();
+    if(func_type == ui->tab_hidwindow)
+    {
+        uint8_t item = 0;
+        item = ui->listWidget_hidwindow->currentIndex().row();
+        File_HideWindow_Content_Save("",item);
+        File_Update_HideWindow_List();
+        hidewindow->File_Update_Hidewindow_Content();
+    }
 }
 
 void Form_MainWindow::on_keyEvent(QKeyEvent* event)  //全局按键事件
@@ -490,38 +541,40 @@ void Form_MainWindow::on_keyEvent(QKeyEvent* event)  //全局按键事件
         {
             if(event->modifiers() == (Qt::ShiftModifier|Qt::ControlModifier|Qt::AltModifier))
             {
-                uint8_t currentIndex = ui->listWidget_table_state->currentIndex().row();
-                uint8_t nextIndex = currentIndex+1;
+//                uint8_t currentIndex = ui->listWidget_table_state->currentIndex().row();
+//                uint8_t nextIndex = currentIndex+1;
 
-                if(currentIndex == ui->listWidget_table_state->count()-1)
-                {
-                    nextIndex = 0;
-                }
-                ui->listWidget_table_state->setCurrentRow(nextIndex);
+//                if(currentIndex == ui->listWidget_table_state->count()-1)
+//                {
+//                    nextIndex = 0;
+//                }
+//                ui->listWidget_table_state->setCurrentRow(nextIndex);
                 //ui->listWidget_table_state->item(nextIndex)->setSelected(true);
-                qDebug() << "current index = " << currentIndex << "next index = " << nextIndex;
+                emit Signal_UpdateHideWindowCheckedItem(Qt::Key_Left);
+                //qDebug() << "current index = " << currentIndex << "next index = " << nextIndex;
             }
         }
         if(event->key() == Qt::Key_Right)
         {
             if(event->modifiers() == (Qt::ShiftModifier|Qt::ControlModifier|Qt::AltModifier))
             {
-                uint8_t currentIndex = ui->listWidget_table_state->currentIndex().row();
-                uint8_t nextIndex = currentIndex-1;
-                if(currentIndex == 0 )
-                {
-                    nextIndex = ui->listWidget_table_state->count()-1;
-                }
-                ui->listWidget_table_state->setCurrentRow(nextIndex);
+//                uint8_t currentIndex = ui->listWidget_table_state->currentIndex().row();
+//                uint8_t nextIndex = currentIndex-1;
+//                if(currentIndex == 0 )
+//                {
+//                    nextIndex = ui->listWidget_table_state->count()-1;
+//                }
+//                ui->listWidget_table_state->setCurrentRow(nextIndex);
                 //ui->listWidget_table_state->item(nextIndex)->setSelected(true);
-                qDebug() << "current index = " << currentIndex << "next index = " << nextIndex;
+                emit Signal_UpdateHideWindowCheckedItem(Qt::Key_Right);
+                //qDebug() << "current index = " << currentIndex << "next index = " << nextIndex;
             }
         }
         if(event->key() == Qt::Key_F1)
         {
             if(event->modifiers() == (Qt::ShiftModifier|Qt::ControlModifier|Qt::AltModifier))
             {
-
+                hidewindow->showWindow();
                 qDebug() << "encoder ";
             }
         }
@@ -617,23 +670,6 @@ void Form_MainWindow::on_keyEvent(QKeyEvent* event)  //全局按键事件
         }
 
     }
-    //if(key_type == "KeyPress")
-    //{
-    //    if(key_value == "Key_Up")
-    //    {
-    //        if(key_modify == "ShiftModifier|ControlModifier|AltModifier")
-    //        {
-    //            qDebug() << "hot key up";
-    //        }
-    //    }
-    //    if(key_value == "Key_Down")
-    //    {
-    //        if(key_modify == "ShiftModifier|ControlModifier|AltModifier")
-    //        {
-    //            qDebug() << "hot key Down";
-    //        }
-    //    }
-    //}
     delete event;       // 使用完成后记得delete
 }
 
@@ -663,13 +699,30 @@ void Form_MainWindow::File_Update_TableContent(QString path)
         if(doc.isObject()){
             QJsonObject obj = doc.object();
             //QString data = "ListConfig";
-            for(int i=0;i<60;i++){
-                QString item = "item";
-                item.append(QString::number(i));
-                QJsonValue value = obj.value(item);
-                //QJsonObject subObj = value.toObject();
-                ui->listWidget_table_state->item(i)->setText(value.toString());
+            uint8_t finger_type = ui->tabWidget_finger_func->currentIndex();
+            if(finger_type == FINGER)
+            {
+                for(int i=0;i<60;i++){
+                    QString item = "item";
+                    item.append(QString::number(i));
+                    QJsonValue value = obj.value(item);
+                    //QJsonObject subObj = value.toObject();
+
+                    ui->listWidget_table_state->item(i)->setText(value.toString());
+                }
             }
+            else
+            {
+                for(int i=0;i<60;i++){
+                    QString item = "item";
+                    item.append(QString::number(i));
+                    QJsonValue value = obj.value(item);
+                    //QJsonObject subObj = value.toObject();
+
+                    ui->listWidget_table_state_key->item(i)->setText(value.toString());
+                }
+            }
+
         }
     }
 }
@@ -779,6 +832,36 @@ void Form_MainWindow::File_Update_QuickStart_Content()
     }
 }
 
+void Form_MainWindow::File_Update_HideWindow_List()
+{
+    uint8_t item = 0;
+    uint8_t itemNum = 0;
+    itemNum = File_HideWindow_ItemNum_Get();
+    ui->listWidget_hidwindow->clear();
+    while(1)
+    {
+
+        if(item == itemNum)
+        {
+            break;
+        }
+        QString path = File_HideWindow_Item_Read(item);
+        {
+            QListWidgetItem *listwidgetitem = new QListWidgetItem;
+            QFileInfo fileInfo(path);
+            QFileIconProvider iconProvider;
+            QString fileName = fileInfo.fileName();
+            QIcon icon = iconProvider.icon(fileInfo);
+            QLabel label;
+            label.setPixmap(icon.pixmap(50,50));
+            listwidgetitem->setIcon(icon);
+            listwidgetitem->setText(fileName);
+
+            ui->listWidget_hidwindow->addItem(listwidgetitem);
+        }
+        item++;
+    }
+}
 
 void Form_MainWindow::File_Save_Shortcut()
 {
@@ -925,45 +1008,55 @@ void Form_MainWindow::dropEvent(QDropEvent *event)           // 放下事件
         // 将其中第一个URL表示为本地文件路径
         QString fileName = urlList.at(0).toLocalFile();
         qDebug() << "url:" << fileName;
-        uint8_t page = ui->toolBox->currentIndex();
-        uint8_t index = 0;
-        switch (page)
+        if(ui->tabWidget->currentWidget() == ui->tab_quickstart)
         {
-        case 0:
+            uint8_t page = ui->toolBox->currentIndex();
+            uint8_t index = 0;
+            switch (page)
+            {
+            case 0:
+            {
+                index = ui->listWidget_task_1->count();
+                break;
+            }
+            case 1:
+            {
+                index = ui->listWidget_task_2->count();
+                break;
+            }
+            case 2:
+            {
+                index = ui->listWidget_task_3->count();
+                break;
+            }
+            case 3:
+            {
+                index = ui->listWidget_task_4->count();
+                break;
+            }
+            case 4:
+            {
+                index = ui->listWidget_task_5->count();
+                break;
+            }
+            case 5:
+            {
+                index = ui->listWidget_task_6->count();
+                break;
+            }
+            default:break;
+            }
+            qDebug() << "page =" << page;
+            File_FastStart_Save(page,index,0,fileName);
+            File_Update_QuickStart_Content();
+        }
+        if(ui->tabWidget->currentWidget() == ui->tab_hidwindow)
         {
-            index = ui->listWidget_task_1->count();
-            break;
+            uint8_t index = ui->listWidget_hidwindow->count();
+            File_HideWindow_Content_Save(fileName,index);
+            File_Update_HideWindow_List();
+            hidewindow->File_Update_Hidewindow_Content();
         }
-        case 1:
-        {
-            index = ui->listWidget_task_2->count();
-            break;
-        }
-        case 2:
-        {
-            index = ui->listWidget_task_3->count();
-            break;
-        }
-        case 3:
-        {
-            index = ui->listWidget_task_4->count();
-            break;
-        }
-        case 4:
-        {
-            index = ui->listWidget_task_5->count();
-            break;
-        }
-        case 5:
-        {
-            index = ui->listWidget_task_6->count();
-            break;
-        }
-        default:break;
-        }
-        qDebug() << "page =" << page;
-        File_FastStart_Save(page,index,0,fileName);
-        File_Update_QuickStart_Content();
     }
     page_index = ui->toolBox->currentIndex();
 
@@ -1017,6 +1110,7 @@ void Form_MainWindow::on_listWidget_table_state_customContextMenuRequested(const
     functionMenu->addAction(Action_setQuickStart4);
     functionMenu->addAction(Action_setQuickStart5);
     functionMenu->addAction(Action_setQuickStart6);
+
     ptr->addMenu(functionMenu);
     // 在鼠标光标位置显示右键快捷菜单
     ptr->exec(QCursor::pos());
@@ -1086,6 +1180,14 @@ void Form_MainWindow::on_listWidget_task_6_customContextMenuRequested(const QPoi
     delete ptr;
 }
 
+void Form_MainWindow::on_listWidget_hidwindow_customContextMenuRequested(const QPoint &pos)
+{
+    Q_UNUSED(pos);
+    QMenu *ptr = new QMenu(this);
+    ptr->addAction(Action_listWidget_Delete_Item);
+    ptr->exec(QCursor::pos());
+    delete ptr;
+}
 
 void Form_MainWindow::on_listWidget_table_state_key_customContextMenuRequested(const QPoint &pos)
 {
@@ -1114,4 +1216,7 @@ void Form_MainWindow::on_listWidget_table_state_key_customContextMenuRequested(c
     // 手工创建的指针必须手工删除
     delete ptr;
 }
+
+
+
 

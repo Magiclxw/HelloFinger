@@ -72,7 +72,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <property name="iconSize">
        <size>
@@ -4298,7 +4298,7 @@ font: 9pt &quot;黑体&quot;;</string>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab">
+      <widget class="QWidget" name="tab_quickstart">
        <attribute name="title">
         <string>快捷启动</string>
        </attribute>
@@ -4347,7 +4347,7 @@ font: 9pt &quot;黑体&quot;;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>98</width>
+             <width>88</width>
              <height>88</height>
             </rect>
            </property>
@@ -4372,7 +4372,7 @@ font: 9pt &quot;黑体&quot;;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>98</width>
+             <width>88</width>
              <height>88</height>
             </rect>
            </property>
@@ -4397,7 +4397,7 @@ font: 9pt &quot;黑体&quot;;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>98</width>
+             <width>88</width>
              <height>88</height>
             </rect>
            </property>
@@ -4422,7 +4422,7 @@ font: 9pt &quot;黑体&quot;;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>98</width>
+             <width>88</width>
              <height>88</height>
             </rect>
            </property>
@@ -4447,7 +4447,7 @@ font: 9pt &quot;黑体&quot;;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>98</width>
+             <width>88</width>
              <height>88</height>
             </rect>
            </property>
@@ -4468,6 +4468,16 @@ font: 9pt &quot;黑体&quot;;</string>
            </layout>
           </widget>
          </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_hidwindow">
+       <attribute name="title">
+        <string> 侧边栏</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_16">
+        <item>
+         <widget class="QListWidget" name="listWidget_hidwindow"/>
         </item>
        </layout>
       </widget>

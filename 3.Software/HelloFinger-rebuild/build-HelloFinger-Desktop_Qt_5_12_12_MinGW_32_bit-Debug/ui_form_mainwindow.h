@@ -175,7 +175,7 @@ public:
     QSlider *slider_interval;
     QLabel *label_interval_value;
     QPushButton *pushButton_save_rgb;
-    QWidget *tab;
+    QWidget *tab_quickstart;
     QVBoxLayout *verticalLayout_8;
     QToolBox *toolBox;
     QWidget *page_task_1;
@@ -196,6 +196,9 @@ public:
     QWidget *page_task_6;
     QHBoxLayout *horizontalLayout_18;
     QListWidget *listWidget_task_6;
+    QWidget *tab_hidwindow;
+    QVBoxLayout *verticalLayout_16;
+    QListWidget *listWidget_hidwindow;
     QWidget *tab_system;
 
     void setupUi(QMainWindow *Form_MainWindow)
@@ -1520,11 +1523,11 @@ public:
         verticalLayout_5->addWidget(pushButton_save_rgb);
 
         tabWidget->addTab(tab_RGB, QString());
-        tab = new QWidget();
-        tab->setObjectName(QString::fromUtf8("tab"));
-        verticalLayout_8 = new QVBoxLayout(tab);
+        tab_quickstart = new QWidget();
+        tab_quickstart->setObjectName(QString::fromUtf8("tab_quickstart"));
+        verticalLayout_8 = new QVBoxLayout(tab_quickstart);
         verticalLayout_8->setObjectName(QString::fromUtf8("verticalLayout_8"));
-        toolBox = new QToolBox(tab);
+        toolBox = new QToolBox(tab_quickstart);
         toolBox->setObjectName(QString::fromUtf8("toolBox"));
         toolBox->setAcceptDrops(false);
         page_task_1 = new QWidget();
@@ -1543,7 +1546,7 @@ public:
         toolBox->addItem(page_task_1, QString::fromUtf8(" \345\220\257\345\212\250\344\273\273\345\212\241\344\270\200"));
         page_task_2 = new QWidget();
         page_task_2->setObjectName(QString::fromUtf8("page_task_2"));
-        page_task_2->setGeometry(QRect(0, 0, 98, 88));
+        page_task_2->setGeometry(QRect(0, 0, 88, 88));
         horizontalLayout_14 = new QHBoxLayout(page_task_2);
         horizontalLayout_14->setObjectName(QString::fromUtf8("horizontalLayout_14"));
         listWidget_task_2 = new QListWidget(page_task_2);
@@ -1555,7 +1558,7 @@ public:
         toolBox->addItem(page_task_2, QString::fromUtf8("\345\220\257\345\212\250\344\273\273\345\212\241\344\272\214"));
         page_task_3 = new QWidget();
         page_task_3->setObjectName(QString::fromUtf8("page_task_3"));
-        page_task_3->setGeometry(QRect(0, 0, 98, 88));
+        page_task_3->setGeometry(QRect(0, 0, 88, 88));
         horizontalLayout_15 = new QHBoxLayout(page_task_3);
         horizontalLayout_15->setObjectName(QString::fromUtf8("horizontalLayout_15"));
         listWidget_task_3 = new QListWidget(page_task_3);
@@ -1567,7 +1570,7 @@ public:
         toolBox->addItem(page_task_3, QString::fromUtf8("\345\220\257\345\212\250\344\273\273\345\212\241\344\270\211"));
         page_task_4 = new QWidget();
         page_task_4->setObjectName(QString::fromUtf8("page_task_4"));
-        page_task_4->setGeometry(QRect(0, 0, 98, 88));
+        page_task_4->setGeometry(QRect(0, 0, 88, 88));
         horizontalLayout_16 = new QHBoxLayout(page_task_4);
         horizontalLayout_16->setObjectName(QString::fromUtf8("horizontalLayout_16"));
         listWidget_task_4 = new QListWidget(page_task_4);
@@ -1579,7 +1582,7 @@ public:
         toolBox->addItem(page_task_4, QString::fromUtf8("\345\220\257\345\212\250\344\273\273\345\212\241\345\233\233"));
         page_task_5 = new QWidget();
         page_task_5->setObjectName(QString::fromUtf8("page_task_5"));
-        page_task_5->setGeometry(QRect(0, 0, 98, 88));
+        page_task_5->setGeometry(QRect(0, 0, 88, 88));
         horizontalLayout_17 = new QHBoxLayout(page_task_5);
         horizontalLayout_17->setObjectName(QString::fromUtf8("horizontalLayout_17"));
         listWidget_task_5 = new QListWidget(page_task_5);
@@ -1591,7 +1594,7 @@ public:
         toolBox->addItem(page_task_5, QString::fromUtf8("\345\220\257\345\212\250\344\273\273\345\212\241\344\272\224"));
         page_task_6 = new QWidget();
         page_task_6->setObjectName(QString::fromUtf8("page_task_6"));
-        page_task_6->setGeometry(QRect(0, 0, 98, 88));
+        page_task_6->setGeometry(QRect(0, 0, 88, 88));
         horizontalLayout_18 = new QHBoxLayout(page_task_6);
         horizontalLayout_18->setObjectName(QString::fromUtf8("horizontalLayout_18"));
         listWidget_task_6 = new QListWidget(page_task_6);
@@ -1604,7 +1607,17 @@ public:
 
         verticalLayout_8->addWidget(toolBox);
 
-        tabWidget->addTab(tab, QString());
+        tabWidget->addTab(tab_quickstart, QString());
+        tab_hidwindow = new QWidget();
+        tab_hidwindow->setObjectName(QString::fromUtf8("tab_hidwindow"));
+        verticalLayout_16 = new QVBoxLayout(tab_hidwindow);
+        verticalLayout_16->setObjectName(QString::fromUtf8("verticalLayout_16"));
+        listWidget_hidwindow = new QListWidget(tab_hidwindow);
+        listWidget_hidwindow->setObjectName(QString::fromUtf8("listWidget_hidwindow"));
+
+        verticalLayout_16->addWidget(listWidget_hidwindow);
+
+        tabWidget->addTab(tab_hidwindow, QString());
         tab_system = new QWidget();
         tab_system->setObjectName(QString::fromUtf8("tab_system"));
         tabWidget->addTab(tab_system, QString());
@@ -1615,7 +1628,7 @@ public:
 
         retranslateUi(Form_MainWindow);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(2);
         tabWidget_finger_func->setCurrentIndex(1);
         stackedWidget->setCurrentIndex(4);
         stackedWidget_key->setCurrentIndex(4);
@@ -2461,7 +2474,8 @@ public:
         toolBox->setItemText(toolBox->indexOf(page_task_4), QApplication::translate("Form_MainWindow", "\345\220\257\345\212\250\344\273\273\345\212\241\345\233\233", nullptr));
         toolBox->setItemText(toolBox->indexOf(page_task_5), QApplication::translate("Form_MainWindow", "\345\220\257\345\212\250\344\273\273\345\212\241\344\272\224", nullptr));
         toolBox->setItemText(toolBox->indexOf(page_task_6), QApplication::translate("Form_MainWindow", "\345\220\257\345\212\250\344\273\273\345\212\241\345\205\255", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("Form_MainWindow", "\345\277\253\346\215\267\345\220\257\345\212\250", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_quickstart), QApplication::translate("Form_MainWindow", "\345\277\253\346\215\267\345\220\257\345\212\250", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_hidwindow), QApplication::translate("Form_MainWindow", " \344\276\247\350\276\271\346\240\217", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_system), QApplication::translate("Form_MainWindow", "\347\263\273\347\273\237", nullptr));
     } // retranslateUi
 

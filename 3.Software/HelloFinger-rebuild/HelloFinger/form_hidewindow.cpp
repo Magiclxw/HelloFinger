@@ -32,7 +32,8 @@ void Form_HideWindow::File_Update_Hidewindow_Content()
 {
     uint8_t item = 0;
     uint8_t itemNum = 0;
-    itemNum = File_Fast_Start_Num_Get(7,item);
+    ui->listWidget_func->clear();
+    itemNum = File_HideWindow_ItemNum_Get();
     while(1)
     {
 
@@ -40,7 +41,7 @@ void Form_HideWindow::File_Update_Hidewindow_Content()
         {
             break;
         }
-        QString path = File_FastStart_Read(7,item);
+        QString path = File_HideWindow_Item_Read(item);
         {
             QListWidgetItem *listwidgetitem = new QListWidgetItem;
             QFileInfo fileInfo(path);
@@ -155,6 +156,32 @@ void Form_HideWindow::leaveEvent(QEvent *event)
         hideWindow();
 }
 
+void Form_HideWindow::Slot_UpdateCheckedItem(int dir)
+{
+    if(dir == Qt::Key_Left)
+    {
+        uint8_t currentIndex = ui->listWidget_func->currentIndex().row();
+        uint8_t nextIndex = currentIndex+1;
+
+        if(currentIndex == ui->listWidget_func->count()-1)
+        {
+            nextIndex = 0;
+        }
+        ui->listWidget_func->setCurrentRow(nextIndex);
+
+    }
+
+    if(dir == Qt::Key_Right)
+    {
+        uint8_t currentIndex = ui->listWidget_func->currentIndex().row();
+        uint8_t nextIndex = currentIndex-1;
+        if(currentIndex == 0 )
+        {
+            nextIndex = ui->listWidget_func->count()-1;
+        }
+        ui->listWidget_func->setCurrentRow(nextIndex);
+    }
+}
 
 
 Form_HideWindow::~Form_HideWindow()

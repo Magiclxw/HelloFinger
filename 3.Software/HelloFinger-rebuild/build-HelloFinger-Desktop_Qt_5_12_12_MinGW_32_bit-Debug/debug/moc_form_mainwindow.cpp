@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Form_MainWindow_t {
-    QByteArrayData data[57];
-    char stringdata0[1084];
+    QByteArrayData data[60];
+    char stringdata0[1174];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -63,31 +63,34 @@ QT_MOC_LITERAL(28, 355, 4), // "func"
 QT_MOC_LITERAL(29, 360, 5), // "char*"
 QT_MOC_LITERAL(30, 366, 3), // "key"
 QT_MOC_LITERAL(31, 370, 7), // "key_len"
-QT_MOC_LITERAL(32, 378, 14), // "Slot_AddFinger"
-QT_MOC_LITERAL(33, 393, 16), // "Slot_EnrollState"
-QT_MOC_LITERAL(34, 410, 6), // "state1"
-QT_MOC_LITERAL(35, 417, 6), // "state2"
-QT_MOC_LITERAL(36, 424, 17), // "Slot_DeleteFinger"
-QT_MOC_LITERAL(37, 442, 18), // "Slot_RefreshFinger"
-QT_MOC_LITERAL(38, 461, 21), // "Slot_UpdateIndexTable"
-QT_MOC_LITERAL(39, 483, 23), // "Slot_SetWindowsPassword"
-QT_MOC_LITERAL(40, 507, 16), // "Slot_SetPassword"
-QT_MOC_LITERAL(41, 524, 24), // "Slot_SetAccount_Password"
-QT_MOC_LITERAL(42, 549, 18), // "Slot_SetQuickStart"
-QT_MOC_LITERAL(43, 568, 17), // "Slot_SetBreathRGB"
-QT_MOC_LITERAL(44, 586, 16), // "Slot_RGB_Display"
-QT_MOC_LITERAL(45, 603, 20), // "Slot_ChangeItemValue"
-QT_MOC_LITERAL(46, 624, 18), // "Slot_SaveItemValue"
-QT_MOC_LITERAL(47, 643, 16), // "Slot_SetShortcut"
-QT_MOC_LITERAL(48, 660, 25), // "Slot_DeleteQuickStartItem"
-QT_MOC_LITERAL(49, 686, 47), // "on_listWidget_task_1_customCo..."
-QT_MOC_LITERAL(50, 734, 52), // "on_listWidget_table_state_cus..."
-QT_MOC_LITERAL(51, 787, 47), // "on_listWidget_task_2_customCo..."
-QT_MOC_LITERAL(52, 835, 47), // "on_listWidget_task_3_customCo..."
-QT_MOC_LITERAL(53, 883, 47), // "on_listWidget_task_4_customCo..."
-QT_MOC_LITERAL(54, 931, 47), // "on_listWidget_task_5_customCo..."
-QT_MOC_LITERAL(55, 979, 56), // "on_listWidget_table_state_key..."
-QT_MOC_LITERAL(56, 1036, 47) // "on_listWidget_task_6_customCo..."
+QT_MOC_LITERAL(32, 378, 34), // "Signal_UpdateHideWindowChecke..."
+QT_MOC_LITERAL(33, 413, 3), // "dir"
+QT_MOC_LITERAL(34, 417, 14), // "Slot_AddFinger"
+QT_MOC_LITERAL(35, 432, 16), // "Slot_EnrollState"
+QT_MOC_LITERAL(36, 449, 6), // "state1"
+QT_MOC_LITERAL(37, 456, 6), // "state2"
+QT_MOC_LITERAL(38, 463, 17), // "Slot_DeleteFinger"
+QT_MOC_LITERAL(39, 481, 18), // "Slot_RefreshFinger"
+QT_MOC_LITERAL(40, 500, 21), // "Slot_UpdateIndexTable"
+QT_MOC_LITERAL(41, 522, 23), // "Slot_SetWindowsPassword"
+QT_MOC_LITERAL(42, 546, 16), // "Slot_SetPassword"
+QT_MOC_LITERAL(43, 563, 24), // "Slot_SetAccount_Password"
+QT_MOC_LITERAL(44, 588, 18), // "Slot_SetQuickStart"
+QT_MOC_LITERAL(45, 607, 17), // "Slot_SetBreathRGB"
+QT_MOC_LITERAL(46, 625, 16), // "Slot_RGB_Display"
+QT_MOC_LITERAL(47, 642, 20), // "Slot_ChangeItemValue"
+QT_MOC_LITERAL(48, 663, 18), // "Slot_SaveItemValue"
+QT_MOC_LITERAL(49, 682, 16), // "Slot_SetShortcut"
+QT_MOC_LITERAL(50, 699, 25), // "Slot_DeleteListWidgetItem"
+QT_MOC_LITERAL(51, 725, 47), // "on_listWidget_task_1_customCo..."
+QT_MOC_LITERAL(52, 773, 52), // "on_listWidget_table_state_cus..."
+QT_MOC_LITERAL(53, 826, 47), // "on_listWidget_task_2_customCo..."
+QT_MOC_LITERAL(54, 874, 47), // "on_listWidget_task_3_customCo..."
+QT_MOC_LITERAL(55, 922, 47), // "on_listWidget_task_4_customCo..."
+QT_MOC_LITERAL(56, 970, 47), // "on_listWidget_task_5_customCo..."
+QT_MOC_LITERAL(57, 1018, 56), // "on_listWidget_table_state_key..."
+QT_MOC_LITERAL(58, 1075, 47), // "on_listWidget_task_6_customCo..."
+QT_MOC_LITERAL(59, 1123, 50) // "on_listWidget_hidwindow_custo..."
 
     },
     "Form_MainWindow\0Signal_AddFinger\0\0"
@@ -100,15 +103,16 @@ QT_MOC_LITERAL(56, 1036, 47) // "on_listWidget_task_6_customCo..."
     "Signal_SetQuickStart\0QUICK_START_e\0"
     "startID\0Signal_SetBreathRGB\0color_R\0"
     "color_G\0color_B\0interval\0Signal_SetShortcut\0"
-    "func\0char*\0key\0key_len\0Slot_AddFinger\0"
-    "Slot_EnrollState\0state1\0state2\0"
-    "Slot_DeleteFinger\0Slot_RefreshFinger\0"
-    "Slot_UpdateIndexTable\0Slot_SetWindowsPassword\0"
-    "Slot_SetPassword\0Slot_SetAccount_Password\0"
-    "Slot_SetQuickStart\0Slot_SetBreathRGB\0"
-    "Slot_RGB_Display\0Slot_ChangeItemValue\0"
-    "Slot_SaveItemValue\0Slot_SetShortcut\0"
-    "Slot_DeleteQuickStartItem\0"
+    "func\0char*\0key\0key_len\0"
+    "Signal_UpdateHideWindowCheckedItem\0"
+    "dir\0Slot_AddFinger\0Slot_EnrollState\0"
+    "state1\0state2\0Slot_DeleteFinger\0"
+    "Slot_RefreshFinger\0Slot_UpdateIndexTable\0"
+    "Slot_SetWindowsPassword\0Slot_SetPassword\0"
+    "Slot_SetAccount_Password\0Slot_SetQuickStart\0"
+    "Slot_SetBreathRGB\0Slot_RGB_Display\0"
+    "Slot_ChangeItemValue\0Slot_SaveItemValue\0"
+    "Slot_SetShortcut\0Slot_DeleteListWidgetItem\0"
     "on_listWidget_task_1_customContextMenuRequested\0"
     "on_listWidget_table_state_customContextMenuRequested\0"
     "on_listWidget_task_2_customContextMenuRequested\0"
@@ -116,7 +120,8 @@ QT_MOC_LITERAL(56, 1036, 47) // "on_listWidget_task_6_customCo..."
     "on_listWidget_task_4_customContextMenuRequested\0"
     "on_listWidget_task_5_customContextMenuRequested\0"
     "on_listWidget_table_state_key_customContextMenuRequested\0"
-    "on_listWidget_task_6_customContextMenuRequested"
+    "on_listWidget_task_6_customContextMenuRequested\0"
+    "on_listWidget_hidwindow_customContextMenuRequested"
 };
 #undef QT_MOC_LITERAL
 
@@ -126,49 +131,51 @@ static const uint qt_meta_data_Form_MainWindow[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      33,   14, // methods
+      35,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-      10,       // signalCount
+      11,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    4,  179,    2, 0x06 /* Public */,
-       8,    1,  188,    2, 0x06 /* Public */,
-      10,    0,  191,    2, 0x06 /* Public */,
-      11,    0,  192,    2, 0x06 /* Public */,
-      12,    3,  193,    2, 0x06 /* Public */,
-      16,    3,  200,    2, 0x06 /* Public */,
-      17,    4,  207,    2, 0x06 /* Public */,
-      19,    3,  216,    2, 0x06 /* Public */,
-      22,    4,  223,    2, 0x06 /* Public */,
-      27,    5,  232,    2, 0x06 /* Public */,
+       1,    4,  189,    2, 0x06 /* Public */,
+       8,    1,  198,    2, 0x06 /* Public */,
+      10,    0,  201,    2, 0x06 /* Public */,
+      11,    0,  202,    2, 0x06 /* Public */,
+      12,    3,  203,    2, 0x06 /* Public */,
+      16,    3,  210,    2, 0x06 /* Public */,
+      17,    4,  217,    2, 0x06 /* Public */,
+      19,    3,  226,    2, 0x06 /* Public */,
+      22,    4,  233,    2, 0x06 /* Public */,
+      27,    5,  242,    2, 0x06 /* Public */,
+      32,    1,  253,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      32,    0,  243,    2, 0x0a /* Public */,
-      33,    2,  244,    2, 0x0a /* Public */,
-      36,    0,  249,    2, 0x0a /* Public */,
-      37,    0,  250,    2, 0x0a /* Public */,
-      38,    0,  251,    2, 0x0a /* Public */,
-      39,    0,  252,    2, 0x0a /* Public */,
-      40,    0,  253,    2, 0x0a /* Public */,
-      41,    0,  254,    2, 0x0a /* Public */,
-      42,    1,  255,    2, 0x0a /* Public */,
-      43,    0,  258,    2, 0x0a /* Public */,
-      44,    0,  259,    2, 0x0a /* Public */,
-      45,    0,  260,    2, 0x0a /* Public */,
-      46,    0,  261,    2, 0x0a /* Public */,
-      47,    0,  262,    2, 0x0a /* Public */,
-      48,    0,  263,    2, 0x0a /* Public */,
-      49,    1,  264,    2, 0x08 /* Private */,
-      50,    1,  267,    2, 0x08 /* Private */,
-      51,    1,  270,    2, 0x08 /* Private */,
-      52,    1,  273,    2, 0x08 /* Private */,
-      53,    1,  276,    2, 0x08 /* Private */,
-      54,    1,  279,    2, 0x08 /* Private */,
-      55,    1,  282,    2, 0x08 /* Private */,
-      56,    1,  285,    2, 0x08 /* Private */,
+      34,    0,  256,    2, 0x0a /* Public */,
+      35,    2,  257,    2, 0x0a /* Public */,
+      38,    0,  262,    2, 0x0a /* Public */,
+      39,    0,  263,    2, 0x0a /* Public */,
+      40,    0,  264,    2, 0x0a /* Public */,
+      41,    0,  265,    2, 0x0a /* Public */,
+      42,    0,  266,    2, 0x0a /* Public */,
+      43,    0,  267,    2, 0x0a /* Public */,
+      44,    1,  268,    2, 0x0a /* Public */,
+      45,    0,  271,    2, 0x0a /* Public */,
+      46,    0,  272,    2, 0x0a /* Public */,
+      47,    0,  273,    2, 0x0a /* Public */,
+      48,    0,  274,    2, 0x0a /* Public */,
+      49,    0,  275,    2, 0x0a /* Public */,
+      50,    0,  276,    2, 0x0a /* Public */,
+      51,    1,  277,    2, 0x08 /* Private */,
+      52,    1,  280,    2, 0x08 /* Private */,
+      53,    1,  283,    2, 0x08 /* Private */,
+      54,    1,  286,    2, 0x08 /* Private */,
+      55,    1,  289,    2, 0x08 /* Private */,
+      56,    1,  292,    2, 0x08 /* Private */,
+      57,    1,  295,    2, 0x08 /* Private */,
+      58,    1,  298,    2, 0x08 /* Private */,
+      59,    1,  301,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3, 0x80000000 | 3, 0x80000000 | 3, 0x80000000 | 3,    4,    5,    6,    7,
@@ -181,10 +188,11 @@ static const uint qt_meta_data_Form_MainWindow[] = {
     QMetaType::Void, 0x80000000 | 3, 0x80000000 | 20, 0x80000000 | 3,   14,   21,   15,
     QMetaType::Void, 0x80000000 | 3, 0x80000000 | 3, 0x80000000 | 3, 0x80000000 | 3,   23,   24,   25,   26,
     QMetaType::Void, 0x80000000 | 3, 0x80000000 | 3, 0x80000000 | 29, 0x80000000 | 3, 0x80000000 | 3,   14,   28,   30,   31,   15,
+    QMetaType::Void, QMetaType::Int,   33,
 
  // slots: parameters
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 3, 0x80000000 | 3,   34,   35,
+    QMetaType::Void, 0x80000000 | 3, 0x80000000 | 3,   36,   37,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -198,6 +206,7 @@ static const uint qt_meta_data_Form_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::QPoint,    4,
     QMetaType::Void, QMetaType::QPoint,    4,
     QMetaType::Void, QMetaType::QPoint,    4,
     QMetaType::Void, QMetaType::QPoint,    4,
@@ -226,29 +235,31 @@ void Form_MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 7: _t->Signal_SetQuickStart((*reinterpret_cast< uint8_t(*)>(_a[1])),(*reinterpret_cast< QUICK_START_e(*)>(_a[2])),(*reinterpret_cast< uint8_t(*)>(_a[3]))); break;
         case 8: _t->Signal_SetBreathRGB((*reinterpret_cast< uint8_t(*)>(_a[1])),(*reinterpret_cast< uint8_t(*)>(_a[2])),(*reinterpret_cast< uint8_t(*)>(_a[3])),(*reinterpret_cast< uint8_t(*)>(_a[4]))); break;
         case 9: _t->Signal_SetShortcut((*reinterpret_cast< uint8_t(*)>(_a[1])),(*reinterpret_cast< uint8_t(*)>(_a[2])),(*reinterpret_cast< char*(*)>(_a[3])),(*reinterpret_cast< uint8_t(*)>(_a[4])),(*reinterpret_cast< uint8_t(*)>(_a[5]))); break;
-        case 10: _t->Slot_AddFinger(); break;
-        case 11: _t->Slot_EnrollState((*reinterpret_cast< uint8_t(*)>(_a[1])),(*reinterpret_cast< uint8_t(*)>(_a[2]))); break;
-        case 12: _t->Slot_DeleteFinger(); break;
-        case 13: _t->Slot_RefreshFinger(); break;
-        case 14: _t->Slot_UpdateIndexTable(); break;
-        case 15: _t->Slot_SetWindowsPassword(); break;
-        case 16: _t->Slot_SetPassword(); break;
-        case 17: _t->Slot_SetAccount_Password(); break;
-        case 18: _t->Slot_SetQuickStart((*reinterpret_cast< QUICK_START_e(*)>(_a[1]))); break;
-        case 19: _t->Slot_SetBreathRGB(); break;
-        case 20: _t->Slot_RGB_Display(); break;
-        case 21: _t->Slot_ChangeItemValue(); break;
-        case 22: _t->Slot_SaveItemValue(); break;
-        case 23: _t->Slot_SetShortcut(); break;
-        case 24: _t->Slot_DeleteQuickStartItem(); break;
-        case 25: _t->on_listWidget_task_1_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
-        case 26: _t->on_listWidget_table_state_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
-        case 27: _t->on_listWidget_task_2_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
-        case 28: _t->on_listWidget_task_3_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
-        case 29: _t->on_listWidget_task_4_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
-        case 30: _t->on_listWidget_task_5_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
-        case 31: _t->on_listWidget_table_state_key_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
-        case 32: _t->on_listWidget_task_6_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 10: _t->Signal_UpdateHideWindowCheckedItem((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 11: _t->Slot_AddFinger(); break;
+        case 12: _t->Slot_EnrollState((*reinterpret_cast< uint8_t(*)>(_a[1])),(*reinterpret_cast< uint8_t(*)>(_a[2]))); break;
+        case 13: _t->Slot_DeleteFinger(); break;
+        case 14: _t->Slot_RefreshFinger(); break;
+        case 15: _t->Slot_UpdateIndexTable(); break;
+        case 16: _t->Slot_SetWindowsPassword(); break;
+        case 17: _t->Slot_SetPassword(); break;
+        case 18: _t->Slot_SetAccount_Password(); break;
+        case 19: _t->Slot_SetQuickStart((*reinterpret_cast< QUICK_START_e(*)>(_a[1]))); break;
+        case 20: _t->Slot_SetBreathRGB(); break;
+        case 21: _t->Slot_RGB_Display(); break;
+        case 22: _t->Slot_ChangeItemValue(); break;
+        case 23: _t->Slot_SaveItemValue(); break;
+        case 24: _t->Slot_SetShortcut(); break;
+        case 25: _t->Slot_DeleteListWidgetItem(); break;
+        case 26: _t->on_listWidget_task_1_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 27: _t->on_listWidget_table_state_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 28: _t->on_listWidget_task_2_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 29: _t->on_listWidget_task_3_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 30: _t->on_listWidget_task_4_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 31: _t->on_listWidget_task_5_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 32: _t->on_listWidget_table_state_key_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 33: _t->on_listWidget_task_6_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 34: _t->on_listWidget_hidwindow_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -323,6 +334,13 @@ void Form_MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
                 return;
             }
         }
+        {
+            using _t = void (Form_MainWindow::*)(int );
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&Form_MainWindow::Signal_UpdateHideWindowCheckedItem)) {
+                *result = 10;
+                return;
+            }
+        }
     }
 }
 
@@ -355,13 +373,13 @@ int Form_MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 33)
+        if (_id < 35)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 33;
+        _id -= 35;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 33)
+        if (_id < 35)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 33;
+        _id -= 35;
     }
     return _id;
 }
@@ -432,6 +450,13 @@ void Form_MainWindow::Signal_SetShortcut(uint8_t _t1, uint8_t _t2, char * _t3, u
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)), const_cast<void*>(reinterpret_cast<const void*>(&_t4)), const_cast<void*>(reinterpret_cast<const void*>(&_t5)) };
     QMetaObject::activate(this, &staticMetaObject, 9, _a);
+}
+
+// SIGNAL 10
+void Form_MainWindow::Signal_UpdateHideWindowCheckedItem(int _t1)
+{
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 10, _a);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

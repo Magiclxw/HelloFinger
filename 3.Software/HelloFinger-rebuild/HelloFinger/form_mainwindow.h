@@ -30,7 +30,7 @@ public:
     void File_Update_TableContent(QString path);
     void File_Save_Shortcut();
     void File_Update_QuickStart_Content();
-
+    void File_Update_HideWindow_List();
 private:
     Ui::Form_MainWindow *ui;
 
@@ -53,7 +53,7 @@ public slots:
     void Slot_ChangeItemValue(void);
     void Slot_SaveItemValue(void);
     void Slot_SetShortcut(void);
-    void Slot_DeleteQuickStartItem(void);
+    void Slot_DeleteListWidgetItem(void);
 
 signals:
     void Signal_AddFinger(uint8_t pos,uint8_t times,uint8_t param1,uint8_t param2);
@@ -66,6 +66,7 @@ signals:
     void Signal_SetQuickStart(uint8_t fingertype,QUICK_START_e startID,uint8_t index);
     void Signal_SetBreathRGB(uint8_t color_R,uint8_t color_G,uint8_t color_B,uint8_t interval);
     void Signal_SetShortcut(uint8_t fingertype,uint8_t func,char* key,uint8_t key_len,uint8_t index);
+    void Signal_UpdateHideWindowCheckedItem(int dir);
 private slots:
     void on_listWidget_task_1_customContextMenuRequested(const QPoint &pos);
     void on_listWidget_table_state_customContextMenuRequested(const QPoint &pos);
@@ -75,5 +76,6 @@ private slots:
     void on_listWidget_task_5_customContextMenuRequested(const QPoint &pos);
     void on_listWidget_table_state_key_customContextMenuRequested(const QPoint &pos);
     void on_listWidget_task_6_customContextMenuRequested(const QPoint &pos);
+    void on_listWidget_hidwindow_customContextMenuRequested(const QPoint &pos);
 };
 #endif // FORM_MAINWINDOW_H

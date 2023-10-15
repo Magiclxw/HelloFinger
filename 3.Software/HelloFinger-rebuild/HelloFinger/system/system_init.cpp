@@ -14,6 +14,7 @@
 
 QString quick_start_file = "config/quick_start";
 QString table_name_file = "table_name.json";
+QString hidewindow_list_file = "config/hidewindowList.json";
 
 
 QFile jsonFile(table_name_file);
@@ -106,7 +107,7 @@ void File_FastStart_Save(uint8_t page,uint8_t index,uint8_t checkStete,QString p
             }
             else
             {
-                for(uint8_t i=index; i<itemNum-index; i++)
+                for(uint8_t i=index; i<itemNum-1; i++)
                 {
                     obj["item"+QString::number(i)] = obj.take("item"+QString::number(i+1));
                 }
@@ -211,6 +212,141 @@ uint8_t File_Fast_Start_Num_Get(uint8_t page,uint8_t index)
             {
                 QJsonObject obj = doc.object();
                 path = obj["item"+QString::number(index)].toString();
+                qDebug() << "path:" << path;
+                itemNum = obj.count();
+                if(itemNum == 1 && path == "")
+                {
+                    itemNum = 0;
+                }
+                qDebug() << "item num= " << itemNum;
+            }
+
+        }
+        else
+        {
+
+        }
+
+    }
+    return itemNum;
+}
+
+void File_HideWindow_Content_Save(QString path,uint8_t index)
+{
+    QString filePath;
+    filePath = hidewindow_list_file;
+    QFile file(filePath);
+
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        QByteArray jsonData = file.readAll();
+        file.close();
+
+        // 解析JSON数据
+        QJsonDocument doc = QJsonDocument::fromJson(jsonData);
+        QJsonObject obj = doc.object();
+        if(path == "")  //空 删除数据
+        {
+            uint8_t itemNum = 0;
+            //obj.remove("item"+QString::number(index));
+
+            itemNum = obj.size();
+            if(index == itemNum-1)  //删除的是最后一个元素
+            {
+                obj.remove("item"+QString::number(index));
+            }
+            else
+            {
+                for(uint8_t i=index; i<itemNum-1; i++)  //数据补齐
+                {
+                    obj["item"+QString::number(i)] = obj.take("item"+QString::number(i+1));
+                }
+            }
+
+        }
+        else
+        {
+            // 修改数据
+            obj["item"+QString::number(index)] = path;
+        }
+        // 将修改后的数据写回JSON文件
+        if (file.open(QIODevice::WriteOnly | QIODevice::Text))
+        {
+            QJsonDocument newDoc(obj);
+            file.write(newDoc.toJson());
+            file.close();
+        }
+    }
+    else
+    {
+        QJsonObject obj;
+        QString item = "item"+QString::number(index);
+        obj.insert(item,path);
+        QJsonDocument doc(obj);
+        QByteArray data = doc.toJson();
+        file.open(QIODevice::WriteOnly);
+        file.write(data);
+        file.close();
+    }
+}
+
+QString File_HideWindow_Item_Read(uint8_t index)
+{
+    QString path;
+    QString filePath;
+    QJsonObject obj;
+    filePath = hidewindow_list_file;
+    QFile file(filePath);
+
+    if (!file.open(QIODevice::ReadOnly)) {
+
+    }
+    else
+    {
+        QByteArray data = file.readAll();
+        file.close();
+        QJsonDocument doc = QJsonDocument::fromJson(data);
+        if(!doc.isNull())
+        {
+            if(doc.isObject())
+            {
+                QJsonObject obj = doc.object();
+                path = obj["item"+QString::number(index)].toString();
+                qDebug() << "path:" << path;
+            }
+
+        }
+        else
+        {
+
+        }
+
+    }
+    return path;
+}
+
+uint8_t File_HideWindow_ItemNum_Get(void)
+{
+    uint8_t itemNum = 0;
+    QString path;
+    QString filePath;
+    QJsonObject obj;
+    filePath = hidewindow_list_file;
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly)) {
+
+    }
+    else
+    {
+        QByteArray data = file.readAll();
+        file.close();
+        QJsonDocument doc = QJsonDocument::fromJson(data);
+        if(!doc.isNull())
+        {
+            if(doc.isObject())
+            {
+                QJsonObject obj = doc.object();
+                path = obj["item"+QString::number(0)].toString();
                 qDebug() << "path:" << path;
                 itemNum = obj.count();
                 if(itemNum == 1 && path == "")

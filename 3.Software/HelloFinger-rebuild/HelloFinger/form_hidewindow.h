@@ -48,6 +48,8 @@ private:
     bool m_isLMousePress;
     QPoint m_relativePos;
     HIDEPOSATION m_hp;
+public slots:
+    void Slot_UpdateCheckedItem(int dir);
 };
 
 #endif // FORM_HIDEWINDOW_H

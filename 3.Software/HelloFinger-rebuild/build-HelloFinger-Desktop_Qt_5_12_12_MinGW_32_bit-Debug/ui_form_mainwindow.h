@@ -24,6 +24,7 @@
 #include <QtWidgets/QSlider>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QTabWidget>
+#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QToolBox>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -199,6 +200,14 @@ public:
     QWidget *tab_hidwindow;
     QVBoxLayout *verticalLayout_16;
     QListWidget *listWidget_hidwindow;
+    QWidget *tab;
+    QVBoxLayout *verticalLayout_17;
+    QWidget *widget_21;
+    QWidget *tab_2;
+    QVBoxLayout *verticalLayout_18;
+    QTextEdit *textEdit_chat_output;
+    QTextEdit *textEdit_chat_input;
+    QPushButton *pushButton_chat_data_send;
     QWidget *tab_system;
 
     void setupUi(QMainWindow *Form_MainWindow)
@@ -207,6 +216,7 @@ public:
             Form_MainWindow->setObjectName(QString::fromUtf8("Form_MainWindow"));
         Form_MainWindow->resize(230, 396);
         Form_MainWindow->setAcceptDrops(true);
+        Form_MainWindow->setIconSize(QSize(30, 30));
         Form_MainWindow->setToolButtonStyle(Qt::ToolButtonIconOnly);
         Form_MainWindow->setTabShape(QTabWidget::Rounded);
         centralwidget = new QWidget(Form_MainWindow);
@@ -227,6 +237,7 @@ public:
         tabWidget->setFocusPolicy(Qt::TabFocus);
         tabWidget->setContextMenuPolicy(Qt::DefaultContextMenu);
         tabWidget->setLayoutDirection(Qt::LeftToRight);
+        tabWidget->setStyleSheet(QString::fromUtf8(""));
         tabWidget->setTabPosition(QTabWidget::West);
         tabWidget->setTabShape(QTabWidget::Rounded);
         tabWidget->setIconSize(QSize(16, 16));
@@ -236,7 +247,9 @@ public:
         tab_Table = new QWidget();
         tab_Table->setObjectName(QString::fromUtf8("tab_Table"));
         verticalLayout = new QVBoxLayout(tab_Table);
+        verticalLayout->setSpacing(0);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setContentsMargins(0, 0, 0, 0);
         tabWidget_finger_func = new QTabWidget(tab_Table);
         tabWidget_finger_func->setObjectName(QString::fromUtf8("tabWidget_finger_func"));
         tab_finger = new QWidget();
@@ -882,6 +895,7 @@ public:
         new QListWidgetItem(listWidget_table_state_key);
         new QListWidgetItem(listWidget_table_state_key);
         listWidget_table_state_key->setObjectName(QString::fromUtf8("listWidget_table_state_key"));
+        listWidget_table_state_key->setStyleSheet(QString::fromUtf8(""));
 
         verticalLayout_15->addWidget(listWidget_table_state_key);
 
@@ -1618,6 +1632,37 @@ public:
         verticalLayout_16->addWidget(listWidget_hidwindow);
 
         tabWidget->addTab(tab_hidwindow, QString());
+        tab = new QWidget();
+        tab->setObjectName(QString::fromUtf8("tab"));
+        verticalLayout_17 = new QVBoxLayout(tab);
+        verticalLayout_17->setObjectName(QString::fromUtf8("verticalLayout_17"));
+        widget_21 = new QWidget(tab);
+        widget_21->setObjectName(QString::fromUtf8("widget_21"));
+
+        verticalLayout_17->addWidget(widget_21);
+
+        tabWidget->addTab(tab, QString());
+        tab_2 = new QWidget();
+        tab_2->setObjectName(QString::fromUtf8("tab_2"));
+        verticalLayout_18 = new QVBoxLayout(tab_2);
+        verticalLayout_18->setObjectName(QString::fromUtf8("verticalLayout_18"));
+        textEdit_chat_output = new QTextEdit(tab_2);
+        textEdit_chat_output->setObjectName(QString::fromUtf8("textEdit_chat_output"));
+        textEdit_chat_output->setTextInteractionFlags(Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
+
+        verticalLayout_18->addWidget(textEdit_chat_output);
+
+        textEdit_chat_input = new QTextEdit(tab_2);
+        textEdit_chat_input->setObjectName(QString::fromUtf8("textEdit_chat_input"));
+
+        verticalLayout_18->addWidget(textEdit_chat_input);
+
+        pushButton_chat_data_send = new QPushButton(tab_2);
+        pushButton_chat_data_send->setObjectName(QString::fromUtf8("pushButton_chat_data_send"));
+
+        verticalLayout_18->addWidget(pushButton_chat_data_send);
+
+        tabWidget->addTab(tab_2, QString());
         tab_system = new QWidget();
         tab_system->setObjectName(QString::fromUtf8("tab_system"));
         tabWidget->addTab(tab_system, QString());
@@ -1628,10 +1673,10 @@ public:
 
         retranslateUi(Form_MainWindow);
 
-        tabWidget->setCurrentIndex(2);
+        tabWidget->setCurrentIndex(5);
         tabWidget_finger_func->setCurrentIndex(1);
         stackedWidget->setCurrentIndex(4);
-        stackedWidget_key->setCurrentIndex(4);
+        stackedWidget_key->setCurrentIndex(5);
         toolBox->setCurrentIndex(0);
 
 
@@ -2476,6 +2521,9 @@ public:
         toolBox->setItemText(toolBox->indexOf(page_task_6), QApplication::translate("Form_MainWindow", "\345\220\257\345\212\250\344\273\273\345\212\241\345\205\255", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_quickstart), QApplication::translate("Form_MainWindow", "\345\277\253\346\215\267\345\220\257\345\212\250", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_hidwindow), QApplication::translate("Form_MainWindow", " \344\276\247\350\276\271\346\240\217", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("Form_MainWindow", "Action", nullptr));
+        pushButton_chat_data_send->setText(QApplication::translate("Form_MainWindow", " \345\217\221\351\200\201", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("Form_MainWindow", "Chat", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_system), QApplication::translate("Form_MainWindow", "\347\263\273\347\273\237", nullptr));
     } // retranslateUi
 

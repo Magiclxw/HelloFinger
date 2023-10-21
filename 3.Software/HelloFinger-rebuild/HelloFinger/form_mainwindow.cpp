@@ -24,6 +24,17 @@
 #include <QProcess>
 #include <QTextCodec>
 #include "hid_function.h"
+#include "interface_chat.h"
+
+//QNetworkAccessManager manager;
+
+//// 构建API请求
+//QNetworkRequest request;
+//// 发送POST请求
+//QNetworkReply *reply;
+//QString api_server = "https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation";
+//QByteArray api_key = "sk-6f6c005f9a484e7385c3161f54732c79";
+
 QColor itemValid(0,255,255);       //指纹有效颜色
 QColor itemUnValid(255,255,255);   //指纹无效颜色
 QColor itemkeyValid(0,255,0);       //指纹+按键有效颜色
@@ -61,8 +72,11 @@ QString table_1_Content = "table1Content.json";
 QString table_2_Content = "table2Content.json";
 
 QTimer *rgb_timer = NULL;
+QTimer *hidewindowHold_timer = NULL;
 
 Form_HideWindow *hidewindow = NULL;
+interface_chat *chat = NULL;
+
 
 Form_MainWindow::Form_MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -74,13 +88,23 @@ Form_MainWindow::Form_MainWindow(QWidget *parent)
     ui->pushButton_save_param_key->hide();
 
     this->setWindowTitle("HelloFinger");
+    this->setWindowIcon(QIcon(":/icon/main_icon.jpg"));
     this->setFixedSize(this->width(),this->height());
+
+    QFile file(":/shape/darkgray.css"); // 创建QFile对象，指定样式表文件路径
+    file.open(QFile::ReadOnly); // 打开文件，只读模式
+    QString styleSheet = QLatin1String(file.readAll()); // 读取文件内容到字符串
+    setStyleSheet(styleSheet); // 应用样式表
+
+    ui->pushButton_chat_data_send->setFocus();
 
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 
     hidewindow = new Form_HideWindow;
     hidewindow->show();
     hidewindow->File_Update_Hidewindow_Content();
+
+    chat = new interface_chat;
 
     QMenuBar *bar = menuBar();
     this->setMenuBar(bar);
@@ -92,6 +116,7 @@ Form_MainWindow::Form_MainWindow(QWidget *parent)
     File_Update_HideWindow_List();      //更新侧边栏启动列表
 
     rgb_timer = new QTimer; //初始化rgb显示定时器
+    hidewindowHold_timer = new QTimer; //初始化侧边栏隐藏定时器
 
     Action_Add = Menu->addAction("增加");
     Action_Delete = Menu->addAction("删除");
@@ -161,6 +186,10 @@ Form_MainWindow::Form_MainWindow(QWidget *parent)
     connect(ui->pushButton_save_rgb,&QPushButton::clicked,this,[=](){emit Signal_SetBreathRGB((uint8_t)tmp_R,(uint8_t)tmp_G,(uint8_t)tmp_B,interval);});
 
     connect(this,&Form_MainWindow::Signal_UpdateHideWindowCheckedItem,hidewindow,&Form_HideWindow::Slot_UpdateCheckedItem);
+    connect(hidewindowHold_timer,&QTimer::timeout,hidewindow,[=](){hidewindow->hideWindow();hidewindowHold_timer->stop();});
+
+    connect(ui->pushButton_chat_data_send,&QPushButton::clicked,this,&Form_MainWindow::Slot_Chat_Send_Msg);
+    connect(chat,&interface_chat::Signal_Chat_Msg_Received,this,&Form_MainWindow::Chat_RevMsg_Handler);
 }
 
 void Form_MainWindow::Slot_UpdateIndexTable()
@@ -575,7 +604,9 @@ void Form_MainWindow::on_keyEvent(QKeyEvent* event)  //全局按键事件
             if(event->modifiers() == (Qt::ShiftModifier|Qt::ControlModifier|Qt::AltModifier))
             {
                 hidewindow->showWindow();
+
                 qDebug() << "encoder ";
+                hidewindowHold_timer->start(3000);
             }
         }
         if(event->key() == Qt::Key_0)
@@ -999,6 +1030,12 @@ void Form_MainWindow::Slot_SetShortcut()
 
 }
 
+void Form_MainWindow::Slot_Chat_Send_Msg(void)
+{
+    QString msg = ui->textEdit_chat_input->toPlainText();
+    chat->Chat_Send_Question(msg);
+}
+
 void Form_MainWindow::dropEvent(QDropEvent *event)           // 放下事件
 {
     uint8_t page_index = 0; //文件拖入页索引
@@ -1079,6 +1116,15 @@ void Form_MainWindow::dragEnterEvent(QDragEnterEvent *event) // 拖动进入事�
 //    }
 //}
 
+void Form_MainWindow::Chat_RevMsg_Handler(QString msg)
+{
+    //ui->textEdit_chat_output->setText(msg);
+    QString ask = "问：\r\n"+ui->textEdit_chat_input->toPlainText();
+    QString answer = "答：\r\n"+msg;
+    ui->textEdit_chat_output->append(ask);
+    ui->textEdit_chat_input->clear();
+    ui->textEdit_chat_output->append(answer);
+}
 
 Form_MainWindow::~Form_MainWindow()
 {

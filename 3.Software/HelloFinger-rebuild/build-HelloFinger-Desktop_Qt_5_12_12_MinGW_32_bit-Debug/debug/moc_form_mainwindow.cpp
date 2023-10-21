@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Form_MainWindow_t {
-    QByteArrayData data[60];
-    char stringdata0[1174];
+    QByteArrayData data[61];
+    char stringdata0[1193];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -82,15 +82,16 @@ QT_MOC_LITERAL(47, 642, 20), // "Slot_ChangeItemValue"
 QT_MOC_LITERAL(48, 663, 18), // "Slot_SaveItemValue"
 QT_MOC_LITERAL(49, 682, 16), // "Slot_SetShortcut"
 QT_MOC_LITERAL(50, 699, 25), // "Slot_DeleteListWidgetItem"
-QT_MOC_LITERAL(51, 725, 47), // "on_listWidget_task_1_customCo..."
-QT_MOC_LITERAL(52, 773, 52), // "on_listWidget_table_state_cus..."
-QT_MOC_LITERAL(53, 826, 47), // "on_listWidget_task_2_customCo..."
-QT_MOC_LITERAL(54, 874, 47), // "on_listWidget_task_3_customCo..."
-QT_MOC_LITERAL(55, 922, 47), // "on_listWidget_task_4_customCo..."
-QT_MOC_LITERAL(56, 970, 47), // "on_listWidget_task_5_customCo..."
-QT_MOC_LITERAL(57, 1018, 56), // "on_listWidget_table_state_key..."
-QT_MOC_LITERAL(58, 1075, 47), // "on_listWidget_task_6_customCo..."
-QT_MOC_LITERAL(59, 1123, 50) // "on_listWidget_hidwindow_custo..."
+QT_MOC_LITERAL(51, 725, 18), // "Slot_Chat_Send_Msg"
+QT_MOC_LITERAL(52, 744, 47), // "on_listWidget_task_1_customCo..."
+QT_MOC_LITERAL(53, 792, 52), // "on_listWidget_table_state_cus..."
+QT_MOC_LITERAL(54, 845, 47), // "on_listWidget_task_2_customCo..."
+QT_MOC_LITERAL(55, 893, 47), // "on_listWidget_task_3_customCo..."
+QT_MOC_LITERAL(56, 941, 47), // "on_listWidget_task_4_customCo..."
+QT_MOC_LITERAL(57, 989, 47), // "on_listWidget_task_5_customCo..."
+QT_MOC_LITERAL(58, 1037, 56), // "on_listWidget_table_state_key..."
+QT_MOC_LITERAL(59, 1094, 47), // "on_listWidget_task_6_customCo..."
+QT_MOC_LITERAL(60, 1142, 50) // "on_listWidget_hidwindow_custo..."
 
     },
     "Form_MainWindow\0Signal_AddFinger\0\0"
@@ -113,6 +114,7 @@ QT_MOC_LITERAL(59, 1123, 50) // "on_listWidget_hidwindow_custo..."
     "Slot_SetBreathRGB\0Slot_RGB_Display\0"
     "Slot_ChangeItemValue\0Slot_SaveItemValue\0"
     "Slot_SetShortcut\0Slot_DeleteListWidgetItem\0"
+    "Slot_Chat_Send_Msg\0"
     "on_listWidget_task_1_customContextMenuRequested\0"
     "on_listWidget_table_state_customContextMenuRequested\0"
     "on_listWidget_task_2_customContextMenuRequested\0"
@@ -131,7 +133,7 @@ static const uint qt_meta_data_Form_MainWindow[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      35,   14, // methods
+      36,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -139,43 +141,44 @@ static const uint qt_meta_data_Form_MainWindow[] = {
       11,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    4,  189,    2, 0x06 /* Public */,
-       8,    1,  198,    2, 0x06 /* Public */,
-      10,    0,  201,    2, 0x06 /* Public */,
-      11,    0,  202,    2, 0x06 /* Public */,
-      12,    3,  203,    2, 0x06 /* Public */,
-      16,    3,  210,    2, 0x06 /* Public */,
-      17,    4,  217,    2, 0x06 /* Public */,
-      19,    3,  226,    2, 0x06 /* Public */,
-      22,    4,  233,    2, 0x06 /* Public */,
-      27,    5,  242,    2, 0x06 /* Public */,
-      32,    1,  253,    2, 0x06 /* Public */,
+       1,    4,  194,    2, 0x06 /* Public */,
+       8,    1,  203,    2, 0x06 /* Public */,
+      10,    0,  206,    2, 0x06 /* Public */,
+      11,    0,  207,    2, 0x06 /* Public */,
+      12,    3,  208,    2, 0x06 /* Public */,
+      16,    3,  215,    2, 0x06 /* Public */,
+      17,    4,  222,    2, 0x06 /* Public */,
+      19,    3,  231,    2, 0x06 /* Public */,
+      22,    4,  238,    2, 0x06 /* Public */,
+      27,    5,  247,    2, 0x06 /* Public */,
+      32,    1,  258,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      34,    0,  256,    2, 0x0a /* Public */,
-      35,    2,  257,    2, 0x0a /* Public */,
-      38,    0,  262,    2, 0x0a /* Public */,
-      39,    0,  263,    2, 0x0a /* Public */,
-      40,    0,  264,    2, 0x0a /* Public */,
-      41,    0,  265,    2, 0x0a /* Public */,
-      42,    0,  266,    2, 0x0a /* Public */,
-      43,    0,  267,    2, 0x0a /* Public */,
-      44,    1,  268,    2, 0x0a /* Public */,
-      45,    0,  271,    2, 0x0a /* Public */,
-      46,    0,  272,    2, 0x0a /* Public */,
-      47,    0,  273,    2, 0x0a /* Public */,
-      48,    0,  274,    2, 0x0a /* Public */,
-      49,    0,  275,    2, 0x0a /* Public */,
-      50,    0,  276,    2, 0x0a /* Public */,
-      51,    1,  277,    2, 0x08 /* Private */,
-      52,    1,  280,    2, 0x08 /* Private */,
-      53,    1,  283,    2, 0x08 /* Private */,
-      54,    1,  286,    2, 0x08 /* Private */,
-      55,    1,  289,    2, 0x08 /* Private */,
-      56,    1,  292,    2, 0x08 /* Private */,
-      57,    1,  295,    2, 0x08 /* Private */,
-      58,    1,  298,    2, 0x08 /* Private */,
-      59,    1,  301,    2, 0x08 /* Private */,
+      34,    0,  261,    2, 0x0a /* Public */,
+      35,    2,  262,    2, 0x0a /* Public */,
+      38,    0,  267,    2, 0x0a /* Public */,
+      39,    0,  268,    2, 0x0a /* Public */,
+      40,    0,  269,    2, 0x0a /* Public */,
+      41,    0,  270,    2, 0x0a /* Public */,
+      42,    0,  271,    2, 0x0a /* Public */,
+      43,    0,  272,    2, 0x0a /* Public */,
+      44,    1,  273,    2, 0x0a /* Public */,
+      45,    0,  276,    2, 0x0a /* Public */,
+      46,    0,  277,    2, 0x0a /* Public */,
+      47,    0,  278,    2, 0x0a /* Public */,
+      48,    0,  279,    2, 0x0a /* Public */,
+      49,    0,  280,    2, 0x0a /* Public */,
+      50,    0,  281,    2, 0x0a /* Public */,
+      51,    0,  282,    2, 0x0a /* Public */,
+      52,    1,  283,    2, 0x08 /* Private */,
+      53,    1,  286,    2, 0x08 /* Private */,
+      54,    1,  289,    2, 0x08 /* Private */,
+      55,    1,  292,    2, 0x08 /* Private */,
+      56,    1,  295,    2, 0x08 /* Private */,
+      57,    1,  298,    2, 0x08 /* Private */,
+      58,    1,  301,    2, 0x08 /* Private */,
+      59,    1,  304,    2, 0x08 /* Private */,
+      60,    1,  307,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3, 0x80000000 | 3, 0x80000000 | 3, 0x80000000 | 3,    4,    5,    6,    7,
@@ -200,6 +203,7 @@ static const uint qt_meta_data_Form_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 20,   21,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -251,15 +255,16 @@ void Form_MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 23: _t->Slot_SaveItemValue(); break;
         case 24: _t->Slot_SetShortcut(); break;
         case 25: _t->Slot_DeleteListWidgetItem(); break;
-        case 26: _t->on_listWidget_task_1_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
-        case 27: _t->on_listWidget_table_state_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
-        case 28: _t->on_listWidget_task_2_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
-        case 29: _t->on_listWidget_task_3_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
-        case 30: _t->on_listWidget_task_4_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
-        case 31: _t->on_listWidget_task_5_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
-        case 32: _t->on_listWidget_table_state_key_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
-        case 33: _t->on_listWidget_task_6_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
-        case 34: _t->on_listWidget_hidwindow_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 26: _t->Slot_Chat_Send_Msg(); break;
+        case 27: _t->on_listWidget_task_1_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 28: _t->on_listWidget_table_state_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 29: _t->on_listWidget_task_2_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 30: _t->on_listWidget_task_3_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 31: _t->on_listWidget_task_4_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 32: _t->on_listWidget_task_5_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 33: _t->on_listWidget_table_state_key_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 34: _t->on_listWidget_task_6_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 35: _t->on_listWidget_hidwindow_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -373,13 +378,13 @@ int Form_MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 35)
+        if (_id < 36)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 35;
+        _id -= 36;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 35)
+        if (_id < 36)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 35;
+        _id -= 36;
     }
     return _id;
 }

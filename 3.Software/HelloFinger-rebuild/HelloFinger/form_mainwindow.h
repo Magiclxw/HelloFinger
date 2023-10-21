@@ -31,6 +31,7 @@ public:
     void File_Save_Shortcut();
     void File_Update_QuickStart_Content();
     void File_Update_HideWindow_List();
+    void Chat_RevMsg_Handler(QString msg);
 private:
     Ui::Form_MainWindow *ui;
 
@@ -54,7 +55,7 @@ public slots:
     void Slot_SaveItemValue(void);
     void Slot_SetShortcut(void);
     void Slot_DeleteListWidgetItem(void);
-
+    void Slot_Chat_Send_Msg(void);
 signals:
     void Signal_AddFinger(uint8_t pos,uint8_t times,uint8_t param1,uint8_t param2);
     void Signal_DeleteFinger(uint8_t id);

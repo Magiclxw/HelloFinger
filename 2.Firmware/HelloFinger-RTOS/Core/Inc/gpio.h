@@ -29,7 +29,7 @@ extern "C" {
 #include "main.h"
 
 /* USER CODE BEGIN Includes */
-
+typedef int(*FUNC_ACTIONKEYRECVTCB)(void);
 /* USER CODE END Includes */
 
 /* USER CODE BEGIN Private defines */
@@ -48,7 +48,7 @@ extern "C" {
 /* USER CODE END Private defines */
 
 void MX_GPIO_Init(void);
-
+int RegisterActionKeyCallBack(FUNC_ACTIONKEYRECVTCB TOUCHRECVCBT);
 /* USER CODE BEGIN Prototypes */
 
 /* USER CODE END Prototypes */

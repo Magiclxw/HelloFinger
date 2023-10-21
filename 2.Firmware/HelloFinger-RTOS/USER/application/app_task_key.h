@@ -9,25 +9,29 @@ extern QueueHandle_t RGB_Queue_Handle;
 extern QueueHandle_t Queue_Computer_Info_Handle;
 
 
-#define KEY_CMD_HEAD_H	0x57
-#define KEY_CMD_HEAD_L	0xAB
-#define KEY_CMD_ADDR		0x00
+#define KEY_CMD_HEAD_H	(0x57)
+#define KEY_CMD_HEAD_L	(0xAB)
+#define KEY_CMD_ADDR		(0x00)
 
 #define FIXED_CMD_LEN (9)	//固定指令包长度(包头+设备地址+包标识+包长度)
 #define CRC_LEN	(4)
 
 #define TASK_KEY_CONTROL_SIZE	(200)
 #define TASK_KEY_CONTROL_PRIORITY	(5)
-#define KEY_DATA_HANDLE_QUEUE_LEN	(10)
+#define TASK_SIDEBAR_CONTROL_SIZE	(100)
+#define TASK_SIDEBAR_CONTROL_PRIORITY	(3)
+#define TASK_ACTION_KEY_SIZE	(100)
+#define TASK_ACTION_KEY_PRIORITY	(11)
+#define KEY_DATA_HANDLE_QUEUE_LEN	(3)
 #define KEY_DATA_HANDLE_QUEUE_SIZE	(1)
 #define COMPUTER_INFO_QUEUE_LEN	(1)
 #define COMPUTER_INFO_QUEUE_SIZE	(1)
 
-#define FINGER_FUNC_BASE_ADDR	0x100000
-#define FINGER_KEY_FUNC_BASE_ADDR	0x102710
-#define FINGER_FUNC_LEN1_OFFSET	0x01
-#define FINGER_FUNC_BASE_SIZE	100
-#define FINGER_FUNC_RESERVED_DATA	0x00
+#define FINGER_FUNC_BASE_ADDR	(0x100000)
+#define FINGER_KEY_FUNC_BASE_ADDR	(0x102710)
+#define FINGER_FUNC_LEN1_OFFSET	(0x01)
+#define FINGER_FUNC_BASE_SIZE	(100)
+#define FINGER_FUNC_RESERVED_DATA	(0x00)
 
 typedef enum USB_PROTOCOL_FORMAT
 {
@@ -91,6 +95,9 @@ typedef struct KEY_DATA_FORMAT
 
 int Key_GiveNotifyFromISR(uint8_t *recData,uint8_t dataSize);
 int ENCODER_KeyNotifyFromISR(void);
+int Action_KeyNotifyFromISR(void);
 int Task_Key_DataCTLCreate(void);
+int Task_Sidebar_CTLCreate(void);
+int Task_Action_KEY_CTLCreate(void);
 int HID_Data_Handle(void);
 #endif

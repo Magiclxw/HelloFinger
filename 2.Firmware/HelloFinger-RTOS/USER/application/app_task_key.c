@@ -7,6 +7,8 @@
 #include "app_task_rgb.h"
 
 static void vTaskKeyProcessing(void);
+static void vTaskSidebarProcessing(void);
+static void vTaskActionKeyProcessing(void);
 int Key_Protocol_Mode_RecData_Handle(uint8_t data);
 int Key_Trans_Mode_RecData_Handle(uint8_t data);
 static void KeyResetData(void);
@@ -15,7 +17,10 @@ static void Key_Func_Exec(void);
 
 
 
-TaskHandle_t Task_Key_Handle = NULL;
+TaskHandle_t Task_Key_Handle = NULL;	//按键数据传输任务句柄
+TaskHandle_t Task_Sidebar_Handle = NULL;	//侧边栏控制任务句柄
+TaskHandle_t Task_Action_Key_Handle = NULL;	//Action按键功能句柄
+
 QueueHandle_t Queue_KeyProcessing_Handle = NULL;
 QueueHandle_t Queue_Computer_Info_Handle = NULL;
 
@@ -36,10 +41,23 @@ int Key_GiveNotifyFromISR(uint8_t *recData,uint8_t dataSize)
 
 int ENCODER_KeyNotifyFromISR(void)	//编码器按键功能
 {
-	//REL_Mouse_Ctrl(0,0,0,button_RIGHT);
-	//REL_Mouse_Ctrl(0,0,0,button_NULL);
-	CH9329_Input_Fuc_Key(R_ALT|R_SHIFT|R_CTRL,KEY_F1);
-	
+	portBASE_TYPE xHigherPriorityTaskWoken = pdTRUE;
+	if(Task_Sidebar_Handle != NULL)
+	{
+		vTaskNotifyGiveFromISR((TaskHandle_t)Task_Sidebar_Handle,&xHigherPriorityTaskWoken);
+		portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+	}
+	return OPERATE_SUCCESS;
+}
+
+int Action_KeyNotifyFromISR(void)
+{
+	portBASE_TYPE xHigherPriorityTaskWoken = pdTRUE;
+	if(Task_Action_Key_Handle != NULL)
+	{
+		vTaskNotifyGiveFromISR((TaskHandle_t)Task_Action_Key_Handle,&xHigherPriorityTaskWoken);
+		portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+	}
 	return OPERATE_SUCCESS;
 }
 
@@ -51,6 +69,28 @@ int Task_Key_DataCTLCreate(void)
 								(void *				)NULL,
 								(UBaseType_t  )TASK_KEY_CONTROL_PRIORITY,
 								&Task_Key_Handle);
+	return OPERATE_SUCCESS;
+}
+
+int Task_Sidebar_CTLCreate(void)
+{
+	xTaskCreate( (TaskFunction_t)vTaskSidebarProcessing,
+								(const char*  )"SidebarDataControl",
+								(uint32_t     )TASK_SIDEBAR_CONTROL_SIZE,
+								(void *				)NULL,
+								(UBaseType_t  )TASK_SIDEBAR_CONTROL_PRIORITY,
+								&Task_Sidebar_Handle);
+	return OPERATE_SUCCESS;
+}
+
+int Task_Action_KEY_CTLCreate(void)
+{
+	xTaskCreate( (TaskFunction_t)vTaskActionKeyProcessing,
+								(const char*  )"ActionKeyControl",
+								(uint32_t     )TASK_ACTION_KEY_SIZE,
+								(void *				)NULL,
+								(UBaseType_t  )TASK_ACTION_KEY_PRIORITY,
+								&Task_Action_Key_Handle);
 	return OPERATE_SUCCESS;
 }
 
@@ -104,6 +144,39 @@ static void vTaskKeyProcessing(void)
 	}
 }
 
+static void vTaskSidebarProcessing(void)
+{
+	while(1)
+	{
+		BaseType_t ret = ulTaskNotifyTake((BaseType_t)pdTRUE,(TickType_t)portMAX_DELAY);
+		if(ret != 0)
+		{
+			vTaskDelay(20);
+			if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_1))	//消抖
+			{
+				CH9329_Input_Fuc_Key(R_ALT|R_SHIFT|R_CTRL,KEY_F1);
+			}
+			vTaskDelay(50);
+		}
+	}
+}
+
+static void vTaskActionKeyProcessing(void)
+{
+	while(1)
+	{
+		BaseType_t ret = ulTaskNotifyTake((BaseType_t)pdTRUE,(TickType_t)portMAX_DELAY);
+		if(ret != 0)
+		{
+			vTaskDelay(20);
+			if(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_14) == 0)	//消抖
+			{
+				CH9329_Input_Fuc_Key(R_CTRL,KEY_A);
+			}
+			vTaskDelay(50);
+		}
+	}
+}
 
 int Key_Protocol_Mode_RecData_Handle(uint8_t data)	//协议传输数据处理
 {

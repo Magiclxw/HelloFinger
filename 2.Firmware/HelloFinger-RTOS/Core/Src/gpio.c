@@ -20,9 +20,15 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "gpio.h"
-
+#include "sys_config.h"
 /* USER CODE BEGIN 0 */
+FUNC_ACTIONKEYRECVTCB ActionKeyRECVCallback = NULL;
 
+int RegisterActionKeyCallBack(FUNC_ACTIONKEYRECVTCB TOUCHRECVCBT)
+{
+	ActionKeyRECVCallback = TOUCHRECVCBT;
+	return OPERATE_SUCCESS;
+}
 /* USER CODE END 0 */
 
 /*----------------------------------------------------------------------------*/
@@ -54,8 +60,14 @@ void MX_GPIO_Init(void)
 	gpio.Speed = GPIO_SPEED_FREQ_MEDIUM;
 	HAL_GPIO_Init(GPIOA,&gpio);
 	
-	gpio.Pin = MCU_GPIO_KEY2_PIN|MCU_GPIO_KEY3_PIN;
+	gpio.Pin = MCU_GPIO_KEY3_PIN;
 	gpio.Mode = GPIO_MODE_INPUT;
+	gpio.Pull = GPIO_PULLUP;
+	gpio.Speed = GPIO_SPEED_FREQ_MEDIUM;
+	HAL_GPIO_Init(GPIOB,&gpio);
+	
+	gpio.Pin = MCU_GPIO_KEY2_PIN;
+	gpio.Mode = GPIO_MODE_IT_FALLING;
 	gpio.Pull = GPIO_PULLUP;
 	gpio.Speed = GPIO_SPEED_FREQ_MEDIUM;
 	HAL_GPIO_Init(GPIOB,&gpio);

@@ -87,6 +87,8 @@ void Task_Create(void)
 	Task_Key_DataCTLCreate();
 	Task_RGB_ProcessCreate();
 	Task_JoyStick_DataCTLCreate();
+	Task_Sidebar_CTLCreate();
+	Task_Action_KEY_CTLCreate();
 	
 	taskEXIT_CRITICAL();
 }

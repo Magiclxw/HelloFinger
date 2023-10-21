@@ -576,14 +576,21 @@ static void Finger_Func_Exec(void)
 	//Generate_Sleep();
 	//HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_sleep,g_sleep.LEN[0]<<8|g_sleep.LEN[1]+FIXED_CMD_LEN,1000);
 }
-
+/**
+* @brief		指纹验证通过后执行对应的操作
+* @param		- id 验证成功的指纹序号
+* @param		- score 验证成功的指纹得分
+* @date			2023-10-16 22:22:26
+* @return 	NULL
+* @note
+*/
 static void Finger_Function(uint16_t id,uint16_t score)
 {
 	uint8_t func_type = 0;
-	Flash_read(&func_type,FINGER_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE,1);
+	Flash_read(&func_type,FINGER_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE,1);	//读取功能类型
 	switch (func_type)
 	{
-		case TYPE_Windows_Password:
+		case TYPE_Windows_Password:	//解锁
 		{
 			uint8_t len = 0;
 			uint32_t crc_value = 0;
@@ -609,7 +616,7 @@ static void Finger_Function(uint16_t id,uint16_t score)
 				}
 				CH9329_Input_Fuc_Key(NO_CTRL,KEY_LeftCtrl);
 				vTaskDelay(400);
-				CH9329_Keyboard_Switch();
+				CH9329_Keyboard_Switch();	//系统键盘切换
 				CH9329_Input_Ascii((char*)&password[3],len);
 				CH9329_Input_Fuc_Key(NO_CTRL,KEY_LeftEnter);
 				CH9329_Keyboard_Switch();
@@ -644,8 +651,10 @@ static void Finger_Function(uint16_t id,uint16_t score)
 				{
 					CH9329_Input_Fuc_Key(NO_CTRL,KEY_CapsLock);
 				}
+				CH9329_Keyboard_Switch();	//系统键盘切换
 				CH9329_Input_Ascii((char*)&password[3],len);
 				CH9329_Input_Fuc_Key(NO_CTRL,KEY_LeftEnter);
+				CH9329_Keyboard_Switch();	//系统键盘切换
 				if(led_status & LED_STATE_CAPS_LOCK)
 				{
 					CH9329_Input_Fuc_Key(NO_CTRL,KEY_CapsLock);
@@ -683,6 +692,7 @@ static void Finger_Function(uint16_t id,uint16_t score)
 				{
 					CH9329_Input_Fuc_Key(NO_CTRL,KEY_CapsLock);
 				}
+				CH9329_Keyboard_Switch();	//系统键盘切换
 				uint8_t *account = (uint8_t *)pvPortMalloc(account_len);
 				uint8_t *password = (uint8_t *)pvPortMalloc(password_len);
 				memcpy(account,(uint8_t*)&account_password[3],account_len);
@@ -695,6 +705,7 @@ static void Finger_Function(uint16_t id,uint16_t score)
 				vTaskDelay(50);
 				CH9329_Input_Fuc_Key(NO_CTRL,KEY_LeftEnter);
 				vTaskDelay(10);
+				CH9329_Keyboard_Switch();	//系统键盘切换
 				if(led_status & LED_STATE_CAPS_LOCK)
 				{
 					CH9329_Input_Fuc_Key(NO_CTRL,KEY_CapsLock);
@@ -715,11 +726,10 @@ static void Finger_Function(uint16_t id,uint16_t score)
 			if(key_len == 0) break;
 			Flash_read(&func_key,FINGER_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE+FINGER_FUNC_LEN1_OFFSET+2,1);
 			Flash_read((uint8_t*)key,FINGER_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE+FINGER_FUNC_LEN1_OFFSET+3,key_len-1);
-			
 			CH9329_Input_Shortcut(func_key,key,key_len-1);
 			break;
 		}
-		case TYPE_QuickStart:
+		case TYPE_QuickStart:	//快捷启动应用
 		{
 			uint8_t quick_start = 0;
 			Flash_read(&quick_start,FINGER_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE+FINGER_FUNC_LEN1_OFFSET,1);
@@ -761,6 +771,14 @@ static void Finger_Function(uint16_t id,uint16_t score)
 	}
 }
 
+/**
+* @brief		指纹验证通过且按键按下后执行对应的操作
+* @param		- id 验证成功的指纹序号
+* @param		- score 验证成功的指纹得分
+* @date			2023-10-16 22:22:14
+* @return 	NULL
+* @note
+*/
 static void Finger_Key_Function(uint16_t id,uint16_t score)
 {
 	uint8_t func_type = 0;
@@ -792,8 +810,10 @@ static void Finger_Key_Function(uint16_t id,uint16_t score)
 				}
 				CH9329_Input_Fuc_Key(NO_CTRL,KEY_LeftCtrl);
 				vTaskDelay(400);
+				CH9329_Keyboard_Switch();	//系统键盘切换
 				CH9329_Input_Ascii((char*)&password[3],len);
 				CH9329_Input_Fuc_Key(NO_CTRL,KEY_LeftEnter);
+				CH9329_Keyboard_Switch();	//系统键盘切换
 				if(led_status & LED_STATE_CAPS_LOCK)
 				{
 					CH9329_Input_Fuc_Key(NO_CTRL,KEY_CapsLock);
@@ -825,8 +845,10 @@ static void Finger_Key_Function(uint16_t id,uint16_t score)
 				{
 					CH9329_Input_Fuc_Key(NO_CTRL,KEY_CapsLock);
 				}
+				CH9329_Keyboard_Switch();	//系统键盘切换
 				CH9329_Input_Ascii((char*)&password[3],len);
 				CH9329_Input_Fuc_Key(NO_CTRL,KEY_LeftEnter);
+				CH9329_Keyboard_Switch();	//系统键盘切换
 				if(led_status & LED_STATE_CAPS_LOCK)
 				{
 					CH9329_Input_Fuc_Key(NO_CTRL,KEY_CapsLock);
@@ -864,6 +886,7 @@ static void Finger_Key_Function(uint16_t id,uint16_t score)
 				{
 					CH9329_Input_Fuc_Key(NO_CTRL,KEY_CapsLock);
 				}
+				CH9329_Keyboard_Switch();	//系统键盘切换
 				uint8_t *account = (uint8_t *)pvPortMalloc(account_len);
 				uint8_t *password = (uint8_t *)pvPortMalloc(password_len);
 				memcpy(account,(uint8_t*)&account_password[3],account_len);
@@ -876,6 +899,7 @@ static void Finger_Key_Function(uint16_t id,uint16_t score)
 				vTaskDelay(50);
 				CH9329_Input_Fuc_Key(NO_CTRL,KEY_LeftEnter);
 				vTaskDelay(10);
+				CH9329_Keyboard_Switch();	//系统键盘切换
 				if(led_status & LED_STATE_CAPS_LOCK)
 				{
 					CH9329_Input_Fuc_Key(NO_CTRL,KEY_CapsLock);
@@ -900,7 +924,7 @@ static void Finger_Key_Function(uint16_t id,uint16_t score)
 			CH9329_Input_Shortcut(func_key,key,key_len-1);
 			break;
 		}
-		case TYPE_KEY_QuickStart:
+		case TYPE_KEY_QuickStart:	//快捷启动应用
 		{
 			uint8_t quick_start = 0;
 			Flash_read(&quick_start,FINGER_KEY_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE+FINGER_FUNC_LEN1_OFFSET,1);

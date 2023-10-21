@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>shape/black.css</file>
+        <file>shape/blue.css</file>
+        <file>shape/darkblack.css</file>
+        <file>shape/darkblue.css</file>
+        <file>shape/darkgray.css</file>
+        <file>shape/gray.css</file>
+        <file>shape/lightblack.css</file>
+        <file>shape/lightblue.css</file>
+        <file>shape/lightgray.css</file>
+        <file>shape/psblack.css</file>
+        <file>shape/silvery.css</file>
+    </qresource>
+</RCC>

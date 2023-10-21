@@ -16,6 +16,12 @@
   <property name="windowTitle">
    <string>Frame_MainWindow</string>
   </property>
+  <property name="iconSize">
+   <size>
+    <width>30</width>
+    <height>30</height>
+   </size>
+  </property>
   <property name="toolButtonStyle">
    <enum>Qt::ToolButtonIconOnly</enum>
   </property>
@@ -65,6 +71,9 @@
       <property name="layoutDirection">
        <enum>Qt::LeftToRight</enum>
       </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
       <property name="tabPosition">
        <enum>QTabWidget::West</enum>
       </property>
@@ -72,7 +81,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>5</number>
       </property>
       <property name="iconSize">
        <size>
@@ -94,6 +103,21 @@
         <string>功能</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
         <item>
          <widget class="QTabWidget" name="tabWidget_finger_func">
           <property name="currentIndex">
@@ -2071,6 +2095,9 @@
             </item>
             <item>
              <widget class="QListWidget" name="listWidget_table_state_key">
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
               <item>
                <property name="text">
                 <string>1</string>
@@ -2396,7 +2423,7 @@
             <item>
              <widget class="QStackedWidget" name="stackedWidget_key">
               <property name="currentIndex">
-               <number>4</number>
+               <number>5</number>
               </property>
               <widget class="QWidget" name="page_enrollState_key">
                <layout class="QHBoxLayout" name="horizontalLayout_20">
@@ -4478,6 +4505,40 @@ font: 9pt &quot;黑体&quot;;</string>
        <layout class="QVBoxLayout" name="verticalLayout_16">
         <item>
          <widget class="QListWidget" name="listWidget_hidwindow"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Action</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_17">
+        <item>
+         <widget class="QWidget" name="widget_21" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>Chat</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_18">
+        <item>
+         <widget class="QTextEdit" name="textEdit_chat_output">
+          <property name="textInteractionFlags">
+           <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTextEdit" name="textEdit_chat_input"/>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_chat_data_send">
+          <property name="text">
+           <string> 发送</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>

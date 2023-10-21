@@ -10,7 +10,7 @@
 #define QUEUE_RGB_PROCESS_LEN	(1)
 #define QUEUE_RGB_PROCESS_SIZE (4)
 
-#define EVENT_RGB_TRANS_OVER	0x01
+#define EVENT_RGB_TRANS_OVER	(0x01)
 
 typedef enum RESULT_
 {

@@ -3,12 +3,12 @@
 #include "sys_config.h"
 #include "drv_fpm383.h"
 
-#define FINGER_CMD_HEAD_H	0xEF
-#define FINGER_CMD_HEAD_L	0x01
-#define FINGER_CMD_ADDR_1	0xFF
-#define FINGER_CMD_ADDR_2	0xFF
-#define FINGER_CMD_ADDR_3	0xFF
-#define FINGER_CMD_ADDR_4	0xFF
+#define FINGER_CMD_HEAD_H	(0xEF)
+#define FINGER_CMD_HEAD_L	(0x01)
+#define FINGER_CMD_ADDR_1	(0xFF)
+#define FINGER_CMD_ADDR_2	(0xFF)
+#define FINGER_CMD_ADDR_3	(0xFF)
+#define FINGER_CMD_ADDR_4	(0xFF)
 
 #define TASK_FINGER_CONTROL_SIZE	(200)
 #define TASK_FINGER_CONTROL_PRIORITY	(3)

@@ -1,5 +1,7 @@
 QT       += core gui
 QT      += winextras
+QT += network
+
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -16,6 +18,7 @@ SOURCES += \
     form_mainwindow.cpp \
     hid_function.cpp \
     interface.cpp \
+    interface_chat.cpp \
     main.cpp \
     msg_handler.cpp \
     system/system_init.cpp \
@@ -30,6 +33,7 @@ HEADERS += \
     hid_function.h \
     hidapi.h \
     interface.h \
+    interface_chat.h \
     lib/hidapi.h \
     msg_handler.h \
     system/system_init.h \
@@ -57,5 +61,8 @@ else:unix: LIBS += -L$$PWD/lib/ -lhidapi
 INCLUDEPATH += $$PWD/.
 DEPENDPATH += $$PWD/.
 
+INCLUDEPATH += C:/OpenSSL-Win32/include
+
 RESOURCES += \
-    icon.qrc
+    icon.qrc \
+    qss.qrc

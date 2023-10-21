@@ -27,6 +27,7 @@
 #include "drv_encoder.h"
 #include "drv_ch9329.h"
 #include "drv_fpm383.h"
+#include "gpio.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -214,6 +215,7 @@ extern FUNC_USARTRECVTCB USART1RECVCallback;
 extern FUNC_USARTRECVTCB USART2RECVCallback;
 extern FUNC_TOUCHRECVTCB TOUCHRECVCallback;
 extern FUNC_ENCODERKEYRECVTCB ENCODERKeyRECVCallback;
+extern FUNC_ACTIONKEYRECVTCB ActionKeyRECVCallback;
 
 extern DMA_HandleTypeDef hdma_adc1;
 
@@ -267,6 +269,16 @@ void EXTI9_5_IRQHandler(void)		//编码器信号中断
 		HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_9);		//调用中断处理公用函数
 		EXTI->PR &= ~0x200;
 	} 
+}
+
+void EXTI15_10_IRQHandler(void)
+{
+	uint32_t status = EXTI->PR;
+	if(status & (1<<14))
+	{
+		HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_14);
+		EXTI->PR &= ~(1<<14);
+	}
 }
 
 void DMA1_Channel1_IRQHandler(void)
@@ -324,32 +336,6 @@ void TIM2_IRQHandler(void)
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	switch (GPIO_Pin){
-		case GPIO_PIN_8:
-		{
-			if(Signal_A_Read == GPIO_PIN_SET && Signal_B_Read == GPIO_PIN_RESET && signal_a == 0){
-				signal_a = 1;
-			}else if(Signal_A_Read == GPIO_PIN_RESET && Signal_B_Read == GPIO_PIN_SET && signal_a == 1){
-				REL_Mouse_Ctrl(0x01,0,0,button_NULL);
-				signal_a = 0;
-			}else{
-				signal_a = 0;
-			}
-			break;
-		}
-			
-		case GPIO_PIN_9:
-		{
-			if(Signal_B_Read == GPIO_PIN_SET && Signal_A_Read == GPIO_PIN_RESET && signal_b == 0){
-				signal_b = 1;
-			}else if(Signal_B_Read == GPIO_PIN_RESET && Signal_A_Read == GPIO_PIN_SET && signal_b == 1){
-				REL_Mouse_Ctrl(0xFF,0,0,button_NULL);
-				signal_b = 0;
-			}else{
-				signal_b = 0;
-			}
-			break;
-		}
-		
 		case GPIO_PIN_1:	//编码器按键按下
 		{
 			//REL_Mouse_Ctrl(0,0,0,button_RIGHT);
@@ -379,6 +365,41 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 			}
 			break;
 		}
+		
+		case GPIO_PIN_8:
+		{
+			if(Signal_A_Read == GPIO_PIN_SET && Signal_B_Read == GPIO_PIN_RESET && signal_a == 0){
+				signal_a = 1;
+			}else if(Signal_A_Read == GPIO_PIN_RESET && Signal_B_Read == GPIO_PIN_SET && signal_a == 1){
+				REL_Mouse_Ctrl(0x01,0,0,button_NULL);
+				signal_a = 0;
+			}else{
+				signal_a = 0;
+			}
+			break;
+		}
+			
+		case GPIO_PIN_9:
+		{
+			if(Signal_B_Read == GPIO_PIN_SET && Signal_A_Read == GPIO_PIN_RESET && signal_b == 0){
+				signal_b = 1;
+			}else if(Signal_B_Read == GPIO_PIN_RESET && Signal_A_Read == GPIO_PIN_SET && signal_b == 1){
+				REL_Mouse_Ctrl(0xFF,0,0,button_NULL);
+				signal_b = 0;
+			}else{
+				signal_b = 0;
+			}
+			break;
+		}
+		case GPIO_PIN_14:
+		{
+			if(ActionKeyRECVCallback != NULL)
+			{
+				ActionKeyRECVCallback();
+			}
+		}
+		
+		
 		
 		
 	}

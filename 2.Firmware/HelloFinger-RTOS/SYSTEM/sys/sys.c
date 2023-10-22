@@ -89,7 +89,7 @@ void Task_Create(void)
 	Task_JoyStick_DataCTLCreate();
 	Task_Sidebar_CTLCreate();
 	Task_Action_KEY_CTLCreate();
-	
+	Task_Normal_KEY_CTLCreate();
 	taskEXIT_CRITICAL();
 }
 

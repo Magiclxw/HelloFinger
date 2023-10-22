@@ -62,6 +62,10 @@ Interface::Interface(QObject *parent) : QThread(parent)
         HID_Send_Shortcut(usb_handle,(Finger_Type_e)fingertype,func,key,key_len,index);
     });
 
+    connect(mainwindow,&Form_MainWindow::Signal_SetActionFunc,this,[=](uint8_t func,uint32_t action){
+        HID_Set_Action_Func(usb_handle,func,action);
+    });
+
 }
 
 void Interface::run()

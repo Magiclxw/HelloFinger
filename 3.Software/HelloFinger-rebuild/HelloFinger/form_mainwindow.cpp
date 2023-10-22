@@ -25,6 +25,7 @@
 #include <QTextCodec>
 #include "hid_function.h"
 #include "interface_chat.h"
+#include <QClipboard>
 
 //QNetworkAccessManager manager;
 
@@ -68,6 +69,8 @@ float G_decrease = 0;
 float B_decrease = 0;
 uint8_t interval = 0;   //亮度改变间隔
 
+QString chat_rec_last_msg;
+
 QString table_1_Content = "table1Content.json";
 QString table_2_Content = "table2Content.json";
 
@@ -96,9 +99,10 @@ Form_MainWindow::Form_MainWindow(QWidget *parent)
     QString styleSheet = QLatin1String(file.readAll()); // 读取文件内容到字符串
     setStyleSheet(styleSheet); // 应用样式表
 
-    ui->pushButton_chat_data_send->setFocus();
-
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
+
+    ui->pushButton_chat_data_send->setFocus();
+    ui->textEdit_chat_input->setPlaceholderText("此处输入对话内容");
 
     hidewindow = new Form_HideWindow;
     hidewindow->show();
@@ -190,6 +194,7 @@ Form_MainWindow::Form_MainWindow(QWidget *parent)
 
     connect(ui->pushButton_chat_data_send,&QPushButton::clicked,this,&Form_MainWindow::Slot_Chat_Send_Msg);
     connect(chat,&interface_chat::Signal_Chat_Msg_Received,this,&Form_MainWindow::Chat_RevMsg_Handler);
+
 }
 
 void Form_MainWindow::Slot_UpdateIndexTable()
@@ -1119,6 +1124,7 @@ void Form_MainWindow::dragEnterEvent(QDragEnterEvent *event) // 拖动进入事�
 void Form_MainWindow::Chat_RevMsg_Handler(QString msg)
 {
     //ui->textEdit_chat_output->setText(msg);
+    chat_rec_last_msg = msg;
     QString ask = "问：\r\n"+ui->textEdit_chat_input->toPlainText();
     QString answer = "答：\r\n"+msg;
     ui->textEdit_chat_output->append(ask);
@@ -1264,5 +1270,81 @@ void Form_MainWindow::on_listWidget_table_state_key_customContextMenuRequested(c
 }
 
 
+void Form_MainWindow::on_pushButton_chat_copy_answer_clicked()
+{
+    QClipboard *clip = QApplication::clipboard();
+    if(chat_rec_last_msg != NULL)
+    {
+        clip->setText(chat_rec_last_msg);
+    }
 
+
+}
+
+
+void Form_MainWindow::on_pushButton_action_play_pause_clicked()
+{
+    emit Signal_SetActionFunc(ACTION_FUNC_MEDIA,KEY_PLAY_PAUSE);
+}
+
+
+void Form_MainWindow::on_pushButton_action_calculator_clicked()
+{
+    emit Signal_SetActionFunc(ACTION_FUNC_MEDIA,KEY_CALCULATOR);
+}
+
+
+
+void Form_MainWindow::on_pushButton_action_chat_clicked()
+{
+    emit Signal_SetActionFunc(ACTION_FUNC_CHAT,ACTION_FUNC_CHAT);
+}
+
+
+void Form_MainWindow::on_pushButton_action_computer_clicked()
+{
+    emit Signal_SetActionFunc(ACTION_FUNC_MEDIA,KEY_MY_COMPUTER);
+}
+
+
+void Form_MainWindow::on_pushButton_action_email_clicked()
+{
+    emit Signal_SetActionFunc(ACTION_FUNC_MEDIA,KEY_EMAIL);
+}
+
+
+void Form_MainWindow::on_pushButton_action_explorer_clicked()
+{
+    emit Signal_SetActionFunc(ACTION_FUNC_MEDIA,KEY_EXPLORER);
+}
+
+
+void Form_MainWindow::on_pushButton_action_mute_clicked()
+{
+    emit Signal_SetActionFunc(ACTION_FUNC_MEDIA,KEY_MUTE);
+}
+
+
+void Form_MainWindow::on_pushButton_action_power_clicked()
+{
+    emit Signal_SetActionFunc(ACTION_FUNC_POWER,KEY_POWER);
+}
+
+
+void Form_MainWindow::on_pushButton_action_screen_save_clicked()
+{
+    emit Signal_SetActionFunc(ACTION_FUNC_MEDIA,KEY_SCREEN_SAVE);
+}
+
+
+void Form_MainWindow::on_pushButton_action_sleep_clicked()
+{
+    emit Signal_SetActionFunc(ACTION_FUNC_POWER,KEY_SLEEP);
+}
+
+
+void Form_MainWindow::on_pushButton_action_weakup_clicked()
+{
+    emit Signal_SetActionFunc(ACTION_FUNC_POWER,KEY_WAKE_UP);
+}
 

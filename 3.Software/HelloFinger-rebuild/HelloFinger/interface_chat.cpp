@@ -38,40 +38,30 @@ void interface_chat::Chat_Send_Question(QString question)
 
     reply = manager.post(request, QJsonDocument(data).toJson());
 
-        connect(reply, &QNetworkReply::finished, [&]() {
-            if (reply->error() == QNetworkReply::NoError) {
-                QByteArray responseData = reply->readAll();
-                QJsonDocument json = QJsonDocument::fromJson(responseData);
-                if(json.isObject())
-                {
-                    qDebug() << "obj";
-                    QJsonObject jsonObject = json.object();
-                    QString text = jsonObject.value("request_id").toString();
-                    QJsonArray array = jsonObject["output"].toArray().first().toObject().value("text").toArray();
-
-                    QJsonObject jsonObject1 = jsonObject["output"].toObject();
-                    QString text1 = jsonObject1.value("text").toString();
-                    qDebug() << "obj text : " << text << "text1 " << text1;
-                    emit Signal_Chat_Msg_Received(text1);
-                }
-                if(json.isArray())
-                {
-                    qDebug() << "array";
-                }
+    connect(reply, &QNetworkReply::finished,this, [&]() {
+        if (reply->error() == QNetworkReply::NoError) {
+            QByteArray responseData = reply->readAll();
+            QJsonDocument json = QJsonDocument::fromJson(responseData);
+            if(json.isObject())
+            {
+                qDebug() << "obj";
                 QJsonObject jsonObject = json.object();
-                QJsonArray choices = jsonObject["output"].toArray();
-                qDebug() << "text:" << responseData;
-                if (!choices.isEmpty()) {
-                    QJsonObject replyObj = choices[0].toObject();
-                    QString replyText = replyObj["message"].toObject()["content"].toString();
-                    qDebug() << "API Response:" << replyText;
-                }
-            } else {
-                QByteArray responseData = reply->readAll();
-                qDebug() << "API Error:" << reply->errorString();
-                qDebug() << "text:" << responseData;
+                //QString request_id = jsonObject.value("request_id").toString();
+                QJsonObject jsonObject1 = jsonObject["output"].toObject();
+                QString text = jsonObject1.value("text").toString();
+                emit Signal_Chat_Msg_Received(text);
             }
-            qDebug() << reply->error();
-            //reply->deleteLater();
-        });
+            if(json.isArray())
+            {
+                //qDebug() << "array";
+            }
+
+        } else {
+            QByteArray responseData = reply->readAll();
+            qDebug() << "API Error:" << reply->errorString();
+            qDebug() << "text:" << responseData;
+        }
+        qDebug() << reply->error();
+        //reply->deleteLater();
+    });
 }

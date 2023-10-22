@@ -13,6 +13,10 @@ Form_HideWindow::Form_HideWindow(QWidget *parent) :
     //this->setFixedSize(this->width(),this->height());
     this->setFixedSize(40,250);
     this->move(0,300);
+    QFile file(":/shape/darkgray.css"); // 创建QFile对象，指定样式表文件路径
+    file.open(QFile::ReadOnly); // 打开文件，只读模式
+    QString styleSheet = QLatin1String(file.readAll()); // 读取文件内容到字符串
+    setStyleSheet(styleSheet); // 应用样式表
 
     QRect rect = QGuiApplication::primaryScreen()->geometry();
     m_screenWidth = rect.width();

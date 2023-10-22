@@ -6,7 +6,7 @@ SPI_HandleTypeDef hspi1;
 
 static __IO uint32_t  SPITimeout = SPIT_LONG_TIMEOUT;   
 
-static uint16_t SPI_TIMEOUT_UserCallback(uint8_t errorCode);
+//static uint16_t SPI_TIMEOUT_UserCallback(uint8_t errorCode);
 
 void SPI1_Init(void)
 {

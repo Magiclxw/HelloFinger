@@ -21,7 +21,9 @@ extern QueueHandle_t Queue_Computer_Info_Handle;
 #define TASK_SIDEBAR_CONTROL_SIZE	(100)
 #define TASK_SIDEBAR_CONTROL_PRIORITY	(3)
 #define TASK_ACTION_KEY_SIZE	(100)
-#define TASK_ACTION_KEY_PRIORITY	(11)
+#define TASK_ACTION_KEY_PRIORITY	(6)
+#define TASK_NORMAL_KEY_SIZE	(100)
+#define TASK_NORMAL_KEY_PRIORITY	(4)
 #define KEY_DATA_HANDLE_QUEUE_LEN	(3)
 #define KEY_DATA_HANDLE_QUEUE_SIZE	(1)
 #define COMPUTER_INFO_QUEUE_LEN	(1)
@@ -32,6 +34,8 @@ extern QueueHandle_t Queue_Computer_Info_Handle;
 #define FINGER_FUNC_LEN1_OFFSET	(0x01)
 #define FINGER_FUNC_BASE_SIZE	(100)
 #define FINGER_FUNC_RESERVED_DATA	(0x00)
+
+#define ACTION_FUNC_BASE_ADDR	(0x104E20)
 
 typedef enum USB_PROTOCOL_FORMAT
 {
@@ -54,7 +58,7 @@ typedef enum USB_PROTOCOL_FORMAT
     USB_PROTOCOL_FORMAT_GET_INDEX_LIST,		  //0x10
     USB_PROTOCOL_FORMAT_FUNC_STORE,           //0x11
     USB_PROTOCOL_FORMAT_SET_RGB,              //0x12
-
+		USB_PROTOCOL_FORMAT_SET_ACTION,						//0x13	设置Action按键功能
 }USB_PROTOCOL_FORMAT_e;
 
 typedef enum{
@@ -96,8 +100,10 @@ typedef struct KEY_DATA_FORMAT
 int Key_GiveNotifyFromISR(uint8_t *recData,uint8_t dataSize);
 int ENCODER_KeyNotifyFromISR(void);
 int Action_KeyNotifyFromISR(void);
+int Normal_KeyNotifyFromISR(void);
 int Task_Key_DataCTLCreate(void);
 int Task_Sidebar_CTLCreate(void);
 int Task_Action_KEY_CTLCreate(void);
+int Task_Normal_KEY_CTLCreate(void);
 int HID_Data_Handle(void);
 #endif

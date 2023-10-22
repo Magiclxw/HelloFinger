@@ -216,6 +216,7 @@ extern FUNC_USARTRECVTCB USART2RECVCallback;
 extern FUNC_TOUCHRECVTCB TOUCHRECVCallback;
 extern FUNC_ENCODERKEYRECVTCB ENCODERKeyRECVCallback;
 extern FUNC_ACTIONKEYRECVTCB ActionKeyRECVCallback;
+extern FUNC_NORMALKEYRECVTCB	NormalKeyRECVCallback;
 
 extern DMA_HandleTypeDef hdma_adc1;
 
@@ -258,22 +259,31 @@ void EXTI4_IRQHandler(void)	//手指触摸信号
 	HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_4);
 }
 
-void EXTI9_5_IRQHandler(void)		//编码器信号中断
+void EXTI9_5_IRQHandler(void)		
 {
 	uint32_t status = EXTI->PR;
-	if(status & 0x100){
+	if(status & 0x40){	//编码器信号中断
+		HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_6);
+		EXTI->PR &= ~0x40;
+	}
+	if(status & 0x80){	//编码器信号中断
+		HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_7);		//调用中断处理公用函数
+		EXTI->PR &= ~0x80;
+	}
+	if(status & 0x100){	//按键中断
 		HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_8);
 		EXTI->PR &= ~0x100;
-	}
-	if(status & 0x200){
-		HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_9);		//调用中断处理公用函数
-		EXTI->PR &= ~0x200;
 	} 
 }
 
 void EXTI15_10_IRQHandler(void)
 {
 	uint32_t status = EXTI->PR;
+	if(status & (1<<11))
+	{
+		HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_11);
+		EXTI->PR &= ~(1<<11);
+	}
 	if(status & (1<<14))
 	{
 		HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_14);
@@ -366,7 +376,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 			break;
 		}
 		
-		case GPIO_PIN_8:
+		case GPIO_PIN_6:
 		{
 			if(Signal_A_Read == GPIO_PIN_SET && Signal_B_Read == GPIO_PIN_RESET && signal_a == 0){
 				signal_a = 1;
@@ -379,7 +389,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 			break;
 		}
 			
-		case GPIO_PIN_9:
+		case GPIO_PIN_7:
 		{
 			if(Signal_B_Read == GPIO_PIN_SET && Signal_A_Read == GPIO_PIN_RESET && signal_b == 0){
 				signal_b = 1;
@@ -388,6 +398,22 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 				signal_b = 0;
 			}else{
 				signal_b = 0;
+			}
+			break;
+		}
+		case GPIO_PIN_8:
+		{
+			if(NormalKeyRECVCallback != NULL)
+			{
+				NormalKeyRECVCallback();
+			}
+			break;
+		}
+		case GPIO_PIN_11:
+		{
+			if(NormalKeyRECVCallback != NULL)
+			{
+				NormalKeyRECVCallback();
 			}
 			break;
 		}

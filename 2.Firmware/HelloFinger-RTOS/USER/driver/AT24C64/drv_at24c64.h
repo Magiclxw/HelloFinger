@@ -12,12 +12,12 @@
 #define PBout(n)   BIT_ADDR(GPIOB_ODR_Addr,n)  //输出 
 #define PBin(n)    BIT_ADDR(GPIOB_IDR_Addr,n)  //输入 
 
-#define SDA_IN()  {GPIOB->CRL&=0X0FFFFFFF;GPIOB->CRL|=(uint32_t)8<<28;}	//PB7输入模式
-#define SDA_OUT() {GPIOB->CRL&=0X0FFFFFFF;GPIOB->CRL|=(uint32_t)3<<28;} 	//PB7输出模式
+#define SDA_IN()  {GPIOB->CRH&=0XFFFFFF0F;GPIOB->CRH|=(uint32_t)8<<4;}	//PB9输入模式
+#define SDA_OUT() {GPIOB->CRH&=0XFFFFFF0F;GPIOB->CRH|=(uint32_t)3<<4;} 	//PB9输出模式
 
-#define IIC_SCL   PBout(6) //SCL
-#define IIC_SDA   PBout(7) //SDA
-#define READ_SDA  PBin(7)  //输入SDA
+#define IIC_SCL   PBout(8) //SCL
+#define IIC_SDA   PBout(9) //SDA
+#define READ_SDA  PBin(9)  //输入SDA
 
 #define EEPROM_SIZE	0xFFFF
 #define EEPROM_BUFFER_SIZE	100

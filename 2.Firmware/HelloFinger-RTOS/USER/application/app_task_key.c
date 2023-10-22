@@ -9,6 +9,7 @@
 static void vTaskKeyProcessing(void);
 static void vTaskSidebarProcessing(void);
 static void vTaskActionKeyProcessing(void);
+static void vTaskNormalKeyProcessing(void);
 int Key_Protocol_Mode_RecData_Handle(uint8_t data);
 int Key_Trans_Mode_RecData_Handle(uint8_t data);
 static void KeyResetData(void);
@@ -20,6 +21,7 @@ static void Key_Func_Exec(void);
 TaskHandle_t Task_Key_Handle = NULL;	//按键数据传输任务句柄
 TaskHandle_t Task_Sidebar_Handle = NULL;	//侧边栏控制任务句柄
 TaskHandle_t Task_Action_Key_Handle = NULL;	//Action按键功能句柄
+TaskHandle_t Task_Normal_Key_Handle = NULL;
 
 QueueHandle_t Queue_KeyProcessing_Handle = NULL;
 QueueHandle_t Queue_Computer_Info_Handle = NULL;
@@ -61,6 +63,17 @@ int Action_KeyNotifyFromISR(void)
 	return OPERATE_SUCCESS;
 }
 
+int Normal_KeyNotifyFromISR(void)
+{
+	portBASE_TYPE xHigherPriorityTaskWoken = pdTRUE;
+	if(Task_Normal_Key_Handle != NULL)
+	{
+		vTaskNotifyGiveFromISR((TaskHandle_t)Task_Normal_Key_Handle,&xHigherPriorityTaskWoken);
+		portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+	}
+	return OPERATE_SUCCESS;
+}
+
 int Task_Key_DataCTLCreate(void)
 {
 	xTaskCreate( (TaskFunction_t)vTaskKeyProcessing,
@@ -72,7 +85,7 @@ int Task_Key_DataCTLCreate(void)
 	return OPERATE_SUCCESS;
 }
 
-int Task_Sidebar_CTLCreate(void)
+int Task_Sidebar_CTLCreate(void)	//侧边栏控制按键
 {
 	xTaskCreate( (TaskFunction_t)vTaskSidebarProcessing,
 								(const char*  )"SidebarDataControl",
@@ -83,7 +96,7 @@ int Task_Sidebar_CTLCreate(void)
 	return OPERATE_SUCCESS;
 }
 
-int Task_Action_KEY_CTLCreate(void)
+int Task_Action_KEY_CTLCreate(void)	//Action功能控制按键
 {
 	xTaskCreate( (TaskFunction_t)vTaskActionKeyProcessing,
 								(const char*  )"ActionKeyControl",
@@ -91,6 +104,17 @@ int Task_Action_KEY_CTLCreate(void)
 								(void *				)NULL,
 								(UBaseType_t  )TASK_ACTION_KEY_PRIORITY,
 								&Task_Action_Key_Handle);
+	return OPERATE_SUCCESS;
+}
+
+int Task_Normal_KEY_CTLCreate(void)
+{
+	xTaskCreate( (TaskFunction_t)vTaskNormalKeyProcessing,
+								(const char*  )"NormalKeyControl",
+								(uint32_t     )TASK_NORMAL_KEY_SIZE,
+								(void *				)NULL,
+								(UBaseType_t  )TASK_NORMAL_KEY_PRIORITY,
+								&Task_Normal_Key_Handle);
 	return OPERATE_SUCCESS;
 }
 
@@ -163,6 +187,21 @@ static void vTaskSidebarProcessing(void)
 
 static void vTaskActionKeyProcessing(void)
 {
+	uint8_t func = 0;
+	uint32_t action = 0;
+	uint32_t crc_value = 0;
+	KEY_TYPE_e keyType = 0;
+	Flash_read(&func,ACTION_FUNC_BASE_ADDR,1);
+	Flash_read((uint8_t*)&action,ACTION_FUNC_BASE_ADDR+1,4);
+	switch (func)
+	{
+		case KEY_POWER:
+		{
+			keyType = KEY_TYPE_POWER_KEY;
+			
+			break;
+		}
+	}
 	while(1)
 	{
 		BaseType_t ret = ulTaskNotifyTake((BaseType_t)pdTRUE,(TickType_t)portMAX_DELAY);
@@ -172,8 +211,50 @@ static void vTaskActionKeyProcessing(void)
 			if(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_14) == 0)	//消抖
 			{
 				CH9329_Input_Fuc_Key(R_CTRL,KEY_A);
+				//CH9329_Generate_KEY_CMD();
 			}
 			vTaskDelay(50);
+		}
+	}
+}
+
+static void vTaskNormalKeyProcessing(void)
+{
+	uint8_t key1_press_flag = 0;
+	uint8_t key2_press_flag = 0;
+	
+	while(1)
+	{
+		BaseType_t ret = ulTaskNotifyTake((BaseType_t)pdTRUE,(TickType_t)portMAX_DELAY);
+		if(ret != 0)
+		{
+			vTaskDelay(20);
+			if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_8) == GPIO_PIN_RESET)
+			{
+				REL_Mouse_Ctrl(0,0,0,button_LEFT);
+				key1_press_flag = 1;
+			}
+			if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_8) == GPIO_PIN_SET)
+			{
+				if(key1_press_flag == 1)
+				{
+					REL_Mouse_Ctrl(0,0,0,button_NULL);
+					key1_press_flag = 0;
+				}
+			}
+			if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_11) == GPIO_PIN_RESET)
+			{
+				REL_Mouse_Ctrl(0,0,0,button_RIGHT);
+				key2_press_flag = 1;
+			}
+			if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_11) == GPIO_PIN_SET)
+			{
+				if(key2_press_flag == 1)
+				{
+					REL_Mouse_Ctrl(0,0,0,button_NULL);
+					key2_press_flag = 0;
+				}
+			}
 		}
 	}
 }
@@ -762,6 +843,23 @@ int HID_Data_Handle(void)
 				 
 				 g_usb_response.data[19] = CH9329_CAL_SUM((uint8_t*)&g_usb_response,23);
 				 Send_HID_Data((uint8_t*)&g_usb_response,24);
+				 break;
+			 }
+			 case USB_PROTOCOL_FORMAT_SET_ACTION:	//设置Action按键功能
+			 {
+				 uint8_t action_type = g_key_data_format.data[5];
+				 uint32_t action_value;
+				 uint32_t crc_value;
+				 memcpy(&action_value,(uint8_t*)&g_key_data_format.data[6],sizeof(uint32_t));
+				 store_msg[0] = action_type;
+				 store_msg[1] = action_value>>24;
+				 store_msg[2] = action_value>>16;
+				 store_msg[2] = action_value>>8;
+				 store_msg[3] = (uint8_t)action_value;
+				 crc_value = Calc_CRC(store_msg,5);
+				 Flash_write(store_msg,ACTION_FUNC_BASE_ADDR,5);
+				 vTaskDelay(10);
+				 Flash_write((uint8_t*)&crc_value,ACTION_FUNC_BASE_ADDR+5,4);
 				 break;
 			 }
 			 default : break;

@@ -7,7 +7,7 @@ void IIC_Init(void)
     
     __HAL_RCC_GPIOB_CLK_ENABLE();
     
-    GPIO_Initure.Pin=GPIO_PIN_6|GPIO_PIN_7;
+    GPIO_Initure.Pin=GPIO_PIN_8|GPIO_PIN_9;
     GPIO_Initure.Mode=GPIO_MODE_OUTPUT_PP;
     GPIO_Initure.Pull=GPIO_PULLUP;
     GPIO_Initure.Speed=GPIO_SPEED_FREQ_HIGH;

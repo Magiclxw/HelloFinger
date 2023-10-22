@@ -69,6 +69,7 @@ void SystemClock_Config(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 uint8_t rx[20] = {0};
+
 /* USER CODE END 0 */
 
 /**
@@ -109,12 +110,12 @@ int main(void)
 	Flash_Init();
 	MX_SPI2_Init();
 	delay_init(72);
+	IIC_Init();
 	FPM383C_Init();
 	CH9329_Init();
 	delay_ms(1000);
 	ENCODER_Init();
 	printf("hello finger\r\n");
-	
 	memcpy(g_sys_info.firmware_version,Firmware_Version,strlen(Firmware_Version));
 
 	id = Flash_Read_id(); /* ∂¡»°FLASH ID */
@@ -126,10 +127,14 @@ int main(void)
         printf( "Please Check!      ");
         delay_ms(500);
     }
-	//uint8_t data[10] = {0,1,2,3,4,5,6,7,8,9};
+	uint8_t data[10] = {0,1,2,3,4,5,6,7,8,9};
+	
 	//Flash_write(data,0x10000,10);
+	//AT24C64_WriteOneByte(0x00,data[2]);
+	
 	//delay_ms(1000);
 	
+	//rx[0] = AT24C64_ReadOneByte(0x00);
 	//Flash_read(rx,0x100000,10);
 	Flash_Read_DMA(rx,0x100000+100*2,20);
 	//delay_ms(1000);
@@ -146,6 +151,7 @@ int main(void)
 	RegisterFingerTouchCallBack(Finger_TouchNotifyFromISR);
 	RegisterEncoderKeyCallBack(ENCODER_KeyNotifyFromISR);
 	RegisterActionKeyCallBack(Action_KeyNotifyFromISR);
+	RegisterNormalKeyCallBack(Normal_KeyNotifyFromISR);
 	//Generate_StoreChar(0xAB,0x01);
 	Task_Create();
 	vTaskStartScheduler();

@@ -9,9 +9,9 @@ __IO uint8_t signal_b = 0;
 
 FUNC_ENCODERKEYRECVTCB ENCODERKeyRECVCallback = NULL;
 
-int RegisterEncoderKeyCallBack(FUNC_ENCODERKEYRECVTCB TOUCHRECVCBT)
+int RegisterEncoderKeyCallBack(FUNC_ENCODERKEYRECVTCB ENCODERRECVCBT)
 {
-	ENCODERKeyRECVCallback = TOUCHRECVCBT;
+	ENCODERKeyRECVCallback = ENCODERRECVCBT;
 	return OPERATE_SUCCESS;
 }
 
@@ -22,7 +22,7 @@ void ENCODER_Init(void)
 	__HAL_RCC_GPIOB_CLK_ENABLE();
 	
 	gpio.Mode=GPIO_MODE_IT_RISING_FALLING;
-	gpio.Pin=GPIO_PIN_8|GPIO_PIN_9;
+	gpio.Pin=GPIO_PIN_6|GPIO_PIN_7;
 	gpio.Pull=GPIO_PULLUP;
 	gpio.Speed=GPIO_SPEED_FREQ_HIGH;
 	HAL_GPIO_Init(GPIOB,&gpio);
@@ -33,7 +33,7 @@ void ENCODER_Init(void)
 	gpio.Speed = GPIO_SPEED_FREQ_HIGH;
 	HAL_GPIO_Init(GPIOA,&gpio);
 
-	HAL_NVIC_SetPriority(EXTI9_5_IRQn,11,0);       //抢占优先级为2，子优先级为0
+	HAL_NVIC_SetPriority(EXTI9_5_IRQn,11,0);
   HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 	
 	HAL_NVIC_SetPriority(EXTI1_IRQn,11,0);

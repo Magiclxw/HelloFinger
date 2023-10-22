@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QComboBox>
+#include <QtWidgets/QFormLayout>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
@@ -21,6 +22,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QScrollArea>
 #include <QtWidgets/QSlider>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QTabWidget>
@@ -202,10 +204,24 @@ public:
     QListWidget *listWidget_hidwindow;
     QWidget *tab;
     QVBoxLayout *verticalLayout_17;
-    QWidget *widget_21;
+    QScrollArea *scrollArea;
+    QWidget *scrollAreaWidgetContents;
+    QFormLayout *formLayout;
+    QPushButton *pushButton_action_chat;
+    QPushButton *pushButton_action_power;
+    QPushButton *pushButton_action_sleep;
+    QPushButton *pushButton_action_weakup;
+    QPushButton *pushButton_action_calculator;
+    QPushButton *pushButton_action_explorer;
+    QPushButton *pushButton_action_computer;
+    QPushButton *pushButton_action_screen_save;
+    QPushButton *pushButton_action_email;
+    QPushButton *pushButton_action_mute;
+    QPushButton *pushButton_action_play_pause;
     QWidget *tab_2;
     QVBoxLayout *verticalLayout_18;
     QTextEdit *textEdit_chat_output;
+    QPushButton *pushButton_chat_copy_answer;
     QTextEdit *textEdit_chat_input;
     QPushButton *pushButton_chat_data_send;
     QWidget *tab_system;
@@ -1636,10 +1652,83 @@ public:
         tab->setObjectName(QString::fromUtf8("tab"));
         verticalLayout_17 = new QVBoxLayout(tab);
         verticalLayout_17->setObjectName(QString::fromUtf8("verticalLayout_17"));
-        widget_21 = new QWidget(tab);
-        widget_21->setObjectName(QString::fromUtf8("widget_21"));
+        scrollArea = new QScrollArea(tab);
+        scrollArea->setObjectName(QString::fromUtf8("scrollArea"));
+        scrollArea->setWidgetResizable(true);
+        scrollAreaWidgetContents = new QWidget();
+        scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 184, 372));
+        formLayout = new QFormLayout(scrollAreaWidgetContents);
+        formLayout->setObjectName(QString::fromUtf8("formLayout"));
+        pushButton_action_chat = new QPushButton(scrollAreaWidgetContents);
+        pushButton_action_chat->setObjectName(QString::fromUtf8("pushButton_action_chat"));
+        pushButton_action_chat->setMinimumSize(QSize(0, 20));
 
-        verticalLayout_17->addWidget(widget_21);
+        formLayout->setWidget(0, QFormLayout::FieldRole, pushButton_action_chat);
+
+        pushButton_action_power = new QPushButton(scrollAreaWidgetContents);
+        pushButton_action_power->setObjectName(QString::fromUtf8("pushButton_action_power"));
+        pushButton_action_power->setMinimumSize(QSize(0, 20));
+
+        formLayout->setWidget(1, QFormLayout::FieldRole, pushButton_action_power);
+
+        pushButton_action_sleep = new QPushButton(scrollAreaWidgetContents);
+        pushButton_action_sleep->setObjectName(QString::fromUtf8("pushButton_action_sleep"));
+        pushButton_action_sleep->setMinimumSize(QSize(0, 20));
+
+        formLayout->setWidget(2, QFormLayout::FieldRole, pushButton_action_sleep);
+
+        pushButton_action_weakup = new QPushButton(scrollAreaWidgetContents);
+        pushButton_action_weakup->setObjectName(QString::fromUtf8("pushButton_action_weakup"));
+        pushButton_action_weakup->setMinimumSize(QSize(0, 20));
+
+        formLayout->setWidget(3, QFormLayout::FieldRole, pushButton_action_weakup);
+
+        pushButton_action_calculator = new QPushButton(scrollAreaWidgetContents);
+        pushButton_action_calculator->setObjectName(QString::fromUtf8("pushButton_action_calculator"));
+        pushButton_action_calculator->setMinimumSize(QSize(0, 20));
+
+        formLayout->setWidget(4, QFormLayout::FieldRole, pushButton_action_calculator);
+
+        pushButton_action_explorer = new QPushButton(scrollAreaWidgetContents);
+        pushButton_action_explorer->setObjectName(QString::fromUtf8("pushButton_action_explorer"));
+        pushButton_action_explorer->setMinimumSize(QSize(0, 20));
+
+        formLayout->setWidget(5, QFormLayout::FieldRole, pushButton_action_explorer);
+
+        pushButton_action_computer = new QPushButton(scrollAreaWidgetContents);
+        pushButton_action_computer->setObjectName(QString::fromUtf8("pushButton_action_computer"));
+        pushButton_action_computer->setMinimumSize(QSize(0, 20));
+
+        formLayout->setWidget(6, QFormLayout::FieldRole, pushButton_action_computer);
+
+        pushButton_action_screen_save = new QPushButton(scrollAreaWidgetContents);
+        pushButton_action_screen_save->setObjectName(QString::fromUtf8("pushButton_action_screen_save"));
+        pushButton_action_screen_save->setMinimumSize(QSize(0, 20));
+
+        formLayout->setWidget(7, QFormLayout::FieldRole, pushButton_action_screen_save);
+
+        pushButton_action_email = new QPushButton(scrollAreaWidgetContents);
+        pushButton_action_email->setObjectName(QString::fromUtf8("pushButton_action_email"));
+        pushButton_action_email->setMinimumSize(QSize(0, 20));
+
+        formLayout->setWidget(8, QFormLayout::FieldRole, pushButton_action_email);
+
+        pushButton_action_mute = new QPushButton(scrollAreaWidgetContents);
+        pushButton_action_mute->setObjectName(QString::fromUtf8("pushButton_action_mute"));
+        pushButton_action_mute->setMinimumSize(QSize(0, 20));
+
+        formLayout->setWidget(9, QFormLayout::FieldRole, pushButton_action_mute);
+
+        pushButton_action_play_pause = new QPushButton(scrollAreaWidgetContents);
+        pushButton_action_play_pause->setObjectName(QString::fromUtf8("pushButton_action_play_pause"));
+        pushButton_action_play_pause->setMinimumSize(QSize(0, 20));
+
+        formLayout->setWidget(10, QFormLayout::FieldRole, pushButton_action_play_pause);
+
+        scrollArea->setWidget(scrollAreaWidgetContents);
+
+        verticalLayout_17->addWidget(scrollArea);
 
         tabWidget->addTab(tab, QString());
         tab_2 = new QWidget();
@@ -1648,12 +1737,22 @@ public:
         verticalLayout_18->setObjectName(QString::fromUtf8("verticalLayout_18"));
         textEdit_chat_output = new QTextEdit(tab_2);
         textEdit_chat_output->setObjectName(QString::fromUtf8("textEdit_chat_output"));
+        QFont font;
+        font.setPointSize(10);
+        textEdit_chat_output->setFont(font);
         textEdit_chat_output->setTextInteractionFlags(Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
 
         verticalLayout_18->addWidget(textEdit_chat_output);
 
+        pushButton_chat_copy_answer = new QPushButton(tab_2);
+        pushButton_chat_copy_answer->setObjectName(QString::fromUtf8("pushButton_chat_copy_answer"));
+
+        verticalLayout_18->addWidget(pushButton_chat_copy_answer);
+
         textEdit_chat_input = new QTextEdit(tab_2);
         textEdit_chat_input->setObjectName(QString::fromUtf8("textEdit_chat_input"));
+        textEdit_chat_input->setMaximumSize(QSize(16777215, 70));
+        textEdit_chat_input->setFont(font);
 
         verticalLayout_18->addWidget(textEdit_chat_input);
 
@@ -1673,7 +1772,7 @@ public:
 
         retranslateUi(Form_MainWindow);
 
-        tabWidget->setCurrentIndex(5);
+        tabWidget->setCurrentIndex(4);
         tabWidget_finger_func->setCurrentIndex(1);
         stackedWidget->setCurrentIndex(4);
         stackedWidget_key->setCurrentIndex(5);
@@ -2521,7 +2620,19 @@ public:
         toolBox->setItemText(toolBox->indexOf(page_task_6), QApplication::translate("Form_MainWindow", "\345\220\257\345\212\250\344\273\273\345\212\241\345\205\255", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_quickstart), QApplication::translate("Form_MainWindow", "\345\277\253\346\215\267\345\220\257\345\212\250", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_hidwindow), QApplication::translate("Form_MainWindow", " \344\276\247\350\276\271\346\240\217", nullptr));
+        pushButton_action_chat->setText(QApplication::translate("Form_MainWindow", "\345\257\271\350\257\235", nullptr));
+        pushButton_action_power->setText(QApplication::translate("Form_MainWindow", "\347\224\265\346\272\220", nullptr));
+        pushButton_action_sleep->setText(QApplication::translate("Form_MainWindow", "\347\235\241\347\234\240", nullptr));
+        pushButton_action_weakup->setText(QApplication::translate("Form_MainWindow", "\345\224\244\351\206\222", nullptr));
+        pushButton_action_calculator->setText(QApplication::translate("Form_MainWindow", "\350\256\241\347\256\227\345\231\250", nullptr));
+        pushButton_action_explorer->setText(QApplication::translate("Form_MainWindow", "\346\265\217\350\247\210\345\231\250", nullptr));
+        pushButton_action_computer->setText(QApplication::translate("Form_MainWindow", "\346\210\221\347\232\204\347\224\265\350\204\221", nullptr));
+        pushButton_action_screen_save->setText(QApplication::translate("Form_MainWindow", "\346\210\252\345\261\217", nullptr));
+        pushButton_action_email->setText(QApplication::translate("Form_MainWindow", "\351\202\256\344\273\266", nullptr));
+        pushButton_action_mute->setText(QApplication::translate("Form_MainWindow", "\351\235\231\351\237\263", nullptr));
+        pushButton_action_play_pause->setText(QApplication::translate("Form_MainWindow", "\346\222\255\346\224\276/\346\232\202\345\201\234", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("Form_MainWindow", "Action", nullptr));
+        pushButton_chat_copy_answer->setText(QApplication::translate("Form_MainWindow", " \345\244\215\345\210\266\345\233\236\347\255\224", nullptr));
         pushButton_chat_data_send->setText(QApplication::translate("Form_MainWindow", " \345\217\221\351\200\201", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("Form_MainWindow", "Chat", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_system), QApplication::translate("Form_MainWindow", "\347\263\273\347\273\237", nullptr));

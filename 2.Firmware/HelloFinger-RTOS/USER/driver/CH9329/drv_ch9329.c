@@ -642,6 +642,11 @@ int Quick_Start(char key)
 	return OPERATE_SUCCESS;
 }
 
+int CH9329_Key_Release(void)	//发送释放按键指令
+{
+	HAL_UART_Transmit(&huart1,KeyRelease,14,1000);	//释放按键
+}
+
 /**
 * @brief	美式键盘、通用键盘切换
 * @date	2023-10-14 16:29:56

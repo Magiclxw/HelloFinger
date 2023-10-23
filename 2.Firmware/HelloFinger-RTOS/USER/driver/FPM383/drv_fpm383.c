@@ -1,34 +1,11 @@
 #include "drv_fpm383.h"
 #include "app_task_key.h"
-static void CMD_Init(void);
-static uint16_t Generate_CMD_Checksum(uint8_t * cmd,uint16_t len);
+static void FPM383C_CMD_Init(void);
+static uint16_t FPM383C_Generate_CMD_Checksum(uint8_t * cmd,uint16_t len);
 
 uint8_t CMD_HEAD[2] =	{0xEF,0x01};						//包头
 uint8_t CMD_ADDR[4] =	{0xFF,0xFF,0xFF,0xFF};	//芯片地址，默认0xffffffff
 uint8_t CMD_HEAD_ADDR[6] = {0xEF,0x01,0xFF,0xFF,0xFF,0xFF};
-
-
-CMD_AutoEnroll_t 				g_autoenroll 				= {0};	//自动注册模板结构体
-CMD_AutoIdentify_t 			g_autoidentify 			= {0};	//自动验证指纹结构体
-CMD_DeleteChar_t 				g_deletechar 				= {0};	//删除模板结构体
-CMD_Cancel_t						g_cancel						= {0};	//取消指令结构体
-CMD_Sleep_t							g_sleep							= {0};	//休眠指令结构体
-CMD_ValidTempleteNum_t 	g_valid_num  				= {0};	//读有效模板个数结构体
-CMD_ReadIndexTable_t	 	g_read_index_table 	= {0};	//读索引表结构体
-CMD_SetPwd_t						g_set_pwd						= {0};	//设置口令结构体
-CMD_VfyPwd_t						g_vfy_pwd						= {0};	//验证口令结构体
-CMD_HandShake_t					g_hand_shake				= {0};	//握手指令结构体
-CMD_CheckSensor_t				g_check_sensor			= {0};	//校验传感器指令结构体
-CMD_SetChipAddr_t				g_set_chip_addr 		= {0};	//设置设备地址结构体
-CMD_WriteNotePad_t			g_write_notepad 		= {0};	//写记事本结构体
-CMD_ReadNotepad_t   		g_read_notepad  		= {0};	//读记事本结构体
-CMD_GetImage_t					g_get_image					= {0};	//获取图像结构体
-CMD_GenChar_t						g_gen_char					= {0};	//生成特征结构体
-CMD_RegModel_t					g_reg_model					= {0};	//合并模板结构体
-CMD_StoreChar_t					g_store_char				= {0};	//存储模板结构体
-CMD_Match_t							g_match							= {0};	//精确对比结构体
-CMD_ControlBLN_t				g_control_bln				=	{0};	//控制LED
-CMD_ControlBLN_PRO_t		g_control_bln_pro		= {0};	//控制七彩LED
 
 
 /*******************指令码**********************/													/***********************指令码长度*************************/
@@ -80,7 +57,7 @@ int RegisterFingerTouchCallBack(FUNC_TOUCHRECVTCB TOUCHRECVCBT)
 	return OPERATE_SUCCESS;
 }
 
-void FPM383C_Init(void)
+int FPM383C_Init(void)
 {
 	GPIO_InitTypeDef gpio;
 	__HAL_RCC_GPIOA_CLK_ENABLE();
@@ -94,15 +71,18 @@ void FPM383C_Init(void)
 	HAL_NVIC_SetPriority(EXTI4_IRQn,6,0);
 	HAL_NVIC_EnableIRQ(EXTI4_IRQn);
 	
-	CMD_Init();
+	FPM383C_CMD_Init();
 	
-	Generate_Sleep();
+	CMD_Sleep_t							g_sleep							= {0};	//休眠指令结构体
+	
+	Generate_Sleep(&g_sleep);
 	
 	HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_sleep,g_sleep.LEN[0]<<8|g_sleep.LEN[1]+FIXED_CMD_LEN,1000);
 	
+	return OPERATE_SUCCESS;
 }
 
-static void CMD_Init(void)	//初始化包头和设备地址，后期可从EEPROM中读取
+static void FPM383C_CMD_Init(void)	//初始化包头和设备地址，后期可从EEPROM中读取
 {
 	CMD_HEAD[0] = 0xEF;
 	CMD_HEAD[1] = 0x01;
@@ -120,7 +100,7 @@ static void CMD_Init(void)	//初始化包头和设备地址，后期可从EEPROM中读取
 	CMD_HEAD_ADDR[5] = 0xFF;
 }
 
-static uint16_t Generate_CMD_Checksum(uint8_t * cmd,uint16_t len)
+static uint16_t FPM383C_Generate_CMD_Checksum(uint8_t * cmd,uint16_t len)
 {
 	uint16_t checksum = 0;
 	for(uint16_t i = 0; i<len; i++)
@@ -137,577 +117,618 @@ static uint16_t Generate_CMD_Checksum(uint8_t * cmd,uint16_t len)
 	*@param	Parameter.
 	*@return Address of CMD.
 	*/
-void Generate_AutoEnroll(uint16_t ID,uint8_t enrollTimes,uint16_t PARAM)		//生成自动注册模板指令
+int Generate_AutoEnroll(CMD_AutoEnroll_t* autoenroll,uint16_t ID,uint8_t enrollTimes,uint16_t PARAM)		//生成自动注册模板指令
 {
 	uint16_t checksum = 0;
 	
-	memcpy((uint8_t*)g_autoenroll.CMD_HEAD,CMD_HEAD,2);
+	memcpy((uint8_t*)autoenroll->CMD_HEAD,CMD_HEAD,2);
 	
-	memcpy((uint8_t*)g_autoenroll.CMD_ADDR,CMD_ADDR,4);
+	memcpy((uint8_t*)autoenroll->CMD_ADDR,CMD_ADDR,4);
 	
-	g_autoenroll.TYPE = ID_CMD;
+	autoenroll->TYPE = ID_CMD;
 	
-	g_autoenroll.LEN[0] = AutoEnrollLen[0];
+	autoenroll->LEN[0] = AutoEnrollLen[0];
 	
-	g_autoenroll.LEN[1] = AutoEnrollLen[1];
+	autoenroll->LEN[1] = AutoEnrollLen[1];
 	
-	g_autoenroll.CMD = AutoEnroll;
+	autoenroll->CMD = AutoEnroll;
 	
-	g_autoenroll.ID[0] = ID>>8;
+	autoenroll->ID[0] = ID>>8;
 	
-	g_autoenroll.ID[1] = (uint8_t)ID;
+	autoenroll->ID[1] = (uint8_t)ID;
 	
-	g_autoenroll.ENROLL_TIMES = enrollTimes;
+	autoenroll->ENROLL_TIMES = enrollTimes;
 	
-	g_autoenroll.PARAM[0] = PARAM>>8;
+	autoenroll->PARAM[0] = PARAM>>8;
 	
-	g_autoenroll.PARAM[1] = (uint8_t)PARAM;
+	autoenroll->PARAM[1] = (uint8_t)PARAM;
 	
-	checksum = Generate_CMD_Checksum((uint8_t*)&g_autoenroll.TYPE,(g_autoenroll.LEN[0]<<8|g_autoenroll.LEN[1])+CHECKNUM_EXPECT_LEN);
+	checksum = FPM383C_Generate_CMD_Checksum((uint8_t*)&autoenroll->TYPE,(autoenroll->LEN[0]<<8|autoenroll->LEN[1])+CHECKNUM_EXPECT_LEN);
 	
-	g_autoenroll.CHECKSUM[0] = checksum>>8;
+	autoenroll->CHECKSUM[0] = checksum>>8;
 	
-	g_autoenroll.CHECKSUM[1] = (uint8_t)checksum;
+	autoenroll->CHECKSUM[1] = (uint8_t)checksum;
 	
+	return OPERATE_SUCCESS;
 }
 
-void Generate_AutoIdentify(uint8_t secureleval,uint16_t ID,uint16_t PARAM)				//生成自动验证指纹指令
+int Generate_AutoIdentify(CMD_AutoIdentify_t *autoidentify,uint8_t secureleval,uint16_t ID,uint16_t PARAM)				//生成自动验证指纹指令
 {
 	uint16_t checksum=0;
 	
-	memcpy((uint8_t*)g_autoidentify.CMD_HEAD,CMD_HEAD,2);
+	memcpy((uint8_t*)autoidentify->CMD_HEAD,CMD_HEAD,2);
 	
-	memcpy((uint8_t*)g_autoidentify.CMD_ADDR,CMD_ADDR,4);
+	memcpy((uint8_t*)autoidentify->CMD_ADDR,CMD_ADDR,4);
 	
-	g_autoidentify.TYPE = ID_CMD;
+	autoidentify->TYPE = ID_CMD;
 	
-	g_autoidentify.LEN[0] = AutoIdentifyLen[0];
+	autoidentify->LEN[0] = AutoIdentifyLen[0];
 	
-	g_autoidentify.LEN[1] = AutoIdentifyLen[1];
+	autoidentify->LEN[1] = AutoIdentifyLen[1];
 	
-	g_autoidentify.CMD = AutoIdentify;
+	autoidentify->CMD = AutoIdentify;
 	
-	g_autoidentify.LEVEL = secureleval;
+	autoidentify->LEVEL = secureleval;
 	
-	g_autoidentify.ID[0] = ID>>8;
+	autoidentify->ID[0] = ID>>8;
 	
-	g_autoidentify.ID[1] = (uint8_t)ID;
+	autoidentify->ID[1] = (uint8_t)ID;
 
-	g_autoidentify.PARAM[0] = PARAM>>8;
+	autoidentify->PARAM[0] = PARAM>>8;
 	
-	g_autoidentify.PARAM[1] = (uint8_t)PARAM;
+	autoidentify->PARAM[1] = (uint8_t)PARAM;
 	
-	checksum = Generate_CMD_Checksum((uint8_t*)&g_autoidentify.TYPE,(g_autoidentify.LEN[0]<<8|g_autoidentify.LEN[1])+CHECKNUM_EXPECT_LEN);
+	checksum = FPM383C_Generate_CMD_Checksum((uint8_t*)&autoidentify->TYPE,(autoidentify->LEN[0]<<8|autoidentify->LEN[1])+CHECKNUM_EXPECT_LEN);
 	
-	g_autoidentify.CHECKSUM[0] = checksum>>8;
+	autoidentify->CHECKSUM[0] = checksum>>8;
 	
-	g_autoidentify.CHECKSUM[1] = (uint8_t)checksum;
+	autoidentify->CHECKSUM[1] = (uint8_t)checksum;
+	
+	return OPERATE_SUCCESS;
 }
 
-void Generate_DeletChar(uint16_t PageID,uint16_t number)		//生成删除模板指令
+int Generate_DeletChar(CMD_DeleteChar_t *deletechar,uint16_t PageID,uint16_t number)		//生成删除模板指令
 {
 	uint16_t checksum=0;
 	
-	memcpy((uint8_t*)g_deletechar.CMD_HEAD,CMD_HEAD,2);
+	memcpy((uint8_t*)deletechar->CMD_HEAD,CMD_HEAD,2);
 	
-	memcpy((uint8_t*)g_deletechar.CMD_ADDR,CMD_ADDR,4);
+	memcpy((uint8_t*)deletechar->CMD_ADDR,CMD_ADDR,4);
 	
-	g_deletechar.TYPE = ID_CMD;
+	deletechar->TYPE = ID_CMD;
 	
-	g_deletechar.LEN[0] = DeletCharLen[0];
+	deletechar->LEN[0] = DeletCharLen[0];
 	
-	g_deletechar.LEN[1] = DeletCharLen[1];
+	deletechar->LEN[1] = DeletCharLen[1];
 	
-	g_deletechar.CMD = DeletChar;
+	deletechar->CMD = DeletChar;
 
-	g_deletechar.PAGE_ID[0] = PageID>>8;
+	deletechar->PAGE_ID[0] = PageID>>8;
 	
-	g_deletechar.PAGE_ID[1] = (uint8_t)PageID;
+	deletechar->PAGE_ID[1] = (uint8_t)PageID;
 
-	g_deletechar.NUM[0] = number>>8;
+	deletechar->NUM[0] = number>>8;
 	
-	g_deletechar.NUM[1] = (uint8_t)number;
+	deletechar->NUM[1] = (uint8_t)number;
 	
-	checksum = Generate_CMD_Checksum((uint8_t*)&g_deletechar.TYPE,(g_deletechar.LEN[0]<<8|g_deletechar.LEN[1])+CHECKNUM_EXPECT_LEN);
+	checksum = FPM383C_Generate_CMD_Checksum((uint8_t*)&deletechar->TYPE,(deletechar->LEN[0]<<8|deletechar->LEN[1])+CHECKNUM_EXPECT_LEN);
 	
-	g_deletechar.CHECKSUM[0] = checksum>>8;
+	deletechar->CHECKSUM[0] = checksum>>8;
 	
-	g_deletechar.CHECKSUM[1] = (uint8_t)checksum;
+	deletechar->CHECKSUM[1] = (uint8_t)checksum;
+	
+	return OPERATE_SUCCESS;
 }
 
-void Generate_Cancel(void)					//生成取消指令
+int Generate_Cancel(CMD_Cancel_t *cancel)					//生成取消指令
 {
 	uint16_t checksum=0;
 	
-	memcpy((uint8_t*)g_cancel.CMD_HEAD,CMD_HEAD,2);
+	memcpy((uint8_t*)cancel->CMD_HEAD,CMD_HEAD,2);
 	
-	memcpy((uint8_t*)g_cancel.CMD_ADDR,CMD_ADDR,4);
+	memcpy((uint8_t*)cancel->CMD_ADDR,CMD_ADDR,4);
 	
-	g_cancel.TYPE = ID_CMD;
+	cancel->TYPE = ID_CMD;
 	
-	g_cancel.LEN[0] = CancelLen[0];
+	cancel->LEN[0] = CancelLen[0];
 	
-	g_cancel.LEN[1] = CancelLen[1];
+	cancel->LEN[1] = CancelLen[1];
 	
-	g_cancel.CMD = Cancel;
+	cancel->CMD = Cancel;
 
-	checksum = Generate_CMD_Checksum((uint8_t*)&g_cancel.TYPE,(g_cancel.LEN[0]<<8|g_cancel.LEN[1])+CHECKNUM_EXPECT_LEN);
+	checksum = FPM383C_Generate_CMD_Checksum((uint8_t*)&cancel->TYPE,(cancel->LEN[0]<<8|cancel->LEN[1])+CHECKNUM_EXPECT_LEN);
 	
-	g_cancel.CHECKSUM[0] = checksum>>8;
+	cancel->CHECKSUM[0] = checksum>>8;
 	
-	g_cancel.CHECKSUM[1] = (uint8_t)checksum;
+	cancel->CHECKSUM[1] = (uint8_t)checksum;
+	
+	return OPERATE_SUCCESS;
 }
 
-void Generate_Sleep(void)
+int Generate_Sleep(CMD_Sleep_t* sleep)
 {
 	uint16_t checksum=0;
 	
-	memcpy((uint8_t*)g_sleep.CMD_HEAD,CMD_HEAD,2);
+	memcpy((uint8_t*)sleep->CMD_HEAD,CMD_HEAD,2);
 	
-	memcpy((uint8_t*)g_sleep.CMD_ADDR,CMD_ADDR,4);
+	memcpy((uint8_t*)sleep->CMD_ADDR,CMD_ADDR,4);
 	
-	g_sleep.TYPE = ID_CMD;
+	sleep->TYPE = ID_CMD;
 	
-	g_sleep.LEN[0] = SleepLen[0];
+	sleep->LEN[0] = SleepLen[0];
 	
-	g_sleep.LEN[1] = SleepLen[1];
+	sleep->LEN[1] = SleepLen[1];
 	
-	g_sleep.CMD = Sleep;
+	sleep->CMD = Sleep;
 
-	checksum = Generate_CMD_Checksum((uint8_t*)&g_sleep.TYPE,(g_sleep.LEN[0]<<8|g_sleep.LEN[1])+CHECKNUM_EXPECT_LEN);
+	checksum = FPM383C_Generate_CMD_Checksum((uint8_t*)&sleep->TYPE,(sleep->LEN[0]<<8|sleep->LEN[1])+CHECKNUM_EXPECT_LEN);
 	
-	g_sleep.CHECKSUM[0] = checksum>>8;
+	sleep->CHECKSUM[0] = checksum>>8;
 	
-	g_sleep.CHECKSUM[1] = (uint8_t)checksum;
+	sleep->CHECKSUM[1] = (uint8_t)checksum;
+	
+	return OPERATE_SUCCESS;
 }
 
 
-void Generate_ValidTempleteNum(void)				//生成读有效模板个数指令
+int Generate_ValidTempleteNum(CMD_ValidTempleteNum_t* valid_num)				//生成读有效模板个数指令
 {
 	uint16_t checksum=0;
 	
-	memcpy((uint8_t*)g_valid_num.CMD_HEAD,CMD_HEAD,2);
+	memcpy((uint8_t*)valid_num->CMD_HEAD,CMD_HEAD,2);
 	
-	memcpy((uint8_t*)g_valid_num.CMD_ADDR,CMD_ADDR,4);
+	memcpy((uint8_t*)valid_num->CMD_ADDR,CMD_ADDR,4);
 	
-	g_valid_num.TYPE = ID_CMD;
+	valid_num->TYPE = ID_CMD;
 	
-	g_valid_num.LEN[0] = ValidTempleteNumLen[0];
+	valid_num->LEN[0] = ValidTempleteNumLen[0];
 	
-	g_valid_num.LEN[1] = ValidTempleteNumLen[1];
+	valid_num->LEN[1] = ValidTempleteNumLen[1];
 	
-	g_valid_num.CMD = ValidTempleteNum;
+	valid_num->CMD = ValidTempleteNum;
 
-	checksum = Generate_CMD_Checksum((uint8_t*)&g_valid_num.TYPE,(g_valid_num.LEN[0]<<8|g_valid_num.LEN[1])+CHECKNUM_EXPECT_LEN);
+	checksum = FPM383C_Generate_CMD_Checksum((uint8_t*)&valid_num->TYPE,(valid_num->LEN[0]<<8|valid_num->LEN[1])+CHECKNUM_EXPECT_LEN);
 	
-	g_valid_num.CHECKSUM[0] = checksum>>8;
+	valid_num->CHECKSUM[0] = checksum>>8;
 	
-	g_valid_num.CHECKSUM[1] = (uint8_t)checksum;
+	valid_num->CHECKSUM[1] = (uint8_t)checksum;
+	
+	return OPERATE_SUCCESS;
 }
 
-void Generate_ReadIndexTable(uint8_t page)					//生成读索引表指令
+int Generate_ReadIndexTable(CMD_ReadIndexTable_t* read_index_table,uint8_t page)					//生成读索引表指令
 {
 	uint16_t checksum=0;
 	
-	memcpy((uint8_t*)g_read_index_table.CMD_HEAD,CMD_HEAD,2);
+	memcpy((uint8_t*)read_index_table->CMD_HEAD,CMD_HEAD,2);
 	
-	memcpy((uint8_t*)g_read_index_table.CMD_ADDR,CMD_ADDR,4);
+	memcpy((uint8_t*)read_index_table->CMD_ADDR,CMD_ADDR,4);
 	
-	g_read_index_table.TYPE = ID_CMD;
+	read_index_table->TYPE = ID_CMD;
 	
-	g_read_index_table.LEN[0] = ReadIndexTableLen[0];
+	read_index_table->LEN[0] = ReadIndexTableLen[0];
 	
-	g_read_index_table.LEN[1] = ReadIndexTableLen[1];
+	read_index_table->LEN[1] = ReadIndexTableLen[1];
 	
-	g_read_index_table.CMD = ReadIndexTable;
+	read_index_table->CMD = ReadIndexTable;
 	
-	g_read_index_table.PAGE = page;
+	read_index_table->PAGE = page;
 
-	checksum = Generate_CMD_Checksum((uint8_t*)&g_read_index_table.TYPE,(g_read_index_table.LEN[0]<<8|g_read_index_table.LEN[1])+CHECKNUM_EXPECT_LEN);
+	checksum = FPM383C_Generate_CMD_Checksum((uint8_t*)&read_index_table->TYPE,(read_index_table->LEN[0]<<8|read_index_table->LEN[1])+CHECKNUM_EXPECT_LEN);
 	
-	g_read_index_table.CHECKSUM[0] = checksum>>8;
+	read_index_table->CHECKSUM[0] = checksum>>8;
 	
-	g_read_index_table.CHECKSUM[1] = (uint8_t)checksum;
+	read_index_table->CHECKSUM[1] = (uint8_t)checksum;
+	
+	return OPERATE_SUCCESS;
 }
 
-void Generate_SetPwd(uint32_t PassWord)			//生成设置口令
+int Generate_SetPwd(CMD_SetPwd_t* set_pwd,uint32_t PassWord)			//生成设置口令
 {
 	uint16_t checksum=0;
 	
-	memcpy((uint8_t*)g_set_pwd.CMD_HEAD,CMD_HEAD,2);
+	memcpy((uint8_t*)set_pwd->CMD_HEAD,CMD_HEAD,2);
 	
-	memcpy((uint8_t*)g_set_pwd.CMD_ADDR,CMD_ADDR,4);
+	memcpy((uint8_t*)set_pwd->CMD_ADDR,CMD_ADDR,4);
 	
-	g_set_pwd.TYPE = ID_CMD;
+	set_pwd->TYPE = ID_CMD;
 	
-	g_set_pwd.LEN[0] = SetPwdLen[0];
+	set_pwd->LEN[0] = SetPwdLen[0];
 	
-	g_set_pwd.LEN[1] = SetPwdLen[1];
+	set_pwd->LEN[1] = SetPwdLen[1];
 	
-	g_set_pwd.CMD = SetPwd;
+	set_pwd->CMD = SetPwd;
 	
-	g_set_pwd.PASSWORD[0] = PassWord>>24;
+	set_pwd->PASSWORD[0] = PassWord>>24;
 	
-	g_set_pwd.PASSWORD[0] = PassWord>>16;
+	set_pwd->PASSWORD[0] = PassWord>>16;
 	
-	g_set_pwd.PASSWORD[0] = PassWord>>8;
+	set_pwd->PASSWORD[0] = PassWord>>8;
 	
-	g_set_pwd.PASSWORD[0] = (uint8_t)PassWord;
+	set_pwd->PASSWORD[0] = (uint8_t)PassWord;
 
-	checksum = Generate_CMD_Checksum((uint8_t*)&g_set_pwd.TYPE,(g_set_pwd.LEN[0]<<8|g_set_pwd.LEN[1])+CHECKNUM_EXPECT_LEN);
+	checksum = FPM383C_Generate_CMD_Checksum((uint8_t*)&set_pwd->TYPE,(set_pwd->LEN[0]<<8|set_pwd->LEN[1])+CHECKNUM_EXPECT_LEN);
 	
-	g_set_pwd.CHECKSUM[0] = checksum>>8;
+	set_pwd->CHECKSUM[0] = checksum>>8;
 	
-	g_set_pwd.CHECKSUM[1] = (uint8_t)checksum;
+	set_pwd->CHECKSUM[1] = (uint8_t)checksum;
+	
+	return OPERATE_SUCCESS;
 }
 
-void Generate_VfyPwd(uint32_t PassWord)				//生成验证口令
+int Generate_VfyPwd(CMD_VfyPwd_t *vfy_pwd,uint32_t PassWord)				//生成验证口令
 {
 	uint16_t checksum=0;
 	
-	memcpy((uint8_t*)g_vfy_pwd.CMD_HEAD,CMD_HEAD,2);
+	memcpy((uint8_t*)vfy_pwd->CMD_HEAD,CMD_HEAD,2);
 	
-	memcpy((uint8_t*)g_vfy_pwd.CMD_ADDR,CMD_ADDR,4);
+	memcpy((uint8_t*)vfy_pwd->CMD_ADDR,CMD_ADDR,4);
 	
-	g_vfy_pwd.TYPE = ID_CMD;
+	vfy_pwd->TYPE = ID_CMD;
 	
-	g_vfy_pwd.LEN[0] = VfyPwdLen[0];
+	vfy_pwd->LEN[0] = VfyPwdLen[0];
 	
-	g_vfy_pwd.LEN[1] = VfyPwdLen[1];
+	vfy_pwd->LEN[1] = VfyPwdLen[1];
 	
-	g_vfy_pwd.CMD = VfyPwd;
+	vfy_pwd->CMD = VfyPwd;
 	
-	g_vfy_pwd.PASSWORD[0] = PassWord>>24;
+	vfy_pwd->PASSWORD[0] = PassWord>>24;
 	
-	g_vfy_pwd.PASSWORD[0] = PassWord>>16;
+	vfy_pwd->PASSWORD[0] = PassWord>>16;
 	
-	g_vfy_pwd.PASSWORD[0] = PassWord>>8;
+	vfy_pwd->PASSWORD[0] = PassWord>>8;
 	
-	g_vfy_pwd.PASSWORD[0] = (uint8_t)PassWord;
+	vfy_pwd->PASSWORD[0] = (uint8_t)PassWord;
 
-	checksum = Generate_CMD_Checksum((uint8_t*)&g_vfy_pwd.TYPE,(g_vfy_pwd.LEN[0]<<8|g_vfy_pwd.LEN[1])+CHECKNUM_EXPECT_LEN);
+	checksum = FPM383C_Generate_CMD_Checksum((uint8_t*)&vfy_pwd->TYPE,(vfy_pwd->LEN[0]<<8|vfy_pwd->LEN[1])+CHECKNUM_EXPECT_LEN);
 	
-	g_vfy_pwd.CHECKSUM[0] = checksum>>8;
+	vfy_pwd->CHECKSUM[0] = checksum>>8;
 	
-	g_vfy_pwd.CHECKSUM[1] = (uint8_t)checksum;
+	vfy_pwd->CHECKSUM[1] = (uint8_t)checksum;
+	
+	return OPERATE_SUCCESS;
 }
 
-void Generate_HandShake(void)				//生成握手命令
+int Generate_HandShake(CMD_HandShake_t* hand_shake)				//生成握手命令
 {
 	uint16_t checksum=0;
 	
-	memcpy((uint8_t*)g_hand_shake.CMD_HEAD,CMD_HEAD,2);
+	memcpy((uint8_t*)hand_shake->CMD_HEAD,CMD_HEAD,2);
 	
-	memcpy((uint8_t*)g_hand_shake.CMD_ADDR,CMD_ADDR,4);
+	memcpy((uint8_t*)hand_shake->CMD_ADDR,CMD_ADDR,4);
 	
-	g_hand_shake.TYPE = ID_CMD;
+	hand_shake->TYPE = ID_CMD;
 	
-	g_hand_shake.LEN[0] = HandShakeLen[0];
+	hand_shake->LEN[0] = HandShakeLen[0];
 	
-	g_hand_shake.LEN[1] = HandShakeLen[1];
+	hand_shake->LEN[1] = HandShakeLen[1];
 	
-	g_hand_shake.CMD = HandShake;
+	hand_shake->CMD = HandShake;
 
-	checksum = Generate_CMD_Checksum((uint8_t*)&g_hand_shake.TYPE,(g_hand_shake.LEN[0]<<8|g_hand_shake.LEN[1])+CHECKNUM_EXPECT_LEN);
+	checksum = FPM383C_Generate_CMD_Checksum((uint8_t*)&hand_shake->TYPE,(hand_shake->LEN[0]<<8|hand_shake->LEN[1])+CHECKNUM_EXPECT_LEN);
 	
-	g_hand_shake.CHECKSUM[0] = checksum>>8;
+	hand_shake->CHECKSUM[0] = checksum>>8;
 	
-	g_hand_shake.CHECKSUM[1] = (uint8_t)checksum;
+	hand_shake->CHECKSUM[1] = (uint8_t)checksum;
+	
+	return OPERATE_SUCCESS;
 }
 
-void Generate_CheckSensor(void)
+int Generate_CheckSensor(CMD_CheckSensor_t *check_sensor)
 {
 	uint16_t checksum=0;
 	
-	memcpy((uint8_t*)g_check_sensor.CMD_HEAD,CMD_HEAD,2);
+	memcpy((uint8_t*)check_sensor->CMD_HEAD,CMD_HEAD,2);
 	
-	memcpy((uint8_t*)g_check_sensor.CMD_ADDR,CMD_ADDR,4);
+	memcpy((uint8_t*)check_sensor->CMD_ADDR,CMD_ADDR,4);
 	
-	g_check_sensor.TYPE = ID_CMD;
+	check_sensor->TYPE = ID_CMD;
 	
-	g_check_sensor.LEN[0] = CheckSensorLen[0];
+	check_sensor->LEN[0] = CheckSensorLen[0];
 	
-	g_check_sensor.LEN[1] = CheckSensorLen[1];
+	check_sensor->LEN[1] = CheckSensorLen[1];
 	
-	g_check_sensor.CMD = CheckSensor;
+	check_sensor->CMD = CheckSensor;
 
-	checksum = Generate_CMD_Checksum((uint8_t*)&g_check_sensor.TYPE,(g_check_sensor.LEN[0]<<8|g_check_sensor.LEN[1])+CHECKNUM_EXPECT_LEN);
+	checksum = FPM383C_Generate_CMD_Checksum((uint8_t*)&check_sensor->TYPE,(check_sensor->LEN[0]<<8|check_sensor->LEN[1])+CHECKNUM_EXPECT_LEN);
 	
-	g_check_sensor.CHECKSUM[0] = checksum>>8;
+	check_sensor->CHECKSUM[0] = checksum>>8;
 	
-	g_check_sensor.CHECKSUM[1] = (uint8_t)checksum;
+	check_sensor->CHECKSUM[1] = (uint8_t)checksum;
+	
+	return OPERATE_SUCCESS;
 }
 
-void Generate_SetChipAddr(uint32_t Addr)
+int Generate_SetChipAddr(CMD_SetChipAddr_t* set_chip_addr,uint32_t Addr)
 {
 	uint16_t checksum=0;
 	
-	memcpy((uint8_t*)g_set_chip_addr.CMD_HEAD,CMD_HEAD,2);
+	memcpy((uint8_t*)set_chip_addr->CMD_HEAD,CMD_HEAD,2);
 	
-	memcpy((uint8_t*)g_set_chip_addr.CMD_ADDR,CMD_ADDR,4);
+	memcpy((uint8_t*)set_chip_addr->CMD_ADDR,CMD_ADDR,4);
 	
-	g_set_chip_addr.TYPE = ID_CMD;
+	set_chip_addr->TYPE = ID_CMD;
 	
-	g_set_chip_addr.LEN[0] = SetChipAddrLen[0];
+	set_chip_addr->LEN[0] = SetChipAddrLen[0];
 	
-	g_set_chip_addr.LEN[1] = SetChipAddrLen[1];
+	set_chip_addr->LEN[1] = SetChipAddrLen[1];
 	
-	g_set_chip_addr.CMD = SetChipAddr;
+	set_chip_addr->CMD = SetChipAddr;
 	
-	g_set_chip_addr.DEV_ADDR[0] = Addr>>24;
+	set_chip_addr->DEV_ADDR[0] = Addr>>24;
 	
-	g_set_chip_addr.DEV_ADDR[1] = Addr>>16;
+	set_chip_addr->DEV_ADDR[1] = Addr>>16;
 	
-	g_set_chip_addr.DEV_ADDR[2] = Addr>>8;
+	set_chip_addr->DEV_ADDR[2] = Addr>>8;
 	
-	g_set_chip_addr.DEV_ADDR[3] = (uint8_t)Addr;
+	set_chip_addr->DEV_ADDR[3] = (uint8_t)Addr;
 
-	checksum = Generate_CMD_Checksum((uint8_t*)&g_set_chip_addr.TYPE,(g_set_chip_addr.LEN[0]<<8|g_set_chip_addr.LEN[1])+CHECKNUM_EXPECT_LEN);
+	checksum = FPM383C_Generate_CMD_Checksum((uint8_t*)&set_chip_addr->TYPE,(set_chip_addr->LEN[0]<<8|set_chip_addr->LEN[1])+CHECKNUM_EXPECT_LEN);
 	
-	g_set_chip_addr.CHECKSUM[0] = checksum>>8;
+	set_chip_addr->CHECKSUM[0] = checksum>>8;
 	
-	g_set_chip_addr.CHECKSUM[1] = (uint8_t)checksum;
+	set_chip_addr->CHECKSUM[1] = (uint8_t)checksum;
+	
+	return OPERATE_SUCCESS;
 }
 
-void Generate_WriteNotePad(uint8_t Page,uint8_t *Content)
+int Generate_WriteNotePad(CMD_WriteNotePad_t* write_notepad,uint8_t Page,uint8_t *Content)
 {
 	uint16_t checksum=0;
 	
-	memcpy((uint8_t*)g_write_notepad.CMD_HEAD,CMD_HEAD,2);
+	memcpy((uint8_t*)write_notepad->CMD_HEAD,CMD_HEAD,2);
 	
-	memcpy((uint8_t*)g_write_notepad.CMD_ADDR,CMD_ADDR,4);
+	memcpy((uint8_t*)write_notepad->CMD_ADDR,CMD_ADDR,4);
 	
-	g_write_notepad.TYPE = ID_CMD;
+	write_notepad->TYPE = ID_CMD;
 	
-	g_write_notepad.LEN[0] = WriteNotepadLen[0];
+	write_notepad->LEN[0] = WriteNotepadLen[0];
 	
-	g_write_notepad.LEN[1] = WriteNotepadLen[1];
+	write_notepad->LEN[1] = WriteNotepadLen[1];
 	
-	g_write_notepad.CMD = WriteNotepad;
+	write_notepad->CMD = WriteNotepad;
 	
-	g_write_notepad.PAGE = Page;
+	write_notepad->PAGE = Page;
 	
-	memcpy((uint8_t*)g_write_notepad.CONTENT,Content,32);
+	memcpy((uint8_t*)write_notepad->CONTENT,Content,32);
 
-	checksum = Generate_CMD_Checksum((uint8_t*)&g_write_notepad.TYPE,(g_write_notepad.LEN[0]<<8|g_write_notepad.LEN[1])+CHECKNUM_EXPECT_LEN);
+	checksum = FPM383C_Generate_CMD_Checksum((uint8_t*)&write_notepad->TYPE,(write_notepad->LEN[0]<<8|write_notepad->LEN[1])+CHECKNUM_EXPECT_LEN);
 	
-	g_write_notepad.CHECKSUM[0] = checksum>>8;
+	write_notepad->CHECKSUM[0] = checksum>>8;
 	
-	g_write_notepad.CHECKSUM[1] = (uint8_t)checksum;
+	write_notepad->CHECKSUM[1] = (uint8_t)checksum;
+	
+	return OPERATE_SUCCESS;
 }
 
-void Generate_ReadNotepad(uint8_t Page)
+int Generate_ReadNotepad(CMD_ReadNotepad_t* read_notepad,uint8_t Page)
 {
 	uint16_t checksum=0;
 	
-	memcpy((uint8_t*)g_read_notepad.CMD_HEAD,CMD_HEAD,2);
+	memcpy((uint8_t*)read_notepad->CMD_HEAD,CMD_HEAD,2);
 	
-	memcpy((uint8_t*)g_read_notepad.CMD_ADDR,CMD_ADDR,4);
+	memcpy((uint8_t*)read_notepad->CMD_ADDR,CMD_ADDR,4);
 	
-	g_read_notepad.TYPE = ID_CMD;
+	read_notepad->TYPE = ID_CMD;
 	
-	g_read_notepad.LEN[0] = ReadNotepadLen[0];
+	read_notepad->LEN[0] = ReadNotepadLen[0];
 	
-	g_read_notepad.LEN[1] = ReadNotepadLen[1];
+	read_notepad->LEN[1] = ReadNotepadLen[1];
 	
-	g_read_notepad.CMD = ReadNotepad;
+	read_notepad->CMD = ReadNotepad;
 	
-	g_read_notepad.PAGE = Page;
+	read_notepad->PAGE = Page;
 
-	checksum = Generate_CMD_Checksum((uint8_t*)&g_read_notepad.TYPE,(g_read_notepad.LEN[0]<<8|g_read_notepad.LEN[1])+CHECKNUM_EXPECT_LEN);
+	checksum = FPM383C_Generate_CMD_Checksum((uint8_t*)&read_notepad->TYPE,(read_notepad->LEN[0]<<8|read_notepad->LEN[1])+CHECKNUM_EXPECT_LEN);
 	
-	g_read_notepad.CHECKSUM[0] = checksum>>8;
+	read_notepad->CHECKSUM[0] = checksum>>8;
 	
-	g_read_notepad.CHECKSUM[1] = (uint8_t)checksum;
+	read_notepad->CHECKSUM[1] = (uint8_t)checksum;
+	
+	return OPERATE_SUCCESS;
 }
 
-void Generate_GetImage(void)		//生成获取图像指令
+int Generate_GetImage(CMD_GetImage_t* get_image)		//生成获取图像指令
 {
 	uint16_t checksum=0;
 	
-	memcpy((uint8_t*)g_get_image.CMD_HEAD,CMD_HEAD,2);
+	memcpy((uint8_t*)get_image->CMD_HEAD,CMD_HEAD,2);
 	
-	memcpy((uint8_t*)g_get_image.CMD_ADDR,CMD_ADDR,4);
+	memcpy((uint8_t*)get_image->CMD_ADDR,CMD_ADDR,4);
 	
-	g_get_image.TYPE = ID_CMD;
+	get_image->TYPE = ID_CMD;
 	
-	g_get_image.LEN[0] = GetImageLen[0];
+	get_image->LEN[0] = GetImageLen[0];
 	
-	g_get_image.LEN[1] = GetImageLen[1];
+	get_image->LEN[1] = GetImageLen[1];
 	
-	g_get_image.CMD = GetImage;
+	get_image->CMD = GetImage;
 
-	checksum = Generate_CMD_Checksum((uint8_t*)&g_get_image.TYPE,(g_get_image.LEN[0]<<8|g_get_image.LEN[1])+CHECKNUM_EXPECT_LEN);
+	checksum = FPM383C_Generate_CMD_Checksum((uint8_t*)&get_image->TYPE,(get_image->LEN[0]<<8|get_image->LEN[1])+CHECKNUM_EXPECT_LEN);
 	
-	g_get_image.CHECKSUM[0] = checksum>>8;
+	get_image->CHECKSUM[0] = checksum>>8;
 	
-	g_get_image.CHECKSUM[1] = (uint8_t)checksum;
+	get_image->CHECKSUM[1] = (uint8_t)checksum;
+	
+	return OPERATE_SUCCESS;
 }
 
-void Generate_GenChar(uint8_t BufferID)			//生成生成模板指令
+int Generate_GenChar(CMD_GenChar_t* gen_char,uint8_t BufferID)			//生成生成模板指令
 {
 	uint16_t checksum=0;
 	
-	memcpy((uint8_t*)g_gen_char.CMD_HEAD,CMD_HEAD,2);
+	memcpy((uint8_t*)gen_char->CMD_HEAD,CMD_HEAD,2);
 	
-	memcpy((uint8_t*)g_gen_char.CMD_ADDR,CMD_ADDR,4);
+	memcpy((uint8_t*)gen_char->CMD_ADDR,CMD_ADDR,4);
 	
-	g_gen_char.TYPE = ID_CMD;
+	gen_char->TYPE = ID_CMD;
 	
-	g_gen_char.LEN[0] = GenCharLen[0];
+	gen_char->LEN[0] = GenCharLen[0];
 	
-	g_gen_char.LEN[1] = GenCharLen[1];
+	gen_char->LEN[1] = GenCharLen[1];
 	
-	g_gen_char.CMD = GenChar;
+	gen_char->CMD = GenChar;
 	
-	g_gen_char.BUFFER_ID = BufferID;
+	gen_char->BUFFER_ID = BufferID;
 
-	checksum = Generate_CMD_Checksum((uint8_t*)&g_gen_char.TYPE,(g_gen_char.LEN[0]<<8|g_gen_char.LEN[1])+CHECKNUM_EXPECT_LEN);
+	checksum = FPM383C_Generate_CMD_Checksum((uint8_t*)&gen_char->TYPE,(gen_char->LEN[0]<<8|gen_char->LEN[1])+CHECKNUM_EXPECT_LEN);
 	
-	g_gen_char.CHECKSUM[0] = checksum>>8;
+	gen_char->CHECKSUM[0] = checksum>>8;
 	
-	g_gen_char.CHECKSUM[1] = (uint8_t)checksum;
+	gen_char->CHECKSUM[1] = (uint8_t)checksum;
+	
+	return OPERATE_SUCCESS;
 }
 
-void Generate_RegModel(void)				//生成合并特征（生成模板）指令
+int Generate_RegModel(CMD_RegModel_t* reg_model)				//生成合并特征（生成模板）指令
 {
 	uint16_t checksum=0;
 	
-	memcpy((uint8_t*)g_reg_model.CMD_HEAD,CMD_HEAD,2);
+	memcpy((uint8_t*)reg_model->CMD_HEAD,CMD_HEAD,2);
 	
-	memcpy((uint8_t*)g_reg_model.CMD_ADDR,CMD_ADDR,4);
+	memcpy((uint8_t*)reg_model->CMD_ADDR,CMD_ADDR,4);
 	
-	g_reg_model.TYPE = ID_CMD;
+	reg_model->TYPE = ID_CMD;
 	
-	g_reg_model.LEN[0] = RegMBLen[0];
+	reg_model->LEN[0] = RegMBLen[0];
 	
-	g_reg_model.LEN[1] = RegMBLen[1];
+	reg_model->LEN[1] = RegMBLen[1];
 	
-	g_reg_model.CMD = RegMB;
+	reg_model->CMD = RegMB;
 	
-	checksum = Generate_CMD_Checksum((uint8_t*)&g_reg_model.TYPE,(g_reg_model.LEN[0]<<8|g_reg_model.LEN[1])+CHECKNUM_EXPECT_LEN);
+	checksum = FPM383C_Generate_CMD_Checksum((uint8_t*)&reg_model->TYPE,(reg_model->LEN[0]<<8|reg_model->LEN[1])+CHECKNUM_EXPECT_LEN);
 	
-	g_reg_model.CHECKSUM[0] = checksum>>8;
+	reg_model->CHECKSUM[0] = checksum>>8;
 	
-	g_reg_model.CHECKSUM[1] = (uint8_t)checksum;
+	reg_model->CHECKSUM[1] = (uint8_t)checksum;
+	
+	return OPERATE_SUCCESS;
 }
 
-void Generate_StoreChar(uint8_t BufferID,uint16_t PageID)
+int Generate_StoreChar(CMD_StoreChar_t* store_char,uint8_t BufferID,uint16_t PageID)
 {
 	uint16_t checksum=0;
 	
-	memcpy((uint8_t*)g_store_char.CMD_HEAD,CMD_HEAD,2);
+	memcpy((uint8_t*)store_char->CMD_HEAD,CMD_HEAD,2);
 	
-	memcpy((uint8_t*)g_store_char.CMD_ADDR,CMD_ADDR,4);
+	memcpy((uint8_t*)store_char->CMD_ADDR,CMD_ADDR,4);
 	
-	g_store_char.TYPE = ID_CMD;
+	store_char->TYPE = ID_CMD;
 	
-	g_store_char.LEN[0] = StorMBLen[0];
+	store_char->LEN[0] = StorMBLen[0];
 	
-	g_store_char.LEN[1] = StorMBLen[1];
+	store_char->LEN[1] = StorMBLen[1];
 	
-	g_store_char.CMD = StorMB;
+	store_char->CMD = StorMB;
 	
-	g_store_char.BUFFER_ID = BufferID;
+	store_char->BUFFER_ID = BufferID;
 	
-	g_store_char.PAGE_ID[0] = PageID>>8;
+	store_char->PAGE_ID[0] = PageID>>8;
 	
-	g_store_char.PAGE_ID[1] = (uint8_t)PageID;
+	store_char->PAGE_ID[1] = (uint8_t)PageID;
 	
-	checksum = Generate_CMD_Checksum((uint8_t*)&g_store_char.TYPE,(g_store_char.LEN[0]<<8|g_store_char.LEN[1])+CHECKNUM_EXPECT_LEN);
+	checksum = FPM383C_Generate_CMD_Checksum((uint8_t*)&store_char->TYPE,(store_char->LEN[0]<<8|store_char->LEN[1])+CHECKNUM_EXPECT_LEN);
 	
-	g_store_char.CHECKSUM[0] = checksum>>8;
+	store_char->CHECKSUM[0] = checksum>>8;
 	
-	g_store_char.CHECKSUM[1] = (uint8_t)checksum;
+	store_char->CHECKSUM[1] = (uint8_t)checksum;
+	
+	return OPERATE_SUCCESS;
 }
 
-void Generate_Match(void)			//精确对比
+int Generate_Match(CMD_Match_t* match)			//精确对比
 {
 	uint16_t checksum=0;
 	
-	memcpy((uint8_t*)g_match.CMD_HEAD,CMD_HEAD,2);
+	memcpy((uint8_t*)match->CMD_HEAD,CMD_HEAD,2);
 	
-	memcpy((uint8_t*)g_match.CMD_ADDR,CMD_ADDR,4);
+	memcpy((uint8_t*)match->CMD_ADDR,CMD_ADDR,4);
 	
-	g_match.TYPE = ID_CMD;
+	match->TYPE = ID_CMD;
 	
-	g_match.LEN[0] = MatchLen[0];
+	match->LEN[0] = MatchLen[0];
 	
-	g_match.LEN[1] = MatchLen[1];
+	match->LEN[1] = MatchLen[1];
 	
-	g_match.CMD = Match;
+	match->CMD = Match;
 	
-	checksum = Generate_CMD_Checksum((uint8_t*)&g_match.TYPE,(g_match.LEN[0]<<8|g_match.LEN[1])+CHECKNUM_EXPECT_LEN);
+	checksum = FPM383C_Generate_CMD_Checksum((uint8_t*)&match->TYPE,(match->LEN[0]<<8|match->LEN[1])+CHECKNUM_EXPECT_LEN);
 	
-	g_match.CHECKSUM[0] = checksum>>8;
+	match->CHECKSUM[0] = checksum>>8;
 	
-	g_match.CHECKSUM[1] = (uint8_t)checksum;
+	match->CHECKSUM[1] = (uint8_t)checksum;
+	
+	return OPERATE_SUCCESS;
 }
 
-void Generate_ControlBLN(_LED_Function_t func,uint8_t startColor,uint8_t endColor,uint8_t cycle)
+int Generate_ControlBLN(CMD_ControlBLN_t* control_bln,_LED_Function_t func,uint8_t startColor,uint8_t endColor,uint8_t cycle)
 {
 	uint16_t checksum=0;
 	
-	memcpy((uint8_t*)g_control_bln.CMD_HEAD,CMD_HEAD,2);
+	memcpy((uint8_t*)control_bln->CMD_HEAD,CMD_HEAD,2);
 	
-	memcpy((uint8_t*)g_control_bln.CMD_ADDR,CMD_ADDR,4);
+	memcpy((uint8_t*)control_bln->CMD_ADDR,CMD_ADDR,4);
 	
-	g_control_bln.TYPE = ID_CMD;
+	control_bln->TYPE = ID_CMD;
 	
-	g_control_bln.LEN[0] = ControlBLNLen[0];
+	control_bln->LEN[0] = ControlBLNLen[0];
 	
-	g_control_bln.LEN[1] = ControlBLNLen[1];
+	control_bln->LEN[1] = ControlBLNLen[1];
 	
-	g_control_bln.CMD = ControlBLN;
+	control_bln->CMD = ControlBLN;
 	
-	g_control_bln.FUNC = func;
+	control_bln->FUNC = func;
 	
-	g_control_bln.S_COLOR = startColor;
+	control_bln->S_COLOR = startColor;
 	
-	g_control_bln.E_COLOR = endColor;
+	control_bln->E_COLOR = endColor;
 	
-	g_control_bln.CYCLE_TIME = cycle;
+	control_bln->CYCLE_TIME = cycle;
 	
-	checksum = Generate_CMD_Checksum((uint8_t*)&g_control_bln.TYPE,(g_control_bln.LEN[0]<<8|g_control_bln.LEN[1])+CHECKNUM_EXPECT_LEN);
+	checksum = FPM383C_Generate_CMD_Checksum((uint8_t*)&control_bln->TYPE,(control_bln->LEN[0]<<8|control_bln->LEN[1])+CHECKNUM_EXPECT_LEN);
 	
-	g_control_bln.CHECKSUM[0] = checksum>>8;
+	control_bln->CHECKSUM[0] = checksum>>8;
 	
-	g_control_bln.CHECKSUM[1] = (uint8_t)checksum;
+	control_bln->CHECKSUM[1] = (uint8_t)checksum;
+	
+	return OPERATE_SUCCESS;
 }
 
-void Generate_ControlBLN_Program(uint8_t time,uint8_t color_1,uint8_t color_2,uint8_t color_3,uint8_t color_4,uint8_t color_5,uint8_t cycle)
+int Generate_ControlBLN_Program(CMD_ControlBLN_PRO_t* control_bln_pro,uint8_t time,uint8_t color_1,uint8_t color_2,uint8_t color_3,uint8_t color_4,uint8_t color_5,uint8_t cycle)
 {
 	uint16_t checksum=0;
 	
-	memcpy((uint8_t*)g_control_bln_pro.CMD_HEAD,CMD_HEAD,2);
+	memcpy((uint8_t*)control_bln_pro->CMD_HEAD,CMD_HEAD,2);
 	
-	memcpy((uint8_t*)g_control_bln_pro.CMD_ADDR,CMD_ADDR,4);
+	memcpy((uint8_t*)control_bln_pro->CMD_ADDR,CMD_ADDR,4);
 	
-	g_control_bln_pro.TYPE = ID_CMD;
+	control_bln_pro->TYPE = ID_CMD;
 	
-	g_control_bln_pro.LEN[0] = ControlBLN_PROLen[0];
+	control_bln_pro->LEN[0] = ControlBLN_PROLen[0];
 	
-	g_control_bln_pro.LEN[1] = ControlBLN_PROLen[1];
+	control_bln_pro->LEN[1] = ControlBLN_PROLen[1];
 	
-	g_control_bln_pro.CMD = ControlBLN_PRO;
+	control_bln_pro->CMD = ControlBLN_PRO;
 	
-	g_control_bln_pro.FUNC = 7;
+	control_bln_pro->FUNC = 7;
 	
-	g_control_bln_pro.TIME = time;
+	control_bln_pro->TIME = time;
 	
-	g_control_bln_pro.COLOR1 = color_1;
-	g_control_bln_pro.COLOR2 = color_2;
-	g_control_bln_pro.COLOR3 = color_3;
-	g_control_bln_pro.COLOR4 = color_4;
-	g_control_bln_pro.COLOR5 = color_5;
+	control_bln_pro->COLOR1 = color_1;
+	control_bln_pro->COLOR2 = color_2;
+	control_bln_pro->COLOR3 = color_3;
+	control_bln_pro->COLOR4 = color_4;
+	control_bln_pro->COLOR5 = color_5;
 	
-	g_control_bln_pro.CYCLE_TIME = cycle;
+	control_bln_pro->CYCLE_TIME = cycle;
 	
-	checksum = Generate_CMD_Checksum((uint8_t*)&g_control_bln_pro.TYPE,(g_control_bln_pro.LEN[0]<<8|g_control_bln_pro.LEN[1])+CHECKNUM_EXPECT_LEN);
+	checksum = FPM383C_Generate_CMD_Checksum((uint8_t*)&control_bln_pro->TYPE,(control_bln_pro->LEN[0]<<8|control_bln_pro->LEN[1])+CHECKNUM_EXPECT_LEN);
 	
-	g_control_bln_pro.CHECKSUM[0] = checksum>>8;
+	control_bln_pro->CHECKSUM[0] = checksum>>8;
 	
-	g_control_bln_pro.CHECKSUM[1] = (uint8_t)checksum;
+	control_bln_pro->CHECKSUM[1] = (uint8_t)checksum;
+	
+	return OPERATE_SUCCESS;
 }
 
 

@@ -556,6 +556,16 @@ void CH9329_Input_Media_Key(uint8_t key_index)
 	delay_ms(1);
 }
 
+/* 输入电源按键 */
+void CH9329_Input_Power_Key(uint8_t key_index)
+{
+	CH9329_Generate_KEY_CMD(KEY_TYPE_POWER_KEY,0x00,key_index);
+	HAL_UART_Transmit(&huart1,(uint8_t*)&g_cmd_format,g_cmd_format.len+6,1000);
+	delay_ms(1);
+	HAL_UART_Transmit(&huart1,KeyRelease,14,1000);	//释放按键
+	delay_ms(1);
+}
+
 /**
 * @brief		发送自定义数据包(协议传输)
 * @param		- data 数据包

@@ -157,6 +157,38 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
+          <LineNumber>884</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134244088</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\USER\application\app_task_key.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\HelloFinger_RTOS\../USER/application/app_task_key.c\884</Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
+          <LineNumber>454</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134219614</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\USER\driver\CH9329\drv_ch9329.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\HelloFinger_RTOS\../USER/driver/CH9329/drv_ch9329.c\454</Expression>
+        </Bp>
+        <Bp>
+          <Number>2</Number>
+          <Type>0</Type>
           <LineNumber>139</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
@@ -242,7 +274,7 @@
         <Mm>
           <WinNumber>1</WinNumber>
           <SubType>0</SubType>
-          <ItemText>crc_value</ItemText>
+          <ItemText>password</ItemText>
           <AccSizeX>0</AccSizeX>
         </Mm>
       </MemoryWindow1>

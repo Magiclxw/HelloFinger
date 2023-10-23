@@ -19,7 +19,7 @@ uint32_t Calc_CRC(uint8_t *data,uint8_t len)
 	switch_len = len/4;
 	if(len%4) switch_len ++;
 	
-	crc_value = HAL_CRC_Accumulate(&crc,(uint32_t*)data,switch_len);
+	crc_value = HAL_CRC_Calculate(&crc,(uint32_t*)data,switch_len);
 	
 	return crc_value;
 }

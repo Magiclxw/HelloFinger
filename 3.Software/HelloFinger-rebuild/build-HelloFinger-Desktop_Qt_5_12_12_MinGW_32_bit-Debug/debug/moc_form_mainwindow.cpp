@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Form_MainWindow_t {
-    QByteArrayData data[76];
-    char stringdata0[1675];
+    QByteArrayData data[75];
+    char stringdata0[1666];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -66,47 +66,46 @@ QT_MOC_LITERAL(31, 370, 7), // "key_len"
 QT_MOC_LITERAL(32, 378, 34), // "Signal_UpdateHideWindowChecke..."
 QT_MOC_LITERAL(33, 413, 3), // "dir"
 QT_MOC_LITERAL(34, 417, 20), // "Signal_SetActionFunc"
-QT_MOC_LITERAL(35, 438, 8), // "uint32_t"
-QT_MOC_LITERAL(36, 447, 6), // "action"
-QT_MOC_LITERAL(37, 454, 14), // "Slot_AddFinger"
-QT_MOC_LITERAL(38, 469, 16), // "Slot_EnrollState"
-QT_MOC_LITERAL(39, 486, 6), // "state1"
-QT_MOC_LITERAL(40, 493, 6), // "state2"
-QT_MOC_LITERAL(41, 500, 17), // "Slot_DeleteFinger"
-QT_MOC_LITERAL(42, 518, 18), // "Slot_RefreshFinger"
-QT_MOC_LITERAL(43, 537, 21), // "Slot_UpdateIndexTable"
-QT_MOC_LITERAL(44, 559, 23), // "Slot_SetWindowsPassword"
-QT_MOC_LITERAL(45, 583, 16), // "Slot_SetPassword"
-QT_MOC_LITERAL(46, 600, 24), // "Slot_SetAccount_Password"
-QT_MOC_LITERAL(47, 625, 18), // "Slot_SetQuickStart"
-QT_MOC_LITERAL(48, 644, 17), // "Slot_SetBreathRGB"
-QT_MOC_LITERAL(49, 662, 16), // "Slot_RGB_Display"
-QT_MOC_LITERAL(50, 679, 20), // "Slot_ChangeItemValue"
-QT_MOC_LITERAL(51, 700, 18), // "Slot_SaveItemValue"
-QT_MOC_LITERAL(52, 719, 16), // "Slot_SetShortcut"
-QT_MOC_LITERAL(53, 736, 25), // "Slot_DeleteListWidgetItem"
-QT_MOC_LITERAL(54, 762, 18), // "Slot_Chat_Send_Msg"
-QT_MOC_LITERAL(55, 781, 47), // "on_listWidget_task_1_customCo..."
-QT_MOC_LITERAL(56, 829, 52), // "on_listWidget_table_state_cus..."
-QT_MOC_LITERAL(57, 882, 47), // "on_listWidget_task_2_customCo..."
-QT_MOC_LITERAL(58, 930, 47), // "on_listWidget_task_3_customCo..."
-QT_MOC_LITERAL(59, 978, 47), // "on_listWidget_task_4_customCo..."
-QT_MOC_LITERAL(60, 1026, 47), // "on_listWidget_task_5_customCo..."
-QT_MOC_LITERAL(61, 1074, 56), // "on_listWidget_table_state_key..."
-QT_MOC_LITERAL(62, 1131, 47), // "on_listWidget_task_6_customCo..."
-QT_MOC_LITERAL(63, 1179, 50), // "on_listWidget_hidwindow_custo..."
-QT_MOC_LITERAL(64, 1230, 38), // "on_pushButton_chat_copy_answe..."
-QT_MOC_LITERAL(65, 1269, 39), // "on_pushButton_action_play_pau..."
-QT_MOC_LITERAL(66, 1309, 39), // "on_pushButton_action_calculat..."
-QT_MOC_LITERAL(67, 1349, 33), // "on_pushButton_action_chat_cli..."
-QT_MOC_LITERAL(68, 1383, 37), // "on_pushButton_action_computer..."
-QT_MOC_LITERAL(69, 1421, 34), // "on_pushButton_action_email_cl..."
-QT_MOC_LITERAL(70, 1456, 37), // "on_pushButton_action_explorer..."
-QT_MOC_LITERAL(71, 1494, 33), // "on_pushButton_action_mute_cli..."
-QT_MOC_LITERAL(72, 1528, 34), // "on_pushButton_action_power_cl..."
-QT_MOC_LITERAL(73, 1563, 40), // "on_pushButton_action_screen_s..."
-QT_MOC_LITERAL(74, 1604, 34), // "on_pushButton_action_sleep_cl..."
-QT_MOC_LITERAL(75, 1639, 35) // "on_pushButton_action_weakup_c..."
+QT_MOC_LITERAL(35, 438, 6), // "action"
+QT_MOC_LITERAL(36, 445, 14), // "Slot_AddFinger"
+QT_MOC_LITERAL(37, 460, 16), // "Slot_EnrollState"
+QT_MOC_LITERAL(38, 477, 6), // "state1"
+QT_MOC_LITERAL(39, 484, 6), // "state2"
+QT_MOC_LITERAL(40, 491, 17), // "Slot_DeleteFinger"
+QT_MOC_LITERAL(41, 509, 18), // "Slot_RefreshFinger"
+QT_MOC_LITERAL(42, 528, 21), // "Slot_UpdateIndexTable"
+QT_MOC_LITERAL(43, 550, 23), // "Slot_SetWindowsPassword"
+QT_MOC_LITERAL(44, 574, 16), // "Slot_SetPassword"
+QT_MOC_LITERAL(45, 591, 24), // "Slot_SetAccount_Password"
+QT_MOC_LITERAL(46, 616, 18), // "Slot_SetQuickStart"
+QT_MOC_LITERAL(47, 635, 17), // "Slot_SetBreathRGB"
+QT_MOC_LITERAL(48, 653, 16), // "Slot_RGB_Display"
+QT_MOC_LITERAL(49, 670, 20), // "Slot_ChangeItemValue"
+QT_MOC_LITERAL(50, 691, 18), // "Slot_SaveItemValue"
+QT_MOC_LITERAL(51, 710, 16), // "Slot_SetShortcut"
+QT_MOC_LITERAL(52, 727, 25), // "Slot_DeleteListWidgetItem"
+QT_MOC_LITERAL(53, 753, 18), // "Slot_Chat_Send_Msg"
+QT_MOC_LITERAL(54, 772, 47), // "on_listWidget_task_1_customCo..."
+QT_MOC_LITERAL(55, 820, 52), // "on_listWidget_table_state_cus..."
+QT_MOC_LITERAL(56, 873, 47), // "on_listWidget_task_2_customCo..."
+QT_MOC_LITERAL(57, 921, 47), // "on_listWidget_task_3_customCo..."
+QT_MOC_LITERAL(58, 969, 47), // "on_listWidget_task_4_customCo..."
+QT_MOC_LITERAL(59, 1017, 47), // "on_listWidget_task_5_customCo..."
+QT_MOC_LITERAL(60, 1065, 56), // "on_listWidget_table_state_key..."
+QT_MOC_LITERAL(61, 1122, 47), // "on_listWidget_task_6_customCo..."
+QT_MOC_LITERAL(62, 1170, 50), // "on_listWidget_hidwindow_custo..."
+QT_MOC_LITERAL(63, 1221, 38), // "on_pushButton_chat_copy_answe..."
+QT_MOC_LITERAL(64, 1260, 39), // "on_pushButton_action_play_pau..."
+QT_MOC_LITERAL(65, 1300, 39), // "on_pushButton_action_calculat..."
+QT_MOC_LITERAL(66, 1340, 33), // "on_pushButton_action_chat_cli..."
+QT_MOC_LITERAL(67, 1374, 37), // "on_pushButton_action_computer..."
+QT_MOC_LITERAL(68, 1412, 34), // "on_pushButton_action_email_cl..."
+QT_MOC_LITERAL(69, 1447, 37), // "on_pushButton_action_explorer..."
+QT_MOC_LITERAL(70, 1485, 33), // "on_pushButton_action_mute_cli..."
+QT_MOC_LITERAL(71, 1519, 34), // "on_pushButton_action_power_cl..."
+QT_MOC_LITERAL(72, 1554, 40), // "on_pushButton_action_screen_s..."
+QT_MOC_LITERAL(73, 1595, 34), // "on_pushButton_action_sleep_cl..."
+QT_MOC_LITERAL(74, 1630, 35) // "on_pushButton_action_weakup_c..."
 
     },
     "Form_MainWindow\0Signal_AddFinger\0\0"
@@ -121,16 +120,15 @@ QT_MOC_LITERAL(75, 1639, 35) // "on_pushButton_action_weakup_c..."
     "color_G\0color_B\0interval\0Signal_SetShortcut\0"
     "func\0char*\0key\0key_len\0"
     "Signal_UpdateHideWindowCheckedItem\0"
-    "dir\0Signal_SetActionFunc\0uint32_t\0"
-    "action\0Slot_AddFinger\0Slot_EnrollState\0"
-    "state1\0state2\0Slot_DeleteFinger\0"
-    "Slot_RefreshFinger\0Slot_UpdateIndexTable\0"
-    "Slot_SetWindowsPassword\0Slot_SetPassword\0"
-    "Slot_SetAccount_Password\0Slot_SetQuickStart\0"
-    "Slot_SetBreathRGB\0Slot_RGB_Display\0"
-    "Slot_ChangeItemValue\0Slot_SaveItemValue\0"
-    "Slot_SetShortcut\0Slot_DeleteListWidgetItem\0"
-    "Slot_Chat_Send_Msg\0"
+    "dir\0Signal_SetActionFunc\0action\0"
+    "Slot_AddFinger\0Slot_EnrollState\0state1\0"
+    "state2\0Slot_DeleteFinger\0Slot_RefreshFinger\0"
+    "Slot_UpdateIndexTable\0Slot_SetWindowsPassword\0"
+    "Slot_SetPassword\0Slot_SetAccount_Password\0"
+    "Slot_SetQuickStart\0Slot_SetBreathRGB\0"
+    "Slot_RGB_Display\0Slot_ChangeItemValue\0"
+    "Slot_SaveItemValue\0Slot_SetShortcut\0"
+    "Slot_DeleteListWidgetItem\0Slot_Chat_Send_Msg\0"
     "on_listWidget_task_1_customContextMenuRequested\0"
     "on_listWidget_table_state_customContextMenuRequested\0"
     "on_listWidget_task_2_customContextMenuRequested\0"
@@ -183,43 +181,43 @@ static const uint qt_meta_data_Form_MainWindow[] = {
       34,    2,  326,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      37,    0,  331,    2, 0x0a /* Public */,
-      38,    2,  332,    2, 0x0a /* Public */,
-      41,    0,  337,    2, 0x0a /* Public */,
-      42,    0,  338,    2, 0x0a /* Public */,
-      43,    0,  339,    2, 0x0a /* Public */,
-      44,    0,  340,    2, 0x0a /* Public */,
-      45,    0,  341,    2, 0x0a /* Public */,
-      46,    0,  342,    2, 0x0a /* Public */,
-      47,    1,  343,    2, 0x0a /* Public */,
-      48,    0,  346,    2, 0x0a /* Public */,
-      49,    0,  347,    2, 0x0a /* Public */,
-      50,    0,  348,    2, 0x0a /* Public */,
-      51,    0,  349,    2, 0x0a /* Public */,
-      52,    0,  350,    2, 0x0a /* Public */,
-      53,    0,  351,    2, 0x0a /* Public */,
-      54,    0,  352,    2, 0x0a /* Public */,
-      55,    1,  353,    2, 0x08 /* Private */,
-      56,    1,  356,    2, 0x08 /* Private */,
-      57,    1,  359,    2, 0x08 /* Private */,
-      58,    1,  362,    2, 0x08 /* Private */,
-      59,    1,  365,    2, 0x08 /* Private */,
-      60,    1,  368,    2, 0x08 /* Private */,
-      61,    1,  371,    2, 0x08 /* Private */,
-      62,    1,  374,    2, 0x08 /* Private */,
-      63,    1,  377,    2, 0x08 /* Private */,
-      64,    0,  380,    2, 0x08 /* Private */,
-      65,    0,  381,    2, 0x08 /* Private */,
-      66,    0,  382,    2, 0x08 /* Private */,
-      67,    0,  383,    2, 0x08 /* Private */,
-      68,    0,  384,    2, 0x08 /* Private */,
-      69,    0,  385,    2, 0x08 /* Private */,
-      70,    0,  386,    2, 0x08 /* Private */,
-      71,    0,  387,    2, 0x08 /* Private */,
-      72,    0,  388,    2, 0x08 /* Private */,
-      73,    0,  389,    2, 0x08 /* Private */,
-      74,    0,  390,    2, 0x08 /* Private */,
-      75,    0,  391,    2, 0x08 /* Private */,
+      36,    0,  331,    2, 0x0a /* Public */,
+      37,    2,  332,    2, 0x0a /* Public */,
+      40,    0,  337,    2, 0x0a /* Public */,
+      41,    0,  338,    2, 0x0a /* Public */,
+      42,    0,  339,    2, 0x0a /* Public */,
+      43,    0,  340,    2, 0x0a /* Public */,
+      44,    0,  341,    2, 0x0a /* Public */,
+      45,    0,  342,    2, 0x0a /* Public */,
+      46,    1,  343,    2, 0x0a /* Public */,
+      47,    0,  346,    2, 0x0a /* Public */,
+      48,    0,  347,    2, 0x0a /* Public */,
+      49,    0,  348,    2, 0x0a /* Public */,
+      50,    0,  349,    2, 0x0a /* Public */,
+      51,    0,  350,    2, 0x0a /* Public */,
+      52,    0,  351,    2, 0x0a /* Public */,
+      53,    0,  352,    2, 0x0a /* Public */,
+      54,    1,  353,    2, 0x08 /* Private */,
+      55,    1,  356,    2, 0x08 /* Private */,
+      56,    1,  359,    2, 0x08 /* Private */,
+      57,    1,  362,    2, 0x08 /* Private */,
+      58,    1,  365,    2, 0x08 /* Private */,
+      59,    1,  368,    2, 0x08 /* Private */,
+      60,    1,  371,    2, 0x08 /* Private */,
+      61,    1,  374,    2, 0x08 /* Private */,
+      62,    1,  377,    2, 0x08 /* Private */,
+      63,    0,  380,    2, 0x08 /* Private */,
+      64,    0,  381,    2, 0x08 /* Private */,
+      65,    0,  382,    2, 0x08 /* Private */,
+      66,    0,  383,    2, 0x08 /* Private */,
+      67,    0,  384,    2, 0x08 /* Private */,
+      68,    0,  385,    2, 0x08 /* Private */,
+      69,    0,  386,    2, 0x08 /* Private */,
+      70,    0,  387,    2, 0x08 /* Private */,
+      71,    0,  388,    2, 0x08 /* Private */,
+      72,    0,  389,    2, 0x08 /* Private */,
+      73,    0,  390,    2, 0x08 /* Private */,
+      74,    0,  391,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3, 0x80000000 | 3, 0x80000000 | 3, 0x80000000 | 3,    4,    5,    6,    7,
@@ -233,11 +231,11 @@ static const uint qt_meta_data_Form_MainWindow[] = {
     QMetaType::Void, 0x80000000 | 3, 0x80000000 | 3, 0x80000000 | 3, 0x80000000 | 3,   23,   24,   25,   26,
     QMetaType::Void, 0x80000000 | 3, 0x80000000 | 3, 0x80000000 | 29, 0x80000000 | 3, 0x80000000 | 3,   14,   28,   30,   31,   15,
     QMetaType::Void, QMetaType::Int,   33,
-    QMetaType::Void, 0x80000000 | 3, 0x80000000 | 35,   28,   36,
+    QMetaType::Void, 0x80000000 | 3, 0x80000000 | 3,   28,   35,
 
  // slots: parameters
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 3, 0x80000000 | 3,   39,   40,
+    QMetaType::Void, 0x80000000 | 3, 0x80000000 | 3,   38,   39,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -294,7 +292,7 @@ void Form_MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 8: _t->Signal_SetBreathRGB((*reinterpret_cast< uint8_t(*)>(_a[1])),(*reinterpret_cast< uint8_t(*)>(_a[2])),(*reinterpret_cast< uint8_t(*)>(_a[3])),(*reinterpret_cast< uint8_t(*)>(_a[4]))); break;
         case 9: _t->Signal_SetShortcut((*reinterpret_cast< uint8_t(*)>(_a[1])),(*reinterpret_cast< uint8_t(*)>(_a[2])),(*reinterpret_cast< char*(*)>(_a[3])),(*reinterpret_cast< uint8_t(*)>(_a[4])),(*reinterpret_cast< uint8_t(*)>(_a[5]))); break;
         case 10: _t->Signal_UpdateHideWindowCheckedItem((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 11: _t->Signal_SetActionFunc((*reinterpret_cast< uint8_t(*)>(_a[1])),(*reinterpret_cast< uint32_t(*)>(_a[2]))); break;
+        case 11: _t->Signal_SetActionFunc((*reinterpret_cast< uint8_t(*)>(_a[1])),(*reinterpret_cast< uint8_t(*)>(_a[2]))); break;
         case 12: _t->Slot_AddFinger(); break;
         case 13: _t->Slot_EnrollState((*reinterpret_cast< uint8_t(*)>(_a[1])),(*reinterpret_cast< uint8_t(*)>(_a[2]))); break;
         case 14: _t->Slot_DeleteFinger(); break;
@@ -414,7 +412,7 @@ void Form_MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
             }
         }
         {
-            using _t = void (Form_MainWindow::*)(uint8_t , uint32_t );
+            using _t = void (Form_MainWindow::*)(uint8_t , uint8_t );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&Form_MainWindow::Signal_SetActionFunc)) {
                 *result = 11;
                 return;
@@ -539,7 +537,7 @@ void Form_MainWindow::Signal_UpdateHideWindowCheckedItem(int _t1)
 }
 
 // SIGNAL 11
-void Form_MainWindow::Signal_SetActionFunc(uint8_t _t1, uint32_t _t2)
+void Form_MainWindow::Signal_SetActionFunc(uint8_t _t1, uint8_t _t2)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 11, _a);

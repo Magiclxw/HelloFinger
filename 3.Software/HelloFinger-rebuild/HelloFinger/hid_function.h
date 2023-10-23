@@ -10,37 +10,42 @@
 #define ACTION_FUNC_POWER   (0x01)
 #define ACTION_FUNC_MEDIA   (0x02)
 /* 多媒体按键值 */
-#define KEY_RELEASE				(0x000000)
-#define KEY_MEDIA					(0x000001)
-#define KEY_EXPLORER			(0x000002)
-#define KEY_CALCULATOR		(0x000004)
-#define KEY_SCREEN_SAVE		(0x000008)
-#define KEY_MY_COMPUTER		(0x000010)
-#define KEY_MINIMIZE			(0x000020)
-#define KEY_RECORD				(0x000040)
-#define KEY_REWIND				(0x000080)
-#define KEY_EMAIL					(0x000100)
-#define KEY_WB_SEARCH			(0x000200)
-#define KEY_WB_FAVORITES	(0x000400)
-#define KEY_WB_HOME				(0x000800)
-#define KEY_WB_BACK				(0x001000)
-#define KEY_WB_FORWARD		(0x002000)
-#define KEY_WB_STOP				(0x004000)
-#define KEY_REFRESH				(0x008000)
-#define KEY_VOLUME_ADD		(0x010000)
-#define KEY_VOLUME_SUM		(0x020000)
-#define KEY_MUTE					(0x040000)
-#define KEY_PLAY_PAUSE		(0x080000)
-#define KEY_NEXT_TRACK		(0x100000)
-#define KEY_PREV_TRACK		(0x200000)
-#define KEY_CD_STOP				(0x400000)
-#define KEY_EJECT					(0x800000)
-
+typedef enum MEDIA_KEY_TYPE
+{
+    MEDIA_KEY_TYPE_KEY_RELEASE = 0,
+    MEDIA_KEY_TYPE_KEY_MEDIA,
+    MEDIA_KEY_TYPE_KEY_EXPLORER,
+    MEDIA_KEY_TYPE_KEY_CALCULATOR,
+    MEDIA_KEY_TYPE_KEY_SCREEN_SAVE,
+    MEDIA_KEY_TYPE_KEY_MY_COMPUTER,
+    MEDIA_KEY_TYPE_KEY_MINIMIZE,
+    MEDIA_KEY_TYPE_KEY_RECORD,
+    MEDIA_KEY_TYPE_KEY_REWIND,
+    MEDIA_KEY_TYPE_KEY_EMAIL,
+    MEDIA_KEY_TYPE_KEY_WB_SEARCH,
+    MEDIA_KEY_TYPE_KEY_WB_FAVORITES,
+    MEDIA_KEY_TYPE_KEY_WB_HOME,
+    MEDIA_KEY_TYPE_KEY_WB_BACK,
+    MEDIA_KEY_TYPE_KEY_WB_FORWARD,
+    MEDIA_KEY_TYPE_KEY_WB_STOP,
+    MEDIA_KEY_TYPE_KEY_REFRESH,
+    MEDIA_KEY_TYPE_KEY_VOLUME_ADD,
+    MEDIA_KEY_TYPE_KEY_VOLUME_SUM,
+    MEDIA_KEY_TYPE_KEY_MUTE,
+    MEDIA_KEY_TYPE_KEY_PLAY_PAUSE,
+    MEDIA_KEY_TYPE_KEY_NEXT_TRACK,
+    MEDIA_KEY_TYPE_KEY_PREV_TRACK,
+    MEDIA_KEY_TYPE_KEY_CD_STOP,
+    MEDIA_KEY_TYPE_KEY_EJECT,
+}MEDIA_KEY_TYPE_e;
 /* 电源功能按键值 */
-#define KEY_POWER		(0x01)
-#define KEY_SLEEP		(0x02)
-#define KEY_WAKE_UP	(0x04)
-
+typedef enum POWER_KEY_TYPE
+{
+    POWER_KEY_TYPE_KEY_RELEASE = 0,
+    POWER_KEY_TYPE_KEY_POWER,
+    POWER_KEY_TYPE_KEY_SLEEP,
+    POWER_KEY_TYPE_KEY_WAKE_UP
+}POWER_KEY_TYPE_e;
 
 typedef enum{
     TYPE_Windows_Password = 0,
@@ -93,5 +98,5 @@ int HID_Send_Shortcut(hid_device *usb_handle,Finger_Type_e fingertype,uint8_t fu
 int HID_Send_QuickStart(hid_device *usb_handle,Finger_Type_e fingertype,QUICK_START_e startID,uint8_t index);
 int HID_Send_Breath_RGB(hid_device *usb_handle,uint8_t color_R,uint8_t color_G,uint8_t color_B,uint8_t interval);
 int HID_Get_FW_HW_Msg(hid_device *usb_handle);
-int HID_Set_Action_Func(hid_device *usb_handle, uint8_t func,uint32_t action);
+int HID_Set_Action_Func(hid_device *usb_handle, uint8_t func,uint8_t action);
 #endif // HID_FUNCTION_H

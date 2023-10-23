@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>230</width>
-    <height>396</height>
+    <width>250</width>
+    <height>400</height>
    </rect>
   </property>
   <property name="acceptDrops">
@@ -81,7 +81,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>0</number>
       </property>
       <property name="iconSize">
        <size>
@@ -121,7 +121,7 @@
         <item>
          <widget class="QTabWidget" name="tabWidget_finger_func">
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="tab_finger">
            <attribute name="title">
@@ -4343,8 +4343,8 @@ font: 9pt &quot;黑体&quot;;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>186</width>
-             <height>218</height>
+             <width>200</width>
+             <height>204</height>
             </rect>
            </property>
            <attribute name="label">
@@ -4374,8 +4374,8 @@ font: 9pt &quot;黑体&quot;;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>88</width>
-             <height>88</height>
+             <width>103</width>
+             <height>103</height>
             </rect>
            </property>
            <attribute name="label">
@@ -4399,8 +4399,8 @@ font: 9pt &quot;黑体&quot;;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>88</width>
-             <height>88</height>
+             <width>103</width>
+             <height>103</height>
             </rect>
            </property>
            <attribute name="label">
@@ -4424,8 +4424,8 @@ font: 9pt &quot;黑体&quot;;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>88</width>
-             <height>88</height>
+             <width>103</width>
+             <height>103</height>
             </rect>
            </property>
            <attribute name="label">
@@ -4449,8 +4449,8 @@ font: 9pt &quot;黑体&quot;;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>88</width>
-             <height>88</height>
+             <width>103</width>
+             <height>103</height>
             </rect>
            </property>
            <attribute name="label">
@@ -4474,8 +4474,8 @@ font: 9pt &quot;黑体&quot;;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>88</width>
-             <height>88</height>
+             <width>103</width>
+             <height>103</height>
             </rect>
            </property>
            <attribute name="label">
@@ -4508,7 +4508,7 @@ font: 9pt &quot;黑体&quot;;</string>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab">
+      <widget class="QWidget" name="tab_action">
        <attribute name="title">
         <string>Action</string>
        </attribute>
@@ -4523,8 +4523,8 @@ font: 9pt &quot;黑体&quot;;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>184</width>
-             <height>372</height>
+             <width>198</width>
+             <height>376</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
@@ -4677,7 +4677,7 @@ font: 9pt &quot;黑体&quot;;</string>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_2">
+      <widget class="QWidget" name="tab_chat">
        <attribute name="title">
         <string>Chat</string>
        </attribute>

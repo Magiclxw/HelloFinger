@@ -9,13 +9,18 @@
 #include <QLabel>
 #include <QJsonArray>
 #include <QInputMethod>
+#include "config/sys_config.h"
 
 
 
 QString quick_start_file = "config/quick_start";
 QString table_name_file = "table_name.json";
 QString hidewindow_list_file = "config/hidewindowList.json";
+QString sys_config = "config/sys_config.ini";
 
+
+QString default_api_server = "https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation";
+QByteArray default_api_key = "sk-6f6c005f9a484e7385c3161f54732c79";
 
 QFile jsonFile(table_name_file);
 
@@ -373,7 +378,44 @@ void Get_Icon_From_Path(QString path)
     QIcon icon = iconProvider.icon(fileInfo);
     QLabel label;
     label.setPixmap(icon.pixmap(32,32));
+}
 
+int File_Get_ChatAI_URL(QString* url)
+{
+    QFile file(sys_config);
+    if(!file.open(QIODevice::ReadOnly)){    //文件不存在
+        *url = default_api_server;
+    }
+    else
+    {  // 文件存在
+        QSettings *iniRead = new QSettings(sys_config,QSettings::IniFormat);
+        *url = iniRead->value("chat_ai_url").toString();
+        if(*url == NULL)
+        {
+            *url = default_api_server;
+        }
+        file.close();
+    }
+    return OPERATE_SUCCESS;
+}
+
+int File_Get_ChatAI_KEY(QByteArray* key)
+{
+    QFile file(sys_config);
+    if(!file.open(QIODevice::ReadOnly)){    //文件不存在
+        *key = default_api_key;
+    }
+    else
+    {  // 文件存在
+        QSettings *iniRead = new QSettings(sys_config,QSettings::IniFormat);
+        *key = iniRead->value("chat_ai_key").toByteArray();
+        if(key->isEmpty())
+        {
+            *key = default_api_key;
+        }
+        file.close();
+    }
+    return OPERATE_SUCCESS;
 }
 
 

@@ -1,7 +1,6 @@
 #include "interface_chat.h"
+#include "system/system_init.h"
 
-QString api_server = "https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation";
-QByteArray api_key = "sk-6f6c005f9a484e7385c3161f54732c79";
 
 
 QNetworkAccessManager manager;
@@ -18,9 +17,14 @@ interface_chat::interface_chat(QObject *parent) : QObject(parent)
 
 void interface_chat::Chat_Send_Question(QString question)
 {
+    QString api_server;
+    QByteArray api_key;
+    File_Get_ChatAI_URL(&api_server);
+
     request.setUrl(QUrl(api_server));
 
     // 设置请求头部
+    File_Get_ChatAI_KEY(&api_key);
     request.setRawHeader("Authorization", api_key);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 

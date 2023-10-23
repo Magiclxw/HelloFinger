@@ -61,6 +61,13 @@ typedef enum USB_PROTOCOL_FORMAT
 		USB_PROTOCOL_FORMAT_SET_ACTION,						//0x13	设置Action按键功能
 }USB_PROTOCOL_FORMAT_e;
 
+typedef enum ACTION_KEY_FUNC_
+{
+	ACTION_KEY_FUNC_POWER = 1,
+	ACTION_KEY_FUNC_MEDIA,
+	ACTION_KEY_FUNC_CHAT,
+}ACTION_KEY_FUNC_e;
+
 typedef enum{
     TYPE_Windows_Password = 0,
     TYPE_Password,

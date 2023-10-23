@@ -20,5 +20,7 @@ uint8_t File_Fast_Start_Num_Get(uint8_t page,uint8_t index);
 void File_HideWindow_Content_Save(QString path,uint8_t index);
 QString File_HideWindow_Item_Read(uint8_t index);
 uint8_t File_HideWindow_ItemNum_Get(void);
+int File_Get_ChatAI_URL(QString* url);
+int File_Get_ChatAI_KEY(QByteArray* key);
 
 #endif // SYSTEM_INIT_H

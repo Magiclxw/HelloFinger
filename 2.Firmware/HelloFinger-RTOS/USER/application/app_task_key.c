@@ -15,13 +15,14 @@ int Key_Trans_Mode_RecData_Handle(uint8_t data);
 static void KeyResetData(void);
 static int Key_CMP_Checksum(uint8_t *data,uint8_t len);
 static void Key_Func_Exec(void);
+static void Action_Func_Exec(uint8_t func,uint8_t action);
 
 
 
 TaskHandle_t Task_Key_Handle = NULL;	//按键数据传输任务句柄
 TaskHandle_t Task_Sidebar_Handle = NULL;	//侧边栏控制任务句柄
 TaskHandle_t Task_Action_Key_Handle = NULL;	//Action按键功能句柄
-TaskHandle_t Task_Normal_Key_Handle = NULL;
+TaskHandle_t Task_Normal_Key_Handle = NULL;	//普通按键句柄
 
 QueueHandle_t Queue_KeyProcessing_Handle = NULL;
 QueueHandle_t Queue_Computer_Info_Handle = NULL;
@@ -41,7 +42,7 @@ int Key_GiveNotifyFromISR(uint8_t *recData,uint8_t dataSize)
 	return OPERATE_SUCCESS;
 }
 
-int ENCODER_KeyNotifyFromISR(void)	//编码器按键功能
+int ENCODER_KeyNotifyFromISR(void)	//编码器按键任务通知
 {
 	portBASE_TYPE xHigherPriorityTaskWoken = pdTRUE;
 	if(Task_Sidebar_Handle != NULL)
@@ -52,7 +53,7 @@ int ENCODER_KeyNotifyFromISR(void)	//编码器按键功能
 	return OPERATE_SUCCESS;
 }
 
-int Action_KeyNotifyFromISR(void)
+int Action_KeyNotifyFromISR(void)	//Action按键任务通知
 {
 	portBASE_TYPE xHigherPriorityTaskWoken = pdTRUE;
 	if(Task_Action_Key_Handle != NULL)
@@ -63,7 +64,7 @@ int Action_KeyNotifyFromISR(void)
 	return OPERATE_SUCCESS;
 }
 
-int Normal_KeyNotifyFromISR(void)
+int Normal_KeyNotifyFromISR(void)	//普通按键任务通知
 {
 	portBASE_TYPE xHigherPriorityTaskWoken = pdTRUE;
 	if(Task_Normal_Key_Handle != NULL)
@@ -85,7 +86,7 @@ int Task_Key_DataCTLCreate(void)
 	return OPERATE_SUCCESS;
 }
 
-int Task_Sidebar_CTLCreate(void)	//侧边栏控制按键
+int Task_Sidebar_CTLCreate(void)	//侧边栏控制按键任务创建
 {
 	xTaskCreate( (TaskFunction_t)vTaskSidebarProcessing,
 								(const char*  )"SidebarDataControl",
@@ -96,7 +97,7 @@ int Task_Sidebar_CTLCreate(void)	//侧边栏控制按键
 	return OPERATE_SUCCESS;
 }
 
-int Task_Action_KEY_CTLCreate(void)	//Action功能控制按键
+int Task_Action_KEY_CTLCreate(void)	//Action功能控制按键任务创建
 {
 	xTaskCreate( (TaskFunction_t)vTaskActionKeyProcessing,
 								(const char*  )"ActionKeyControl",
@@ -107,7 +108,7 @@ int Task_Action_KEY_CTLCreate(void)	//Action功能控制按键
 	return OPERATE_SUCCESS;
 }
 
-int Task_Normal_KEY_CTLCreate(void)
+int Task_Normal_KEY_CTLCreate(void)	//普通按键任务创建
 {
 	xTaskCreate( (TaskFunction_t)vTaskNormalKeyProcessing,
 								(const char*  )"NormalKeyControl",
@@ -123,6 +124,7 @@ static uint8_t store_msg[100] = {0};
 static void vTaskKeyProcessing(void)
 {
 	uint8_t rec_data = 0;
+	CMD_ControlBLN_t g_control_bln = {0};
 	KeyResetData();
 	Queue_KeyProcessing_Handle = xQueueCreate((UBaseType_t)KEY_DATA_HANDLE_QUEUE_LEN,(UBaseType_t)KEY_DATA_HANDLE_QUEUE_SIZE);
 	Queue_Computer_Info_Handle = xQueueCreate((UBaseType_t)COMPUTER_INFO_QUEUE_LEN,(UBaseType_t)COMPUTER_INFO_QUEUE_SIZE);
@@ -139,7 +141,7 @@ static void vTaskKeyProcessing(void)
 	uint8_t start_color = LED_COLOR_RED|LED_COLOR_GREEN;
 	uint8_t end_color = LED_COLOR_RED|LED_COLOR_GREEN;
 	uint8_t cycle_time = 0;
-	Generate_ControlBLN(func,start_color,end_color,cycle_time);
+	Generate_ControlBLN(&g_control_bln,func,start_color,end_color,cycle_time);
 	HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_control_bln,g_control_bln.LEN[0]<<8|g_control_bln.LEN[1]+FIXED_CMD_LEN,1000);
 	CH9329_Get_Info();
 	//RGB_Effect(255,0,0,500,2);
@@ -168,7 +170,7 @@ static void vTaskKeyProcessing(void)
 	}
 }
 
-static void vTaskSidebarProcessing(void)
+static void vTaskSidebarProcessing(void)	//编码器按键任务
 {
 	while(1)
 	{
@@ -178,42 +180,30 @@ static void vTaskSidebarProcessing(void)
 			vTaskDelay(20);
 			if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_1))	//消抖
 			{
-				CH9329_Input_Fuc_Key(R_ALT|R_SHIFT|R_CTRL,KEY_F1);
+				CH9329_Input_Fuc_Key(R_ALT|R_SHIFT|R_CTRL,KEY_F1);	//输入快捷键，上位机解析为侧边栏控制功能
 			}
 			vTaskDelay(50);
 		}
 	}
 }
 
-static void vTaskActionKeyProcessing(void)
+static void vTaskActionKeyProcessing(void)	//Action按键任务
 {
 	uint8_t func = 0;
-	uint32_t action = 0;
+	uint8_t action = 0;
 	uint32_t crc_value = 0;
-	KEY_TYPE_e keyType = 0;
-	Flash_read(&func,ACTION_FUNC_BASE_ADDR,1);
-	Flash_read((uint8_t*)&action,ACTION_FUNC_BASE_ADDR+1,4);
-	switch (func)
-	{
-		case KEY_POWER:
-		{
-			keyType = KEY_TYPE_POWER_KEY;
-			
-			break;
-		}
-	}
 	while(1)
 	{
-		BaseType_t ret = ulTaskNotifyTake((BaseType_t)pdTRUE,(TickType_t)portMAX_DELAY);
+		BaseType_t ret = ulTaskNotifyTake((BaseType_t)pdTRUE,(TickType_t)portMAX_DELAY);	
 		if(ret != 0)
 		{
-			vTaskDelay(20);
+			vTaskDelay(50);
 			if(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_14) == 0)	//消抖
 			{
-				CH9329_Input_Fuc_Key(R_CTRL,KEY_A);
-				//CH9329_Generate_KEY_CMD();
+				Flash_read(&func,ACTION_FUNC_BASE_ADDR,1);
+				Flash_read(&action,ACTION_FUNC_BASE_ADDR+1,1);
+				Action_Func_Exec(func,action);
 			}
-			vTaskDelay(50);
 		}
 	}
 }
@@ -460,7 +450,8 @@ int HID_Data_Handle(void)
 			 }
 			 case USB_PROTOCOL_FORMAT_GET_INDEX_LIST:	//获取索引表状态
 			 {
-				 Generate_ReadIndexTable(0);
+				 CMD_ReadIndexTable_t	 	g_read_index_table 	= {0};	//读索引表结构体
+				 Generate_ReadIndexTable(&g_read_index_table,0);
 				 HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_read_index_table,g_read_index_table.LEN[0]<<8|g_read_index_table.LEN[1]+FIXED_CMD_LEN,1000);
 				 xEventGroupSetBits((EventGroupHandle_t)FingerEvent_Handle,(EventBits_t)EVENT_INDEX_LIST);
 				 break;
@@ -470,7 +461,8 @@ int HID_Data_Handle(void)
 				 uint16_t id = g_key_data_format.data[5]<<8|g_key_data_format.data[6];
 				 uint8_t enroll_times = g_key_data_format.data[7];
 				 uint16_t param = g_key_data_format.data[8]<<8|g_key_data_format.data[9];
-				 Generate_AutoEnroll(id,enroll_times,param);
+				 CMD_AutoEnroll_t 				g_autoenroll 				= {0};	//自动注册模板结构体
+				 Generate_AutoEnroll(&g_autoenroll,id,enroll_times,param);
 				 HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_autoenroll,g_autoenroll.LEN[0]<<8|g_autoenroll.LEN[1]+FIXED_CMD_LEN,1000);
 				 xEventGroupSetBits((EventGroupHandle_t)FingerEvent_Handle,(EventBits_t)EVENT_AUTO_ENROLL);
 				 break;
@@ -479,7 +471,8 @@ int HID_Data_Handle(void)
 			 {
 				 uint16_t id = g_key_data_format.data[5]<<8|g_key_data_format.data[6];
 				 uint16_t num = g_key_data_format.data[7]<<8|g_key_data_format.data[8];
-				 Generate_DeletChar(id,num);
+				 CMD_DeleteChar_t 				g_deletechar 				= {0};	//删除模板结构体
+				 Generate_DeletChar(&g_deletechar,id,num);
 				 HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_deletechar,g_deletechar.LEN[0]<<8|g_deletechar.LEN[1]+FIXED_CMD_LEN,1000);
 				 xEventGroupSetBits((EventGroupHandle_t)FingerEvent_Handle,(EventBits_t)EVENT_DELETE_CHAR);
 				 break;
@@ -490,7 +483,8 @@ int HID_Data_Handle(void)
 				 uint8_t start_color = g_key_data_format.data[6];
 				 uint8_t end_color = g_key_data_format.data[7];
 				 uint8_t cycle_time = g_key_data_format.data[8];
-				 Generate_ControlBLN((_LED_Function_t)func,start_color,end_color,cycle_time);
+				 CMD_ControlBLN_t g_control_bln = {0};
+				 Generate_ControlBLN(&g_control_bln,(_LED_Function_t)func,start_color,end_color,cycle_time);
 				 HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_control_bln,g_control_bln.LEN[0]<<8|g_control_bln.LEN[1]+FIXED_CMD_LEN,1000);
 				 break;
 			 }
@@ -503,7 +497,8 @@ int HID_Data_Handle(void)
 				 uint8_t color4 = g_key_data_format.data[9];
 				 uint8_t color5 = g_key_data_format.data[10];
 				 uint8_t cycle = g_key_data_format.data[11];
-				 Generate_ControlBLN_Program(time,color1,color2,color3,color4,color5,cycle);
+				 CMD_ControlBLN_PRO_t g_control_bln_pro = {0};
+				 Generate_ControlBLN_Program(&g_control_bln_pro,time,color1,color2,color3,color4,color5,cycle);
 				 HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_control_bln_pro,g_control_bln_pro.LEN[0]<<8|g_control_bln_pro.LEN[1]+FIXED_CMD_LEN,1000);
 				 break;
 			 }
@@ -848,18 +843,16 @@ int HID_Data_Handle(void)
 			 case USB_PROTOCOL_FORMAT_SET_ACTION:	//设置Action按键功能
 			 {
 				 uint8_t action_type = g_key_data_format.data[5];
-				 uint32_t action_value;
+				 uint8_t action_value;
 				 uint32_t crc_value;
-				 memcpy(&action_value,(uint8_t*)&g_key_data_format.data[6],sizeof(uint32_t));
+				 action_value = g_key_data_format.data[6];
 				 store_msg[0] = action_type;
-				 store_msg[1] = action_value>>24;
-				 store_msg[2] = action_value>>16;
-				 store_msg[2] = action_value>>8;
-				 store_msg[3] = (uint8_t)action_value;
-				 crc_value = Calc_CRC(store_msg,5);
-				 Flash_write(store_msg,ACTION_FUNC_BASE_ADDR,5);
+				 store_msg[1] = action_value;
+				 crc_value = Calc_CRC(store_msg,2);
+				 Flash_write(store_msg,ACTION_FUNC_BASE_ADDR,2);
 				 vTaskDelay(10);
-				 Flash_write((uint8_t*)&crc_value,ACTION_FUNC_BASE_ADDR+5,4);
+				 Flash_write((uint8_t*)&crc_value,ACTION_FUNC_BASE_ADDR+2,4);
+				 
 				 break;
 			 }
 			 default : break;
@@ -875,4 +868,25 @@ int HID_Data_Handle(void)
 static void Store_FingerFunc()
 {
 	
+}
+
+static void Action_Func_Exec(uint8_t func,uint8_t action)
+{
+	switch (func)
+	{
+		case ACTION_KEY_FUNC_POWER:
+		{
+			CH9329_Input_Power_Key(action);
+			break;
+		}
+		case ACTION_KEY_FUNC_MEDIA:
+		{
+			CH9329_Input_Media_Key(action);
+			break;
+		}
+		case ACTION_KEY_FUNC_CHAT:
+		{
+			CH9329_Input_Fuc_Key(R_ALT|R_SHIFT|R_CTRL,KEY_F2);
+		}
+	}
 }

@@ -363,62 +363,23 @@ int HID_Get_FW_HW_Msg(hid_device *usb_handle)
 }
 
 
-int HID_Set_Action_Func(hid_device *usb_handle, uint8_t func,uint32_t action)
+int HID_Set_Action_Func(hid_device *usb_handle, uint8_t func,uint8_t action)
 {
     if(usb_handle == NULL)
     {
         return OPERATE_ERROR_INVALID_PARAMETERS;
     }
     uint8_t flag = USB_PROTOCOL_FORMAT_SET_ACTION;
-    if(func == ACTION_FUNC_CHAT)
-    {
-        uint8_t *cmd_pack = new uint8_t[8];
-        cmd_pack[0] = flag;
-        cmd_pack[1] = 0x00;
-        cmd_pack[2] = 0x00;
-        cmd_pack[3] = (uint8_t)ACTION_FUNC_CHAT;
-        cmd_pack[4] = 0x00; //无效字节
-        cmd_pack[5] = 0x00; //无效字节
-        cmd_pack[6] = 0x00; //无效字节
-        cmd_pack[7] = 0x00; //无效字节
-        GenerateCmd(cmd_pack,8);
-        delete [] cmd_pack;
-        hid_write(usb_handle,hid_command,8+HID_FIXED_LEN);
-        return OPERATE_SUCCESS;
-    }
-    if(func == ACTION_FUNC_POWER)
-    {
-        uint8_t *cmd_pack = new uint8_t[8];
-        cmd_pack[0] = flag;
-        cmd_pack[1] = 0x00;
-        cmd_pack[2] = 0x00;
-        cmd_pack[3] = (uint8_t)ACTION_FUNC_POWER;
-        cmd_pack[4] = (uint8_t)action;
-        cmd_pack[5] = 0x00; //无效字节
-        cmd_pack[6] = 0x00; //无效字节
-        cmd_pack[7] = 0x00; //无效字节
-        GenerateCmd(cmd_pack,8);
-        delete [] cmd_pack;
-        hid_write(usb_handle,hid_command,8+HID_FIXED_LEN);
-        return OPERATE_SUCCESS;
-    }
-    if(func == ACTION_FUNC_MEDIA)
-    {
-        uint8_t *cmd_pack = new uint8_t[8];
-        cmd_pack[0] = flag;
-        cmd_pack[1] = 0x00;
-        cmd_pack[2] = 0x00;
-        cmd_pack[3] = (uint8_t)ACTION_FUNC_MEDIA;
-        cmd_pack[4] = action>>16;
-        cmd_pack[5] = action>>8;
-        cmd_pack[6] = (uint8_t)action;
-        cmd_pack[7] = 0x00; //无效字节
-        GenerateCmd(cmd_pack,8);
-        delete [] cmd_pack;
-        hid_write(usb_handle,hid_command,8+HID_FIXED_LEN);
-        return OPERATE_SUCCESS;
-    }
-    return OPERATE_ERROR_EXCEPTION;
+    uint8_t *cmd_pack = new uint8_t[5];
+    cmd_pack[0] = flag;
+    cmd_pack[1] = 0x00;
+    cmd_pack[2] = 0x00;
+    cmd_pack[3] = func;
+    cmd_pack[4] = action;
+    GenerateCmd(cmd_pack,5);
+    delete [] cmd_pack;
+    hid_write(usb_handle,hid_command,5+HID_FIXED_LEN);
+    return OPERATE_SUCCESS;
 }
 
 

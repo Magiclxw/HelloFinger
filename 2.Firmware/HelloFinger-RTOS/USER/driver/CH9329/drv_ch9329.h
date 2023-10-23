@@ -444,6 +444,7 @@ void CH9329_Input_Ascii(char *ascii,uint8_t len);
 void CH9329_Input_Shortcut(uint8_t func_key,char *key,uint8_t key_len);
 void CH9329_Input_Fuc_Key(uint8_t key_contral,uint8_t func_key);
 void CH9329_Input_Media_Key(uint8_t key_index);
+void CH9329_Input_Power_Key(uint8_t key_index);
 uint8_t CH9329_CAL_SUM(uint8_t *cmd,uint8_t len);
 int Send_HID_Data(uint8_t *data,uint8_t len);
 int ABD_Mouse_Ctrl(uint8_t step,uint8_t* pos_x,uint8_t* pos_y,BUTTON_VALUE_e button);

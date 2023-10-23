@@ -69,7 +69,7 @@ signals:
     void Signal_SetBreathRGB(uint8_t color_R,uint8_t color_G,uint8_t color_B,uint8_t interval);
     void Signal_SetShortcut(uint8_t fingertype,uint8_t func,char* key,uint8_t key_len,uint8_t index);
     void Signal_UpdateHideWindowCheckedItem(int dir);
-    void Signal_SetActionFunc(uint8_t func ,uint32_t action);
+    void Signal_SetActionFunc(uint8_t func ,uint8_t action);
 private slots:
     void on_listWidget_task_1_customContextMenuRequested(const QPoint &pos);
     void on_listWidget_table_state_customContextMenuRequested(const QPoint &pos);

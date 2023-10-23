@@ -115,6 +115,7 @@ int main(void)
 	CH9329_Init();
 	delay_ms(1000);
 	ENCODER_Init();
+	CRC_Init();
 	printf("hello finger\r\n");
 	memcpy(g_sys_info.firmware_version,Firmware_Version,strlen(Firmware_Version));
 
@@ -129,14 +130,14 @@ int main(void)
     }
 	uint8_t data[10] = {0,1,2,3,4,5,6,7,8,9};
 	
-	//Flash_write(data,0x10000,10);
+	//Flash_write(data,0,10);
 	//AT24C64_WriteOneByte(0x00,data[2]);
 	
-	//delay_ms(1000);
+	delay_ms(1000);
 	
 	//rx[0] = AT24C64_ReadOneByte(0x00);
-	//Flash_read(rx,0x100000,10);
-	Flash_Read_DMA(rx,0x100000+100*2,20);
+	Flash_read(rx,0x0,10);
+	//Flash_Read_DMA(rx,0x100000+100*2,20);
 	//delay_ms(1000);
 	for(uint8_t i=0;i<20;i++)
 	{

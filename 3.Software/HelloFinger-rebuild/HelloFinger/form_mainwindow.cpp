@@ -27,14 +27,6 @@
 #include "interface_chat.h"
 #include <QClipboard>
 
-//QNetworkAccessManager manager;
-
-//// 构建API请求
-//QNetworkRequest request;
-//// 发送POST请求
-//QNetworkReply *reply;
-//QString api_server = "https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation";
-//QByteArray api_key = "sk-6f6c005f9a484e7385c3161f54732c79";
 
 QColor itemValid(0,255,255);       //指纹有效颜色
 QColor itemUnValid(255,255,255);   //指纹无效颜色
@@ -612,6 +604,22 @@ void Form_MainWindow::on_keyEvent(QKeyEvent* event)  //全局按键事件
 
                 qDebug() << "encoder ";
                 hidewindowHold_timer->start(3000);
+            }
+        }
+        if(event->key() == Qt::Key_F2)//显示/隐藏Action界面
+        {
+            if(event->modifiers() == (Qt::ShiftModifier|Qt::ControlModifier|Qt::AltModifier))
+            {
+                if(this->isVisible() == true && ui->tabWidget->currentWidget() == ui->tab_chat)
+                {
+                    this->hide();
+                }
+                else
+                {
+                    this->show();
+                    ui->tabWidget->setCurrentWidget(ui->tab_chat);
+                }
+
             }
         }
         if(event->key() == Qt::Key_0)
@@ -1284,13 +1292,13 @@ void Form_MainWindow::on_pushButton_chat_copy_answer_clicked()
 
 void Form_MainWindow::on_pushButton_action_play_pause_clicked()
 {
-    emit Signal_SetActionFunc(ACTION_FUNC_MEDIA,KEY_PLAY_PAUSE);
+    emit Signal_SetActionFunc(ACTION_FUNC_MEDIA,MEDIA_KEY_TYPE_KEY_PLAY_PAUSE);
 }
 
 
 void Form_MainWindow::on_pushButton_action_calculator_clicked()
 {
-    emit Signal_SetActionFunc(ACTION_FUNC_MEDIA,KEY_CALCULATOR);
+    emit Signal_SetActionFunc(ACTION_FUNC_MEDIA,MEDIA_KEY_TYPE_KEY_CALCULATOR);
 }
 
 
@@ -1303,48 +1311,48 @@ void Form_MainWindow::on_pushButton_action_chat_clicked()
 
 void Form_MainWindow::on_pushButton_action_computer_clicked()
 {
-    emit Signal_SetActionFunc(ACTION_FUNC_MEDIA,KEY_MY_COMPUTER);
+    emit Signal_SetActionFunc(ACTION_FUNC_MEDIA,MEDIA_KEY_TYPE_KEY_MY_COMPUTER);
 }
 
 
 void Form_MainWindow::on_pushButton_action_email_clicked()
 {
-    emit Signal_SetActionFunc(ACTION_FUNC_MEDIA,KEY_EMAIL);
+    emit Signal_SetActionFunc(ACTION_FUNC_MEDIA,MEDIA_KEY_TYPE_KEY_EMAIL);
 }
 
 
 void Form_MainWindow::on_pushButton_action_explorer_clicked()
 {
-    emit Signal_SetActionFunc(ACTION_FUNC_MEDIA,KEY_EXPLORER);
+    emit Signal_SetActionFunc(ACTION_FUNC_MEDIA,MEDIA_KEY_TYPE_KEY_EXPLORER);
 }
 
 
 void Form_MainWindow::on_pushButton_action_mute_clicked()
 {
-    emit Signal_SetActionFunc(ACTION_FUNC_MEDIA,KEY_MUTE);
+    emit Signal_SetActionFunc(ACTION_FUNC_MEDIA,MEDIA_KEY_TYPE_KEY_MUTE);
 }
 
 
 void Form_MainWindow::on_pushButton_action_power_clicked()
 {
-    emit Signal_SetActionFunc(ACTION_FUNC_POWER,KEY_POWER);
+    emit Signal_SetActionFunc(ACTION_FUNC_POWER,POWER_KEY_TYPE_KEY_POWER);
 }
 
 
 void Form_MainWindow::on_pushButton_action_screen_save_clicked()
 {
-    emit Signal_SetActionFunc(ACTION_FUNC_MEDIA,KEY_SCREEN_SAVE);
+    emit Signal_SetActionFunc(ACTION_FUNC_MEDIA,MEDIA_KEY_TYPE_KEY_SCREEN_SAVE);
 }
 
 
 void Form_MainWindow::on_pushButton_action_sleep_clicked()
 {
-    emit Signal_SetActionFunc(ACTION_FUNC_POWER,KEY_SLEEP);
+    emit Signal_SetActionFunc(ACTION_FUNC_POWER,POWER_KEY_TYPE_KEY_SLEEP);
 }
 
 
 void Form_MainWindow::on_pushButton_action_weakup_clicked()
 {
-    emit Signal_SetActionFunc(ACTION_FUNC_POWER,KEY_WAKE_UP);
+    emit Signal_SetActionFunc(ACTION_FUNC_POWER,POWER_KEY_TYPE_KEY_WAKE_UP);
 }
 

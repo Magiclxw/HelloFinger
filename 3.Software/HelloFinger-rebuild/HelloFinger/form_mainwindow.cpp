@@ -1134,7 +1134,7 @@ void Form_MainWindow::Chat_RevMsg_Handler(QString msg)
     //ui->textEdit_chat_output->setText(msg);
     chat_rec_last_msg = msg;
     QString ask = "问：\r\n"+ui->textEdit_chat_input->toPlainText();
-    QString answer = "答：\r\n"+msg;
+    QString answer = "答：\r\n"+msg+"\r\n";
     ui->textEdit_chat_output->append(ask);
     ui->textEdit_chat_input->clear();
     ui->textEdit_chat_output->append(answer);
@@ -1323,7 +1323,7 @@ void Form_MainWindow::on_pushButton_action_email_clicked()
 
 void Form_MainWindow::on_pushButton_action_explorer_clicked()
 {
-    emit Signal_SetActionFunc(ACTION_FUNC_MEDIA,MEDIA_KEY_TYPE_KEY_EXPLORER);
+    emit Signal_SetActionFunc(ACTION_FUNC_MEDIA,MEDIA_KEY_TYPE_KEY_REWIND);
 }
 
 

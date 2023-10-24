@@ -9,6 +9,6 @@ typedef int(*FUNC_ENCODERKEYRECVTCB)(void);
 #define ENCODER_PUSH	HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_1)
 
 int RegisterEncoderKeyCallBack(FUNC_ENCODERKEYRECVTCB ENCODERRECVCBT);
-void ENCODER_Init(void);
+int ENCODER_Init(void);
 
 #endif

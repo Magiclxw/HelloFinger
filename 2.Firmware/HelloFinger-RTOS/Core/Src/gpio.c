@@ -67,6 +67,7 @@ void MX_GPIO_Init(void)
 	gpio.Speed = GPIO_SPEED_FREQ_HIGH;
 	HAL_GPIO_Init(GPIOA,&gpio);
 	
+	
 	gpio.Pin = MCU_GPIO_KEY3_PIN;
 	gpio.Mode = GPIO_MODE_INPUT;
 	gpio.Pull = GPIO_PULLUP;
@@ -78,6 +79,7 @@ void MX_GPIO_Init(void)
 	gpio.Pull = GPIO_PULLUP;
 	gpio.Speed = GPIO_SPEED_FREQ_MEDIUM;
 	HAL_GPIO_Init(GPIOB,&gpio);
+	
 	
 	HAL_NVIC_SetPriority(EXTI9_5_IRQn,11,0);
 	HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);

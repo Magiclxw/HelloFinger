@@ -8,28 +8,30 @@ static __IO uint32_t  SPITimeout = SPIT_LONG_TIMEOUT;
 
 //static uint16_t SPI_TIMEOUT_UserCallback(uint8_t errorCode);
 
-void SPI1_Init(void)
+int SPI1_Init(void)
 {
-    __HAL_RCC_SPI1_CLK_ENABLE(); 
+	__HAL_RCC_SPI1_CLK_ENABLE(); 
 
-    hspi1.Instance = SPI1;
-    hspi1.Init.Mode = SPI_MODE_MASTER;                        
-    hspi1.Init.Direction = SPI_DIRECTION_2LINES;              
-    hspi1.Init.DataSize = SPI_DATASIZE_8BIT;                  
-    hspi1.Init.CLKPolarity = SPI_POLARITY_HIGH;               
-    hspi1.Init.CLKPhase = SPI_PHASE_2EDGE;                    
-    hspi1.Init.NSS = SPI_NSS_SOFT;                            
-    hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_8; 
-    hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;                   
-    hspi1.Init.TIMode = SPI_TIMODE_DISABLE;                   
-    hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;   
-    hspi1.Init.CRCPolynomial = 7;                             
-    HAL_SPI_Init(&hspi1);                                     
+	hspi1.Instance = SPI1;
+	hspi1.Init.Mode = SPI_MODE_MASTER;                        
+	hspi1.Init.Direction = SPI_DIRECTION_2LINES;              
+	hspi1.Init.DataSize = SPI_DATASIZE_8BIT;                  
+	hspi1.Init.CLKPolarity = SPI_POLARITY_HIGH;               
+	hspi1.Init.CLKPhase = SPI_PHASE_2EDGE;                    
+	hspi1.Init.NSS = SPI_NSS_SOFT;                            
+	hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_8; 
+	hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;                   
+	hspi1.Init.TIMode = SPI_TIMODE_DISABLE;                   
+	hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;   
+	hspi1.Init.CRCPolynomial = 7;                             
+	HAL_SPI_Init(&hspi1);                                     
 
-    __HAL_SPI_ENABLE(&hspi1); /* 使能SPI2 */
+	__HAL_SPI_ENABLE(&hspi1); /* 使能SPI2 */
+	
+	return OPERATE_SUCCESS;
 }
 
-void Flash_Init(void)
+int Flash_Init(void)
 {
 	__HAL_RCC_GPIOB_CLK_ENABLE();
 	
@@ -41,6 +43,8 @@ void Flash_Init(void)
   HAL_GPIO_Init(GPIOB, &gpio_init_struct);
 	
 	SPI1_Init();
+	
+	return OPERATE_SUCCESS;
 }
 
 uint8_t Flash_Read_Write_Byte(uint8_t txdata)
@@ -125,7 +129,7 @@ static void Flash_Send_Address(uint32_t address)
  * @param       sr   : 要写入状态寄存器的值
  * @retval      无
  */
-void Flash_Write_SR(uint8_t regno, uint8_t sr)
+int Flash_Write_SR(uint8_t regno, uint8_t sr)
 {
     uint8_t command = 0;
 
@@ -152,6 +156,8 @@ void Flash_Write_SR(uint8_t regno, uint8_t sr)
     Flash_Read_Write_Byte(command);  /* 发送读寄存器命令 */
     Flash_Read_Write_Byte(sr);       /* 写入一个字节 */
     SPI_FLASH_CS_HIGH();
+		
+		return OPERATE_SUCCESS;
 }
 
 /**
@@ -184,20 +190,22 @@ uint16_t Flash_Read_id(void)
  * @param       datalen : 要读取的字节数(最大65535)
  * @retval      无
  */
-void Flash_read(uint8_t *pbuf, uint32_t addr, uint16_t datalen)
+int Flash_read(uint8_t *pbuf, uint32_t addr, uint16_t datalen)
 {
-    uint16_t i;
+	uint16_t i;
 
-    SPI_FLASH_CS_LOW();
-    Flash_Read_Write_Byte(FLASH_ReadData);       /* 发送读取命令 */
-    Flash_Send_Address(addr);                /* 发送地址 */
-    
-    for(i=0;i<datalen;i++)
-    {
-        pbuf[i] = Flash_Read_Write_Byte(0XFF);   /* 循环读取 */
-    }
-    
-    SPI_FLASH_CS_HIGH();
+	SPI_FLASH_CS_LOW();
+	Flash_Read_Write_Byte(FLASH_ReadData);       /* 发送读取命令 */
+	Flash_Send_Address(addr);                /* 发送地址 */
+	
+	for(i=0;i<datalen;i++)
+	{
+			pbuf[i] = Flash_Read_Write_Byte(0XFF);   /* 循环读取 */
+	}
+	
+	SPI_FLASH_CS_HIGH();
+	
+	return OPERATE_SUCCESS;
 }
 
 /**
@@ -290,76 +298,77 @@ static void Flash_Write_nocheck(uint8_t *pbuf, uint32_t addr, uint16_t datalen)
  */
 uint8_t g_norflash_buf[4096];   /* 扇区缓存 */
 
-void Flash_write(uint8_t *pbuf, uint32_t addr, uint16_t datalen)
+int Flash_write(uint8_t *pbuf, uint32_t addr, uint16_t datalen)
 {
-    uint32_t secpos;
-    uint16_t secoff;
-    uint16_t secremain;
-    uint16_t i;
-    uint8_t *norflash_buf;
+	uint32_t secpos;
+	uint16_t secoff;
+	uint16_t secremain;
+	uint16_t i;
+	uint8_t *norflash_buf;
 
-    norflash_buf = g_norflash_buf;
-    secpos = addr / 4096;       /* 扇区地址 */
-    secoff = addr % 4096;       /* 在扇区内的偏移 */
-    secremain = 4096 - secoff;  /* 扇区剩余空间大小 */
+	norflash_buf = g_norflash_buf;
+	secpos = addr / 4096;       /* 扇区地址 */
+	secoff = addr % 4096;       /* 在扇区内的偏移 */
+	secremain = 4096 - secoff;  /* 扇区剩余空间大小 */
 
-    //printf("ad:%X,nb:%X\r\n", addr, datalen); /* 测试用 */
-    if (datalen <= secremain)
-    {
-        secremain = datalen;    /* 不大于4096个字节 */
-    }
+	//printf("ad:%X,nb:%X\r\n", addr, datalen); /* 测试用 */
+	if (datalen <= secremain)
+	{
+			secremain = datalen;    /* 不大于4096个字节 */
+	}
 
-    while (1)
-    {
-        Flash_read(norflash_buf, secpos * 4096, 4096);   /* 读出整个扇区的内容 */
+	while (1)
+	{
+			Flash_read(norflash_buf, secpos * 4096, 4096);   /* 读出整个扇区的内容 */
 
-        for (i = 0; i < secremain; i++)   /* 校验数据 */
-        {
-            if (norflash_buf[secoff + i] != 0XFF)
-            {
-                break;      /* 需要擦除, 直接退出for循环 */
-            }
-        }
+			for (i = 0; i < secremain; i++)   /* 校验数据 */
+			{
+					if (norflash_buf[secoff + i] != 0XFF)
+					{
+							break;      /* 需要擦除, 直接退出for循环 */
+					}
+			}
 
-        if (i < secremain)   /* 需要擦除 */
-        {
-            Flash_Erase_Sector(secpos);  /* 擦除这个扇区 */
+			if (i < secremain)   /* 需要擦除 */
+			{
+					Flash_Erase_Sector(secpos);  /* 擦除这个扇区 */
 
-            for (i = 0; i < secremain; i++)   /* 复制 */
-            {
-                norflash_buf[i + secoff] = pbuf[i];
-            }
+					for (i = 0; i < secremain; i++)   /* 复制 */
+					{
+							norflash_buf[i + secoff] = pbuf[i];
+					}
 
-            Flash_Write_nocheck(norflash_buf, secpos * 4096, 4096);  /* 写入整个扇区 */
-        }
-        else        /* 写已经擦除了的,直接写入扇区剩余区间. */
-        {
-            Flash_Write_nocheck(pbuf, addr, secremain);  /* 直接写扇区 */
-        }
+					Flash_Write_nocheck(norflash_buf, secpos * 4096, 4096);  /* 写入整个扇区 */
+			}
+			else        /* 写已经擦除了的,直接写入扇区剩余区间. */
+			{
+					Flash_Write_nocheck(pbuf, addr, secremain);  /* 直接写扇区 */
+			}
 
-        if (datalen == secremain)
-        {
-            break;  /* 写入结束了 */
-        }
-        else        /* 写入未结束 */
-        {
-            secpos++;               /* 扇区地址增1 */
-            secoff = 0;             /* 偏移位置为0 */
+			if (datalen == secremain)
+			{
+					break;  /* 写入结束了 */
+			}
+			else        /* 写入未结束 */
+			{
+					secpos++;               /* 扇区地址增1 */
+					secoff = 0;             /* 偏移位置为0 */
 
-            pbuf += secremain;      /* 指针偏移 */
-            addr += secremain;      /* 写地址偏移 */
-            datalen -= secremain;   /* 字节数递减 */
+					pbuf += secremain;      /* 指针偏移 */
+					addr += secremain;      /* 写地址偏移 */
+					datalen -= secremain;   /* 字节数递减 */
 
-            if (datalen > 4096)
-            {
-                secremain = 4096;   /* 下一个扇区还是写不完 */
-            }
-            else
-            {
-                secremain = datalen;/* 下一个扇区可以写完了 */
-            }
-        }
-    }
+					if (datalen > 4096)
+					{
+							secremain = 4096;   /* 下一个扇区还是写不完 */
+					}
+					else
+					{
+							secremain = datalen;/* 下一个扇区可以写完了 */
+					}
+			}
+	}
+	return OPERATE_SUCCESS;
 }
 
 /**
@@ -368,14 +377,14 @@ void Flash_write(uint8_t *pbuf, uint32_t addr, uint16_t datalen)
  * @param       无
  * @retval      无
  */
-void Flash_Erase_Chip(void)
+int Flash_Erase_Chip(void)
 {
-    Flash_Write_Enable();    /* 写使能 */
-    Flash_Wait_Busy();       /* 等待空闲 */
-    SPI_FLASH_CS_LOW();
-    Flash_Read_Write_Byte(FLASH_ChipErase);  /* 发送读寄存器命令 */ 
-    SPI_FLASH_CS_HIGH();
-    Flash_Wait_Busy();       /* 等待芯片擦除结束 */
+	Flash_Write_Enable();    /* 写使能 */
+	Flash_Wait_Busy();       /* 等待空闲 */
+	SPI_FLASH_CS_LOW();
+	Flash_Read_Write_Byte(FLASH_ChipErase);  /* 发送读寄存器命令 */ 
+	SPI_FLASH_CS_HIGH();
+	Flash_Wait_Busy();       /* 等待芯片擦除结束 */
 }
 
 /**
@@ -386,22 +395,23 @@ void Flash_Erase_Chip(void)
  * @param       saddr : 扇区地址 根据实际容量设置
  * @retval      无
  */
-void Flash_Erase_Sector(uint32_t saddr)
+int Flash_Erase_Sector(uint32_t saddr)
 {
-    //printf("fe:%x\r\n", saddr);   /* 监视falsh擦除情况,测试用 */
-    saddr *= 4096;
-    Flash_Write_Enable();        /* 写使能 */
-    Flash_Wait_Busy();           /* 等待空闲 */
+	saddr *= 4096;
+	Flash_Write_Enable();        /* 写使能 */
+	Flash_Wait_Busy();           /* 等待空闲 */
 
-    SPI_FLASH_CS_LOW();
-    Flash_Read_Write_Byte(FLASH_SectorErase);    /* 发送写页命令 */
-    Flash_Send_Address(saddr);   /* 发送地址 */
-    SPI_FLASH_CS_HIGH();
-    Flash_Wait_Busy();           /* 等待扇区擦除完成 */
+	SPI_FLASH_CS_LOW();
+	Flash_Read_Write_Byte(FLASH_SectorErase);    /* 发送写页命令 */
+	Flash_Send_Address(saddr);   /* 发送地址 */
+	SPI_FLASH_CS_HIGH();
+	Flash_Wait_Busy();           /* 等待扇区擦除完成 */
+	
+	return OPERATE_SUCCESS;
 }
 
 
-void Flash_Read_DMA(uint8_t *pbuf, uint32_t addr, uint16_t datalen)
+int Flash_Read_DMA(uint8_t *pbuf, uint32_t addr, uint16_t datalen)
 {
 	SPI_FLASH_CS_LOW();
 	Flash_Read_Write_Byte(FLASH_ReadData);
@@ -409,6 +419,7 @@ void Flash_Read_DMA(uint8_t *pbuf, uint32_t addr, uint16_t datalen)
 	HAL_SPI_Receive_DMA(&hspi1,pbuf,datalen);
 	//delay_ms(1000);
 	//SPI_FLASH_CS_HIGH();	//dma传输完成后拉高片选
+	return OPERATE_SUCCESS;
 }
 
 void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi)

@@ -1772,7 +1772,7 @@ public:
 
         retranslateUi(Form_MainWindow);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(4);
         tabWidget_finger_func->setCurrentIndex(0);
         stackedWidget->setCurrentIndex(4);
         stackedWidget_key->setCurrentIndex(5);

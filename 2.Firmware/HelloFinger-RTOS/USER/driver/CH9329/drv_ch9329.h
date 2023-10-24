@@ -428,17 +428,17 @@ typedef enum
 	QUICK_START_6,
 }QUICK_START_e;
 
-void CH9329_Init(void);
-void CH9329_WorkMode_Config(uint8_t workmode);
-void CH9329_SerialMode_Config(uint8_t serialmode);
-void CH9329_SerialAddr_Config(uint8_t addr);;
-void CH9329_SerialBaudRate_Config(uint8_t* baudrate);
-void CH9329_Get_Cfg(void);
-void CH9329_Set_Cfg(void);
-void CH9329_Get_Info(void);
+int CH9329_Init(void);
+int CH9329_WorkMode_Config(uint8_t workmode);
+int CH9329_SerialMode_Config(uint8_t serialmode);
+int CH9329_SerialAddr_Config(uint8_t addr);;
+int CH9329_SerialBaudRate_Config(uint8_t* baudrate);
+int CH9329_Get_Cfg(void);
+int CH9329_Set_Cfg(void);
+int CH9329_Get_Info(void);
 
 int CH9329_Key_Release(void);
-void CH9329_Index_to_Ascii(uint8_t *ascii);
+int CH9329_Index_to_Ascii(uint8_t *ascii);
 void CH9329_Generate_KEY_CMD(KEY_TYPE_e type,uint8_t key_contral,char key_value);
 void CH9329_Input_Ascii(char *ascii,uint8_t len);
 void CH9329_Input_Shortcut(uint8_t func_key,char *key,uint8_t key_len);
@@ -446,9 +446,8 @@ void CH9329_Input_Fuc_Key(uint8_t key_contral,uint8_t func_key);
 void CH9329_Input_Media_Key(uint8_t key_index);
 void CH9329_Input_Power_Key(uint8_t key_index);
 uint8_t CH9329_CAL_SUM(uint8_t *cmd,uint8_t len);
-int Send_HID_Data(uint8_t *data,uint8_t len);
-int ABD_Mouse_Ctrl(uint8_t step,uint8_t* pos_x,uint8_t* pos_y,BUTTON_VALUE_e button);
-int REL_Mouse_Ctrl(uint8_t step,uint8_t dir_x,uint8_t dir_y,BUTTON_VALUE_e button);
-int Quick_Start(char key);
+int CH9329_Send_HID_Data(uint8_t *data,uint8_t len);
+int CH9329_ABD_Mouse_Ctrl(uint8_t step,uint8_t* pos_x,uint8_t* pos_y,BUTTON_VALUE_e button);
+int CH9329_REL_Mouse_Ctrl(uint8_t step,uint8_t dir_x,uint8_t dir_y,BUTTON_VALUE_e button);
 int CH9329_Keyboard_Switch(void);
 #endif

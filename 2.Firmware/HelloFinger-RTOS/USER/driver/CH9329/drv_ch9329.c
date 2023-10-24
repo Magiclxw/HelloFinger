@@ -1,6 +1,6 @@
 #include "drv_ch9329.h"
 
-static void CH9329_Data_Format_Init(void);
+static int CH9329_Data_Format_Init(void);
 
 CMD_FORMAT_t g_cmd_format = {0};
 CMD_GENERAL_KEY_DATA_t g_general_key = {0};
@@ -59,12 +59,7 @@ uint8_t CH9329_CONFIG[50] =
 	0x00,
 	0x00,
 	0x00};
-//uint8_t CH9329_CONFIG[50] = {0x00,0x80,0x00,0x00,0x00,0x25,0x80,0x08,0x00,0x00,
-//														 0x03,0x86,0x1A,0x29,0xE1,0x00,0x00,0x00,0x01,0x00,
-//														 0x0D,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-//														 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-//														 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
-	 
+
 /**   完整数组末尾一定要加0x0A!!!!!!!!!!!*/
 
 
@@ -259,7 +254,7 @@ const uint8_t POWER_KEY_SEQ[4] =
 };
 /********************************************功能配置**************************************************/
 
-void CH9329_Init(void)		//CH9329引脚初始化
+int CH9329_Init(void)		//CH9329引脚初始化
 {
 	GPIO_InitTypeDef gpio;
 	__HAL_RCC_GPIOA_CLK_ENABLE();
@@ -290,10 +285,12 @@ void CH9329_Init(void)		//CH9329引脚初始化
 	//SET_DEN;
 	
 	CH9329_Data_Format_Init();
+	
+	return OPERATE_SUCCESS;
 }
 
 /* 初始化结构体 */
-static void CH9329_Data_Format_Init(void)
+static int CH9329_Data_Format_Init(void)
 {
 	g_cmd_format.head1 = 0x57;
 	g_cmd_format.head2 = 0xAB;
@@ -301,53 +298,62 @@ static void CH9329_Data_Format_Init(void)
 	g_general_key.null = 0x00;
 	g_media_key.report_id = 0x02;
 	g_power_key.report_id = 0x01;
+	
+	return OPERATE_SUCCESS;
 }
 
-void CH9329_Reset(void)
+int CH9329_Reset(void)
 {
 	HAL_GPIO_WritePin(GPIOA,GPIO_PIN_12,GPIO_PIN_SET);
 	delay_ms(1000);
 	HAL_GPIO_WritePin(GPIOA,GPIO_PIN_12,GPIO_PIN_RESET);
+	return OPERATE_SUCCESS;
 }
 
-void CH9329_WorkMode_Config(uint8_t workmode)
+int CH9329_WorkMode_Config(uint8_t workmode)
 {
 	CH9329_CONFIG[CH9329_CONFIG_INDEX_WORK_MODE] = workmode;
+	return OPERATE_SUCCESS;
 }
 
-void CH9329_SerialMode_Config(uint8_t serialmode)
+int CH9329_SerialMode_Config(uint8_t serialmode)
 {
 	CH9329_CONFIG[CH9329_CONFIG_INDEX_PORT_MODE] = serialmode;
+	return OPERATE_SUCCESS;
 }
 
-void CH9329_SerialAddr_Config(uint8_t addr)
+int CH9329_SerialAddr_Config(uint8_t addr)
 {
 	CH9329_CONFIG[CH9329_CONFIG_INDEX_ADDR] = addr;
+	return OPERATE_SUCCESS;
 }
 
-void CH9329_SerialBaudRate_Config(uint8_t* baudrate)
+int CH9329_SerialBaudRate_Config(uint8_t* baudrate)
 {
 	CH9329_CONFIG[CH9329_CONFIG_INDEX_BAUD_1] = baudrate[0];
 	CH9329_CONFIG[CH9329_CONFIG_INDEX_BAUD_2] = baudrate[1];
 	CH9329_CONFIG[CH9329_CONFIG_INDEX_BAUD_3] = baudrate[2];
 	CH9329_CONFIG[CH9329_CONFIG_INDEX_BAUD_4] = baudrate[3];
+	return OPERATE_SUCCESS;
 }
 
-void CH9329_SerialInterval_Config(uint8_t* interval)
+int CH9329_SerialInterval_Config(uint8_t* interval)
 {
 	CH9329_CONFIG[CH9329_CONFIG_INDEX_PACK_INTERVAL_1] = interval[0];
 	CH9329_CONFIG[CH9329_CONFIG_INDEX_PACK_INTERVAL_2] = interval[1];
+	return OPERATE_SUCCESS;
 }
 
-void CH9329_Vid_Pid_Config(uint16_t vid,uint16_t pid)
+int CH9329_Vid_Pid_Config(uint16_t vid,uint16_t pid)
 {
 	CH9329_CONFIG[CH9329_CONFIG_INDEX_VID_1] = vid;
 	CH9329_CONFIG[CH9329_CONFIG_INDEX_VID_2] = vid>>8;
 	CH9329_CONFIG[CH9329_CONFIG_INDEX_PID_1] = pid;
 	CH9329_CONFIG[CH9329_CONFIG_INDEX_PID_2] = pid>>8;
+	return OPERATE_SUCCESS;
 }
 
-void CH9329_Get_Cfg(void)	//CH9329获取配置信息
+int CH9329_Get_Cfg(void)	//CH9329获取配置信息
 {
 	uint8_t cmd[6] = {0x57,0xAB,0x00,CMD_GET_PARA_CFG,0x00};
 	uint8_t checksum = 0;
@@ -357,12 +363,14 @@ void CH9329_Get_Cfg(void)	//CH9329获取配置信息
 	cmd[5] = checksum;
 	SET_EN;
 	delay_ms(500);
-	HAL_UART_Transmit(&huart1,cmd,6,1000);
+	HAL_UART_Transmit(&KEY_HANDLE,cmd,6,1000);
 	delay_ms(500);
 	SET_DEN;
+	
+	return OPERATE_SUCCESS;
 }
 
-void CH9329_Set_Cfg(void)	//CH9329参数配置
+int CH9329_Set_Cfg(void)	//CH9329参数配置
 {
 	uint8_t cmd[56] = {0x57,0xAB,0x00,CMD_SET_PARA_CFG,0x32};
 	uint8_t checksum = 0;
@@ -371,24 +379,28 @@ void CH9329_Set_Cfg(void)	//CH9329参数配置
 		checksum += cmd[i];
 	}
 	cmd[55] = checksum;
-	HAL_UART_Transmit(&huart1,cmd,56,1000);
+	HAL_UART_Transmit(&KEY_HANDLE,cmd,56,1000);
 	delay_ms(2000);
 	CH9329_Reset();
+	
+	return OPERATE_SUCCESS;
 }
 
-void CH9329_Get_Info(void)
+int CH9329_Get_Info(void)
 {
 	uint8_t cmd[6] = {0x57,0xAB,0x00,CMD_GET_INFO,0x00};
 	uint8_t checksum = 0;
 	checksum = CH9329_CAL_SUM(cmd,4);
 	cmd[5] = checksum;
-	HAL_UART_Transmit(&huart1,cmd,6,1000);
+	HAL_UART_Transmit(&KEY_HANDLE,cmd,6,1000);
+	
+	return OPERATE_SUCCESS;
 }
 
 
 
 /************************************************数据处理***********************************************/
-void CH9329_Index_to_Ascii(uint8_t *ascii)
+int CH9329_Index_to_Ascii(uint8_t *ascii)
 {
 	uint16_t len = 0;	//记录数据长度
 	static uint8_t ascii_value[100] = {0};
@@ -396,6 +408,7 @@ void CH9329_Index_to_Ascii(uint8_t *ascii)
 	for(int i=0;i<len;i++){
 		ascii_value[i]=(char)ascii[i];
 	}
+	return OPERATE_SUCCESS;
 }
 
 uint8_t CH9329_CAL_SUM(uint8_t *cmd,uint8_t len)
@@ -455,7 +468,7 @@ void CH9329_Generate_KEY_CMD(KEY_TYPE_e type,uint8_t key_contral,char key_value)
 		}
 		case KEY_TYPE_POWER_KEY:	//电源功能按键
 		{
-			g_cmd_format.cmd = KEY_TYPE_POWER_KEY;
+			g_cmd_format.cmd = CMD_SEND_KB_MEDIA_DATA;
 			g_cmd_format.len = 2;
 			//g_cmd_format.data = (uint8_t*)&g_power_key;
 			g_power_key.power_key = POWER_KEY_SEQ[key_value];
@@ -463,7 +476,7 @@ void CH9329_Generate_KEY_CMD(KEY_TYPE_e type,uint8_t key_contral,char key_value)
 			g_cmd_format.data[g_cmd_format.len] = CH9329_CAL_SUM((uint8_t*)&g_cmd_format,g_cmd_format.len+5);
 			break;
 		}
-		case KEY_TYPE_FUNC_KEY:
+		case KEY_TYPE_FUNC_KEY:	//控制键+普通按键
 		{
 			g_cmd_format.cmd = CMD_SEND_KB_GENERAL_DATA;
 			g_cmd_format.len = 0x08;
@@ -519,9 +532,9 @@ void CH9329_Input_Ascii(char *ascii,uint8_t len)
 	for(uint16_t i=0;i<len;i++)
 	{
 		CH9329_Generate_KEY_CMD(KEY_TYPE_ASCII_KEY,NO_CTRL,ascii[i]);
-		HAL_UART_Transmit(&huart1,(uint8_t*)&g_cmd_format,g_cmd_format.len+6,1000);
+		HAL_UART_Transmit(&KEY_HANDLE,(uint8_t*)&g_cmd_format,g_cmd_format.len+6,1000);
 		delay_ms(1);
-		HAL_UART_Transmit(&huart1,KeyRelease,14,1000);	//释放按键
+		CH9329_Key_Release();
 		delay_ms(1);
 	}
 }
@@ -530,40 +543,36 @@ void CH9329_Input_Ascii(char *ascii,uint8_t len)
 void CH9329_Input_Shortcut(uint8_t func_key,char *key,uint8_t key_len)
 {
 	CH9329_Generate_Shortcut(func_key,key,key_len);
-	HAL_UART_Transmit(&huart1,(uint8_t*)&g_cmd_format,g_cmd_format.len+6,1000);
+	HAL_UART_Transmit(&KEY_HANDLE,(uint8_t*)&g_cmd_format,g_cmd_format.len+6,1000);
 	delay_ms(1);
-	HAL_UART_Transmit(&huart1,KeyRelease,14,1000);	//释放按键
-	delay_ms(1);
+	CH9329_Key_Release();
 }
 
 /* 输入功能键 */
 void CH9329_Input_Fuc_Key(uint8_t key_contral,uint8_t func_key)
 {
 	CH9329_Generate_KEY_CMD(KEY_TYPE_FUNC_KEY,key_contral,func_key);
-	HAL_UART_Transmit(&huart1,(uint8_t*)&g_cmd_format,g_cmd_format.len+6,1000);
+	HAL_UART_Transmit(&KEY_HANDLE,(uint8_t*)&g_cmd_format,g_cmd_format.len+6,1000);
 	delay_ms(1);
-	HAL_UART_Transmit(&huart1,KeyRelease,14,1000);	//释放按键
-	delay_ms(1);
+	CH9329_Key_Release();
 }
 
 /* 输入多媒体按键 */
 void CH9329_Input_Media_Key(uint8_t key_index)
 {
 	CH9329_Generate_KEY_CMD(KEY_TYPE_MEDIA_KEY,0x00,key_index);
-	HAL_UART_Transmit(&huart1,(uint8_t*)&g_cmd_format,g_cmd_format.len+6,1000);
+	HAL_UART_Transmit(&KEY_HANDLE,(uint8_t*)&g_cmd_format,g_cmd_format.len+6,1000);
 	delay_ms(1);
-	HAL_UART_Transmit(&huart1,KeyRelease,14,1000);	//释放按键
-	delay_ms(1);
+	CH9329_Key_Release();
 }
 
 /* 输入电源按键 */
 void CH9329_Input_Power_Key(uint8_t key_index)
 {
 	CH9329_Generate_KEY_CMD(KEY_TYPE_POWER_KEY,0x00,key_index);
-	HAL_UART_Transmit(&huart1,(uint8_t*)&g_cmd_format,g_cmd_format.len+6,1000);
+	HAL_UART_Transmit(&KEY_HANDLE,(uint8_t*)&g_cmd_format,g_cmd_format.len+6,1000);
 	delay_ms(1);
-	HAL_UART_Transmit(&huart1,KeyRelease,14,1000);	//释放按键
-	delay_ms(1);
+	CH9329_Key_Release();
 }
 
 /**
@@ -574,7 +583,7 @@ void CH9329_Input_Power_Key(uint8_t key_index)
 * @return 	NULL
 * @note
 */
-int Send_HID_Data(uint8_t *data,uint8_t len)
+int CH9329_Send_HID_Data(uint8_t *data,uint8_t len)
 {
 	if(len > CH9329_TRANS_MAX_DATA_LEN)
 	{
@@ -586,7 +595,7 @@ int Send_HID_Data(uint8_t *data,uint8_t len)
 	memcpy((uint8_t*)&g_cmd_format.data,data,len);
 	g_cmd_format.data[g_cmd_format.len] = CH9329_CAL_SUM((uint8_t*)&g_cmd_format,g_cmd_format.len+5);
 	
-	HAL_UART_Transmit(&huart1,(uint8_t*)&g_cmd_format,g_cmd_format.len+9,1000);
+	HAL_UART_Transmit(&KEY_HANDLE,(uint8_t*)&g_cmd_format,g_cmd_format.len+9,1000);
 	
 	return OPERATE_SUCCESS;
 }
@@ -601,7 +610,7 @@ int Send_HID_Data(uint8_t *data,uint8_t len)
 * @date		2023-8-8 21:11:19
 * @return 
 */
-int ABD_Mouse_Ctrl(uint8_t step,uint8_t* pos_x,uint8_t* pos_y,BUTTON_VALUE_e button)
+int CH9329_ABD_Mouse_Ctrl(uint8_t step,uint8_t* pos_x,uint8_t* pos_y,BUTTON_VALUE_e button)
 {
 	g_cmd_format.cmd = CMD_SEND_MS_ABS_DATA;
 	g_cmd_format.len = 7;
@@ -611,7 +620,7 @@ int ABD_Mouse_Ctrl(uint8_t step,uint8_t* pos_x,uint8_t* pos_y,BUTTON_VALUE_e but
 	memcpy((uint8_t*)&g_cmd_format.data[4],pos_y,2);
 	g_cmd_format.data[6] = step;
 	g_cmd_format.data[g_cmd_format.len] = CH9329_CAL_SUM((uint8_t*)&g_cmd_format,g_cmd_format.len+5);
-	HAL_UART_Transmit(&huart1,(uint8_t*)&g_cmd_format,g_cmd_format.len+6,1000);
+	HAL_UART_Transmit(&KEY_HANDLE,(uint8_t*)&g_cmd_format,g_cmd_format.len+6,1000);
 	return OPERATE_SUCCESS;
 }
 
@@ -624,7 +633,7 @@ int ABD_Mouse_Ctrl(uint8_t step,uint8_t* pos_x,uint8_t* pos_y,BUTTON_VALUE_e but
 * @date	2023-8-8 21:13:32
 * @return 
 */
-int REL_Mouse_Ctrl(uint8_t step,uint8_t dir_x,uint8_t dir_y,BUTTON_VALUE_e button)
+int CH9329_REL_Mouse_Ctrl(uint8_t step,uint8_t dir_x,uint8_t dir_y,BUTTON_VALUE_e button)
 {
 	g_cmd_format.cmd = CMD_SEND_MS_REL_DATA;
 	g_cmd_format.len = 5;
@@ -634,27 +643,15 @@ int REL_Mouse_Ctrl(uint8_t step,uint8_t dir_x,uint8_t dir_y,BUTTON_VALUE_e butto
 	g_cmd_format.data[3] = dir_y;
 	g_cmd_format.data[4] = step;
 	g_cmd_format.data[g_cmd_format.len] = CH9329_CAL_SUM((uint8_t*)&g_cmd_format,g_cmd_format.len+5);
-	HAL_UART_Transmit(&huart1,(uint8_t*)&g_cmd_format,g_cmd_format.len+6,1000);
+	HAL_UART_Transmit(&KEY_HANDLE,(uint8_t*)&g_cmd_format,g_cmd_format.len+6,1000);
 	return OPERATE_SUCCESS;
 }
 
-int Quick_Start(char key)
-{
-	if(key < '0' || key > '5')
-	{
-		return OPERATE_ERROR_INVALID_PARAMETERS;
-	}
-	CH9329_Generate_Shortcut(R_WINDOWS|R_CTRL,&key,1);
-	HAL_UART_Transmit(&huart1,(uint8_t*)&g_cmd_format,g_cmd_format.len+6,1000);
-	delay_ms(1);
-	HAL_UART_Transmit(&huart1,KeyRelease,14,1000);	//释放按键
-	delay_ms(1);
-	return OPERATE_SUCCESS;
-}
+
 
 int CH9329_Key_Release(void)	//发送释放按键指令
 {
-	HAL_UART_Transmit(&huart1,KeyRelease,14,1000);	//释放按键
+	HAL_UART_Transmit(&KEY_HANDLE,KeyRelease,14,1000);	//释放按键
 }
 
 /**
@@ -665,5 +662,6 @@ int CH9329_Key_Release(void)	//发送释放按键指令
 int CH9329_Keyboard_Switch(void)
 {
 	CH9329_Input_Shortcut(R_SHIFT|R_ALT,NULL,0);
-	
 }
+
+

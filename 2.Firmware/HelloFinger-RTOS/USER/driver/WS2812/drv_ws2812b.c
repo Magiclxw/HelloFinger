@@ -4,7 +4,7 @@ SPI_HandleTypeDef hspi2;
 DMA_HandleTypeDef hdma_spi2_tx;
 
 /* SPI2 init function */
-void MX_SPI2_Init(void)
+int MX_SPI2_Init(void)
 {
 
   /* USER CODE BEGIN SPI2_Init 0 */
@@ -33,7 +33,7 @@ void MX_SPI2_Init(void)
   /* USER CODE BEGIN SPI2_Init 2 */
 	__HAL_SPI_ENABLE(&hspi2);
   /* USER CODE END SPI2_Init 2 */
-
+	return OPERATE_SUCCESS;
 }
 
 

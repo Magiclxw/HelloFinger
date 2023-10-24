@@ -9,6 +9,7 @@
 static void vTaskFingerProcessing(void);	//指纹接收数据处理任务
 static void FingerResetData(void);	//复位接受结构体
 static int CMP_Checksum(uint8_t *data,uint8_t len);
+static int Finger_Func_Quick_Start(char key);
 int Finger_RecData_Handle(uint8_t data);
 static void Finger_Func_Exec(void);
 static void Finger_Key_Function(uint16_t id,uint16_t score);
@@ -288,7 +289,7 @@ static void Finger_Func_Exec(void)
 						g_usb_response.result = CONFIRM_OK;
 						memcpy((uint8_t*)&g_usb_response.data,(uint8_t*)&g_data_format.data[1],32);
 						g_usb_response.data[32] = CH9329_CAL_SUM((uint8_t*)&g_usb_response,36);
-						Send_HID_Data((uint8_t*)&g_usb_response,37);
+						CH9329_Send_HID_Data((uint8_t*)&g_usb_response,37);
 						xEventGroupClearBits(FingerEvent_Handle,EVENT_INDEX_LIST);
 					}
 					//event_status = xEventGroupWaitBits(FingerEvent_Handle,EVENT_AUTO_ENROLL,pdFALSE,pdFALSE,100);
@@ -304,11 +305,11 @@ static void Finger_Func_Exec(void)
 
 						if(g_usb_response.data[0] == 0x01 || g_usb_response.data[0] == 0x02 ||g_usb_response.data[0] == 0x03)	//重新按下手指
 						{
-							Send_HID_Data((uint8_t*)&g_usb_response,7);
+							CH9329_Send_HID_Data((uint8_t*)&g_usb_response,7);
 						}
 						if(g_usb_response.data[0] == 0x06 && g_usb_response.data[1] == 0xF2)	//流程结束,置位标志
 						{
-							Send_HID_Data((uint8_t*)&g_usb_response,7);
+							CH9329_Send_HID_Data((uint8_t*)&g_usb_response,7);
 							xEventGroupClearBits(FingerEvent_Handle,EVENT_AUTO_ENROLL);
 							/* 指纹注册成功后重新获取索引表信息发送给上位机 */
 							xEventGroupSetBits(FingerEvent_Handle,EVENT_INDEX_LIST);
@@ -324,7 +325,7 @@ static void Finger_Func_Exec(void)
 						g_usb_response.type = USB_PROTOCOL_FORMAT_DELETE_FINGER;
 						g_usb_response.result = CONFIRM_OK;
 						g_usb_response.data[0] = CH9329_CAL_SUM((uint8_t*)&g_usb_response,4);
-						Send_HID_Data((uint8_t*)&g_usb_response,5);           
+						CH9329_Send_HID_Data((uint8_t*)&g_usb_response,5);           
 						xEventGroupClearBits(FingerEvent_Handle,EVENT_DELETE_CHAR);
 						/* 删除指纹完成后重新获取索引表信息发送给上位机 */
 						xEventGroupSetBits(FingerEvent_Handle,EVENT_INDEX_LIST);
@@ -744,32 +745,32 @@ static void Finger_Function(uint16_t id,uint16_t score)
 			{
 				case QUICK_START_1:
 				{
-					Quick_Start('0');
+					Finger_Func_Quick_Start('0');
 					break;
 				}
 				case QUICK_START_2:
 				{
-					Quick_Start('1');
+					Finger_Func_Quick_Start('1');
 					break;
 				}
 				case QUICK_START_3:
 				{
-					Quick_Start('2');
+					Finger_Func_Quick_Start('2');
 					break;
 				}
 				case QUICK_START_4:
 				{
-					Quick_Start('3');
+					Finger_Func_Quick_Start('3');
 					break;
 				}
 				case QUICK_START_5:
 				{
-					Quick_Start('4');
+					Finger_Func_Quick_Start('4');
 					break;
 				}
 				case QUICK_START_6:
 				{
-					Quick_Start('5');
+					Finger_Func_Quick_Start('5');
 					break;
 				}
 				default : break;
@@ -939,32 +940,32 @@ static void Finger_Key_Function(uint16_t id,uint16_t score)
 			{
 				case QUICK_START_1:
 				{
-					Quick_Start('0');
+					Finger_Func_Quick_Start('0');
 					break;
 				}
 				case QUICK_START_2:
 				{
-					Quick_Start('1');
+					Finger_Func_Quick_Start('1');
 					break;
 				}
 				case QUICK_START_3:
 				{
-					Quick_Start('2');
+					Finger_Func_Quick_Start('2');
 					break;
 				}
 				case QUICK_START_4:
 				{
-					Quick_Start('3');
+					Finger_Func_Quick_Start('3');
 					break;
 				}
 				case QUICK_START_5:
 				{
-					Quick_Start('4');
+					Finger_Func_Quick_Start('4');
 					break;
 				}
 				case QUICK_START_6:
 				{
-					Quick_Start('5');
+					Finger_Func_Quick_Start('5');
 					break;
 				}
 				default : break;
@@ -973,5 +974,19 @@ static void Finger_Key_Function(uint16_t id,uint16_t score)
 	}
 }
 
-
+/**
+* @brief	执行快捷启动功能
+* @date	2023-10-24 19:08:29
+* @return 
+*/
+static int Finger_Func_Quick_Start(char key)
+{
+	if(key < '0' || key > '5')
+	{
+		return OPERATE_ERROR_INVALID_PARAMETERS;
+	}
+	CH9329_Input_Shortcut(R_WINDOWS|R_CTRL,&key,1);
+	
+	return OPERATE_SUCCESS;
+}
 

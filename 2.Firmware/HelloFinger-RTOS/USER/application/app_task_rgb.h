@@ -4,7 +4,7 @@
 #include "sys_config.h"
 #include "..\USER\driver\WS2812\drv_ws2812b.h"
 
-#define TASK_RGB_PROCESS_SIZE	(200)
+#define TASK_RGB_PROCESS_SIZE	(100)
 #define TASK_RGB_PROCESS_PRIORITY	(7)
 
 #define QUEUE_RGB_PROCESS_LEN	(1)

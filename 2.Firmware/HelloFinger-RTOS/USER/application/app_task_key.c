@@ -172,6 +172,7 @@ static void vTaskKeyProcessing(void)
 
 static void vTaskSidebarProcessing(void)	//编码器按键任务
 {
+	char            *task_info_buf  = NULL;
 	while(1)
 	{
 		BaseType_t ret = ulTaskNotifyTake((BaseType_t)pdTRUE,(TickType_t)portMAX_DELAY);
@@ -181,6 +182,11 @@ static void vTaskSidebarProcessing(void)	//编码器按键任务
 			if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_1))	//消抖
 			{
 				CH9329_Input_Fuc_Key(R_ALT|R_SHIFT|R_CTRL,KEY_F1);	//输入快捷键，上位机解析为侧边栏控制功能
+//				task_info_buf = pvPortMalloc(500);
+//				vTaskList(task_info_buf); /* 获取所有任务的信息 */
+//				printf("任务名\t\t 状态\t 优先级\t 剩余栈\t 任务序号\r\n");
+//				printf("%s\r\n", task_info_buf);
+//				vPortFree(task_info_buf);
 			}
 			vTaskDelay(50);
 		}
@@ -221,27 +227,27 @@ static void vTaskNormalKeyProcessing(void)
 			vTaskDelay(20);
 			if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_8) == GPIO_PIN_RESET)
 			{
-				REL_Mouse_Ctrl(0,0,0,button_LEFT);
+				CH9329_REL_Mouse_Ctrl(0,0,0,button_LEFT);
 				key1_press_flag = 1;
 			}
 			if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_8) == GPIO_PIN_SET)
 			{
 				if(key1_press_flag == 1)
 				{
-					REL_Mouse_Ctrl(0,0,0,button_NULL);
+					CH9329_REL_Mouse_Ctrl(0,0,0,button_NULL);
 					key1_press_flag = 0;
 				}
 			}
 			if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_11) == GPIO_PIN_RESET)
 			{
-				REL_Mouse_Ctrl(0,0,0,button_RIGHT);
+				CH9329_REL_Mouse_Ctrl(0,0,0,button_RIGHT);
 				key2_press_flag = 1;
 			}
 			if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_11) == GPIO_PIN_SET)
 			{
 				if(key2_press_flag == 1)
 				{
-					REL_Mouse_Ctrl(0,0,0,button_NULL);
+					CH9329_REL_Mouse_Ctrl(0,0,0,button_NULL);
 					key2_press_flag = 0;
 				}
 			}
@@ -837,7 +843,7 @@ int HID_Data_Handle(void)
 				 memcpy((uint8_t*)&g_usb_response.data[11],(uint8_t*)compile_time,8);
 				 
 				 g_usb_response.data[19] = CH9329_CAL_SUM((uint8_t*)&g_usb_response,23);
-				 Send_HID_Data((uint8_t*)&g_usb_response,24);
+				 CH9329_Send_HID_Data((uint8_t*)&g_usb_response,24);
 				 break;
 			 }
 			 case USB_PROTOCOL_FORMAT_SET_ACTION:	//设置Action按键功能

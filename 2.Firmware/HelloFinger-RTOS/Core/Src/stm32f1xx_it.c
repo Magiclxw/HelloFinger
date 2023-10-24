@@ -244,6 +244,7 @@ void USART2_IRQHandler(void)	//FPM383C
 	huart2.Instance->CR1 |= USART_CR1_RXNEIE;
 }
 
+
 void EXTI1_IRQHandler(void)	//±àÂëÆ÷°´¼üÖÐ¶Ï
 {
 	HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_1);
@@ -348,9 +349,9 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 	switch (GPIO_Pin){
 		case GPIO_PIN_1:	//±àÂëÆ÷°´¼ü°´ÏÂ
 		{
-			//REL_Mouse_Ctrl(0,0,0,button_RIGHT);
+			//CH9329_REL_Mouse_Ctrl(0,0,0,button_RIGHT);
 			//Delay_ms(20);
-			//REL_Mouse_Ctrl(0,0,0,button_NULL);
+			//CH9329_REL_Mouse_Ctrl(0,0,0,button_NULL);
 			//Con_Sleep();
 			if(ENCODERKeyRECVCallback != NULL)
 			{
@@ -361,9 +362,9 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 		
 		case GPIO_PIN_3:
 		{
-			REL_Mouse_Ctrl(0,0,0,button_RIGHT);
+			CH9329_REL_Mouse_Ctrl(0,0,0,button_RIGHT);
 			delay_ms(20);
-			REL_Mouse_Ctrl(0,0,0,button_NULL);
+			CH9329_REL_Mouse_Ctrl(0,0,0,button_NULL);
 			break;
 		}
 		
@@ -381,7 +382,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 			if(Signal_A_Read == GPIO_PIN_SET && Signal_B_Read == GPIO_PIN_RESET && signal_a == 0){
 				signal_a = 1;
 			}else if(Signal_A_Read == GPIO_PIN_RESET && Signal_B_Read == GPIO_PIN_SET && signal_a == 1){
-				REL_Mouse_Ctrl(0x01,0,0,button_NULL);
+				CH9329_REL_Mouse_Ctrl(0x01,0,0,button_NULL);
 				signal_a = 0;
 			}else{
 				signal_a = 0;
@@ -394,7 +395,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 			if(Signal_B_Read == GPIO_PIN_SET && Signal_A_Read == GPIO_PIN_RESET && signal_b == 0){
 				signal_b = 1;
 			}else if(Signal_B_Read == GPIO_PIN_RESET && Signal_A_Read == GPIO_PIN_SET && signal_b == 1){
-				REL_Mouse_Ctrl(0xFF,0,0,button_NULL);
+				CH9329_REL_Mouse_Ctrl(0xFF,0,0,button_NULL);
 				signal_b = 0;
 			}else{
 				signal_b = 0;

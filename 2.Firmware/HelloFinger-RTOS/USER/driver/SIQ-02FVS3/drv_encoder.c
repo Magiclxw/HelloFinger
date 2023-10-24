@@ -15,7 +15,7 @@ int RegisterEncoderKeyCallBack(FUNC_ENCODERKEYRECVTCB ENCODERRECVCBT)
 	return OPERATE_SUCCESS;
 }
 
-void ENCODER_Init(void)
+int ENCODER_Init(void)
 {
 	GPIO_InitTypeDef gpio;
 	__HAL_RCC_GPIOA_CLK_ENABLE();
@@ -38,6 +38,8 @@ void ENCODER_Init(void)
 	
 	HAL_NVIC_SetPriority(EXTI1_IRQn,11,0);
 	HAL_NVIC_EnableIRQ(EXTI1_IRQn);
+	
+	return OPERATE_SUCCESS;
 }
 
 

@@ -167,7 +167,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 	//	move_dist_y = 0xFF - ((offset_Y - MAX_OFFSET)*1);
 	//}
 	//if(move_dist_x != 0 | move_dist_y != 0){
-	//	//REL_Mouse_Ctrl(0,move_dist_x,move_dist_y,button_NULL);
+	//	//CH9329_REL_Mouse_Ctrl(0,move_dist_x,move_dist_y,button_NULL);
 	//	//move_dist_x_y[0] = move_dist_x;
 	//	//move_dist_x_y[1] = move_dist_y;
 	//	xQueueSendFromISR(Queue_JOYSTICKProcessing_Handle,move_dist_x_y,&xHigherPriorityTaskWoken);

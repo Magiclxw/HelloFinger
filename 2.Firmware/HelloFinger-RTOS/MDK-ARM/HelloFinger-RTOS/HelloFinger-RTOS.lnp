@@ -5,7 +5,6 @@
 "hellofinger-rtos\usart.o"
 "hellofinger-rtos\stm32f1xx_it.o"
 "hellofinger-rtos\stm32f1xx_hal_msp.o"
-"hellofinger-rtos\adc.o"
 "hellofinger-rtos\dma.o"
 "hellofinger-rtos\stm32f1xx_hal_spi.o"
 "hellofinger-rtos\stm32f1xx_hal_gpio_ex.o"
@@ -44,11 +43,12 @@
 "hellofinger-rtos\drv_encoder.o"
 "hellofinger-rtos\drv_ws2812b.o"
 "hellofinger-rtos\drv_w25q128.o"
-"hellofinger-rtos\app_task_usart.o"
+"hellofinger-rtos\drv_joystick.o"
 "hellofinger-rtos\app_task_finger.o"
 "hellofinger-rtos\app_task_key.o"
 "hellofinger-rtos\app_task_rgb.o"
 "hellofinger-rtos\app_task_joystick.o"
+"hellofinger-rtos\app_task_hid_transfer.o"
 --library_type=microlib --strict --scatter "HelloFinger-RTOS\HelloFinger-RTOS.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

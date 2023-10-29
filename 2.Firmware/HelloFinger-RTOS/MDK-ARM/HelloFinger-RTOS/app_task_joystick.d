@@ -52,8 +52,6 @@ hellofinger-rtos\app_task_joystick.o: ../SYSTEM/delay/delay.h
 hellofinger-rtos\app_task_joystick.o: ../FreeRTOS/include/semphr.h
 hellofinger-rtos\app_task_joystick.o: ../FreeRTOS/include/event_groups.h
 hellofinger-rtos\app_task_joystick.o: ../FreeRTOS/include/timers.h
-hellofinger-rtos\app_task_joystick.o: ../Core/Inc/adc.h
-hellofinger-rtos\app_task_joystick.o: ../SYSTEM/sys_config.h
-hellofinger-rtos\app_task_joystick.o: ../Core/Inc/dma.h
 hellofinger-rtos\app_task_joystick.o: ../SYSTEM/crc.h
+hellofinger-rtos\app_task_joystick.o: ..\USER\driver\JOYSTICK\drv_joystick.h
 hellofinger-rtos\app_task_joystick.o: ../USER/driver/CH9329/drv_ch9329.h

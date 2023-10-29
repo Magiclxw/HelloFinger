@@ -43,21 +43,21 @@
 #define WIP_Flag                  0x01  /* Write In Progress (WIP) flag */
 #define Dummy_Byte                0xFF
 
+#define FINGER_FUNC_BASE_ADDR	(0x100000)
+#define FINGER_KEY_FUNC_BASE_ADDR	(0x102710)
+#define FINGER_FUNC_LEN1_OFFSET	(0x01)
+#define FINGER_FUNC_BASE_SIZE	(100)
+#define FINGER_FUNC_RESERVED_DATA	(0x00)
+
+#define ACTION_FUNC_BASE_ADDR	(0x104E20)
+
+
 /*等待超时时间*/
 #define SPIT_FLAG_TIMEOUT         ((uint32_t)0x1000)
 #define SPIT_LONG_TIMEOUT         ((uint32_t)(10 * SPIT_FLAG_TIMEOUT))
 
 /*信息输出*/
 #define FLASH_DEBUG_ON         1
-
-#define FLASH_INFO(fmt,arg...)           printf("<<-FLASH-INFO->> "fmt"\n",##arg)
-#define FLASH_ERROR(fmt,arg...)          printf("<<-FLASH-ERROR->> "fmt"\n",##arg)
-#define FLASH_DEBUG(fmt,arg...)          do{\
-                                          if(FLASH_DEBUG_ON)\
-                                          printf("<<-FLASH-DEBUG->> [%d]"fmt"\n",__LINE__, ##arg);\
-                                          }while(0)
-
-
 
 int Flash_Init(void);
 int Flash_Erase_Chip(void);

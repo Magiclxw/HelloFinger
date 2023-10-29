@@ -3,7 +3,7 @@
 #include "app_task_finger.h"
 #include "app_task_rgb.h"
 #include "app_task_joystick.h"
-
+#include "app_task_hid_transfer.h"
 
 /**
  * @brief       设置中断向量表偏移地址
@@ -79,6 +79,8 @@ void sys_soft_reset(void)
     NVIC_SystemReset();
 }
 
+
+
 void Task_Create(void)
 {
 	taskENTER_CRITICAL();
@@ -90,6 +92,7 @@ void Task_Create(void)
 	Task_Sidebar_CTLCreate();
 	Task_Action_KEY_CTLCreate();
 	Task_Normal_KEY_CTLCreate();
+	Task_Joycon_KEY_CTLCreate();
 	taskEXIT_CRITICAL();
 }
 

@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F103xB</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;../FreeRTOS/include;../FreeRTOS/portable/RVDS/ARM_CM3;../SYSTEM/delay;../SYSTEM/sys;../SYSTEM/usart;../USER/application;../USER/driver;../SYSTEM;../USER/driver/FPM383;../USER/driver/AT24C64;../USER/driver/CH9329;../USER/driver/SIQ-02FVS3</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;../FreeRTOS/include;../FreeRTOS/portable/RVDS/ARM_CM3;../SYSTEM/delay;../SYSTEM/sys;../SYSTEM/usart;../USER/application;../USER/driver;../SYSTEM;../USER/driver/FPM383;../USER/driver/AT24C64;../USER/driver/CH9329;../USER/driver/SIQ-02FVS3;..\USER\driver\JOYSTICK</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -416,11 +416,6 @@
               <FileName>stm32f1xx_hal_msp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/stm32f1xx_hal_msp.c</FilePath>
-            </File>
-            <File>
-              <FileName>adc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\adc.c</FilePath>
             </File>
             <File>
               <FileName>dma.c</FileName>
@@ -647,16 +642,16 @@
               <FileType>1</FileType>
               <FilePath>..\USER\driver\W25Q128\drv_w25q128.c</FilePath>
             </File>
+            <File>
+              <FileName>drv_joystick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\USER\driver\JOYSTICK\drv_joystick.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>application</GroupName>
           <Files>
-            <File>
-              <FileName>app_task_usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\USER\application\app_task_usart.c</FilePath>
-            </File>
             <File>
               <FileName>app_task_finger.c</FileName>
               <FileType>1</FileType>
@@ -676,6 +671,11 @@
               <FileName>app_task_joystick.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\USER\application\app_task_joystick.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_task_hid_transfer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\USER\application\app_task_hid_transfer.c</FilePath>
             </File>
           </Files>
         </Group>

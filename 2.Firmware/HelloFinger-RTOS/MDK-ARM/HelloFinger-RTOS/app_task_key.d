@@ -52,9 +52,6 @@ hellofinger-rtos\app_task_key.o: ../SYSTEM/delay/delay.h
 hellofinger-rtos\app_task_key.o: ../FreeRTOS/include/semphr.h
 hellofinger-rtos\app_task_key.o: ../FreeRTOS/include/event_groups.h
 hellofinger-rtos\app_task_key.o: ../FreeRTOS/include/timers.h
-hellofinger-rtos\app_task_key.o: ../Core/Inc/adc.h
-hellofinger-rtos\app_task_key.o: ../SYSTEM/sys_config.h
-hellofinger-rtos\app_task_key.o: ../Core/Inc/dma.h
 hellofinger-rtos\app_task_key.o: ../SYSTEM/crc.h
 hellofinger-rtos\app_task_key.o: ../USER/driver/CH9329/drv_ch9329.h
 hellofinger-rtos\app_task_key.o: ../USER/driver/FPM383/drv_fpm383.h

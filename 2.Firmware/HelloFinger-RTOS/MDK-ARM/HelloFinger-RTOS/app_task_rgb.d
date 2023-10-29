@@ -52,8 +52,5 @@ hellofinger-rtos\app_task_rgb.o: ../SYSTEM/delay/delay.h
 hellofinger-rtos\app_task_rgb.o: ../FreeRTOS/include/semphr.h
 hellofinger-rtos\app_task_rgb.o: ../FreeRTOS/include/event_groups.h
 hellofinger-rtos\app_task_rgb.o: ../FreeRTOS/include/timers.h
-hellofinger-rtos\app_task_rgb.o: ../Core/Inc/adc.h
-hellofinger-rtos\app_task_rgb.o: ../SYSTEM/sys_config.h
-hellofinger-rtos\app_task_rgb.o: ../Core/Inc/dma.h
 hellofinger-rtos\app_task_rgb.o: ../SYSTEM/crc.h
 hellofinger-rtos\app_task_rgb.o: ../SYSTEM/..\USER\driver\WS2812\drv_ws2812b.h

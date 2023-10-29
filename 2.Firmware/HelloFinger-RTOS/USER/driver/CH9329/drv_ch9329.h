@@ -80,7 +80,7 @@
 
 #define CFG_STR_EN_FLAG			(0x00)
 
-#define CFG_KEY_FLAST_UPLOAD_FLAG	(0x00)
+#define CFG_KEY_FAST_UPLOAD_FLAG	(0x00)
 
 /* ¼üÅÌÖ¸Ê¾µÆ×´Ì¬ */
 #define LED_STATE_NUM_LOCK			(0x01)

@@ -52,7 +52,4 @@ hellofinger-rtos\drv_ws2812b.o: ../SYSTEM/delay/delay.h
 hellofinger-rtos\drv_ws2812b.o: ../FreeRTOS/include/semphr.h
 hellofinger-rtos\drv_ws2812b.o: ../FreeRTOS/include/event_groups.h
 hellofinger-rtos\drv_ws2812b.o: ../FreeRTOS/include/timers.h
-hellofinger-rtos\drv_ws2812b.o: ../Core/Inc/adc.h
-hellofinger-rtos\drv_ws2812b.o: ../SYSTEM/sys_config.h
-hellofinger-rtos\drv_ws2812b.o: ../Core/Inc/dma.h
 hellofinger-rtos\drv_ws2812b.o: ../SYSTEM/crc.h

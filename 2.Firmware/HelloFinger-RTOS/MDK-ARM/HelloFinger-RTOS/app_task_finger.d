@@ -52,13 +52,10 @@ hellofinger-rtos\app_task_finger.o: ../SYSTEM/delay/delay.h
 hellofinger-rtos\app_task_finger.o: ../FreeRTOS/include/semphr.h
 hellofinger-rtos\app_task_finger.o: ../FreeRTOS/include/event_groups.h
 hellofinger-rtos\app_task_finger.o: ../FreeRTOS/include/timers.h
-hellofinger-rtos\app_task_finger.o: ../Core/Inc/adc.h
-hellofinger-rtos\app_task_finger.o: ../SYSTEM/sys_config.h
-hellofinger-rtos\app_task_finger.o: ../Core/Inc/dma.h
 hellofinger-rtos\app_task_finger.o: ../SYSTEM/crc.h
 hellofinger-rtos\app_task_finger.o: ../USER/driver/FPM383/drv_fpm383.h
 hellofinger-rtos\app_task_finger.o: ../USER/driver/CH9329/drv_ch9329.h
-hellofinger-rtos\app_task_finger.o: ..\USER\application\app_task_key.h
+hellofinger-rtos\app_task_finger.o: ..\USER\application\app_task_hid_transfer.h
 hellofinger-rtos\app_task_finger.o: ../SYSTEM/..\USER\driver\W25Q128\drv_w25q128.h
 hellofinger-rtos\app_task_finger.o: ..\USER\application\app_task_rgb.h
 hellofinger-rtos\app_task_finger.o: ../SYSTEM/..\USER\driver\WS2812\drv_ws2812b.h

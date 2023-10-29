@@ -52,9 +52,6 @@ hellofinger-rtos\drv_encoder.o: ../SYSTEM/delay/delay.h
 hellofinger-rtos\drv_encoder.o: ../FreeRTOS/include/semphr.h
 hellofinger-rtos\drv_encoder.o: ../FreeRTOS/include/event_groups.h
 hellofinger-rtos\drv_encoder.o: ../FreeRTOS/include/timers.h
-hellofinger-rtos\drv_encoder.o: ../Core/Inc/adc.h
-hellofinger-rtos\drv_encoder.o: ../SYSTEM/sys_config.h
-hellofinger-rtos\drv_encoder.o: ../Core/Inc/dma.h
 hellofinger-rtos\drv_encoder.o: ../SYSTEM/crc.h
 hellofinger-rtos\drv_encoder.o: ../USER/driver/CH9329/drv_ch9329.h
 hellofinger-rtos\drv_encoder.o: ../USER/application/app_task_finger.h

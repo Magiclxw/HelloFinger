@@ -52,7 +52,4 @@ hellofinger-rtos\dma.o: ../SYSTEM/delay/delay.h
 hellofinger-rtos\dma.o: ../FreeRTOS/include/semphr.h
 hellofinger-rtos\dma.o: ../FreeRTOS/include/event_groups.h
 hellofinger-rtos\dma.o: ../FreeRTOS/include/timers.h
-hellofinger-rtos\dma.o: ../Core/Inc/adc.h
-hellofinger-rtos\dma.o: ../SYSTEM/sys_config.h
-hellofinger-rtos\dma.o: ../Core/Inc/dma.h
 hellofinger-rtos\dma.o: ../SYSTEM/crc.h

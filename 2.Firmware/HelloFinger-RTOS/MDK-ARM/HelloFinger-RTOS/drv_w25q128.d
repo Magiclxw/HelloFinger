@@ -52,7 +52,4 @@ hellofinger-rtos\drv_w25q128.o: ../SYSTEM/delay/delay.h
 hellofinger-rtos\drv_w25q128.o: ../FreeRTOS/include/semphr.h
 hellofinger-rtos\drv_w25q128.o: ../FreeRTOS/include/event_groups.h
 hellofinger-rtos\drv_w25q128.o: ../FreeRTOS/include/timers.h
-hellofinger-rtos\drv_w25q128.o: ../Core/Inc/adc.h
-hellofinger-rtos\drv_w25q128.o: ../SYSTEM/sys_config.h
-hellofinger-rtos\drv_w25q128.o: ../Core/Inc/dma.h
 hellofinger-rtos\drv_w25q128.o: ../SYSTEM/crc.h

@@ -53,11 +53,9 @@ hellofinger-rtos\stm32f1xx_it.o: ../SYSTEM/delay/delay.h
 hellofinger-rtos\stm32f1xx_it.o: ../FreeRTOS/include/semphr.h
 hellofinger-rtos\stm32f1xx_it.o: ../FreeRTOS/include/event_groups.h
 hellofinger-rtos\stm32f1xx_it.o: ../FreeRTOS/include/timers.h
-hellofinger-rtos\stm32f1xx_it.o: ../Core/Inc/adc.h
-hellofinger-rtos\stm32f1xx_it.o: ../SYSTEM/sys_config.h
-hellofinger-rtos\stm32f1xx_it.o: ../Core/Inc/dma.h
 hellofinger-rtos\stm32f1xx_it.o: ../SYSTEM/crc.h
 hellofinger-rtos\stm32f1xx_it.o: ../USER/driver/SIQ-02FVS3/drv_encoder.h
 hellofinger-rtos\stm32f1xx_it.o: ../USER/driver/CH9329/drv_ch9329.h
 hellofinger-rtos\stm32f1xx_it.o: ../USER/driver/FPM383/drv_fpm383.h
+hellofinger-rtos\stm32f1xx_it.o: ..\USER\driver\JOYSTICK\drv_joystick.h
 hellofinger-rtos\stm32f1xx_it.o: ../Core/Inc/gpio.h

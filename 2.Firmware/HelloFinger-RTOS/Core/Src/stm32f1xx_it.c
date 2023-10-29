@@ -27,6 +27,7 @@
 #include "drv_encoder.h"
 #include "drv_ch9329.h"
 #include "drv_fpm383.h"
+#include "drv_joystick.h"
 #include "gpio.h"
 /* USER CODE END Includes */
 
@@ -217,6 +218,8 @@ extern FUNC_TOUCHRECVTCB TOUCHRECVCallback;
 extern FUNC_ENCODERKEYRECVTCB ENCODERKeyRECVCallback;
 extern FUNC_ACTIONKEYRECVTCB ActionKeyRECVCallback;
 extern FUNC_NORMALKEYRECVTCB	NormalKeyRECVCallback;
+extern FUNC_JOYCONKEYRECVTCB JoyconKeyRECVCallback;
+extern FUNC_USARTRECVTCB ADCREADYCallback;
 
 extern DMA_HandleTypeDef hdma_adc1;
 
@@ -244,6 +247,10 @@ void USART2_IRQHandler(void)	//FPM383C
 	huart2.Instance->CR1 |= USART_CR1_RXNEIE;
 }
 
+void EXTI0_IRQHandler(void)
+{
+	HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_0);
+}
 
 void EXTI1_IRQHandler(void)	//编码器按键中断
 {
@@ -347,6 +354,14 @@ void TIM2_IRQHandler(void)
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	switch (GPIO_Pin){
+		case GPIO_PIN_0:
+		{
+			if(JoyconKeyRECVCallback != NULL)
+			{
+				JoyconKeyRECVCallback();
+			}
+			break;
+		}
 		case GPIO_PIN_1:	//编码器按键按下
 		{
 			//CH9329_REL_Mouse_Ctrl(0,0,0,button_RIGHT);
@@ -425,10 +440,22 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 				ActionKeyRECVCallback();
 			}
 		}
-		
-		
-		
-		
+	}
+}
+
+void ADC1_2_IRQHandler(void)
+{
+	if(__HAL_ADC_GET_FLAG(&hadc1,ADC_FLAG_AWD))
+	{
+		uint8_t move_dist_x_y[2] = {0};
+		move_dist_x_y[0] = value_X_Y[0]/50;
+		move_dist_x_y[1] = value_X_Y[1]/50;
+		//printf("x = %d y = %d\r\n",move_dist_x_y[0],move_dist_x_y[1]);
+		if(ADCREADYCallback != NULL)
+		{
+			ADCREADYCallback(move_dist_x_y,2);
+		}
+		__HAL_ADC_CLEAR_FLAG(&hadc1,ADC_FLAG_AWD);
 	}
 }
 /* USER CODE END 1 */

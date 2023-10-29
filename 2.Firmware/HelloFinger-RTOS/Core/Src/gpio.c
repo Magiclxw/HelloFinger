@@ -24,6 +24,7 @@
 /* USER CODE BEGIN 0 */
 FUNC_ACTIONKEYRECVTCB ActionKeyRECVCallback = NULL;
 FUNC_NORMALKEYRECVTCB	NormalKeyRECVCallback = NULL;
+FUNC_JOYCONKEYRECVTCB JoyconKeyRECVCallback = NULL;
 
 int RegisterActionKeyCallBack(FUNC_ACTIONKEYRECVTCB ACTIONRECVCBT)
 {
@@ -34,6 +35,12 @@ int RegisterActionKeyCallBack(FUNC_ACTIONKEYRECVTCB ACTIONRECVCBT)
 int RegisterNormalKeyCallBack(FUNC_NORMALKEYRECVTCB NORMALKEYRECVCBT)
 {
 	NormalKeyRECVCallback = NORMALKEYRECVCBT;
+	return OPERATE_SUCCESS;
+}
+
+int RegisterJoyconKeyCallBack(FUNC_JOYCONKEYRECVTCB JOYCONKEYRECVCBT)
+{
+	JoyconKeyRECVCallback = JOYCONKEYRECVCBT;
 	return OPERATE_SUCCESS;
 }
 /* USER CODE END 0 */
@@ -67,6 +74,11 @@ void MX_GPIO_Init(void)
 	gpio.Speed = GPIO_SPEED_FREQ_HIGH;
 	HAL_GPIO_Init(GPIOA,&gpio);
 	
+	gpio.Pin = MCU_GPIO_JOYCON_KEY_PIN;
+	gpio.Mode = GPIO_MODE_IT_RISING;
+	gpio.Pull = GPIO_PULLDOWN;
+	gpio.Speed = GPIO_SPEED_FREQ_HIGH;
+	HAL_GPIO_Init(GPIOA,&gpio);
 	
 	gpio.Pin = MCU_GPIO_KEY3_PIN;
 	gpio.Mode = GPIO_MODE_INPUT;
@@ -80,6 +92,8 @@ void MX_GPIO_Init(void)
 	gpio.Speed = GPIO_SPEED_FREQ_MEDIUM;
 	HAL_GPIO_Init(GPIOB,&gpio);
 	
+	HAL_NVIC_SetPriority(EXTI0_IRQn,12,0);
+	HAL_NVIC_EnableIRQ(EXTI0_IRQn);
 	
 	HAL_NVIC_SetPriority(EXTI9_5_IRQn,11,0);
 	HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);

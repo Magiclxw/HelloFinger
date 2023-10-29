@@ -4,6 +4,9 @@
 
 typedef int(*FUNC_TOUCHRECVTCB)(void);
 
+#define FIXED_CMD_LEN (9)	//固定指令包长度(包头+设备地址+包标识+包长度)
+
+
 #define	ID_CMD			0x01							//包标识（命令包）
 #define	ID_DATA1		0x02							//包标识（数据包）
 #define	ID_DATA2	  0x08							//包标识（结束包）
@@ -247,7 +250,7 @@ typedef struct _CMD_SetChipAddr_
 	volatile uint8_t TYPE;
 	volatile uint8_t LEN[2];
 	volatile uint8_t CMD;
-	volatile uint8_t DEV_ADDR[4];
+	uint8_t DEV_ADDR[4];
 	volatile uint8_t CHECKSUM[2];
 }CMD_SetChipAddr_t;
 
@@ -358,6 +361,30 @@ typedef struct _CMD_ControlBLN_PRO_
 	volatile uint8_t CYCLE_TIME;	//循环次数
 	volatile uint8_t CHECKSUM[2];
 }CMD_ControlBLN_PRO_t;
+
+typedef enum REG_NUM_
+{
+	REG_NUM_EnrollTimes = 1,
+	REG_NUM_ImageFormat,
+	REG_NUM_EnrollMode,
+	REG_NUM_Baud,
+	REG_NUM_COMP_Level,
+	REG_NUM_PackSize,
+	REG_NUM_SecureLevel,
+}REG_NUM_e;
+
+typedef struct _CMD_WriteReg_
+{
+	volatile uint8_t CMD_HEAD[2];
+	volatile uint8_t CMD_ADDR[4];
+	volatile uint8_t TYPE;
+	volatile uint8_t LEN[2];
+	volatile uint8_t CMD;
+	REG_NUM_e reg;
+	volatile uint8_t value;
+	volatile uint8_t CHECKSUM[2];
+}_CMD_WriteReg_t;
+
 
 
 int RegisterFingerTouchCallBack(FUNC_TOUCHRECVTCB TOUCHRECVCBT);

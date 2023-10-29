@@ -31,11 +31,13 @@ extern "C" {
 /* USER CODE BEGIN Includes */
 typedef int(*FUNC_ACTIONKEYRECVTCB)(void);
 typedef int(*FUNC_NORMALKEYRECVTCB)(void);
+typedef int(*FUNC_JOYCONKEYRECVTCB)(void);
 /* USER CODE END Includes */
 
 /* USER CODE BEGIN Private defines */
 
 //GPIOA
+#define MCU_GPIO_JOYCON_KEY_PIN	GPIO_PIN_0
 #define MCU_GPIO_KEY0_PIN	GPIO_PIN_11
 #define MCU_GPIO_KEY1_PIN	GPIO_PIN_8
 //GPIOB
@@ -51,6 +53,7 @@ typedef int(*FUNC_NORMALKEYRECVTCB)(void);
 void MX_GPIO_Init(void);
 int RegisterActionKeyCallBack(FUNC_ACTIONKEYRECVTCB ACTIONRECVCBT);
 int RegisterNormalKeyCallBack(FUNC_NORMALKEYRECVTCB NORMALKEYRECVCBT);
+int RegisterJoyconKeyCallBack(FUNC_JOYCONKEYRECVTCB JOYCONKEYRECVCBT);
 /* USER CODE BEGIN Prototypes */
 
 /* USER CODE END Prototypes */

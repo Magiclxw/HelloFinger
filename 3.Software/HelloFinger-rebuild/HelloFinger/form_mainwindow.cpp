@@ -146,9 +146,9 @@ Form_MainWindow::Form_MainWindow(QWidget *parent)
     ui->listWidget_hidwindow->setContextMenuPolicy(Qt::CustomContextMenu);
     this->setContextMenuPolicy(Qt::NoContextMenu);
 
-    connect(Action_Add,SIGNAL(triggered()),this,SLOT(Slot_AddFinger()));    //连接添加指纹槽函数
-    connect(Action_Delete,SIGNAL(triggered()),this,SLOT(Slot_DeleteFinger()));   //连接删除指纹槽函数
-    connect(Action_Refresh,SIGNAL(triggered()),this,SLOT(Slot_RefreshFinger()));    //连接刷新指纹列表槽函数
+    connect(Action_Add,&QAction::triggered,this,&Form_MainWindow::Slot_AddFinger);    //连接添加指纹槽函数
+    connect(Action_Delete,&QAction::triggered,this,&Form_MainWindow::Slot_DeleteFinger);   //连接删除指纹槽函数
+    connect(Action_Refresh,&QAction::triggered,this,&Form_MainWindow::Slot_RefreshFinger);    //连接刷新指纹列表槽函数
     connect(Action_unlock,&QAction::triggered,this,[=](){ui->stackedWidget->setCurrentWidget(ui->page_windows_password);ui->stackedWidget_key->setCurrentWidget(ui->page_windows_password_key);}); //修改当前显示界面
     connect(Action_shortcut,&QAction::triggered,this,[=](){ui->stackedWidget->setCurrentWidget(ui->page_shortcut);ui->stackedWidget_key->setCurrentWidget(ui->page_shortcut_key);});
     connect(Action_enterAccount_Password,&QAction::triggered,this,[=](){ui->stackedWidget->setCurrentWidget(ui->page_account_password);ui->stackedWidget_key->setCurrentWidget(ui->page_account_password_key);});    //修改当前显示界面
@@ -220,7 +220,7 @@ void Form_MainWindow::Slot_AddFinger()
     //enroll->show(); //弹出注册状态窗口
     ui->stackedWidget->setCurrentWidget(ui->page_enrollState);
     uint8_t times = 4;  //注册次数
-    uint8_t param[2] = {0x00,0x00};
+    uint8_t param[2] = {0x00,0x05};
     emit Signal_AddFinger(checkedRow,times,param[0],param[1]);
     ui->label_enroll_state->setText("放下手指");
 }

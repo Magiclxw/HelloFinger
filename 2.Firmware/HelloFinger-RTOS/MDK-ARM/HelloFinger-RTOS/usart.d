@@ -51,7 +51,4 @@ hellofinger-rtos\usart.o: ../SYSTEM/delay/delay.h
 hellofinger-rtos\usart.o: ../FreeRTOS/include/semphr.h
 hellofinger-rtos\usart.o: ../FreeRTOS/include/event_groups.h
 hellofinger-rtos\usart.o: ../FreeRTOS/include/timers.h
-hellofinger-rtos\usart.o: ../Core/Inc/adc.h
-hellofinger-rtos\usart.o: ../SYSTEM/sys_config.h
-hellofinger-rtos\usart.o: ../Core/Inc/dma.h
 hellofinger-rtos\usart.o: ../SYSTEM/crc.h

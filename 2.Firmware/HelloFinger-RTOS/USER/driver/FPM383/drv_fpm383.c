@@ -5,7 +5,6 @@ static uint16_t FPM383C_Generate_CMD_Checksum(uint8_t * cmd,uint16_t len);
 
 uint8_t CMD_HEAD[2] =	{0xEF,0x01};						//包头
 uint8_t CMD_ADDR[4] =	{0xFF,0xFF,0xFF,0xFF};	//芯片地址，默认0xffffffff
-uint8_t CMD_HEAD_ADDR[6] = {0xEF,0x01,0xFF,0xFF,0xFF,0xFF};
 
 
 /*******************指令码**********************/													/***********************指令码长度*************************/
@@ -39,7 +38,7 @@ const uint8_t 			FingerMoudleSet				=				0x0E;		/*模组设置*/     			const uint8_
 const uint8_t				GetDummyTempleteNo		=				0x68;		/*获取空白存储*/     	const uint8_t				GetDummyTempleteNoLen[2]  =       {0x00,0x03};
 const uint8_t				GetFingerMoudleVersion=				0x73;		/*获取模组固件版本*/ 	const uint8_t				GetFingerMoudleVersionLen[2]=     {0x00,0x03};
 
-
+const uint8_t				WriteReg							= 			0x0E;		/* 写系统寄存器 */		const uint8_t				WriteRegLen[2]						=				{0x00,0x03};
 const uint8_t 			GetChipSN							=				0x34;		/*获取芯片唯一序列号*/const uint8_t				GetChipSNLen[2]						=				{0x00,0x04};
 const uint8_t				HandShake							=				0x35;		/*握手指令*/					const uint8_t				HandShakeLen[2]						=				{0x00,0x03};
 const uint8_t 			CheckSensor						=				0x36;		/*校验传感器指令 */		const uint8_t 			CheckSensorLen[2]					=				{0x00,0x03};
@@ -91,13 +90,6 @@ static void FPM383C_CMD_Init(void)	//初始化包头和设备地址，后期可从EEPROM中读取
 	CMD_ADDR[1] = 0xFF;
 	CMD_ADDR[2] = 0xFF;
 	CMD_ADDR[3] = 0xFF;
-	
-	CMD_HEAD_ADDR[0] = 0xEF;
-	CMD_HEAD_ADDR[1] = 0x01;
-	CMD_HEAD_ADDR[2] = 0xFF;
-	CMD_HEAD_ADDR[3] = 0xFF;
-	CMD_HEAD_ADDR[4] = 0xFF;
-	CMD_HEAD_ADDR[5] = 0xFF;
 }
 
 static uint16_t FPM383C_Generate_CMD_Checksum(uint8_t * cmd,uint16_t len)
@@ -731,6 +723,54 @@ int Generate_ControlBLN_Program(CMD_ControlBLN_PRO_t* control_bln_pro,uint8_t ti
 	return OPERATE_SUCCESS;
 }
 
+int FPM383C_Generate_ChipAddr(CMD_SetChipAddr_t* set_chip_addr,uint32_t addr)
+{
+	uint16_t checksum=0;
+	
+	memcpy((uint8_t*)set_chip_addr->CMD_HEAD,CMD_HEAD,2);
+	
+	memcpy((uint8_t*)set_chip_addr->CMD_ADDR,CMD_ADDR,4);
+	
+	set_chip_addr->TYPE = ID_CMD;
+	
+	set_chip_addr->LEN[0] = SetChipAddrLen[0];
+	
+	set_chip_addr->LEN[1] = SetChipAddrLen[1];
+	
+	set_chip_addr->CMD = SetChipAddr;
+	
+	memcpy(set_chip_addr->DEV_ADDR,&addr,sizeof(uint32_t));
+	
+	checksum = FPM383C_Generate_CMD_Checksum((uint8_t*)&set_chip_addr->TYPE,(set_chip_addr->LEN[0]<<8|set_chip_addr->LEN[1])+CHECKNUM_EXPECT_LEN);
+	
+	set_chip_addr->CHECKSUM[0] = checksum>>8;
+	
+	set_chip_addr->CHECKSUM[1] = (uint8_t)checksum;
+	
+	return OPERATE_SUCCESS;
+}
 
-
-
+int FPM383C_Generate_WriteReg(_CMD_WriteReg_t* write_reg,REG_NUM_e reg,uint8_t value)	//写系统寄存器
+{
+	uint16_t checksum=0;
+	
+	memcpy((uint8_t*)write_reg->CMD_HEAD,CMD_HEAD,2);
+	
+	memcpy((uint8_t*)write_reg->CMD_ADDR,CMD_ADDR,4);
+	
+	write_reg->TYPE = ID_CMD;
+	
+	write_reg->LEN[0] = WriteRegLen[0];
+	
+	write_reg->LEN[1] = WriteRegLen[1];
+	
+	write_reg->CMD = WriteReg;
+	
+	checksum = FPM383C_Generate_CMD_Checksum((uint8_t*)&write_reg->TYPE,(write_reg->LEN[0]<<8|write_reg->LEN[1])+CHECKNUM_EXPECT_LEN);
+	
+	write_reg->CHECKSUM[0] = checksum>>8;
+	
+	write_reg->CHECKSUM[1] = (uint8_t)checksum;
+	
+	return OPERATE_SUCCESS;
+}

@@ -2,9 +2,12 @@
 #include "usart.h"
 #include "sys_config.h"
 #include "drv_ch9329.h"
-#include "app_task_key.h"
+#include "app_task_hid_transfer.h"
 #include "..\USER\driver\W25Q128\drv_w25q128.h"
 #include "app_task_rgb.h"
+
+extern QueueHandle_t Queue_KeyProcessing_Handle;
+extern QueueHandle_t Queue_Computer_Info_Handle;
 
 static void vTaskFingerProcessing(void);	//指纹接收数据处理任务
 static void FingerResetData(void);	//复位接受结构体
@@ -313,6 +316,7 @@ static void Finger_Func_Exec(void)
 							xEventGroupClearBits(FingerEvent_Handle,EVENT_AUTO_ENROLL);
 							/* 指纹注册成功后重新获取索引表信息发送给上位机 */
 							xEventGroupSetBits(FingerEvent_Handle,EVENT_INDEX_LIST);
+							HAL_NVIC_EnableIRQ(EXTI4_IRQn);	//指纹注册完成，开启触摸中断
 							CMD_ReadIndexTable_t	 	g_read_index_table 	= {0};	//读索引表结构体
 							Generate_ReadIndexTable(&g_read_index_table,0);
 							HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_read_index_table,g_read_index_table.LEN[0]<<8|g_read_index_table.LEN[1]+FIXED_CMD_LEN,1000);
@@ -902,7 +906,7 @@ static void Finger_Key_Function(uint16_t id,uint16_t score)
 				CH9329_Input_Ascii((char*)account,account_len);
 				vTaskDelay(10);
 				CH9329_Input_Fuc_Key(NO_CTRL,KEY_Tab);
-				vTaskDelay(10);
+				vTaskDelay(100);
 				CH9329_Input_Ascii((char*)password,password_len);
 				vTaskDelay(50);
 				CH9329_Input_Fuc_Key(NO_CTRL,KEY_LeftEnter);

@@ -36,6 +36,7 @@
 #include "adc.h"
 #include "dma.h"
 #include "app_task_joystick.h"
+#include "app_task_hid_transfer.h"
 #include "..\USER\driver\W25Q128\drv_w25q128.h"
 /* USER CODE END Includes */
 
@@ -104,13 +105,12 @@ int main(void)
   MX_USART2_UART_Init();
 	MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
-	
+	IIC_Init();
 	MX_DMA_Init();	//dma初始化要在其他使用dma外设之前
 	MX_ADC1_Init();
 	Flash_Init();
 	MX_SPI2_Init();
 	delay_init(72);
-	IIC_Init();
 	FPM383C_Init();
 	CH9329_Init();
 	delay_ms(1000);
@@ -153,6 +153,7 @@ int main(void)
 	RegisterEncoderKeyCallBack(ENCODER_KeyNotifyFromISR);
 	RegisterActionKeyCallBack(Action_KeyNotifyFromISR);
 	RegisterNormalKeyCallBack(Normal_KeyNotifyFromISR);
+	RegisterJoyconKeyCallBack(Joycon_KeyNotifyFromISR);
 	//Generate_StoreChar(0xAB,0x01);
 	Task_Create();
 	vTaskStartScheduler();

@@ -9,8 +9,6 @@
 #include "usart.h"
 #include "semphr.h"
 #include "event_groups.h"
-#include "adc.h"
-#include "dma.h"
 #include "crc.h"
 
 

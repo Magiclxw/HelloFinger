@@ -677,6 +677,11 @@
               <FileType>1</FileType>
               <FilePath>..\USER\application\app_task_hid_transfer.c</FilePath>
             </File>
+            <File>
+              <FileName>app_task_encoder.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\USER\application\app_task_encoder.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

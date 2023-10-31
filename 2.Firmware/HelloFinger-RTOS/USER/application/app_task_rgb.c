@@ -1,5 +1,8 @@
 #include "app_task_rgb.h"
 #include "task.h"
+#include "sys.h"
+
+extern SYSTEM_INIT_PARAM_t g_sys_init_param;
 
 static void vTaskRGBProcessing(void);
 TIM_HandleTypeDef rgb_timer_handler;
@@ -22,22 +25,28 @@ int Task_RGB_ProcessCreate(void)
 
 static uint32_t gs_rgb[6]; 
 	
-	__IO uint32_t rgb = 0;
-	__IO float r,g,b;
-	__IO float r_tmp,g_tmp,b_tmp;
-	__IO uint8_t dir = 0;
-	uint32_t rec_rgbi = 0;;
-	
-	__IO float R_decrease = 0;
-	__IO float G_decrease = 0;
-	__IO float B_decrease = 5;
-	__IO uint8_t interval = 30;
+__IO uint32_t rgb = 0;
+__IO float r,g,b;
+__IO float r_tmp,g_tmp,b_tmp;
+__IO uint8_t dir = 0;
+uint32_t rec_rgbi = 0;;
+
+__IO float R_decrease = 0;
+__IO float G_decrease = 0;
+__IO float B_decrease = 0;
+__IO uint8_t interval = 30;
 
 static void vTaskRGBProcessing(void)
 {
-	r = 0x00;                               /* set red */
-	g = 0x00;                                /* set green */
-	b = 0xFF; 
+	R_decrease = g_sys_init_param.rgb_param.RGB_R_decrease;
+	G_decrease = g_sys_init_param.rgb_param.RGB_G_decrease;
+	B_decrease = g_sys_init_param.rgb_param.RGB_B_decrease;
+	
+	interval = g_sys_init_param.rgb_param.RGB_interval;
+	
+	r = g_sys_init_param.rgb_param.RGB_INIT_PARAM_R;                               /* set red */
+	g = g_sys_init_param.rgb_param.RGB_INIT_PARAM_G;                                /* set green */
+	b = g_sys_init_param.rgb_param.RGB_INIT_PARAM_B; 
 	r_tmp = r;
 	g_tmp = g;
 	b_tmp = b;	/* set blue */
@@ -53,7 +62,7 @@ static void vTaskRGBProcessing(void)
 	HAL_TIM_Base_Start_IT(&rgb_timer_handler);
 	while(1)
 	{
-		BaseType_t ret = xQueueReceive(RGB_Queue_Handle,&rec_rgbi,200);
+		BaseType_t ret = xQueueReceive(RGB_Queue_Handle,&rec_rgbi,portMAX_DELAY);
 		if(ret == pdTRUE)
 		{
 			HAL_TIM_Base_Stop_IT(&rgb_timer_handler);

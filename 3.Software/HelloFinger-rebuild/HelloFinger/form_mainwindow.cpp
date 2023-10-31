@@ -26,6 +26,7 @@
 #include "hid_function.h"
 #include "interface_chat.h"
 #include <QClipboard>
+#include <QWindow>
 
 
 QColor itemValid(0,255,255);       //指纹有效颜色
@@ -86,10 +87,12 @@ Form_MainWindow::Form_MainWindow(QWidget *parent)
     this->setWindowIcon(QIcon(":/icon/main_icon.jpg"));
     this->setFixedSize(this->width(),this->height());
 
-    QFile file(":/shape/darkgray.css"); // 创建QFile对象，指定样式表文件路径
-    file.open(QFile::ReadOnly); // 打开文件，只读模式
-    QString styleSheet = QLatin1String(file.readAll()); // 读取文件内容到字符串
-    setStyleSheet(styleSheet); // 应用样式表
+    InitSysTray();
+
+//    QFile file(":/shape/darkgray.css"); // 创建QFile对象，指定样式表文件路径
+//    file.open(QFile::ReadOnly); // 打开文件，只读模式
+//    QString styleSheet = QLatin1String(file.readAll()); // 读取文件内容到字符串
+//    setStyleSheet(styleSheet); // 应用样式表
 
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 
@@ -178,8 +181,8 @@ Form_MainWindow::Form_MainWindow(QWidget *parent)
     connect(ui->pushButton_save_windows_password_key,&QPushButton::clicked,this,&Form_MainWindow::Slot_SetWindowsPassword);     //连接windows解锁功能槽函数
     connect(ui->pushButton_save_account_password_key,&QPushButton::clicked,this,&Form_MainWindow::Slot_SetAccount_Password);    //连接输入账号密码槽函数
     connect(ui->pushButton_password_key,&QPushButton::clicked,this,&Form_MainWindow::Slot_SetPassword);
-
     connect(ui->pushButton_save_rgb,&QPushButton::clicked,this,[=](){emit Signal_SetBreathRGB((uint8_t)tmp_R,(uint8_t)tmp_G,(uint8_t)tmp_B,interval);});
+    connect(ui->pushButton_save_finger_rgb,&QPushButton::clicked,this,&Form_MainWindow::Slot_SetFingerRGB);
 
     connect(this,&Form_MainWindow::Signal_UpdateHideWindowCheckedItem,hidewindow,&Form_HideWindow::Slot_UpdateCheckedItem);
     connect(hidewindowHold_timer,&QTimer::timeout,hidewindow,[=](){hidewindow->hideWindow();hidewindowHold_timer->stop();});
@@ -220,7 +223,7 @@ void Form_MainWindow::Slot_AddFinger()
     //enroll->show(); //弹出注册状态窗口
     ui->stackedWidget->setCurrentWidget(ui->page_enrollState);
     uint8_t times = 4;  //注册次数
-    uint8_t param[2] = {0x00,0x05};
+    uint8_t param[2] = {0x00,ENROLL_PARAM_CRITICAL_PROCESS_DISABLE|ENROLL_PARAM_LED_OFF};
     emit Signal_AddFinger(checkedRow,times,param[0],param[1]);
     ui->label_enroll_state->setText("放下手指");
 }
@@ -1049,6 +1052,45 @@ void Form_MainWindow::Slot_Chat_Send_Msg(void)
     chat->Chat_Send_Question(msg);
 }
 
+void Form_MainWindow::Slot_SetFingerRGB(void)
+{
+    uint8_t mode = ui->comboBox_finger_func->currentIndex()+1;
+    uint8_t startColor = 0;
+    uint8_t stopColor = 0;
+    uint8_t interval = 0;
+
+    if(ui->checkBox_start_R->checkState() == Qt::Checked)
+    {
+        startColor |= LED_COLOR_RED;
+    }
+    if(ui->checkBox_start_G->checkState() == Qt::Checked)
+    {
+        startColor |= LED_COLOR_GREEN;
+    }
+    if(ui->checkBox_start_B->checkState() == Qt::Checked)
+    {
+        startColor |= LED_COLOR_BLUE;
+    }
+
+    if(ui->checkBox_stop_R->checkState() == Qt::Checked)
+    {
+        stopColor |= LED_COLOR_RED;
+    }
+    if(ui->checkBox_stop_G->checkState() == Qt::Checked)
+    {
+        stopColor |= LED_COLOR_GREEN;
+    }
+    if(ui->checkBox_stop_B->checkState() == Qt::Checked)
+    {
+        stopColor |= LED_COLOR_BLUE;
+    }
+
+    interval = ui->spinBox_rgb_cycle->value();
+
+    emit Signal_SetFingerRGB(mode,startColor,stopColor,interval);
+
+}
+
 void Form_MainWindow::dropEvent(QDropEvent *event)           // 放下事件
 {
     uint8_t page_index = 0; //文件拖入页索引
@@ -1138,6 +1180,69 @@ void Form_MainWindow::Chat_RevMsg_Handler(QString msg)
     ui->textEdit_chat_output->append(ask);
     ui->textEdit_chat_input->clear();
     ui->textEdit_chat_output->append(answer);
+}
+
+void Form_MainWindow::InitSysTray()
+{
+    m_sysTrayIcon = new QSystemTrayIcon(this);
+
+    QIcon icon = QIcon(":/icon/main_icon.jpg");
+
+    m_sysTrayIcon->setIcon(icon);
+
+    m_sysTrayIcon->setToolTip("HelloFinger");
+
+    connect(m_sysTrayIcon,&QSystemTrayIcon::activated,[=](QSystemTrayIcon::ActivationReason reason){
+        if(reason == QSystemTrayIcon::DoubleClick)
+        {
+            this->show();
+        }
+    });
+
+    createAction();
+    createMenu();
+
+    m_sysTrayIcon->show();
+}
+
+void Form_MainWindow::createAction()
+{
+    m_shoWindow = new QAction("显示主界面",this);
+    connect(m_shoWindow,&QAction::triggered,this,&Form_MainWindow::Slot_ShowWindow);
+    m_exit = new QAction("退出",this);
+    connect(m_exit,&QAction::triggered,this,&Form_MainWindow::Slot_Exit);
+
+}
+
+void Form_MainWindow::createMenu()
+{
+    m_menu = new QMenu(this);
+    //新增菜单项---显示主界面
+    m_menu->addAction(m_shoWindow);
+    //增加分隔符
+    m_menu->addSeparator();
+    //新增菜单项---退出程序
+    m_menu->addAction(m_exit);
+    //把QMenu赋给QSystemTrayIcon对象
+    m_sysTrayIcon->setContextMenu(m_menu);
+}
+
+void Form_MainWindow::Slot_ShowWindow()
+{
+    this->show();
+}
+
+void Form_MainWindow::Slot_Exit()
+{
+    qApp->exit();
+}
+
+void Form_MainWindow::closeEvent(QCloseEvent *event)
+{
+    //忽略窗口关闭事件
+        QApplication::setQuitOnLastWindowClosed( true );
+        this->hide();
+        event->ignore();
 }
 
 Form_MainWindow::~Form_MainWindow()
@@ -1354,5 +1459,17 @@ void Form_MainWindow::on_pushButton_action_sleep_clicked()
 void Form_MainWindow::on_pushButton_action_weakup_clicked()
 {
     emit Signal_SetActionFunc(ACTION_FUNC_POWER,POWER_KEY_TYPE_KEY_WAKE_UP);
+}
+
+
+void Form_MainWindow::on_pushButton_RGB_next_page_clicked()
+{
+    ui->stackedWidget_RGB->setCurrentWidget(ui->page_finger_rgb);
+}
+
+
+void Form_MainWindow::on_pushButton_RGB_last_page_clicked()
+{
+    ui->stackedWidget_RGB->setCurrentWidget(ui->page_rgb);
 }
 

@@ -68,6 +68,12 @@ void MX_GPIO_Init(void)
 	__HAL_RCC_GPIOC_CLK_ENABLE();
 	__HAL_RCC_GPIOD_CLK_ENABLE();
 	
+	gpio.Pin = MCU_GPIO_TOUCH_PIN;
+	gpio.Mode = GPIO_MODE_IT_RISING;
+	gpio.Pull = GPIO_PULLDOWN;
+	gpio.Speed = GPIO_SPEED_FREQ_HIGH;
+	HAL_GPIO_Init(GPIOA,&gpio);
+	
 	gpio.Pin = MCU_GPIO_KEY0_PIN|MCU_GPIO_KEY1_PIN;
 	gpio.Mode = GPIO_MODE_IT_RISING_FALLING;
 	gpio.Pull = GPIO_PULLUP;
@@ -94,6 +100,9 @@ void MX_GPIO_Init(void)
 	
 	HAL_NVIC_SetPriority(EXTI0_IRQn,12,0);
 	HAL_NVIC_EnableIRQ(EXTI0_IRQn);
+	
+	HAL_NVIC_SetPriority(EXTI4_IRQn,6,0);
+	HAL_NVIC_EnableIRQ(EXTI4_IRQn);
 	
 	HAL_NVIC_SetPriority(EXTI9_5_IRQn,11,0);
 	HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);

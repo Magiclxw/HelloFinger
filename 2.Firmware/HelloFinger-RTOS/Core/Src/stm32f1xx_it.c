@@ -220,6 +220,7 @@ extern FUNC_ACTIONKEYRECVTCB ActionKeyRECVCallback;
 extern FUNC_NORMALKEYRECVTCB	NormalKeyRECVCallback;
 extern FUNC_JOYCONKEYRECVTCB JoyconKeyRECVCallback;
 extern FUNC_USARTRECVTCB ADCREADYCallback;
+extern FUNC_ENCODERRECVTCB	ENCODERRECVCallback;
 
 extern DMA_HandleTypeDef hdma_adc1;
 
@@ -354,7 +355,7 @@ void TIM2_IRQHandler(void)
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	switch (GPIO_Pin){
-		case GPIO_PIN_0:
+		case MCU_GPIO_JOYCON_KEY_PIN:
 		{
 			if(JoyconKeyRECVCallback != NULL)
 			{
@@ -362,7 +363,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 			}
 			break;
 		}
-		case GPIO_PIN_1:	//编码器按键按下
+		case MCU_GPIO_ENCODER_KEY_PIN:	//编码器按键按下
 		{
 			//CH9329_REL_Mouse_Ctrl(0,0,0,button_RIGHT);
 			//Delay_ms(20);
@@ -397,7 +398,11 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 			if(Signal_A_Read == GPIO_PIN_SET && Signal_B_Read == GPIO_PIN_RESET && signal_a == 0){
 				signal_a = 1;
 			}else if(Signal_A_Read == GPIO_PIN_RESET && Signal_B_Read == GPIO_PIN_SET && signal_a == 1){
-				CH9329_REL_Mouse_Ctrl(0x01,0,0,button_NULL);
+				if(ENCODERRECVCallback != NULL)
+				{
+					
+					ENCODERRECVCallback(0);
+				}
 				signal_a = 0;
 			}else{
 				signal_a = 0;
@@ -410,7 +415,11 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 			if(Signal_B_Read == GPIO_PIN_SET && Signal_A_Read == GPIO_PIN_RESET && signal_b == 0){
 				signal_b = 1;
 			}else if(Signal_B_Read == GPIO_PIN_RESET && Signal_A_Read == GPIO_PIN_SET && signal_b == 1){
-				CH9329_REL_Mouse_Ctrl(0xFF,0,0,button_NULL);
+				if(ENCODERRECVCallback != NULL)
+				{
+					
+					ENCODERRECVCallback(1);
+				}
 				signal_b = 0;
 			}else{
 				signal_b = 0;

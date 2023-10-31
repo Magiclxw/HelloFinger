@@ -1,6 +1,9 @@
 #include "drv_ch9329.h"
+#include "gpio.h"
 
 static int CH9329_Data_Format_Init(void);
+
+extern SYSTEM_INIT_PARAM_t g_sys_init_param;
 
 CMD_FORMAT_t g_cmd_format = {0};
 CMD_GENERAL_KEY_DATA_t g_general_key = {0};
@@ -261,19 +264,19 @@ int CH9329_Init(void)		//CH9329引脚初始化
 	__HAL_RCC_GPIOB_CLK_ENABLE();
 	
 	/* 复位引脚默认低电平 */
-	HAL_GPIO_WritePin(GPIOA,GPIO_PIN_12,GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_5,GPIO_PIN_RESET);		//SET脚默认低电平
+	HAL_GPIO_WritePin(GPIOA,MCU_GPIO_CH9329_RESET_PIN,GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOB,MCU_GPIO_CH9329_SET_PIN,GPIO_PIN_RESET);		//SET脚默认低电平
 	
 	/* 复位引脚配置 */
 	gpio.Mode=GPIO_MODE_OUTPUT_PP;
-	gpio.Pin=GPIO_PIN_12;
+	gpio.Pin=MCU_GPIO_CH9329_RESET_PIN;
 	gpio.Pull=GPIO_PULLDOWN;
 	gpio.Speed=GPIO_SPEED_FREQ_HIGH;
 	HAL_GPIO_Init(GPIOA,&gpio);
 	
 	/* SET脚配置 */
 	gpio.Mode=GPIO_MODE_OUTPUT_PP;
-	gpio.Pin=GPIO_PIN_5;
+	gpio.Pin=MCU_GPIO_CH9329_SET_PIN;
 	gpio.Pull=GPIO_PULLDOWN;
 	gpio.Speed=GPIO_SPEED_FREQ_HIGH;
 	HAL_GPIO_Init(GPIOB,&gpio);
@@ -294,7 +297,7 @@ static int CH9329_Data_Format_Init(void)
 {
 	g_cmd_format.head1 = 0x57;
 	g_cmd_format.head2 = 0xAB;
-	g_cmd_format.addr = 0x00;
+	g_cmd_format.addr = g_sys_init_param.ch9329_param.CH9329_ADDR;
 	g_general_key.null = 0x00;
 	g_media_key.report_id = 0x02;
 	g_power_key.report_id = 0x01;

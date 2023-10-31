@@ -4,6 +4,9 @@
 
 typedef int(*FUNC_TOUCHRECVTCB)(void);
 
+#define FPM383C_DEFAULT_ADDR	0xFFFFFFFFLU
+#define FPM383C_DEFAULT_PASSWORD	0x00000000U
+
 #define FIXED_CMD_LEN (9)	//固定指令包长度(包头+设备地址+包标识+包长度)
 
 
@@ -95,9 +98,12 @@ typedef int(*FUNC_TOUCHRECVTCB)(void);
 #define 					MatchSize											12
 /****************************************************************************/
 
-#define 					LED_COLOR_BLUE							0x01
-#define 					LED_COLOR_GREEN							0x02
-#define 					LED_COLOR_RED								0x04
+typedef enum LED_COLOR_
+{
+	LED_COLOR_BLUE = 0x01,
+	LED_COLOR_GREEN = 0x02,
+	LED_COLOR_RED = 0x04
+}LED_COLOR_e;
 
 #define AUTOENROLL_PARAM_BACKLIGHT_ON				0x0000
 #define AUTOENROLL_PARAM_BACKLIGHT_OFF			0x0001
@@ -287,6 +293,16 @@ typedef struct _CMD_GetImage_
 	volatile uint8_t CHECKSUM[2];
 }CMD_GetImage_t;
 
+typedef struct _CMD_EnrollGetImage_
+{
+	volatile uint8_t CMD_HEAD[2];
+	volatile uint8_t CMD_ADDR[4];
+	volatile uint8_t TYPE;
+	volatile uint8_t LEN[2];
+	volatile uint8_t CMD;
+	volatile uint8_t CHECKSUM[2];
+}_CMD_EnrollGetImage_t;
+
 typedef struct _CMD_GenChar_
 {
 	volatile uint8_t CMD_HEAD[2];
@@ -389,13 +405,13 @@ typedef struct _CMD_WriteReg_
 
 int RegisterFingerTouchCallBack(FUNC_TOUCHRECVTCB TOUCHRECVCBT);
 int FPM383C_Init(void);
-int Generate_AutoEnroll(CMD_AutoEnroll_t* autoenroll,uint16_t ID,uint8_t enrollTimes,uint16_t PARAM);
-int Generate_AutoIdentify(CMD_AutoIdentify_t *autoidentify,uint8_t secureleval,uint16_t ID,uint16_t PARAM);
-int Generate_StoreChar(CMD_StoreChar_t* store_char,uint8_t BufferID,uint16_t PageID);
-int Generate_Sleep(CMD_Sleep_t* sleep);
-int Generate_Cancel(CMD_Cancel_t *cancel);
-int Generate_ReadIndexTable(CMD_ReadIndexTable_t* read_index_table,uint8_t page);
-int Generate_DeletChar(CMD_DeleteChar_t *deletechar,uint16_t PageID,uint16_t number);
-int Generate_ControlBLN(CMD_ControlBLN_t* control_bln,_LED_Function_t func,uint8_t startColor,uint8_t endColor,uint8_t cycle);
-int Generate_ControlBLN_Program(CMD_ControlBLN_PRO_t* control_bln_pro,uint8_t time,uint8_t color_1,uint8_t color_2,uint8_t color_3,uint8_t color_4,uint8_t color_5,uint8_t cycle);
+int Generate_AutoEnroll(uint16_t ID,uint8_t enrollTimes,uint16_t PARAM);
+int Generate_AutoIdentify(uint8_t secureleval,uint16_t ID,uint16_t PARAM);
+int Generate_StoreChar(uint8_t BufferID,uint16_t PageID);
+int Generate_Sleep(void);
+int Generate_Cancel(void);
+int Generate_ReadIndexTable(uint8_t page);
+int Generate_DeletChar(uint16_t PageID,uint16_t number);
+int Generate_ControlBLN(_LED_Function_t func,uint8_t startColor,uint8_t endColor,uint8_t cycle);
+int Generate_ControlBLN_Program(uint8_t time,uint8_t color_1,uint8_t color_2,uint8_t color_3,uint8_t color_4,uint8_t color_5,uint8_t cycle);
 #endif

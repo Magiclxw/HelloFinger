@@ -76,6 +76,20 @@ typedef enum {
     FINGER_KEY
 }Finger_Type_e ;
 
+typedef enum LED_COLOR_
+{
+    LED_COLOR_BLUE = 0x01,
+    LED_COLOR_GREEN = 0x02,
+    LED_COLOR_RED = 0x04
+}LED_COLOR_e;
+
+
+#define ENROLL_PARAM_LED_OFF  0x01
+#define ENROLL_PARAM_PRETREATMENT_ENABLE 0x02
+#define ENROLL_PARAM_CRITICAL_PROCESS_DISABLE 0x04
+#define ENROLL_PARAM_COVER_ID_ENABLE   0x08
+#define ENROLL_PARAM_REENROLL_DISABLE 0x01
+#define ENROLL_PARAM_FINGER_LEAVE_ENABLE 0x02
 
 
 class Hid_Function : public QObject
@@ -97,6 +111,7 @@ int HID_Send_Account_Password(hid_device *usb_handle,Finger_Type_e fingertype,QS
 int HID_Send_Shortcut(hid_device *usb_handle,Finger_Type_e fingertype,uint8_t func,char* key,uint8_t key_len,uint8_t index);
 int HID_Send_QuickStart(hid_device *usb_handle,Finger_Type_e fingertype,QUICK_START_e startID,uint8_t index);
 int HID_Send_Breath_RGB(hid_device *usb_handle,uint8_t color_R,uint8_t color_G,uint8_t color_B,uint8_t interval);
+int HID_Send_Finger_RGB(hid_device *usb_handle,uint8_t mode,uint8_t startColor,uint8_t stopColor,uint8_t cycle);
 int HID_Get_FW_HW_Msg(hid_device *usb_handle);
 int HID_Set_Action_Func(hid_device *usb_handle, uint8_t func,uint8_t action);
 #endif // HID_FUNCTION_H

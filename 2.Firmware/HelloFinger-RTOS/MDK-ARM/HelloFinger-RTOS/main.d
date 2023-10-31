@@ -66,3 +66,4 @@ hellofinger-rtos\main.o: ../Core/Inc/dma.h
 hellofinger-rtos\main.o: ../USER/application/app_task_joystick.h
 hellofinger-rtos\main.o: ../USER/application/app_task_hid_transfer.h
 hellofinger-rtos\main.o: ../SYSTEM/..\USER\driver\W25Q128\drv_w25q128.h
+hellofinger-rtos\main.o: ../USER/application/app_task_encoder.h

@@ -59,3 +59,4 @@ hellofinger-rtos\app_task_finger.o: ..\USER\application\app_task_hid_transfer.h
 hellofinger-rtos\app_task_finger.o: ../SYSTEM/..\USER\driver\W25Q128\drv_w25q128.h
 hellofinger-rtos\app_task_finger.o: ..\USER\application\app_task_rgb.h
 hellofinger-rtos\app_task_finger.o: ../SYSTEM/..\USER\driver\WS2812\drv_ws2812b.h
+hellofinger-rtos\app_task_finger.o: ../Core/Inc/gpio.h

@@ -66,6 +66,10 @@ Interface::Interface(QObject *parent) : QThread(parent)
         HID_Set_Action_Func(usb_handle,func,action);
     });
 
+    connect(mainwindow,&Form_MainWindow::Signal_SetFingerRGB,this,[=](uint8_t mode,uint8_t startColor,uint8_t stopColor,uint8_t interval){
+        HID_Send_Finger_RGB(usb_handle,mode,startColor,stopColor,interval);
+    });
+
 }
 
 void Interface::run()

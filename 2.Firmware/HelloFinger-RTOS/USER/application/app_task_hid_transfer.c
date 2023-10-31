@@ -5,9 +5,11 @@
 #include "..\USER\driver\W25Q128\drv_w25q128.h"
 #include "app_task_finger.h"
 #include "app_task_rgb.h"
+#include "sys.h"
 
 extern QueueHandle_t RGB_Queue_Handle;
 extern QueueHandle_t Queue_Computer_Info_Handle;
+extern SYSTEM_INIT_PARAM_t g_sys_init_param;
 
 static void vTaskKeyProcessing(void);
 int Key_Protocol_Mode_RecData_Handle(uint8_t data);
@@ -55,7 +57,6 @@ static uint8_t store_msg[100] = {0};
 static void vTaskKeyProcessing(void)
 {
 	uint8_t rec_data = 0;
-	CMD_ControlBLN_t g_control_bln = {0};
 	KeyResetData();
 	Queue_KeyProcessing_Handle = xQueueCreate((UBaseType_t)KEY_DATA_HANDLE_QUEUE_LEN,(UBaseType_t)KEY_DATA_HANDLE_QUEUE_SIZE);
 	Queue_Computer_Info_Handle = xQueueCreate((UBaseType_t)COMPUTER_INFO_QUEUE_LEN,(UBaseType_t)COMPUTER_INFO_QUEUE_SIZE);
@@ -68,12 +69,12 @@ static void vTaskKeyProcessing(void)
 	//Generate_ReadIndexTable(0);
 	//HAL_UART_Transmit(&huart2,(uint8_t*)&g_read_index_table,g_read_index_table.LEN[0]<<8|g_read_index_table.LEN[1]+FIXED_CMD_LEN,1000);
 	//taskEXIT_CRITICAL();
-	_LED_Function_t func = LED_FUNC_BREATHE;
-	uint8_t start_color = LED_COLOR_RED|LED_COLOR_GREEN;
-	uint8_t end_color = LED_COLOR_RED|LED_COLOR_GREEN;
-	uint8_t cycle_time = 0;
-	Generate_ControlBLN(&g_control_bln,func,start_color,end_color,cycle_time);
-	HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_control_bln,g_control_bln.LEN[0]<<8|g_control_bln.LEN[1]+FIXED_CMD_LEN,1000);
+	_LED_Function_t func = g_sys_init_param.fp383_param.FPM383_RGB_func;
+	uint8_t start_color = g_sys_init_param.fp383_param.FPM383_RGB_startColor;
+	uint8_t end_color = g_sys_init_param.fp383_param.FPM383_RGB_stopColor;
+	uint8_t cycle_time = g_sys_init_param.fp383_param.FPM383_RGB_cycle;
+	Generate_ControlBLN(func,start_color,end_color,cycle_time);
+	
 	CH9329_Get_Info();
 	//RGB_Effect(255,0,0,500,2);
 	//CH9329_Input_Media_Key(3);
@@ -303,9 +304,7 @@ int HID_Data_Handle(void)
 			 }
 			 case USB_PROTOCOL_FORMAT_GET_INDEX_LIST:	//获取索引表状态
 			 {
-				 CMD_ReadIndexTable_t	 	g_read_index_table 	= {0};	//读索引表结构体
-				 Generate_ReadIndexTable(&g_read_index_table,0);
-				 HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_read_index_table,g_read_index_table.LEN[0]<<8|g_read_index_table.LEN[1]+FIXED_CMD_LEN,1000);
+				 Generate_ReadIndexTable(0);
 				 xEventGroupSetBits((EventGroupHandle_t)FingerEvent_Handle,(EventBits_t)EVENT_INDEX_LIST);
 				 break;
 			 }
@@ -314,9 +313,7 @@ int HID_Data_Handle(void)
 				 uint16_t id = g_key_data_format.data[5]<<8|g_key_data_format.data[6];
 				 uint8_t enroll_times = g_key_data_format.data[7];
 				 uint16_t param = g_key_data_format.data[8]<<8|g_key_data_format.data[9];
-				 CMD_AutoEnroll_t 				g_autoenroll 				= {0};	//自动注册模板结构体
-				 Generate_AutoEnroll(&g_autoenroll,id,enroll_times,param);
-				 HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_autoenroll,g_autoenroll.LEN[0]<<8|g_autoenroll.LEN[1]+FIXED_CMD_LEN,1000);
+				 Generate_AutoEnroll(id,enroll_times,param);
 				 HAL_NVIC_DisableIRQ(EXTI4_IRQn);	//开始注册流程，禁用触摸中断
 				 xEventGroupSetBits((EventGroupHandle_t)FingerEvent_Handle,(EventBits_t)EVENT_AUTO_ENROLL);
 				 break;
@@ -325,9 +322,7 @@ int HID_Data_Handle(void)
 			 {
 				 uint16_t id = g_key_data_format.data[5]<<8|g_key_data_format.data[6];
 				 uint16_t num = g_key_data_format.data[7]<<8|g_key_data_format.data[8];
-				 CMD_DeleteChar_t 				g_deletechar 				= {0};	//删除模板结构体
-				 Generate_DeletChar(&g_deletechar,id,num);
-				 HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_deletechar,g_deletechar.LEN[0]<<8|g_deletechar.LEN[1]+FIXED_CMD_LEN,1000);
+				 Generate_DeletChar(id,num);
 				 xEventGroupSetBits((EventGroupHandle_t)FingerEvent_Handle,(EventBits_t)EVENT_DELETE_CHAR);
 				 break;
 			 }
@@ -337,9 +332,7 @@ int HID_Data_Handle(void)
 				 uint8_t start_color = g_key_data_format.data[6];
 				 uint8_t end_color = g_key_data_format.data[7];
 				 uint8_t cycle_time = g_key_data_format.data[8];
-				 CMD_ControlBLN_t g_control_bln = {0};
-				 Generate_ControlBLN(&g_control_bln,(_LED_Function_t)func,start_color,end_color,cycle_time);
-				 HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_control_bln,g_control_bln.LEN[0]<<8|g_control_bln.LEN[1]+FIXED_CMD_LEN,1000);
+				 Generate_ControlBLN((_LED_Function_t)func,start_color,end_color,cycle_time);
 				 break;
 			 }
 			 case USB_PROTOCOL_FORMAT_SET_FINGER_COLOR_PRO:
@@ -351,9 +344,7 @@ int HID_Data_Handle(void)
 				 uint8_t color4 = g_key_data_format.data[9];
 				 uint8_t color5 = g_key_data_format.data[10];
 				 uint8_t cycle = g_key_data_format.data[11];
-				 CMD_ControlBLN_PRO_t g_control_bln_pro = {0};
-				 Generate_ControlBLN_Program(&g_control_bln_pro,time,color1,color2,color3,color4,color5,cycle);
-				 HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_control_bln_pro,g_control_bln_pro.LEN[0]<<8|g_control_bln_pro.LEN[1]+FIXED_CMD_LEN,1000);
+				 Generate_ControlBLN_Program(time,color1,color2,color3,color4,color5,cycle);
 				 break;
 			 }
 			 case USB_PROTOCOL_FORMAT_FUNC_STORE:	//存储指纹验证成功执行功能

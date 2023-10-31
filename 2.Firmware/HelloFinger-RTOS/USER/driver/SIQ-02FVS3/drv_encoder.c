@@ -1,17 +1,23 @@
 #include "drv_encoder.h"
 #include "drv_ch9329.h"
-#include "app_task_finger.h"
-#include "drv_fpm383.h"
-#include "app_task_key.h"
+#include "gpio.h"
+
 
 __IO uint8_t signal_a = 0;
 __IO uint8_t signal_b = 0;
 
-FUNC_ENCODERKEYRECVTCB ENCODERKeyRECVCallback = NULL;
+FUNC_ENCODERKEYRECVTCB ENCODERKeyRECVCallback = NULL;	//编码器按键回调函数
+FUNC_ENCODERRECVTCB	ENCODERRECVCallback = NULL;	//编码器触发回调函数
 
 int RegisterEncoderKeyCallBack(FUNC_ENCODERKEYRECVTCB ENCODERRECVCBT)
 {
 	ENCODERKeyRECVCallback = ENCODERRECVCBT;
+	return OPERATE_SUCCESS;
+}
+
+int RegisterEncoderCallBack(FUNC_ENCODERRECVTCB ENCODERRECVCBT)
+{
+	ENCODERRECVCallback = ENCODERRECVCBT;
 	return OPERATE_SUCCESS;
 }
 
@@ -22,13 +28,13 @@ int ENCODER_Init(void)
 	__HAL_RCC_GPIOB_CLK_ENABLE();
 	
 	gpio.Mode=GPIO_MODE_IT_RISING_FALLING;
-	gpio.Pin=GPIO_PIN_6|GPIO_PIN_7;
+	gpio.Pin=MCU_GPIO_ENCODER_SIGNAL_A|MCU_GPIO_ENCODER_SIGNAL_B;
 	gpio.Pull=GPIO_PULLUP;
 	gpio.Speed=GPIO_SPEED_FREQ_HIGH;
 	HAL_GPIO_Init(GPIOB,&gpio);
 	
 	gpio.Mode = GPIO_MODE_IT_RISING;	//编码器按键
-	gpio.Pin = GPIO_PIN_1;
+	gpio.Pin = MCU_GPIO_ENCODER_KEY_PIN;
 	gpio.Pull = GPIO_PULLDOWN;
 	gpio.Speed = GPIO_SPEED_FREQ_HIGH;
 	HAL_GPIO_Init(GPIOA,&gpio);

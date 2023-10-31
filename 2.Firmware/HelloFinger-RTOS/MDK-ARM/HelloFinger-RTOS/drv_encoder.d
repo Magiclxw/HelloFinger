@@ -54,6 +54,4 @@ hellofinger-rtos\drv_encoder.o: ../FreeRTOS/include/event_groups.h
 hellofinger-rtos\drv_encoder.o: ../FreeRTOS/include/timers.h
 hellofinger-rtos\drv_encoder.o: ../SYSTEM/crc.h
 hellofinger-rtos\drv_encoder.o: ../USER/driver/CH9329/drv_ch9329.h
-hellofinger-rtos\drv_encoder.o: ../USER/application/app_task_finger.h
-hellofinger-rtos\drv_encoder.o: ../USER/driver/FPM383/drv_fpm383.h
-hellofinger-rtos\drv_encoder.o: ../USER/application/app_task_key.h
+hellofinger-rtos\drv_encoder.o: ../Core/Inc/gpio.h

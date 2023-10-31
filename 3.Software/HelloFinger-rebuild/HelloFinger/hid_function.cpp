@@ -343,6 +343,28 @@ int HID_Send_Breath_RGB(hid_device *usb_handle,uint8_t color_R,uint8_t color_G,u
     return OPERATE_SUCCESS;
 }
 
+int HID_Send_Finger_RGB(hid_device *usb_handle,uint8_t mode,uint8_t startColor,uint8_t stopColor,uint8_t cycle)
+{
+    if(usb_handle == NULL)
+    {
+        return OPERATE_ERROR_INVALID_PARAMETERS;
+    }
+    uint8_t flag = USB_PROTOCOL_FORMAT_SET_FINGER_COLOR;
+    uint8_t *cmd_pack = new uint8_t[7];
+    cmd_pack[0] = flag;
+    cmd_pack[1] = 0x00;
+    cmd_pack[2] = 0x00;
+    cmd_pack[3] = mode;
+    cmd_pack[4] = startColor;
+    cmd_pack[5] = stopColor;
+    cmd_pack[6] = cycle;
+    GenerateCmd(cmd_pack,7);
+    delete [] cmd_pack;
+    hid_write(usb_handle,hid_command,7+HID_FIXED_LEN);
+
+    return OPERATE_SUCCESS;
+}
+
 /* 获取硬件、固件信息 */
 int HID_Get_FW_HW_Msg(hid_device *usb_handle)
 {

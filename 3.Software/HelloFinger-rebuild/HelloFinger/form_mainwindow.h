@@ -2,6 +2,7 @@
 #define FORM_MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSystemTrayIcon>
 #include "msg_handler.h"
 #include "hid_function.h"
 
@@ -35,10 +36,19 @@ public:
     void Chat_RevMsg_Handler(QString msg);
 private:
     Ui::Form_MainWindow *ui;
+    QSystemTrayIcon *m_sysTrayIcon;
+
+    void InitSysTray();
+    QMenu *m_menu;
+    QAction *m_shoWindow;
+    QAction *m_exit;
+    void createAction();
+    void createMenu();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
     void dropEvent(QDropEvent *event);
+    void closeEvent (QCloseEvent *event) override;
 
 public slots:
     void Slot_AddFinger(void);
@@ -57,6 +67,7 @@ public slots:
     void Slot_SetShortcut(void);
     void Slot_DeleteListWidgetItem(void);
     void Slot_Chat_Send_Msg(void);
+    void Slot_SetFingerRGB(void);
 signals:
     void Signal_AddFinger(uint8_t pos,uint8_t times,uint8_t param1,uint8_t param2);
     void Signal_DeleteFinger(uint8_t id);
@@ -70,7 +81,10 @@ signals:
     void Signal_SetShortcut(uint8_t fingertype,uint8_t func,char* key,uint8_t key_len,uint8_t index);
     void Signal_UpdateHideWindowCheckedItem(int dir);
     void Signal_SetActionFunc(uint8_t func ,uint8_t action);
+    void Signal_SetFingerRGB(uint8_t mode,uint8_t startColor,uint8_t stopColor,uint8_t interval);
 private slots:
+    void Slot_ShowWindow();
+    void Slot_Exit();
     void on_listWidget_task_1_customContextMenuRequested(const QPoint &pos);
     void on_listWidget_table_state_customContextMenuRequested(const QPoint &pos);
     void on_listWidget_task_2_customContextMenuRequested(const QPoint &pos);
@@ -92,5 +106,8 @@ private slots:
     void on_pushButton_action_screen_save_clicked();
     void on_pushButton_action_sleep_clicked();
     void on_pushButton_action_weakup_clicked();
+    void on_pushButton_RGB_next_page_clicked();
+
+    void on_pushButton_RGB_last_page_clicked();
 };
 #endif // FORM_MAINWINDOW_H

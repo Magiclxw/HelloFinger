@@ -49,6 +49,7 @@
 "hellofinger-rtos\app_task_rgb.o"
 "hellofinger-rtos\app_task_joystick.o"
 "hellofinger-rtos\app_task_hid_transfer.o"
+"hellofinger-rtos\app_task_encoder.o"
 --library_type=microlib --strict --scatter "HelloFinger-RTOS\HelloFinger-RTOS.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

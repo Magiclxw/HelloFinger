@@ -32,7 +32,7 @@ hellofinger-rtos\sys.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h
 hellofinger-rtos\sys.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 hellofinger-rtos\sys.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 hellofinger-rtos\sys.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
-hellofinger-rtos\sys.o: ../USER/application/app_task_key.h
+hellofinger-rtos\sys.o: ../USER/driver/CH9329/drv_ch9329.h
 hellofinger-rtos\sys.o: ../SYSTEM/sys_config.h
 hellofinger-rtos\sys.o: E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin\..\include\string.h
 hellofinger-rtos\sys.o: ../FreeRTOS/include/FreeRTOS.h
@@ -53,10 +53,12 @@ hellofinger-rtos\sys.o: ../FreeRTOS/include/semphr.h
 hellofinger-rtos\sys.o: ../FreeRTOS/include/event_groups.h
 hellofinger-rtos\sys.o: ../FreeRTOS/include/timers.h
 hellofinger-rtos\sys.o: ../SYSTEM/crc.h
-hellofinger-rtos\sys.o: ../USER/driver/CH9329/drv_ch9329.h
-hellofinger-rtos\sys.o: ../USER/application/app_task_finger.h
 hellofinger-rtos\sys.o: ../USER/driver/FPM383/drv_fpm383.h
+hellofinger-rtos\sys.o: ..\USER\driver\JOYSTICK\drv_joystick.h
+hellofinger-rtos\sys.o: ../USER/application/app_task_key.h
+hellofinger-rtos\sys.o: ../USER/application/app_task_finger.h
 hellofinger-rtos\sys.o: ../USER/application/app_task_rgb.h
 hellofinger-rtos\sys.o: ../SYSTEM/..\USER\driver\WS2812\drv_ws2812b.h
 hellofinger-rtos\sys.o: ../USER/application/app_task_joystick.h
 hellofinger-rtos\sys.o: ../USER/application/app_task_hid_transfer.h
+hellofinger-rtos\sys.o: ../USER/application/app_task_encoder.h

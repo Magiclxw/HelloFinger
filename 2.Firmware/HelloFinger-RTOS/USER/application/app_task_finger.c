@@ -5,6 +5,7 @@
 #include "app_task_hid_transfer.h"
 #include "..\USER\driver\W25Q128\drv_w25q128.h"
 #include "app_task_rgb.h"
+#include "gpio.h"
 
 extern QueueHandle_t Queue_KeyProcessing_Handle;
 extern QueueHandle_t Queue_Computer_Info_Handle;
@@ -40,9 +41,8 @@ int Finger_GiveNotifyFromISR(uint8_t *recData,uint8_t dataSize)
 
 int Finger_TouchNotifyFromISR(void)
 {
-	CMD_AutoIdentify_t 			g_autoidentify 			= {0};	//自动验证指纹结构体
-	Generate_AutoIdentify(&g_autoidentify,0x03,0xFFFF,0x0007);
-	HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_autoidentify,g_autoidentify.LEN[0]<<8|g_autoidentify.LEN[1]+9,1000);
+	Generate_AutoIdentify(0x03,0xFFFF,0x0007);
+	
 	portBASE_TYPE xHigherPriorityTaskWoken = pdTRUE;
 	if(FingerEvent_Handle != NULL)
 	{
@@ -66,8 +66,6 @@ int Task_Finger_DataCTLCreate(void)
 static void vTaskFingerProcessing(void)
 {
 	uint8_t rec_data = 0 ;
-	CMD_Sleep_t							g_sleep							= {0};	//休眠指令结构体
-	
 	FingerResetData();
 	Queue_FingerProcessing_Handle = xQueueCreate((UBaseType_t)FINGER_DATA_HANDLE_QUEUE_LEN,(UBaseType_t)FINGER_DATA_HANDLE_QUEUE_SIZE);
 	FingerEvent_Handle = xEventGroupCreate();	//初始化事件标志组
@@ -81,10 +79,9 @@ static void vTaskFingerProcessing(void)
 		else
 		{
 			FingerResetData();
-			if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_4) == GPIO_PIN_SET)
+			if(HAL_GPIO_ReadPin(GPIOA,MCU_GPIO_TOUCH_PIN) == GPIO_PIN_SET)
 			{
-				Generate_Sleep(&g_sleep);
-				HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_sleep,g_sleep.LEN[0]<<8|g_sleep.LEN[1]+FIXED_CMD_LEN,1000);
+				Generate_Sleep();
 			}
 		}
 		
@@ -317,9 +314,7 @@ static void Finger_Func_Exec(void)
 							/* 指纹注册成功后重新获取索引表信息发送给上位机 */
 							xEventGroupSetBits(FingerEvent_Handle,EVENT_INDEX_LIST);
 							HAL_NVIC_EnableIRQ(EXTI4_IRQn);	//指纹注册完成，开启触摸中断
-							CMD_ReadIndexTable_t	 	g_read_index_table 	= {0};	//读索引表结构体
-							Generate_ReadIndexTable(&g_read_index_table,0);
-							HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_read_index_table,g_read_index_table.LEN[0]<<8|g_read_index_table.LEN[1]+FIXED_CMD_LEN,1000);
+							Generate_ReadIndexTable(0);
 						}
 					}
 					if(event_status & EVENT_DELETE_CHAR)
@@ -333,9 +328,7 @@ static void Finger_Func_Exec(void)
 						xEventGroupClearBits(FingerEvent_Handle,EVENT_DELETE_CHAR);
 						/* 删除指纹完成后重新获取索引表信息发送给上位机 */
 						xEventGroupSetBits(FingerEvent_Handle,EVENT_INDEX_LIST);
-						CMD_ReadIndexTable_t	 	g_read_index_table 	= {0};	//读索引表结构体
-						Generate_ReadIndexTable(&g_read_index_table,0);
-						HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_read_index_table,g_read_index_table.LEN[0]<<8|g_read_index_table.LEN[1]+FIXED_CMD_LEN,1000);
+						Generate_ReadIndexTable(0);
 					}
 					if(event_status & EVENT_TOUCH_DETECT)	//指纹验证结果
 					{
@@ -353,10 +346,8 @@ static void Finger_Func_Exec(void)
 							}
 							
 						}
-						CMD_Sleep_t							g_sleep							= {0};	//休眠指令结构体
-						Generate_Sleep(&g_sleep);
-						HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_sleep,g_sleep.LEN[0]<<8|g_sleep.LEN[1]+FIXED_CMD_LEN,1000);
-						
+						Generate_Sleep();
+
 						xEventGroupClearBits(FingerEvent_Handle,EVENT_TOUCH_DETECT);
 					}
 					break;
@@ -396,13 +387,10 @@ static void Finger_Func_Exec(void)
 				}
 				case CONFIRM_FINGER_SEARCH_FAIL:	//没有搜索到指纹	
 				{
-					CMD_Sleep_t							g_sleep							= {0};	//休眠指令结构体
 					//if(event_status & EVENT_TOUCH_DETECT)	//指纹验证结果
 					//{
-						Generate_Sleep(&g_sleep);
-						
-						HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_sleep,g_sleep.LEN[0]<<8|g_sleep.LEN[1]+FIXED_CMD_LEN,1000);
-						
+						Generate_Sleep();
+
 						xEventGroupClearBits(FingerEvent_Handle,EVENT_TOUCH_DETECT);
 					//}
 					break;

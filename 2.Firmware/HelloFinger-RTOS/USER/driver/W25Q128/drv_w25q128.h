@@ -7,7 +7,6 @@
 #define SPI_FLASH_CS_HIGH()		(GPIOB->BSRR = GPIO_PIN_12)
 #define SPI_FLASH_CS_LOW()		(GPIOB->BSRR = (uint32_t)GPIO_PIN_12 << 16)
 
-//#define SPI_FLASH_PageSize            4096
 #define SPI_FLASH_PageSize              256
 #define SPI_FLASH_PerWritePageSize      256
 
@@ -50,14 +49,6 @@
 #define FINGER_FUNC_RESERVED_DATA	(0x00)
 
 #define ACTION_FUNC_BASE_ADDR	(0x104E20)
-
-
-/*等待超时时间*/
-#define SPIT_FLAG_TIMEOUT         ((uint32_t)0x1000)
-#define SPIT_LONG_TIMEOUT         ((uint32_t)(10 * SPIT_FLAG_TIMEOUT))
-
-/*信息输出*/
-#define FLASH_DEBUG_ON         1
 
 int Flash_Init(void);
 int Flash_Erase_Chip(void);

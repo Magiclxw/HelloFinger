@@ -1,7 +1,7 @@
 #include "drv_at24c64.h"
 #include "delay.h"
 
-void IIC_Init(void)
+void AT24C64_Init(void)
 {
     GPIO_InitTypeDef GPIO_Initure;
     
@@ -119,8 +119,6 @@ uint8_t IIC_Read_Byte(uint8_t ack)
   return receive;
 }
  
-uint8_t EEPROM_RX_BUF[EEPROM_BUFFER_SIZE];
-
 uint8_t AT24C64_ReadOneByte(uint16_t ReadAddr)
 {				  
 	uint8_t temp=0;

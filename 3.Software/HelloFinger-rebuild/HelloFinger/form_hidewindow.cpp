@@ -4,6 +4,7 @@
 #include <QFileInfo>
 #include <QFileIconProvider>
 #include <QLabel>
+#include <QProcess>
 
 Form_HideWindow::Form_HideWindow(QWidget *parent) :
     QWidget(parent),
@@ -11,11 +12,11 @@ Form_HideWindow::Form_HideWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     //this->setFixedSize(this->width(),this->height());
+
     this->setFixedSize(40,250);
-    this->move(0,300);
+    this->move(20,300);
 
-
-    QFile file(":/shape/darkgray.css"); // 创建QFile对象，指定样式表文件路径
+    QFile file(":/qss/darkgray.css"); // 创建QFile对象，指定样式表文件路径
     file.open(QFile::ReadOnly); // 打开文件，只读模式
     QString styleSheet = QLatin1String(file.readAll()); // 读取文件内容到字符串
     setStyleSheet(styleSheet); // 应用样式表
@@ -23,8 +24,8 @@ Form_HideWindow::Form_HideWindow(QWidget *parent) :
     QRect rect = QGuiApplication::primaryScreen()->geometry();
     m_screenWidth = rect.width();
     m_screenheight = rect.height();
-    qDebug() << "宽度为:" <<m_screenWidth;
-    qDebug() << "高度为:" <<m_screenheight;
+//    qDebug() << "宽度:" <<m_screenWidth;
+//    qDebug() << "高度:" <<m_screenheight;
 
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     setWindowOpacity(0.5);      //设置透明度
@@ -59,11 +60,21 @@ void Form_HideWindow::File_Update_Hidewindow_Content()
             label.setPixmap(icon.pixmap(50,50));
             listwidgetitem->setIcon(icon);
             ui->listWidget_func->addItem(listwidgetitem);
-
         }
         item++;
     }
 }
+
+/* 打开选中程序 */
+void Form_HideWindow::Slot_OpenItem(void)
+{
+    uint8_t currentItem = 0;
+    QString path;
+    currentItem = ui->listWidget_func->currentIndex().row();
+    path = File_HideWindow_Item_Read(currentItem);
+    QProcess::startDetached(path);
+}
+
 
 bool Form_HideWindow::isWindowInScreen(QPoint pos)
 {

@@ -3,6 +3,12 @@
 
 #include <QObject>
 
+typedef enum ChatAI_Cfg_
+{
+    ChatAI_Cfg_URL,
+    ChatAI_Cfg_KEY,
+}ChatAI_Cfg_e;
+
 class System_Init : public QObject
 {
     Q_OBJECT
@@ -22,5 +28,5 @@ QString File_HideWindow_Item_Read(uint8_t index);
 uint8_t File_HideWindow_ItemNum_Get(void);
 int File_Get_ChatAI_URL(QString* url);
 int File_Get_ChatAI_KEY(QByteArray* key);
-
+int File_Set_ChatAI(QString url,QString key);
 #endif // SYSTEM_INIT_H

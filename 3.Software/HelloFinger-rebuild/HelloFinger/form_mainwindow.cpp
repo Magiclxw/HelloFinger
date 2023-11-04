@@ -27,6 +27,7 @@
 #include "interface_chat.h"
 #include <QClipboard>
 #include <QWindow>
+#include "form_chatsetting.h"
 
 
 QColor itemValid(0,255,255);       //指纹有效颜色
@@ -87,12 +88,12 @@ Form_MainWindow::Form_MainWindow(QWidget *parent)
     this->setWindowIcon(QIcon(":/icon/main_icon.jpg"));
     this->setFixedSize(this->width(),this->height());
 
-    InitSysTray();
+    InitSysTray();  //放置托盘
 
-//    QFile file(":/shape/darkgray.css"); // 创建QFile对象，指定样式表文件路径
-//    file.open(QFile::ReadOnly); // 打开文件，只读模式
-//    QString styleSheet = QLatin1String(file.readAll()); // 读取文件内容到字符串
-//    setStyleSheet(styleSheet); // 应用样式表
+    QFile file(":/qss/lightgray.css"); // 创建QFile对象，指定样式表文件路径
+    file.open(QFile::ReadOnly); // 打开文件，只读模式
+    QString styleSheet = QLatin1String(file.readAll()); // 读取文件内容到字符串
+    setStyleSheet(styleSheet); // 应用样式表
 
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 
@@ -183,9 +184,11 @@ Form_MainWindow::Form_MainWindow(QWidget *parent)
     connect(ui->pushButton_password_key,&QPushButton::clicked,this,&Form_MainWindow::Slot_SetPassword);
     connect(ui->pushButton_save_rgb,&QPushButton::clicked,this,[=](){emit Signal_SetBreathRGB((uint8_t)tmp_R,(uint8_t)tmp_G,(uint8_t)tmp_B,interval);});
     connect(ui->pushButton_save_finger_rgb,&QPushButton::clicked,this,&Form_MainWindow::Slot_SetFingerRGB);
+    connect(ui->pushButton_chat_setting,&QPushButton::clicked,this,&Form_MainWindow::Slot_Popup_ChatSettingWindow);
 
     connect(this,&Form_MainWindow::Signal_UpdateHideWindowCheckedItem,hidewindow,&Form_HideWindow::Slot_UpdateCheckedItem);
     connect(hidewindowHold_timer,&QTimer::timeout,hidewindow,[=](){hidewindow->hideWindow();hidewindowHold_timer->stop();});
+    connect(this,&Form_MainWindow::Signal_OpenHidewindowItem,hidewindow,&Form_HideWindow::Slot_OpenItem);
 
     connect(ui->pushButton_chat_data_send,&QPushButton::clicked,this,&Form_MainWindow::Slot_Chat_Send_Msg);
     connect(chat,&interface_chat::Signal_Chat_Msg_Received,this,&Form_MainWindow::Chat_RevMsg_Handler);
@@ -579,6 +582,7 @@ void Form_MainWindow::on_keyEvent(QKeyEvent* event)  //全局按键事件
 //                }
 //                ui->listWidget_table_state->setCurrentRow(nextIndex);
                 //ui->listWidget_table_state->item(nextIndex)->setSelected(true);
+                hidewindowHold_timer->setInterval(HIDEWINDOW_HOLD_TIME);    //重新计时
                 emit Signal_UpdateHideWindowCheckedItem(Qt::Key_Left);
                 //qDebug() << "current index = " << currentIndex << "next index = " << nextIndex;
             }
@@ -595,18 +599,19 @@ void Form_MainWindow::on_keyEvent(QKeyEvent* event)  //全局按键事件
 //                }
 //                ui->listWidget_table_state->setCurrentRow(nextIndex);
                 //ui->listWidget_table_state->item(nextIndex)->setSelected(true);
+                hidewindowHold_timer->setInterval(HIDEWINDOW_HOLD_TIME);    //重新计时
                 emit Signal_UpdateHideWindowCheckedItem(Qt::Key_Right);
                 //qDebug() << "current index = " << currentIndex << "next index = " << nextIndex;
             }
         }
-        if(event->key() == Qt::Key_F1)
+        if(event->key() == Qt::Key_F1) //编码器按下(侧边栏未显示)
         {
             if(event->modifiers() == (Qt::ShiftModifier|Qt::ControlModifier|Qt::AltModifier))
             {
                 hidewindow->showWindow();
 
                 qDebug() << "encoder ";
-                hidewindowHold_timer->start(3000);
+                hidewindowHold_timer->start(HIDEWINDOW_HOLD_TIME);
             }
         }
         if(event->key() == Qt::Key_F2)//显示/隐藏Action界面
@@ -623,6 +628,13 @@ void Form_MainWindow::on_keyEvent(QKeyEvent* event)  //全局按键事件
                     ui->tabWidget->setCurrentWidget(ui->tab_chat);
                 }
 
+            }
+        }
+        if(event->key() == Qt::Key_F3)  //编码器按下(侧边栏已显示)
+        {
+            if(event->modifiers() == (Qt::ShiftModifier|Qt::ControlModifier|Qt::AltModifier))
+            {
+                emit Signal_OpenHidewindowItem();
             }
         }
         if(event->key() == Qt::Key_0)
@@ -910,11 +922,6 @@ void Form_MainWindow::File_Update_HideWindow_List()
     }
 }
 
-void Form_MainWindow::File_Save_Shortcut()
-{
-
-}
-
 void Form_MainWindow::Slot_SetShortcut()
 {
     uint8_t fingertype = ui->tabWidget_finger_func->currentIndex();
@@ -1180,6 +1187,12 @@ void Form_MainWindow::Chat_RevMsg_Handler(QString msg)
     ui->textEdit_chat_output->append(ask);
     ui->textEdit_chat_input->clear();
     ui->textEdit_chat_output->append(answer);
+}
+
+void Form_MainWindow::Slot_Popup_ChatSettingWindow(void)
+{
+    Form_ChatSetting *chatsetting = new Form_ChatSetting;
+    chatsetting->show();
 }
 
 void Form_MainWindow::InitSysTray()

@@ -1,10 +1,19 @@
 #include "app_task_key.h"
 #include "drv_fpm383.h"
+#include "drv_encoder.h"
 #include "usart.h"
 #include "string.h"
-#include "..\USER\driver\W25Q128\drv_w25q128.h"
+#include "drv_w25q128.h"
 #include "app_task_finger.h"
 #include "app_task_rgb.h"
+
+extern TimerHandle_t Sidebar_Timer_Handler;
+extern __IO uint8_t timerFlag;
+
+TaskHandle_t Task_Sidebar_Handle = NULL;	//侧边栏控制任务句柄
+TaskHandle_t Task_Action_Key_Handle = NULL;	//Action按键功能句柄
+TaskHandle_t Task_Normal_Key_Handle = NULL;	//普通按键句柄
+TaskHandle_t Task_Joycon_Key_Handle = NULL;	//Joycon按键句柄
 
 
 static void vTaskSidebarProcessing(void);
@@ -12,12 +21,6 @@ static void vTaskActionKeyProcessing(void);
 static void vTaskNormalKeyProcessing(void);
 static void vTaskJoyconKeyProcessing(void);
 static void Action_Func_Exec(uint8_t func,uint8_t action);
-
-
-TaskHandle_t Task_Sidebar_Handle = NULL;	//侧边栏控制任务句柄
-TaskHandle_t Task_Action_Key_Handle = NULL;	//Action按键功能句柄
-TaskHandle_t Task_Normal_Key_Handle = NULL;	//普通按键句柄
-TaskHandle_t Task_Joycon_Key_Handle = NULL;	//Joycon按键句柄
 
 
 int ENCODER_KeyNotifyFromISR(void)	//编码器按键任务通知
@@ -109,18 +112,29 @@ int Task_Joycon_KEY_CTLCreate(void)	//普通按键任务创建
 }
 
 
+
 static void vTaskSidebarProcessing(void)	//编码器按键任务
 {
-	char            *task_info_buf  = NULL;
 	while(1)
 	{
 		BaseType_t ret = ulTaskNotifyTake((BaseType_t)pdTRUE,(TickType_t)portMAX_DELAY);
-		if(ret != 0)
+		if(ret != pdFALSE)
 		{
 			vTaskDelay(20);
 			if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_1))	//消抖
 			{
-				CH9329_Input_Fuc_Key(R_ALT|R_SHIFT|R_CTRL,KEY_F1);	//输入快捷键，上位机解析为侧边栏控制功能
+				if(timerFlag == 0)
+				{
+					CH9329_Input_Fuc_Key(R_ALT|R_SHIFT|R_CTRL,KEY_F1);	//输入快捷键，上位机解析为侧边栏控制功能
+					timerFlag = 1;
+					xTimerStart((TimerHandle_t  )Sidebar_Timer_Handler,(TickType_t)portMAX_DELAY);
+					continue;
+				}
+				else if(timerFlag == 1)
+				{
+					CH9329_Input_Fuc_Key(R_ALT|R_SHIFT|R_CTRL,KEY_F3);
+				}
+				
 //				task_info_buf = pvPortMalloc(500);
 //				vTaskList(task_info_buf); /* 获取所有任务的信息 */
 //				printf("任务名\t\t 状态\t 优先级\t 剩余栈\t 任务序号\r\n");
@@ -232,4 +246,6 @@ static void Action_Func_Exec(uint8_t func,uint8_t action)
 		}
 	}
 }
+
+
 

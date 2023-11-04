@@ -1,5 +1,5 @@
 hellofinger-rtos\drv_w25q128.o: ..\USER\driver\W25Q128\drv_w25q128.c
-hellofinger-rtos\drv_w25q128.o: ../SYSTEM/..\USER\driver\W25Q128\drv_w25q128.h
+hellofinger-rtos\drv_w25q128.o: ..\USER\driver\W25Q128\drv_w25q128.h
 hellofinger-rtos\drv_w25q128.o: ../SYSTEM/sys_config.h
 hellofinger-rtos\drv_w25q128.o: ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h
 hellofinger-rtos\drv_w25q128.o: ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h

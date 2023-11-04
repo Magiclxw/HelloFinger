@@ -4,8 +4,9 @@
 
 extern SYSTEM_INIT_PARAM_t g_sys_init_param;
 
-static void vTaskRGBProcessing(void);
 TIM_HandleTypeDef rgb_timer_handler;
+
+static void vTaskRGBProcessing(void);
 
 TaskHandle_t Task_RGB_Handle = NULL;
 QueueHandle_t RGB_Queue_Handle = NULL;
@@ -69,12 +70,18 @@ static void vTaskRGBProcessing(void)
 			r = rec_rgbi>>24;
 			g = (rec_rgbi>>16)&0xFF;
 			b = (rec_rgbi>>8)&0xFF;
-			//if((r == 0) && (g == 0) && (b == 0))	//¹Ø±Õrgb
-			//{
-			//	dir = 0;
-			//	//WS2812B_Write_Only_Reset(gs_temp,0);
-			//	continue;
-			//}
+			if((r == 0) && (g == 0) && (b == 0))	//¹Ø±Õrgb
+			{
+				rgb = ((uint32_t)(r) << 16) | ((uint32_t)(g) << 8) | (uint8_t)b;
+			
+				for (uint8_t i = 0; i < 6; i++)
+				{
+					gs_rgb[i] = rgb;//0xE0;
+				}
+				
+				WS25812B_write(gs_rgb, 6, gs_temp);
+				HAL_TIM_Base_Stop_IT(&rgb_timer_handler);
+			}
 			r_tmp = r;
 			g_tmp = g;
 			b_tmp = b;

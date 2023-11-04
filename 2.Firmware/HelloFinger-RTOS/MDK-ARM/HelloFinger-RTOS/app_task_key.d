@@ -55,7 +55,8 @@ hellofinger-rtos\app_task_key.o: ../FreeRTOS/include/timers.h
 hellofinger-rtos\app_task_key.o: ../SYSTEM/crc.h
 hellofinger-rtos\app_task_key.o: ../USER/driver/CH9329/drv_ch9329.h
 hellofinger-rtos\app_task_key.o: ../USER/driver/FPM383/drv_fpm383.h
-hellofinger-rtos\app_task_key.o: ../SYSTEM/..\USER\driver\W25Q128\drv_w25q128.h
+hellofinger-rtos\app_task_key.o: ../USER/driver/SIQ-02FVS3/drv_encoder.h
+hellofinger-rtos\app_task_key.o: ..\USER\driver\W25Q128\drv_w25q128.h
 hellofinger-rtos\app_task_key.o: ..\USER\application\app_task_finger.h
 hellofinger-rtos\app_task_key.o: ..\USER\application\app_task_rgb.h
 hellofinger-rtos\app_task_key.o: ../SYSTEM/..\USER\driver\WS2812\drv_ws2812b.h

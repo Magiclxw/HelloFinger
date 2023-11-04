@@ -5,6 +5,12 @@
 typedef int(*FUNC_ENCODERKEYRECVTCB)(void);
 typedef int(*FUNC_ENCODERRECVTCB)(uint32_t);
 
+typedef enum ENCODER_TRIGGER_
+{
+	ENCODER_TRIGGER_KEY = 1,
+	ENCODER_TRIGGER_TIMER,
+}ENCODER_TRIGGER_e;
+
 #define Signal_A_Read	HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_6)
 #define Signal_B_Read	HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_7)
 #define ENCODER_PUSH	HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_1)

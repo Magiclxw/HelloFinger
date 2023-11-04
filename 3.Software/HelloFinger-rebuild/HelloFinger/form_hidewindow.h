@@ -50,6 +50,7 @@ private:
     HIDEPOSATION m_hp;
 public slots:
     void Slot_UpdateCheckedItem(int dir);
+    void Slot_OpenItem(void);
 };
 
 #endif // FORM_HIDEWINDOW_H

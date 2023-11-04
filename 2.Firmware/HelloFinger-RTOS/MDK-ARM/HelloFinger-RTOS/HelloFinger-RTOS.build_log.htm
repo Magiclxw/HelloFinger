@@ -22,16 +22,19 @@ Dialog DLL:      TCM.DLL V1.36.1.0
  
 <h2>Project:</h2>
 E:\WORK\PersonalProject\HelloKey\root\2.Firmware\HelloFinger-RTOS\MDK-ARM\HelloFinger-RTOS.uvprojx
-Project File Date:  10/30/2023
+Project File Date:  11/04/2023
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin'
 Build target 'HelloFinger-RTOS'
-compiling app_task_rgb.c...
+compiling app_task_key.c...
+..\USER\application\app_task_key.c(153): warning:  #177-D: variable "crc_value"  was declared but never referenced
+  	uint32_t crc_value = 0;
+..\USER\application\app_task_key.c: 1 warning, 0 errors
 linking...
-Program Size: Code=32816 RO-data=720 RW-data=400 ZI-data=17944  
+Program Size: Code=33368 RO-data=720 RW-data=408 ZI-data=17944  
 FromELF: creating hex file...
-"HelloFinger-RTOS\HelloFinger-RTOS.axf" - 0 Error(s), 0 Warning(s).
+"HelloFinger-RTOS\HelloFinger-RTOS.axf" - 0 Error(s), 1 Warning(s).
 
 <h2>Software Packages used:</h2>
 

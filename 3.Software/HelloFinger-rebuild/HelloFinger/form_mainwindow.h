@@ -17,6 +17,7 @@ QT_END_NAMESPACE
 #define ADD_FINGER_PARAM_ENROLL_REPEAT_DISABLE  0x10    //不允许指纹重复注册
 #define ADD_FINGER_PARAM_ENROLL_FINGER_NO_LEAVE    0x20    //注册过程不要求手指离开
 
+#define HIDEWINDOW_HOLD_TIME    5000
 
 class Form_MainWindow : public QMainWindow
 {
@@ -68,6 +69,7 @@ public slots:
     void Slot_DeleteListWidgetItem(void);
     void Slot_Chat_Send_Msg(void);
     void Slot_SetFingerRGB(void);
+    void Slot_Popup_ChatSettingWindow(void);
 signals:
     void Signal_AddFinger(uint8_t pos,uint8_t times,uint8_t param1,uint8_t param2);
     void Signal_DeleteFinger(uint8_t id);
@@ -82,6 +84,8 @@ signals:
     void Signal_UpdateHideWindowCheckedItem(int dir);
     void Signal_SetActionFunc(uint8_t func ,uint8_t action);
     void Signal_SetFingerRGB(uint8_t mode,uint8_t startColor,uint8_t stopColor,uint8_t interval);
+    void Signal_OpenHidewindowItem(void);
+
 private slots:
     void Slot_ShowWindow();
     void Slot_Exit();

@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F103xB</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;../FreeRTOS/include;../FreeRTOS/portable/RVDS/ARM_CM3;../SYSTEM/delay;../SYSTEM/sys;../SYSTEM/usart;../USER/application;../USER/driver;../SYSTEM;../USER/driver/FPM383;../USER/driver/AT24C64;../USER/driver/CH9329;../USER/driver/SIQ-02FVS3;..\USER\driver\JOYSTICK</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;../FreeRTOS/include;../FreeRTOS/portable/RVDS/ARM_CM3;../SYSTEM/delay;../SYSTEM/sys;../SYSTEM/usart;../USER/application;../USER/driver;../SYSTEM;../USER/driver/FPM383;../USER/driver/AT24C64;../USER/driver/CH9329;../USER/driver/SIQ-02FVS3;..\USER\driver\JOYSTICK;..\USER\driver\W25Q128</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>

@@ -81,7 +81,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>6</number>
       </property>
       <property name="iconSize">
        <size>
@@ -4048,7 +4048,7 @@
            </size>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="page_rgb">
            <layout class="QVBoxLayout" name="verticalLayout_19">
@@ -4718,8 +4718,8 @@ font: 9pt &quot;黑体&quot;;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>206</width>
-             <height>222</height>
+             <width>200</width>
+             <height>204</height>
             </rect>
            </property>
            <attribute name="label">
@@ -4749,8 +4749,8 @@ font: 9pt &quot;黑体&quot;;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>98</width>
-             <height>88</height>
+             <width>103</width>
+             <height>103</height>
             </rect>
            </property>
            <attribute name="label">
@@ -4774,8 +4774,8 @@ font: 9pt &quot;黑体&quot;;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>98</width>
-             <height>88</height>
+             <width>103</width>
+             <height>103</height>
             </rect>
            </property>
            <attribute name="label">
@@ -4799,8 +4799,8 @@ font: 9pt &quot;黑体&quot;;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>98</width>
-             <height>88</height>
+             <width>103</width>
+             <height>103</height>
             </rect>
            </property>
            <attribute name="label">
@@ -4824,8 +4824,8 @@ font: 9pt &quot;黑体&quot;;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>98</width>
-             <height>88</height>
+             <width>103</width>
+             <height>103</height>
             </rect>
            </property>
            <attribute name="label">
@@ -4849,8 +4849,8 @@ font: 9pt &quot;黑体&quot;;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>98</width>
-             <height>88</height>
+             <width>103</width>
+             <height>103</height>
             </rect>
            </property>
            <attribute name="label">
@@ -4898,7 +4898,7 @@ font: 9pt &quot;黑体&quot;;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>204</width>
+             <width>198</width>
              <height>376</height>
             </rect>
            </property>
@@ -5070,10 +5070,29 @@ font: 9pt &quot;黑体&quot;;</string>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_chat_copy_answer">
-          <property name="text">
-           <string> 复制回答</string>
+         <widget class="QWidget" name="widget_29" native="true">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>30</height>
+           </size>
           </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_36">
+           <item>
+            <widget class="QPushButton" name="pushButton_chat_setting">
+             <property name="text">
+              <string>设置</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_chat_copy_answer">
+             <property name="text">
+              <string> 复制回答</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
         <item>
@@ -5104,6 +5123,7 @@ font: 9pt &quot;黑体&quot;;</string>
        <attribute name="title">
         <string>系统</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_5"/>
       </widget>
      </widget>
     </item>

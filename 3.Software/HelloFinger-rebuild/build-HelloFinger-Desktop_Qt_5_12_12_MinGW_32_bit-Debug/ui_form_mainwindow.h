@@ -257,10 +257,14 @@ public:
     QWidget *tab_chat;
     QVBoxLayout *verticalLayout_18;
     QTextEdit *textEdit_chat_output;
+    QWidget *widget_29;
+    QHBoxLayout *horizontalLayout_36;
+    QPushButton *pushButton_chat_setting;
     QPushButton *pushButton_chat_copy_answer;
     QTextEdit *textEdit_chat_input;
     QPushButton *pushButton_chat_data_send;
     QWidget *tab_system;
+    QVBoxLayout *verticalLayout_5;
 
     void setupUi(QMainWindow *Form_MainWindow)
     {
@@ -1784,7 +1788,7 @@ public:
         toolBox->setAcceptDrops(false);
         page_task_1 = new QWidget();
         page_task_1->setObjectName(QString::fromUtf8("page_task_1"));
-        page_task_1->setGeometry(QRect(0, 0, 206, 222));
+        page_task_1->setGeometry(QRect(0, 0, 200, 204));
         horizontalLayout_19 = new QHBoxLayout(page_task_1);
         horizontalLayout_19->setObjectName(QString::fromUtf8("horizontalLayout_19"));
         listWidget_task_1 = new QListWidget(page_task_1);
@@ -1798,7 +1802,7 @@ public:
         toolBox->addItem(page_task_1, QString::fromUtf8(" \345\220\257\345\212\250\344\273\273\345\212\241\344\270\200"));
         page_task_2 = new QWidget();
         page_task_2->setObjectName(QString::fromUtf8("page_task_2"));
-        page_task_2->setGeometry(QRect(0, 0, 98, 88));
+        page_task_2->setGeometry(QRect(0, 0, 103, 103));
         horizontalLayout_14 = new QHBoxLayout(page_task_2);
         horizontalLayout_14->setObjectName(QString::fromUtf8("horizontalLayout_14"));
         listWidget_task_2 = new QListWidget(page_task_2);
@@ -1810,7 +1814,7 @@ public:
         toolBox->addItem(page_task_2, QString::fromUtf8("\345\220\257\345\212\250\344\273\273\345\212\241\344\272\214"));
         page_task_3 = new QWidget();
         page_task_3->setObjectName(QString::fromUtf8("page_task_3"));
-        page_task_3->setGeometry(QRect(0, 0, 98, 88));
+        page_task_3->setGeometry(QRect(0, 0, 103, 103));
         horizontalLayout_15 = new QHBoxLayout(page_task_3);
         horizontalLayout_15->setObjectName(QString::fromUtf8("horizontalLayout_15"));
         listWidget_task_3 = new QListWidget(page_task_3);
@@ -1822,7 +1826,7 @@ public:
         toolBox->addItem(page_task_3, QString::fromUtf8("\345\220\257\345\212\250\344\273\273\345\212\241\344\270\211"));
         page_task_4 = new QWidget();
         page_task_4->setObjectName(QString::fromUtf8("page_task_4"));
-        page_task_4->setGeometry(QRect(0, 0, 98, 88));
+        page_task_4->setGeometry(QRect(0, 0, 103, 103));
         horizontalLayout_16 = new QHBoxLayout(page_task_4);
         horizontalLayout_16->setObjectName(QString::fromUtf8("horizontalLayout_16"));
         listWidget_task_4 = new QListWidget(page_task_4);
@@ -1834,7 +1838,7 @@ public:
         toolBox->addItem(page_task_4, QString::fromUtf8("\345\220\257\345\212\250\344\273\273\345\212\241\345\233\233"));
         page_task_5 = new QWidget();
         page_task_5->setObjectName(QString::fromUtf8("page_task_5"));
-        page_task_5->setGeometry(QRect(0, 0, 98, 88));
+        page_task_5->setGeometry(QRect(0, 0, 103, 103));
         horizontalLayout_17 = new QHBoxLayout(page_task_5);
         horizontalLayout_17->setObjectName(QString::fromUtf8("horizontalLayout_17"));
         listWidget_task_5 = new QListWidget(page_task_5);
@@ -1846,7 +1850,7 @@ public:
         toolBox->addItem(page_task_5, QString::fromUtf8("\345\220\257\345\212\250\344\273\273\345\212\241\344\272\224"));
         page_task_6 = new QWidget();
         page_task_6->setObjectName(QString::fromUtf8("page_task_6"));
-        page_task_6->setGeometry(QRect(0, 0, 98, 88));
+        page_task_6->setGeometry(QRect(0, 0, 103, 103));
         horizontalLayout_18 = new QHBoxLayout(page_task_6);
         horizontalLayout_18->setObjectName(QString::fromUtf8("horizontalLayout_18"));
         listWidget_task_6 = new QListWidget(page_task_6);
@@ -1879,7 +1883,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 204, 376));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 198, 376));
         formLayout = new QFormLayout(scrollAreaWidgetContents);
         formLayout->setObjectName(QString::fromUtf8("formLayout"));
         pushButton_action_chat = new QPushButton(scrollAreaWidgetContents);
@@ -1966,10 +1970,23 @@ public:
 
         verticalLayout_18->addWidget(textEdit_chat_output);
 
-        pushButton_chat_copy_answer = new QPushButton(tab_chat);
+        widget_29 = new QWidget(tab_chat);
+        widget_29->setObjectName(QString::fromUtf8("widget_29"));
+        widget_29->setMinimumSize(QSize(0, 30));
+        horizontalLayout_36 = new QHBoxLayout(widget_29);
+        horizontalLayout_36->setObjectName(QString::fromUtf8("horizontalLayout_36"));
+        pushButton_chat_setting = new QPushButton(widget_29);
+        pushButton_chat_setting->setObjectName(QString::fromUtf8("pushButton_chat_setting"));
+
+        horizontalLayout_36->addWidget(pushButton_chat_setting);
+
+        pushButton_chat_copy_answer = new QPushButton(widget_29);
         pushButton_chat_copy_answer->setObjectName(QString::fromUtf8("pushButton_chat_copy_answer"));
 
-        verticalLayout_18->addWidget(pushButton_chat_copy_answer);
+        horizontalLayout_36->addWidget(pushButton_chat_copy_answer);
+
+
+        verticalLayout_18->addWidget(widget_29);
 
         textEdit_chat_input = new QTextEdit(tab_chat);
         textEdit_chat_input->setObjectName(QString::fromUtf8("textEdit_chat_input"));
@@ -1986,6 +2003,8 @@ public:
         tabWidget->addTab(tab_chat, QString());
         tab_system = new QWidget();
         tab_system->setObjectName(QString::fromUtf8("tab_system"));
+        verticalLayout_5 = new QVBoxLayout(tab_system);
+        verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
         tabWidget->addTab(tab_system, QString());
 
         verticalLayout_21->addWidget(tabWidget);
@@ -1994,11 +2013,11 @@ public:
 
         retranslateUi(Form_MainWindow);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(6);
         tabWidget_finger_func->setCurrentIndex(0);
         stackedWidget->setCurrentIndex(4);
         stackedWidget_key->setCurrentIndex(5);
-        stackedWidget_RGB->setCurrentIndex(1);
+        stackedWidget_RGB->setCurrentIndex(0);
         toolBox->setCurrentIndex(0);
 
 
@@ -2877,6 +2896,7 @@ public:
         pushButton_action_mute->setText(QApplication::translate("Form_MainWindow", "\351\235\231\351\237\263", nullptr));
         pushButton_action_play_pause->setText(QApplication::translate("Form_MainWindow", "\346\222\255\346\224\276/\346\232\202\345\201\234", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_action), QApplication::translate("Form_MainWindow", "Action", nullptr));
+        pushButton_chat_setting->setText(QApplication::translate("Form_MainWindow", "\350\256\276\347\275\256", nullptr));
         pushButton_chat_copy_answer->setText(QApplication::translate("Form_MainWindow", " \345\244\215\345\210\266\345\233\236\347\255\224", nullptr));
         pushButton_chat_data_send->setText(QApplication::translate("Form_MainWindow", " \345\217\221\351\200\201", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_chat), QApplication::translate("Form_MainWindow", "Chat", nullptr));

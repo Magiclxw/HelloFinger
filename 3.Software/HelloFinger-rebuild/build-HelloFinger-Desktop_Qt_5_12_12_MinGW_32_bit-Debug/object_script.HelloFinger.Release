@@ -1,3 +1,4 @@
+release/form_chatsetting.o
 release/form_enrollstate.o
 release/form_entrance.o
 release/form_hidewindow.o
@@ -20,6 +21,7 @@ release/qxtwindowsystem_win.o
 release/qxtglobalshortcut_win.o
 release/qrc_icon.o
 release/qrc_qss.o
+release/moc_form_chatsetting.o
 release/moc_form_enrollstate.o
 release/moc_form_entrance.o
 release/moc_form_hidewindow.o

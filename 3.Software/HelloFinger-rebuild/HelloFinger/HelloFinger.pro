@@ -12,6 +12,7 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    form_chatsetting.cpp \
     form_enrollstate.cpp \
     form_entrance.cpp \
     form_hidewindow.cpp \
@@ -26,6 +27,7 @@ SOURCES += \
 
 HEADERS += \
     config/sys_config.h \
+    form_chatsetting.h \
     form_enrollstate.h \
     form_entrance.h \
     form_hidewindow.h \
@@ -40,6 +42,7 @@ HEADERS += \
     usb_listener.h
 
 FORMS += \
+    form_chatsetting.ui \
     form_enrollstate.ui \
     form_entrance.ui \
     form_hidewindow.ui \

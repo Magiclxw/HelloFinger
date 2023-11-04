@@ -389,7 +389,7 @@ int File_Get_ChatAI_URL(QString* url)
     else
     {  // 文件存在
         QSettings *iniRead = new QSettings(sys_config,QSettings::IniFormat);
-        *url = iniRead->value("chat_ai_url").toString();
+        *url = iniRead->value("ChatAI/chat_ai_url").toString();
         if(*url == NULL)
         {
             *url = default_api_server;
@@ -408,7 +408,7 @@ int File_Get_ChatAI_KEY(QByteArray* key)
     else
     {  // 文件存在
         QSettings *iniRead = new QSettings(sys_config,QSettings::IniFormat);
-        *key = iniRead->value("chat_ai_key").toByteArray();
+        *key = iniRead->value("ChatAI/chat_ai_key").toByteArray();
         if(key->isEmpty())
         {
             *key = default_api_key;
@@ -418,5 +418,17 @@ int File_Get_ChatAI_KEY(QByteArray* key)
     return OPERATE_SUCCESS;
 }
 
+int File_Set_ChatAI(QString url,QString key)
+{
 
+        QSettings *iniWrite = new QSettings(sys_config,QSettings::IniFormat);
+        iniWrite->setValue("ChatAI/chat_ai_url",url);
+        iniWrite->setValue("ChatAI/chat_ai_key",key);
+
+        //QSettings *iniRead = new QSettings(sys_config,QSettings::IniFormat);
+        //iniRead->setValue("ChatAI/chat_ai_url",url);
+        //iniRead->setValue("ChatAI/chat_ai_key",key);
+
+    return OPERATE_SUCCESS;
+}
 

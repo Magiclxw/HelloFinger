@@ -13,7 +13,6 @@ CONFIG += c++11
 
 SOURCES += \
     form_chatsetting.cpp \
-    form_enrollstate.cpp \
     form_entrance.cpp \
     form_hidewindow.cpp \
     form_mainwindow.cpp \
@@ -28,7 +27,6 @@ SOURCES += \
 HEADERS += \
     config/sys_config.h \
     form_chatsetting.h \
-    form_enrollstate.h \
     form_entrance.h \
     form_hidewindow.h \
     form_mainwindow.h \
@@ -43,7 +41,6 @@ HEADERS += \
 
 FORMS += \
     form_chatsetting.ui \
-    form_enrollstate.ui \
     form_entrance.ui \
     form_hidewindow.ui \
     form_mainwindow.ui

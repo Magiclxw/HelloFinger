@@ -81,7 +81,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>6</number>
+       <number>0</number>
       </property>
       <property name="iconSize">
        <size>
@@ -4718,8 +4718,8 @@ font: 9pt &quot;黑体&quot;;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>200</width>
-             <height>204</height>
+             <width>206</width>
+             <height>222</height>
             </rect>
            </property>
            <attribute name="label">
@@ -4749,8 +4749,8 @@ font: 9pt &quot;黑体&quot;;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>103</width>
-             <height>103</height>
+             <width>88</width>
+             <height>88</height>
             </rect>
            </property>
            <attribute name="label">
@@ -4774,8 +4774,8 @@ font: 9pt &quot;黑体&quot;;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>103</width>
-             <height>103</height>
+             <width>88</width>
+             <height>88</height>
             </rect>
            </property>
            <attribute name="label">
@@ -4799,8 +4799,8 @@ font: 9pt &quot;黑体&quot;;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>103</width>
-             <height>103</height>
+             <width>88</width>
+             <height>88</height>
             </rect>
            </property>
            <attribute name="label">
@@ -4824,8 +4824,8 @@ font: 9pt &quot;黑体&quot;;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>103</width>
-             <height>103</height>
+             <width>88</width>
+             <height>88</height>
             </rect>
            </property>
            <attribute name="label">
@@ -4849,8 +4849,8 @@ font: 9pt &quot;黑体&quot;;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>103</width>
-             <height>103</height>
+             <width>88</width>
+             <height>88</height>
             </rect>
            </property>
            <attribute name="label">
@@ -4898,7 +4898,7 @@ font: 9pt &quot;黑体&quot;;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>198</width>
+             <width>204</width>
              <height>376</height>
             </rect>
            </property>

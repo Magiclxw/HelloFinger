@@ -24,11 +24,9 @@ Form_HideWindow::Form_HideWindow(QWidget *parent) :
     QRect rect = QGuiApplication::primaryScreen()->geometry();
     m_screenWidth = rect.width();
     m_screenheight = rect.height();
-//    qDebug() << "宽度:" <<m_screenWidth;
-//    qDebug() << "高度:" <<m_screenheight;
 
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
-    setWindowOpacity(0.5);      //设置透明度
+    setWindowOpacity(0.8);      //设置透明度
 
     this->setWindowFlags(this->windowFlags() | Qt::Tool | Qt::WindowStaysOnTopHint);    //隐藏窗口任务栏
 
@@ -37,12 +35,16 @@ Form_HideWindow::Form_HideWindow(QWidget *parent) :
 
 }
 
+/**
+*@brief	更新侧边栏项目图标
+*@return NULL
+*/
 void Form_HideWindow::File_Update_Hidewindow_Content()
 {
     uint8_t item = 0;
     uint8_t itemNum = 0;
     ui->listWidget_func->clear();
-    itemNum = File_HideWindow_ItemNum_Get();
+    itemNum = File_HideWindow_ItemNum_Get();    //获取侧边栏项目个数
     while(1)
     {
 
@@ -65,7 +67,10 @@ void Form_HideWindow::File_Update_Hidewindow_Content()
     }
 }
 
-/* 打开选中程序 */
+/**
+*@brief	打开选中程序
+*@return NULL
+*/
 void Form_HideWindow::Slot_OpenItem(void)
 {
     uint8_t currentItem = 0;
@@ -175,6 +180,11 @@ void Form_HideWindow::leaveEvent(QEvent *event)
         hideWindow();
 }
 
+/**
+*@brief	更新当前被选中项目
+*@param -dir:选择框移动方向
+*@return NULL
+*/
 void Form_HideWindow::Slot_UpdateCheckedItem(int dir)
 {
     if(dir == Qt::Key_Left)

@@ -1,5 +1,4 @@
 debug/form_chatsetting.o
-debug/form_enrollstate.o
 debug/form_entrance.o
 debug/form_hidewindow.o
 debug/form_mainwindow.o
@@ -22,7 +21,6 @@ debug/qxtglobalshortcut_win.o
 debug/qrc_icon.o
 debug/qrc_qss.o
 debug/moc_form_chatsetting.o
-debug/moc_form_enrollstate.o
 debug/moc_form_entrance.o
 debug/moc_form_hidewindow.o
 debug/moc_form_mainwindow.o

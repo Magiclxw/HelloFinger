@@ -20,8 +20,6 @@ Interface::Interface(QObject *parent) : QThread(parent)
     mainwindow->show();
     msgHandler = new Msg_Handler;
 
-
-
     /* 更新索引表 */
     connect(msgHandler,&Msg_Handler::Signal_Update_TableState,mainwindow,&Form_MainWindow::Slot_UpdateIndexTable);
     /* 添加指纹 */
@@ -52,20 +50,21 @@ Interface::Interface(QObject *parent) : QThread(parent)
     connect(mainwindow,&Form_MainWindow::Signal_SetAccount_Password,this,[=](QString account,QString password,uint8_t fingertype,uint8_t id){
         HID_Send_Account_Password(usb_handle,(Finger_Type_e)fingertype,account,password,id);
     });
+    /* 设置快捷启动 */
     connect(mainwindow,&Form_MainWindow::Signal_SetQuickStart,this,[=](uint8_t fingertype,QUICK_START_e startID,uint8_t index){
         HID_Send_QuickStart(usb_handle,(Finger_Type_e)fingertype,startID,index);
     });
     /* 更新指纹注册状态 */
     connect(msgHandler,&Msg_Handler::Signal_Update_EnrollState,mainwindow,&Form_MainWindow::Slot_EnrollState);
-
+    /* 设置快捷键 */
     connect(mainwindow,&Form_MainWindow::Signal_SetShortcut,this,[=](uint8_t fingertype,uint8_t func,char* key,uint8_t key_len,uint8_t index){
         HID_Send_Shortcut(usb_handle,(Finger_Type_e)fingertype,func,key,key_len,index);
     });
-
+    /* 设置Action按键功能 */
     connect(mainwindow,&Form_MainWindow::Signal_SetActionFunc,this,[=](uint8_t func,uint8_t action){
         HID_Set_Action_Func(usb_handle,func,action);
     });
-
+    /* 设置指纹模块灯效 */
     connect(mainwindow,&Form_MainWindow::Signal_SetFingerRGB,this,[=](uint8_t mode,uint8_t startColor,uint8_t stopColor,uint8_t interval){
         HID_Send_Finger_RGB(usb_handle,mode,startColor,stopColor,interval);
     });
@@ -93,8 +92,6 @@ void Interface::run()
                        {
                            qDebug("interface_number:%s",usb_info->path);//打印地址
                            usb_handle = hid_open_path(usb_info->path);
-                           //HID_Send_Breath_RGB(usb_handle,0xFF,0xFF,0xFF,30);
-                           //HID_Get_FW_HW_Msg(usb_handle);
                            msleep(1000);
                            HID_Get_TableState(usb_handle);
                            break;
@@ -107,7 +104,6 @@ void Interface::run()
         }
         else    //已连接
         {
-            //qDebug() << "connect ok";
             rec_num = hid_read_timeout(usb_handle,rec_buffer,REC_LEN,200);
             if(rec_num > 0)
             {

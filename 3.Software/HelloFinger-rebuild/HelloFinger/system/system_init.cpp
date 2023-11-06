@@ -330,6 +330,10 @@ QString File_HideWindow_Item_Read(uint8_t index)
     return path;
 }
 
+/**
+*@brief	获取侧边栏项目个数
+*@return 项目个数
+*/
 uint8_t File_HideWindow_ItemNum_Get(void)
 {
     uint8_t itemNum = 0;
@@ -371,15 +375,20 @@ uint8_t File_HideWindow_ItemNum_Get(void)
     return itemNum;
 }
 
-void Get_Icon_From_Path(QString path)
-{
-    QFileInfo fileInfo(path);
-    QFileIconProvider iconProvider;
-    QIcon icon = iconProvider.icon(fileInfo);
-    QLabel label;
-    label.setPixmap(icon.pixmap(32,32));
-}
+//void Get_Icon_From_Path(QString path)
+//{
+//    QFileInfo fileInfo(path);
+//    QFileIconProvider iconProvider;
+//    QIcon icon = iconProvider.icon(fileInfo);
+//    QLabel label;
+//    label.setPixmap(icon.pixmap(32,32));
+//}
 
+/**
+*@brief	获取ChatAI服务器链接
+*@param	-url:链接
+*@return 执行状态
+*/
 int File_Get_ChatAI_URL(QString* url)
 {
     QFile file(sys_config);
@@ -399,6 +408,11 @@ int File_Get_ChatAI_URL(QString* url)
     return OPERATE_SUCCESS;
 }
 
+/**
+*@brief	获取ChatAI服务器秘钥
+*@param	-key:秘钥
+*@return 执行状态
+*/
 int File_Get_ChatAI_KEY(QByteArray* key)
 {
     QFile file(sys_config);
@@ -418,6 +432,12 @@ int File_Get_ChatAI_KEY(QByteArray* key)
     return OPERATE_SUCCESS;
 }
 
+/**
+*@brief	配置ChatAI服务器
+*@param	-url:链接
+*@param -key:秘钥
+*@return 执行状态
+*/
 int File_Set_ChatAI(QString url,QString key)
 {
 

@@ -43,6 +43,7 @@ public:
         if (Form_ChatSetting->objectName().isEmpty())
             Form_ChatSetting->setObjectName(QString::fromUtf8("Form_ChatSetting"));
         Form_ChatSetting->resize(252, 154);
+        Form_ChatSetting->setFocusPolicy(Qt::NoFocus);
         verticalLayout = new QVBoxLayout(Form_ChatSetting);
         verticalLayout->setSpacing(5);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));

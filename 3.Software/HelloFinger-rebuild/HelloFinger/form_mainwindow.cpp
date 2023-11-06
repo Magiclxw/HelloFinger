@@ -95,14 +95,13 @@ Form_MainWindow::Form_MainWindow(QWidget *parent)
     QString styleSheet = QLatin1String(file.readAll()); // 读取文件内容到字符串
     setStyleSheet(styleSheet); // 应用样式表
 
-    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
+    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));   //设置编码格式
 
-    ui->pushButton_chat_data_send->setFocus();
     ui->textEdit_chat_input->setPlaceholderText("此处输入对话内容");
 
     hidewindow = new Form_HideWindow;
     hidewindow->show();
-    hidewindow->File_Update_Hidewindow_Content();
+    hidewindow->File_Update_Hidewindow_Content();   //更新侧边栏内容
 
     chat = new interface_chat;
 
@@ -136,8 +135,8 @@ Form_MainWindow::Form_MainWindow(QWidget *parent)
     GlobalKeyEvent::installKeyEvent();
     connect(GlobalKeyEvent::getInstance(),&GlobalKeyEvent::keyEvent,this,&Form_MainWindow::on_keyEvent);
 
-    File_Update_TableContent(table_1_Content);
-    File_Update_TableContent(table_2_Content);
+    File_Update_TableContent(table_1_Content);  //更新索引表1(指纹)
+    File_Update_TableContent(table_2_Content);  //更新索引表2(指纹+按键)
 
     ui->listWidget_table_state->setContextMenuPolicy(Qt::CustomContextMenu);
     ui->listWidget_table_state_key->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -729,7 +728,7 @@ void Form_MainWindow::on_keyEvent(QKeyEvent* event)  //全局按键事件
         }
 
     }
-    delete event;       // 使用完成后记得delete
+    delete event;
 }
 
 void Form_MainWindow::File_Update_TableContent(QString path)

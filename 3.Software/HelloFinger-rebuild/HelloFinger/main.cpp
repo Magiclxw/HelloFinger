@@ -12,10 +12,11 @@ int main(int argc, char *argv[])
     //w.show();
     Form_Entrance entrance;
 
+    /* 设置开机自启动 */
     QSettings settings("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
     settings.setValue("HelloFinger", QCoreApplication::applicationFilePath());
 
-    entrance.show();
+    //entrance.show();
 
     return a.exec();
 }

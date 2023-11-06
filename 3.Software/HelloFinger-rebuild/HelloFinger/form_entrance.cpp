@@ -13,7 +13,7 @@ Form_Entrance::Form_Entrance(QWidget *parent) :
     ui(new Ui::Form_Entrance)
 {
     ui->setupUi(this);
-
+    this->hide();
     Interface *usbInterface = new Interface;
     usbInterface->start();
 

@@ -8,7 +8,9 @@ Form_ChatSetting::Form_ChatSetting(QWidget *parent) :
     ui(new Ui::Form_ChatSetting)
 {
     ui->setupUi(this);
-    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+    setWindowTitle("Chat Setting");
+    setModal(true); //配置为模态对话框
+    setWindowFlags(Qt::WindowStaysOnTopHint);   //显示在顶层
 
     QFile file(":/qss/lightgray.css"); // 创建QFile对象，指定样式表文件路径
     file.open(QFile::ReadOnly); // 打开文件，只读模式

@@ -11,6 +11,11 @@ Msg_Handler::Msg_Handler(QObject *parent) : QObject(parent)
 
 }
 
+/**
+*@brief	比较校验和
+*@param	-msg：待校验数据
+*@return 执行状态
+*/
 int Msg_Handler::Comp_CheckSum(uint8_t *msg)
 {
     uint8_t length = msg[0];    //获取接收长度
@@ -29,22 +34,22 @@ int Msg_Handler::Comp_CheckSum(uint8_t *msg)
 }
 
 
-
+/**
+*@brief	HID数据处理
+*@param	-data:接收数据指针
+*@return 执行状态
+*/
 int Msg_Handler::Data_Resolve(uint8_t *data)
 {
-    qDebug() << "handler" ;
-    uint8_t datalength = 0;
-    datalength = data[0];
+    uint8_t datalength = 0; //hid数据长度
+    datalength = data[0];   //hid数据中第一个字节代表后续数据长度
     g_rec_data_format.cmd = data[1];
     g_rec_data_format.data_len = data[2];
     g_rec_data_format.type = data[3];
     g_rec_data_format.result = data[4];
-    //g_rec_data_format.data = &msg[4];
+
     memcpy((uint8_t*)&g_rec_data_format.data, (uint8_t*)&data[5],g_rec_data_format.data_len);
     g_rec_data_format.checksum = data[g_rec_data_format.data_len];
-    qDebug() << "length= " << datalength;
-    qDebug() << "cmd= " << g_rec_data_format.cmd;
-
     switch (g_rec_data_format.type)
     {
     case USB_PROTOCOL_FORMAT_GET_INDEX_LIST:    //数据为索引表信息

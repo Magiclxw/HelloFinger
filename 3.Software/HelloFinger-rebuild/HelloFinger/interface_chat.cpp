@@ -15,6 +15,11 @@ interface_chat::interface_chat(QObject *parent) : QObject(parent)
 
 }
 
+/**
+*@brief	发送对话内容
+*@param	-question:对话内容
+*@return 执行状态
+*/
 void interface_chat::Chat_Send_Question(QString question)
 {
     QString api_server;
@@ -42,30 +47,25 @@ void interface_chat::Chat_Send_Question(QString question)
 
     reply = manager.post(request, QJsonDocument(data).toJson());
 
-    connect(reply, &QNetworkReply::finished,this, [&]() {
-        if (reply->error() == QNetworkReply::NoError) {
+    connect(reply, &QNetworkReply::finished,this, [&]() {   //收到响应
+        if (reply->error() == QNetworkReply::NoError) {     //响应正确
             QByteArray responseData = reply->readAll();
             QJsonDocument json = QJsonDocument::fromJson(responseData);
             if(json.isObject())
             {
-                qDebug() << "obj";
                 QJsonObject jsonObject = json.object();
                 //QString request_id = jsonObject.value("request_id").toString();
                 QJsonObject jsonObject1 = jsonObject["output"].toObject();
-                QString text = jsonObject1.value("text").toString();
-                emit Signal_Chat_Msg_Received(text);
+                QString answer = jsonObject1.value("text").toString();
+                emit Signal_Chat_Msg_Received(answer);  //发送信号传递对话响应
             }
-            if(json.isArray())
-            {
-                //qDebug() << "array";
-            }
-
-        } else {
+        } else {    //响应错误
             QByteArray responseData = reply->readAll();
             qDebug() << "API Error:" << reply->errorString();
             qDebug() << "text:" << responseData;
+            emit Signal_Chat_Msg_Received(responseData);    //发送信号传递错误内容
         }
         qDebug() << reply->error();
-        //reply->deleteLater();
+        reply->deleteLater();
     });
 }

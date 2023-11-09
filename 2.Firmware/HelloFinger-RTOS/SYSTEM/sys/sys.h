@@ -10,6 +10,8 @@
  */
 #define SYS_SUPPORT_OS          1
 
+#define Firmware_Version	 "1.0.0_beta"
+
 typedef struct _SYSTEM_INFO_
 {
 	char *compile_date;

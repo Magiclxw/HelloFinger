@@ -43,7 +43,7 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-const char *Firmware_Version	= "1.0.0_beta";
+//const char *Firmware_Version	= "1.0.0_beta";
 #define Compile_time	__DATE__","__TIME__
 /* USER CODE END PTD */
 

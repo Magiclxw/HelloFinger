@@ -672,17 +672,18 @@ int HID_Data_Handle(void)
 				 printf("%s\r\n",compile_time);
 				 strcpy(compile_date,__DATE__);
 				 printf("%s\r\n",compile_date);
-				 
+				 strcpy(firmware_version,Firmware_Version);
 				 g_usb_response.head = USB_RESPONSE_HEAD;
-				 g_usb_response.len = 21;
+				 g_usb_response.len = 46;
 				 g_usb_response.type = USB_PROTOCOL_FORMAT_GET_FW_HW;
 				 g_usb_response.result = CONFIRM_OK;
 				 
 				 memcpy((uint8_t*)&g_usb_response.data[0],(uint8_t*)compile_date,11);
 				 memcpy((uint8_t*)&g_usb_response.data[11],(uint8_t*)compile_time,8);
+				 memcpy((uint8_t*)&g_usb_response.data[19],(uint8_t*)firmware_version,15);
 				 
-				 g_usb_response.data[19] = CH9329_CAL_SUM((uint8_t*)&g_usb_response,23);
-				 CH9329_Send_HID_Data((uint8_t*)&g_usb_response,24);
+				 g_usb_response.data[34] = CH9329_CAL_SUM((uint8_t*)&g_usb_response,38);
+				 CH9329_Send_HID_Data((uint8_t*)&g_usb_response,39);
 				 break;
 			 }
 			 case USB_PROTOCOL_FORMAT_SET_ACTION:	//设置Action按键功能

@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <QString>
 #include <QSizePolicy>
+#include <QString>
 #include <QFile>
 #include <QJsonObject>
 #include <QJsonDocument>
@@ -98,6 +99,10 @@ Form_MainWindow::Form_MainWindow(QWidget *parent)
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));   //设置编码格式
 
     ui->textEdit_chat_input->setPlaceholderText("此处输入对话内容");
+
+    ui->lineEdit_email->setText(AUTHOR_EMAIL);
+    ui->lineEdit_group->setText(AUTHOR_GROUP);
+    ui->lineEdit_developer_group->setText(AUTHOR_DEVELOPER_GROUP);
 
     hidewindow = new Form_HideWindow;
     hidewindow->show();
@@ -551,6 +556,15 @@ void Form_MainWindow::Slot_Update_FirmwareMsg(char* date,char* version)
 {
     ui->label_build_date->setText(date);
     ui->label_firmware_version->setText(version);
+}
+
+void Form_MainWindow::Slot_Update_HardwareMsg(uint8_t* flashId,uint8_t ch9329_ver,char* fpm383cSN)
+{
+    QString t_fpm383cSN = QString::fromUtf8(fpm383cSN);
+    uint16_t t_flashId = flashId[0] | flashId[1]<<8;
+    ui->label_flashId->setText(QString::number(t_flashId,16).toUpper());
+    ui->label_ch9329_version->setText(QString::number(ch9329_ver,16));
+    ui->label_fpm383_sn->setText(t_fpm383cSN);
 }
 
 void Form_MainWindow::on_keyEvent(QKeyEvent* event)  //全局按键事件
@@ -1493,5 +1507,11 @@ void Form_MainWindow::on_pushButton_RGB_last_page_clicked()
 void Form_MainWindow::on_pushButton_get_firmware_msg_clicked()
 {
     emit Signal_GetFirmwareMsg();
+}
+
+
+void Form_MainWindow::on_pushButton_get_hardware_msg_clicked()
+{
+    emit Signal_GetHardwareMsg();
 }
 

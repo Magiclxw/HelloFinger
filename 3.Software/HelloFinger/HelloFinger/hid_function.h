@@ -112,6 +112,7 @@ int HID_Send_Shortcut(hid_device *usb_handle,Finger_Type_e fingertype,uint8_t fu
 int HID_Send_QuickStart(hid_device *usb_handle,Finger_Type_e fingertype,QUICK_START_e startID,uint8_t index);
 int HID_Send_Breath_RGB(hid_device *usb_handle,uint8_t color_R,uint8_t color_G,uint8_t color_B,uint8_t interval);
 int HID_Send_Finger_RGB(hid_device *usb_handle,uint8_t mode,uint8_t startColor,uint8_t stopColor,uint8_t cycle);
-int HID_Get_FW_HW_Msg(hid_device *usb_handle);
+int HID_Get_FW_Msg(hid_device *usb_handle);
+int HID_Get_HW_Msg(hid_device *usb_handle);
 int HID_Set_Action_Func(hid_device *usb_handle, uint8_t func,uint8_t action);
 #endif // HID_FUNCTION_H

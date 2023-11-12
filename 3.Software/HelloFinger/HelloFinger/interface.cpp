@@ -68,12 +68,17 @@ Interface::Interface(QObject *parent) : QThread(parent)
     connect(mainwindow,&Form_MainWindow::Signal_SetFingerRGB,this,[=](uint8_t mode,uint8_t startColor,uint8_t stopColor,uint8_t interval){
         HID_Send_Finger_RGB(usb_handle,mode,startColor,stopColor,interval);
     });
-
+    /* 获取固件信息 */
     connect(mainwindow,&Form_MainWindow::Signal_GetFirmwareMsg,this,[=](){
-        HID_Get_FW_HW_Msg(usb_handle);
+        HID_Get_FW_Msg(usb_handle);
+    });
+    /* 获取硬件信息 */
+    connect(mainwindow,&Form_MainWindow::Signal_GetHardwareMsg,this,[=](){
+        HID_Get_HW_Msg(usb_handle);
     });
 
     connect(msgHandler,&Msg_Handler::Signal_Update_Firmware_Msg,mainwindow,&Form_MainWindow::Slot_Update_FirmwareMsg);
+    connect(msgHandler,&Msg_Handler::Signal_Update_Hardware_Msg,mainwindow,&Form_MainWindow::Slot_Update_HardwareMsg);
 }
 
 void Interface::run()

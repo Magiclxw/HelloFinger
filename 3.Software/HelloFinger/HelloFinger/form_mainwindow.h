@@ -71,6 +71,7 @@ public slots:
     void Slot_SetFingerRGB(void);
     void Slot_Popup_ChatSettingWindow(void);
     void Slot_Update_FirmwareMsg(char* date,char* version);
+    void Slot_Update_HardwareMsg(uint8_t* flashId,uint8_t ch9329_ver,char* fpm383cSN);
 signals:
     void Signal_AddFinger(uint8_t pos,uint8_t times,uint8_t param1,uint8_t param2);
     void Signal_DeleteFinger(uint8_t id);
@@ -87,7 +88,7 @@ signals:
     void Signal_SetFingerRGB(uint8_t mode,uint8_t startColor,uint8_t stopColor,uint8_t interval);
     void Signal_OpenHidewindowItem(void);
     void Signal_GetFirmwareMsg(void);
-
+    void Signal_GetHardwareMsg(void);
 private slots:
     void Slot_ShowWindow();
     void Slot_Exit();
@@ -115,6 +116,7 @@ private slots:
     void on_pushButton_RGB_next_page_clicked();
 
     void on_pushButton_RGB_last_page_clicked();
+    void on_pushButton_get_hardware_msg_clicked();
     void on_pushButton_get_firmware_msg_clicked();
 };
 #endif // FORM_MAINWINDOW_H

@@ -1,3 +1,0 @@
-[ChatAI]
-chat_ai_url=https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation
-chat_ai_key=sk-6f6c005f9a484e7385c3161f54732c79

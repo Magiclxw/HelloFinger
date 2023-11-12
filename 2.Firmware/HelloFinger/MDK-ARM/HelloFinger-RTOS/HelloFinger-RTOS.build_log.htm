@@ -1,0 +1,73 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: ¦ÌVision V5.26.2.0
+Copyright (C) 2018 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: sdf asdf, df, LIC=X96CK-ZG9AK-RASDM-XQQTP-GJ9CM-9W69D
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Plus  Version: 5.26.2.0
+Toolchain Path:  E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 6 (build 750)
+Assembler:       Armasm.exe V5.06 update 6 (build 750)
+Linker/Locator:  ArmLink.exe V5.06 update 6 (build 750)
+Library Manager: ArmAr.exe V5.06 update 6 (build 750)
+Hex Converter:   FromElf.exe V5.06 update 6 (build 750)
+CPU DLL:         SARMCM3.DLL V5.26.2.0
+Dialog DLL:      DCM.DLL V1.17.2.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.0.5.0
+Dialog DLL:      TCM.DLL V1.36.1.0
+ 
+<h2>Project:</h2>
+E:\WORK\PersonalProject\HelloKey\root\2.Firmware\HelloFinger\MDK-ARM\HelloFinger-RTOS.uvprojx
+Project File Date:  11/09/2023
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 6 (build 750)', folder: 'E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin'
+Build target 'HelloFinger-RTOS'
+compiling app_task_hid_transfer.c...
+..\USER\application\app_task_hid_transfer.c(73): warning:  #188-D: enumerated type mixed with another type
+  	_LED_Function_t func = g_sys_init_param.fp383_param.FPM383_RGB_func;
+..\USER\application\app_task_hid_transfer.c(204): warning:  #940-D: missing return statement at end of non-void function "Key_Trans_Mode_RecData_Handle" 
+  }
+..\USER\application\app_task_hid_transfer.c(454): warning:  #177-D: variable "len"  was declared but never referenced
+  						 uint8_t len = 0;
+..\USER\application\app_task_hid_transfer.c(602): warning:  #177-D: variable "len"  was declared but never referenced
+  						 uint8_t len = 0;
+..\USER\application\app_task_hid_transfer.c(697): warning:  #177-D: variable "ch9329_ver"  was declared but never referenced
+  				 uint8_t ch9329_ver = 0;
+..\USER\application\app_task_hid_transfer.c(741): warning:  #177-D: function "Store_FingerFunc"  was declared but never referenced
+  static void Store_FingerFunc()
+..\USER\application\app_task_hid_transfer.c: 6 warnings, 0 errors
+linking...
+Program Size: Code=33516 RO-data=708 RW-data=404 ZI-data=17980  
+FromELF: creating hex file...
+"HelloFinger-RTOS\HelloFinger-RTOS.axf" - 0 Error(s), 6 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.5.4.0.pack
+                ARM.CMSIS.5.4.0
+                CMSIS (Cortex Microcontroller Software Interface Standard)
+   * Component: CORE Version: 5.1.2
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.STM32F1xx_DFP.2.1.0.pack
+                Keil.STM32F1xx_DFP.2.1.0
+                STMicroelectronics STM32F1 Series Device Support, Drivers and Examples
+
+<h2>Collection of Component include folders:</h2>
+  .\RTE\_HelloFinger-RTOS
+  E:\SOFTWARE\Environment\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include
+  E:\SOFTWARE\Environment\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:5.1.2
+Build Time Elapsed:  00:00:01
+</pre>
+</body>
+</html>

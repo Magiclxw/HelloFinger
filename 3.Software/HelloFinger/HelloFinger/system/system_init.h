@@ -3,6 +3,10 @@
 
 #include <QObject>
 
+#define AUTHOR_EMAIL    "1353182489@qq.com"
+#define AUTHOR_GROUP    "692423608"
+#define AUTHOR_DEVELOPER_GROUP  "253617048"
+
 typedef enum ChatAI_Cfg_
 {
     ChatAI_Cfg_URL,

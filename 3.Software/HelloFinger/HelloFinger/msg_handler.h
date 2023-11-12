@@ -65,8 +65,8 @@ typedef enum USB_PROTOCOL_FORMAT
 {
     USB_PROTOCOL_FORMAT_NOUSE0,				  //0x00
     USB_PROTOCOL_FORMAT_MODE_SWITCH,		  //0x01
-    USB_PROTOCOL_FORMAT_GET_FW_HW,            //0x02
-    USB_PROTOCOL_FORMAT_NOUSE2,               //0x03
+    USB_PROTOCOL_FORMAT_GET_FW,               //0x02
+    USB_PROTOCOL_FORMAT_GET_HW,               //0x03
     USB_PROTOCOL_FORMAT_NOUSE3,               //0x04
     USB_PROTOCOL_FORMAT_NOUSE4,               //0x05
     USB_PROTOCOL_FORMAT_NOUSE5,               //0x06
@@ -108,6 +108,7 @@ signals:
     void Signal_Update_TableState();
     void Signal_Update_EnrollState(uint8_t state1,uint8_t state2);
     void Signal_Update_Firmware_Msg(char* date,char* version);
+    void Signal_Update_Hardware_Msg(uint8_t* flashId,uint8_t ch9329_ver,char* fpm383cSN);
 };
 
 #endif // MSG_HANDLER_H

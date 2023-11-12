@@ -83,7 +83,7 @@ int Msg_Handler::Data_Resolve(uint8_t *data)
         //emit mainwindow->Signal_RefreshFinger();
         break;
     }
-    case USB_PROTOCOL_FORMAT_GET_FW_HW:
+    case USB_PROTOCOL_FORMAT_GET_FW:
     {
         if(g_rec_data_format.result == CONFIRM_OK)  //执行结果正确
         {
@@ -96,6 +96,28 @@ int Msg_Handler::Data_Resolve(uint8_t *data)
             qDebug()<<"date:"<<compile_date;
             qDebug()<<"version:"<<version;
             emit Signal_Update_Firmware_Msg(compile_date,version);
+        }
+        else    //执行结果错误
+        {
+
+        }
+        break;
+    }
+    case USB_PROTOCOL_FORMAT_GET_HW:
+    {
+        if(g_rec_data_format.result == CONFIRM_OK)  //执行结果正确
+        {
+            uint8_t flashId[2] = {0};
+            uint8_t ch9329_ver = 0;
+            char fpm383cSN[33] = {0};
+
+            memcpy(flashId,(uint8_t*)&g_rec_data_format.data[0],2);
+            ch9329_ver = g_rec_data_format.data[2];
+            memcpy(fpm383cSN,(uint8_t*)&g_rec_data_format.data[3],32);
+            fpm383cSN[32] = '\0';
+            qDebug()<<"flashId:"<<flashId << "ch9329 ver:" << ch9329_ver << "fpm383c sn:" << fpm383cSN;
+
+            emit Signal_Update_Hardware_Msg(flashId,ch9329_ver,fpm383cSN);
         }
         else    //执行结果错误
         {

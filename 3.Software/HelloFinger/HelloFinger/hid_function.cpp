@@ -447,17 +447,17 @@ int HID_Send_Finger_RGB(hid_device *usb_handle,uint8_t mode,uint8_t startColor,u
 }
 
 /**
-*@brief	获取硬件、固件信息
+*@brief	获取固件信息
 *@param	-usb_handle:HID通信句柄
 *@return 执行结果
 */
-int HID_Get_FW_HW_Msg(hid_device *usb_handle)
+int HID_Get_FW_Msg(hid_device *usb_handle)
 {
     if(usb_handle == NULL)
     {
         return OPERATE_ERROR_INVALID_PARAMETERS;
     }
-    uint8_t flag = USB_PROTOCOL_FORMAT_GET_FW_HW;
+    uint8_t flag = USB_PROTOCOL_FORMAT_GET_FW;
     uint8_t *cmd_pack = new uint8_t[3];
     cmd_pack[0] = flag;
     cmd_pack[1] = 0x00;
@@ -469,6 +469,28 @@ int HID_Get_FW_HW_Msg(hid_device *usb_handle)
     return OPERATE_SUCCESS;
 }
 
+/**
+*@brief	获取硬件信息
+*@param	-usb_handle:HID通信句柄
+*@return 执行结果
+*/
+int HID_Get_HW_Msg(hid_device *usb_handle)
+{
+    if(usb_handle == NULL)
+    {
+        return OPERATE_ERROR_INVALID_PARAMETERS;
+    }
+    uint8_t flag = USB_PROTOCOL_FORMAT_GET_HW;
+    uint8_t *cmd_pack = new uint8_t[3];
+    cmd_pack[0] = flag;
+    cmd_pack[1] = 0x00;
+    cmd_pack[2] = 0x00;
+    GenerateCmd(cmd_pack,3);
+    delete [] cmd_pack;
+    hid_write(usb_handle,hid_command,3+HID_FIXED_LEN);
+    qDebug() << hid_command;
+    return OPERATE_SUCCESS;
+}
 
 /**
 *@brief	设置Aaction按键功能

@@ -29,7 +29,7 @@
    <enum>QTabWidget::Rounded</enum>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout_35">
+   <layout class="QVBoxLayout" name="verticalLayout_31">
     <property name="spacing">
      <number>0</number>
     </property>
@@ -81,7 +81,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>6</number>
+       <number>0</number>
       </property>
       <property name="iconSize">
        <size>
@@ -5146,15 +5146,15 @@ font: 9pt &quot;黑体&quot;;</string>
             <item>
              <widget class="QToolBox" name="toolBox_2">
               <property name="currentIndex">
-               <number>0</number>
+               <number>2</number>
               </property>
               <widget class="QWidget" name="page_hardware_msg">
                <property name="geometry">
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>196</width>
-                 <height>285</height>
+                 <width>156</width>
+                 <height>210</height>
                 </rect>
                </property>
                <attribute name="label">
@@ -5279,8 +5279,8 @@ font: 9pt &quot;黑体&quot;;</string>
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>196</width>
-                 <height>285</height>
+                 <width>135</width>
+                 <height>148</height>
                 </rect>
                </property>
                <attribute name="label">
@@ -5328,6 +5328,74 @@ font: 9pt &quot;黑体&quot;;</string>
                     <widget class="QLabel" name="label_build_date">
                      <property name="text">
                       <string/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+              <widget class="QWidget" name="page_3">
+               <property name="geometry">
+                <rect>
+                 <x>0</x>
+                 <y>0</y>
+                 <width>196</width>
+                 <height>256</height>
+                </rect>
+               </property>
+               <attribute name="label">
+                <string>软件信息</string>
+               </attribute>
+               <layout class="QVBoxLayout" name="verticalLayout_30">
+                <item>
+                 <widget class="QWidget" name="widget_33" native="true">
+                  <layout class="QVBoxLayout" name="verticalLayout_32">
+                   <item>
+                    <widget class="QWidget" name="widget_34" native="true">
+                     <layout class="QHBoxLayout" name="horizontalLayout_35">
+                      <item>
+                       <widget class="QLabel" name="label_23">
+                        <property name="text">
+                         <string>版本</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLabel" name="label_software_version">
+                        <property name="text">
+                         <string/>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QWidget" name="widget_36" native="true">
+                     <layout class="QHBoxLayout" name="horizontalLayout_36">
+                      <item>
+                       <widget class="QLabel" name="label_24">
+                        <property name="text">
+                         <string>编译日期</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLabel" name="label_software_build_time">
+                        <property name="text">
+                         <string/>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="pushButton_update">
+                     <property name="text">
+                      <string>获取更新</string>
                      </property>
                     </widget>
                    </item>

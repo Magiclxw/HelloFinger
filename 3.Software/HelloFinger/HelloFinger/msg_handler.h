@@ -108,7 +108,7 @@ signals:
     void Signal_Update_TableState();
     void Signal_Update_EnrollState(uint8_t state1,uint8_t state2);
     void Signal_Update_Firmware_Msg(char* date,char* version);
-    void Signal_Update_Hardware_Msg(uint8_t* flashId,uint8_t ch9329_ver,char* fpm383cSN);
+    void Signal_Update_Hardware_Msg(uint8_t* flashId,char ch9329_ver,char* fpm383cSN);
 };
 
 #endif // MSG_HANDLER_H

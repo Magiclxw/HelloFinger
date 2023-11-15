@@ -66,8 +66,8 @@ uint8_t interval = 0;   //亮度改变间隔
 
 QString chat_rec_last_msg;  //记录接收到的对话信息
 
-QString table_1_Content = "table1Content.json";
-QString table_2_Content = "table2Content.json";
+QString table_1_Content = "config/table1Content.json";
+QString table_2_Content = "config/table2Content.json";
 
 QTimer *rgb_timer = NULL;   //灯效演示定时器
 QTimer *hidewindowHold_timer = NULL;    //侧边栏超时隐藏定时器
@@ -103,6 +103,8 @@ Form_MainWindow::Form_MainWindow(QWidget *parent)
     ui->lineEdit_email->setText(AUTHOR_EMAIL);
     ui->lineEdit_group->setText(AUTHOR_GROUP);
     ui->lineEdit_developer_group->setText(AUTHOR_DEVELOPER_GROUP);
+    ui->label_software_version->setText(SOFTWARE_VERSION);
+    ui->label_software_build_time->setText(__DATE__);
 
     hidewindow = new Form_HideWindow;
     hidewindow->show();
@@ -229,7 +231,7 @@ void Form_MainWindow::Slot_AddFinger()
     //enroll->show(); //弹出注册状态窗口
     ui->stackedWidget->setCurrentWidget(ui->page_enrollState);
     uint8_t times = 4;  //注册次数
-    uint8_t param[2] = {0x00,ENROLL_PARAM_CRITICAL_PROCESS_DISABLE|ENROLL_PARAM_LED_OFF};
+    uint8_t param[2] = {0x00,ENROLL_PARAM_REENROLL_DISABLE|ENROLL_PARAM_LED_OFF};
     emit Signal_AddFinger(checkedRow,times,param[0],param[1]);
     ui->label_enroll_state->setText("放下手指");
 }
@@ -252,6 +254,11 @@ void Form_MainWindow::Slot_EnrollState(uint8_t state1,uint8_t state2)
     {
         process += step;
         ui->label_enroll_state->setText("重新放下手指");
+    }
+    if(state1 == 0x05 && state2 == 0xF1)
+    {
+        process = 0;
+        ui->label_enroll_state->setText("指纹重复");
     }
     if(state1 == 0x06 && state2 == 0xF2)
     {
@@ -554,16 +561,26 @@ void Form_MainWindow::Slot_DeleteListWidgetItem()
 
 void Form_MainWindow::Slot_Update_FirmwareMsg(char* date,char* version)
 {
+    qDebug() << "date" << date;
+    qDebug() << "version" << version;
     ui->label_build_date->setText(date);
     ui->label_firmware_version->setText(version);
 }
 
-void Form_MainWindow::Slot_Update_HardwareMsg(uint8_t* flashId,uint8_t ch9329_ver,char* fpm383cSN)
+/**
+*@brief	更新硬件信息
+*@param	-flashId:flash id号
+*@param -ch9329_ver:ch9329版本号
+*@param -fpm383cSN:fpm383c SN号
+*@return NULL
+*/
+void Form_MainWindow::Slot_Update_HardwareMsg(uint8_t* flashId,char ch9329_ver,char* fpm383cSN)
 {
     QString t_fpm383cSN = QString::fromUtf8(fpm383cSN);
     uint16_t t_flashId = flashId[0] | flashId[1]<<8;
+    char t_ch9329_ver[2] = {ch9329_ver,0};
     ui->label_flashId->setText(QString::number(t_flashId,16).toUpper());
-    ui->label_ch9329_version->setText(QString::number(ch9329_ver,16));
+    ui->label_ch9329_version->setText("V1." + QString::fromUtf8(t_ch9329_ver));
     ui->label_fpm383_sn->setText(t_fpm383cSN);
 }
 
@@ -757,7 +774,7 @@ void Form_MainWindow::File_Update_TableContent(QString path)
     if(!jsonFile.open(QIODevice::ReadOnly)){    //文件不存在
         //QJsonObject mainObj;
         QJsonObject subObj;
-        for(int i=1;i<60;i++){
+        for(int i=0;i<60;i++){
             QString item = "item";
             item.append(QString::number(i));
             subObj.insert(item,QJsonValue(QString::number(i)));
@@ -776,9 +793,12 @@ void Form_MainWindow::File_Update_TableContent(QString path)
         if(doc.isObject()){
             QJsonObject obj = doc.object();
             //QString data = "ListConfig";
-            uint8_t finger_type = ui->tabWidget_finger_func->currentIndex();
-            if(finger_type == FINGER)
+            //uint8_t finger_type = ui->tabWidget_finger_func->currentIndex();
+            //if(finger_type == FINGER)
+            //{
+            if(path == table_1_Content)
             {
+                qDebug() << "finger";
                 for(int i=0;i<60;i++){
                     QString item = "item";
                     item.append(QString::number(i));
@@ -788,8 +808,13 @@ void Form_MainWindow::File_Update_TableContent(QString path)
                     ui->listWidget_table_state->item(i)->setText(value.toString());
                 }
             }
-            else
+
+            //}
+            //else
+            //{
+            if(path == table_2_Content)
             {
+                qDebug() << "finger key";
                 for(int i=0;i<60;i++){
                     QString item = "item";
                     item.append(QString::number(i));
@@ -799,6 +824,8 @@ void Form_MainWindow::File_Update_TableContent(QString path)
                     ui->listWidget_table_state_key->item(i)->setText(value.toString());
                 }
             }
+
+            //}
 
         }
     }
@@ -1513,5 +1540,11 @@ void Form_MainWindow::on_pushButton_get_firmware_msg_clicked()
 void Form_MainWindow::on_pushButton_get_hardware_msg_clicked()
 {
     emit Signal_GetHardwareMsg();
+}
+
+
+void Form_MainWindow::on_pushButton_update_clicked()
+{
+    QDesktopServices::openUrl(QUrl(QString(SOFTWARE_UPDATE_LINK)));
 }
 

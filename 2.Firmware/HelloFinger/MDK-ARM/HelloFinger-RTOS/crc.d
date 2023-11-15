@@ -33,3 +33,4 @@ hellofinger-rtos\crc.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 hellofinger-rtos\crc.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 hellofinger-rtos\crc.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 hellofinger-rtos\crc.o: E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin\..\include\stdlib.h
+hellofinger-rtos\crc.o: E:\SOFTWARE\Environment\Keil\ARM\ARMCC\Bin\..\include\string.h

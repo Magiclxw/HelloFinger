@@ -33,7 +33,11 @@ int Msg_Handler::Comp_CheckSum(uint8_t *msg)
 
 }
 
-
+char compile_date[21] = {0};
+char version[16] = {0};
+uint8_t flashId[2] = {0};
+char ch9329_ver = 0;
+char fpm383cSN[33] = {0};
 /**
 *@brief	HID数据处理
 *@param	-data:接收数据指针
@@ -87,10 +91,10 @@ int Msg_Handler::Data_Resolve(uint8_t *data)
     {
         if(g_rec_data_format.result == CONFIRM_OK)  //执行结果正确
         {
-            char compile_date[21] = {0};
-            char version[16] = {0};
+
             memcpy(compile_date,(uint8_t*)&g_rec_data_format.data[0],19);
             memcpy(version,(uint8_t*)&g_rec_data_format.data[19],15);
+
             compile_date[20] = 0;
             version[15] = 0;
             qDebug()<<"date:"<<compile_date;
@@ -107,9 +111,7 @@ int Msg_Handler::Data_Resolve(uint8_t *data)
     {
         if(g_rec_data_format.result == CONFIRM_OK)  //执行结果正确
         {
-            uint8_t flashId[2] = {0};
-            uint8_t ch9329_ver = 0;
-            char fpm383cSN[33] = {0};
+
 
             memcpy(flashId,(uint8_t*)&g_rec_data_format.data[0],2);
             ch9329_ver = g_rec_data_format.data[2];

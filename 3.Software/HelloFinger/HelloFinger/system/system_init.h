@@ -6,6 +6,8 @@
 #define AUTHOR_EMAIL    "1353182489@qq.com"
 #define AUTHOR_GROUP    "692423608"
 #define AUTHOR_DEVELOPER_GROUP  "253617048"
+#define SOFTWARE_VERSION    "1.0.0"
+#define SOFTWARE_UPDATE_LINK    "https://pan.baidu.com/s/1j0SeBc8MDqTK7zDHDOcD2g?pwd=ihth"
 
 typedef enum ChatAI_Cfg_
 {

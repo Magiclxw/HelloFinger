@@ -46,11 +46,11 @@ int System_PARAM_Init(void)
 	g_sys_init_param.joystick_param.JOYSTICK_INIT_PARAM_MIN_OFFSET = MIN_OFFSET;
 	
 	g_sys_init_param.rgb_param.RGB_INIT_PARAM_R = 0x00;
-	g_sys_init_param.rgb_param.RGB_INIT_PARAM_G = 0xFF;
-	g_sys_init_param.rgb_param.RGB_INIT_PARAM_B = 0x00;
+	g_sys_init_param.rgb_param.RGB_INIT_PARAM_G = 0x00;
+	g_sys_init_param.rgb_param.RGB_INIT_PARAM_B = 0xFF;
 	g_sys_init_param.rgb_param.RGB_R_decrease = 0;
-	g_sys_init_param.rgb_param.RGB_G_decrease = 5;
-	g_sys_init_param.rgb_param.RGB_B_decrease = 0;
+	g_sys_init_param.rgb_param.RGB_G_decrease = 0;
+	g_sys_init_param.rgb_param.RGB_B_decrease = 5;
 	g_sys_init_param.rgb_param.RGB_interval = 30;
 
 }

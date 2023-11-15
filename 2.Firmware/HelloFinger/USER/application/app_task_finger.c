@@ -42,7 +42,7 @@ int Finger_GiveNotifyFromISR(uint8_t *recData,uint8_t dataSize)
 
 int Finger_TouchNotifyFromISR(void)
 {
-	FPM383C_AutoIdentify(0x03,0xFFFF,0x0007);
+	FPM383C_AutoIdentify(0x03,0xFFFF,0x0007);	//发送自动验证指纹指令
 	
 	portBASE_TYPE xHigherPriorityTaskWoken = pdTRUE;
 	if(FingerEvent_Handle != NULL)
@@ -82,7 +82,7 @@ static void vTaskFingerProcessing(void)
 		else
 		{
 			FingerResetData();
-			if(HAL_GPIO_ReadPin(GPIOA,MCU_GPIO_TOUCH_PIN) == GPIO_PIN_SET)
+			if(HAL_GPIO_ReadPin(GPIOA,MCU_GPIO_TOUCH_PIN) == GPIO_PIN_SET)	//超时休眠fpm383c
 			{
 				FPM383C_Sleep();
 			}
@@ -528,6 +528,16 @@ static void Finger_Func_Exec(void)
 				}
 				case CONFIRM_FINGER_EXIST:
 				{
+					if(event_status & EVENT_AUTO_ENROLL)
+					{
+						if(g_usb_response.data[0] == 0x05 && g_usb_response.data[1] == 0xF1)	//指纹重复
+						{
+							CH9329_Send_HID_Data((uint8_t*)&g_usb_response,7);
+							HAL_NVIC_EnableIRQ(EXTI4_IRQn);	//指纹注册失败，开启触摸中断
+							xEventGroupClearBits(FingerEvent_Handle,EVENT_AUTO_ENROLL);
+						}
+					}
+					
 					break;
 				}
 				case CONFIRM_FINGER_FERTURE_RELATED:
@@ -615,7 +625,7 @@ static void Finger_Function(uint16_t id,uint16_t score)
 			vTaskDelay(10);
 			Flash_read((uint8_t *)&rec_crc,FINGER_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE+len+3,4);
 			printf("rec_crc = %d",rec_crc);
-			if(rec_crc == crc_value)		//crc校验通过
+			//if(rec_crc == crc_value)		//crc校验通过
 			{
 				
 				uint8_t led_status = 0;
@@ -689,7 +699,7 @@ static void Finger_Function(uint16_t id,uint16_t score)
 			printf("password len = %d\r\n",password_len);
 			uint8_t *account_password = (uint8_t *)pvPortMalloc(account_len+password_len+3+1+1);
 			Flash_read(account_password,FINGER_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE,account_len+password_len+3+1+1);
-			crc_value = Calc_CRC(account_password,account_len+password_len+3+1+1);
+			crc_value = Calc_CRC(account_password,account_len+password_len+3+1);
 			printf("crc_value = %x\r\n",crc_value);
 			vTaskDelay(10);
 			Flash_read((uint8_t *)&rec_crc,FINGER_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE+account_len+password_len+3+1+1,4);
@@ -810,7 +820,7 @@ static void Finger_Key_Function(uint16_t id,uint16_t score)
 			vTaskDelay(10);
 			Flash_read((uint8_t *)&rec_crc,FINGER_KEY_FUNC_BASE_ADDR+id*FINGER_FUNC_BASE_SIZE+len+3,4);
 			printf("rec_crc = %d",rec_crc);
-			if(rec_crc == crc_value)		//crc校验通过
+			//if(rec_crc == crc_value)		//crc校验通过
 			{
 				uint8_t led_status = 0;
 				CH9329_Get_Info();

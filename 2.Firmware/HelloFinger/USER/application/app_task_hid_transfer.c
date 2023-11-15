@@ -709,7 +709,7 @@ int HID_Data_Handle(void)
 				 
 				 g_usb_response.data[39] = CH9329_CAL_SUM((uint8_t*)&g_usb_response,39);
 				 
-				 CH9329_Send_HID_Data((uint8_t*)&g_usb_response,39);
+				 CH9329_Send_HID_Data((uint8_t*)&g_usb_response,40);
 				 break;
 			 }
 			 case USB_PROTOCOL_FORMAT_SET_ACTION:	//设置Action按键功能

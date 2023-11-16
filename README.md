@@ -1,5 +1,5 @@
 # HelloFinger
-![HelloFinger](https://github.com/Magiclxw/HelloFinger/blob/main/4.Doc/Image/HelloFinger.jpg"HelloFinger")
+![HelloFinger](https://github.com/Magiclxw/HelloFinger/blob/main/4.Doc/Image/HelloFinger.jpg)
 ## 关于本项目：
 该项目通过操作单个模块，实现与Windows系统的HID通信，配合上位机实现电脑开机、电脑解锁、鼠标控制、快捷键、多任务、AI对话等功能。
 
@@ -20,7 +20,4 @@
 -**固件**：Keil5  
 -**上位机**：Qt  
 
-# 涉及到的能力：
--**语言**:C、C++  
--**开发平台**:Keil MDK5、Qt
--**芯片**:STM32F103C8T6  
+

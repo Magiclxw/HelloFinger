@@ -45,8 +45,10 @@ HelloFinger使用一颗STM32F103作为主控通过串口与CH9329芯片通信,CH
   6. Tools：工具文件夹：包含硬件外设的测试工具；
 
 ## 原理图
-  1. [连接器]()
-  2. [主板]()
+  1. 连接器  
+  ![连接器](https://github.com/Magiclxw/HelloFinger/blob/main/4.Doc/Image/%E8%BF%9E%E6%8E%A5%E5%99%A8%E5%8E%9F%E7%90%86%E5%9B%BE.png)
+  2. 主板  
+  ![主板](https://github.com/Magiclxw/HelloFinger/blob/main/4.Doc/Image/%E4%B8%BB%E6%9D%BF%E5%8E%9F%E7%90%86%E5%9B%BE.png)
 
 ## PCB说明
 本项目需要2个PCB板，分别是主板和连接器板，其中连接器板不是必须的，如果不需要连接电脑的物理开机键，就可以舍弃掉连接器板。

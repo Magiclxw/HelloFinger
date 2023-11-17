@@ -52,3 +52,6 @@ HelloFinger使用一颗STM32F103作为主控通过串口与CH9329芯片通信,CH
 ![主板背面](https://github.com/Magiclxw/HelloFinger/blob/main/4.Doc/Image/%E4%B8%BB%E6%9D%BF%E8%83%8C%E9%9D%A2.jpg)
 PCB采用4层板，电容电阻封装采用0603，整体含有3个非标准封装，分别是JoyStick摇杆、FPM383C指纹识别模块以及弯角微动。
 PCB焊接时需要遵循一定的焊接步骤，具体的步骤见[焊接指南](https://github.com/Magiclxw/HelloFinger/blob/main/4.Doc/HelloFinger%E7%84%8A%E6%8E%A5%E6%8C%87%E5%8D%97V1.0.pdf)
+
+## 3D结构件
+HelloFinger一共有8个结构件，分别是[连接器上壳]()、[连接器下壳]()、[主板上壳]()、[主板下壳]()、[上按钮*2]()、[侧键*2]()

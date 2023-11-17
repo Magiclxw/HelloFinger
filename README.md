@@ -47,8 +47,8 @@ HelloFinger使用一颗STM32F103作为主控通过串口与CH9329芯片通信,CH
 ## PCB说明
 本项目需要2个PCB板，分别是主板和连接器板，其中连接器板不是必须的，如果不需要连接电脑的物理开机键，就可以舍弃掉连接器板。
 ![连接器板正面](https://github.com/Magiclxw/HelloFinger/blob/main/4.Doc/Image/%E8%BF%9E%E6%8E%A5%E5%99%A8%E6%9D%BF%E6%AD%A3%E9%9D%A2.jpg)
-![连接器板背面](https://github.com/Magiclxw/HelloFinger/blob/main/4.Doc/Image/%E8%BF%9E%E6%8E%A5%E5%99%A8%E6%9D%BF%E6%AD%A3%E9%9D%A2.jpg)
-![主板正面]()
+![连接器板背面](https://github.com/Magiclxw/HelloFinger/blob/main/4.Doc/Image/%E8%BF%9E%E6%8E%A5%E5%99%A8%E6%9D%BF%E8%83%8C%E9%9D%A2.jpg)
+![主板正面](https://github.com/Magiclxw/HelloFinger/blob/main/4.Doc/Image/%E4%B8%BB%E6%9D%BF%E6%AD%A3%E9%9D%A2.jpg)
 ![主板背面](https://github.com/Magiclxw/HelloFinger/blob/main/4.Doc/Image/%E4%B8%BB%E6%9D%BF%E8%83%8C%E9%9D%A2.jpg)
 PCB采用4层板，电容电阻封装采用0603，整体含有3个非标准封装，分别是JoyStick摇杆、FPM383C指纹识别模块以及弯角微动。
 PCB焊接时需要遵循一定的焊接步骤，具体的步骤见[焊接指南](https://github.com/Magiclxw/HelloFinger/blob/main/4.Doc/HelloFinger%E7%84%8A%E6%8E%A5%E6%8C%87%E5%8D%97V1.0.pdf)

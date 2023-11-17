@@ -438,7 +438,6 @@ int CH9329_Set_Cfg(void);
 int CH9329_Get_Info(void);
 
 int CH9329_Key_Release(void);
-int CH9329_Index_to_Ascii(uint8_t *ascii);
 void CH9329_Generate_KEY_CMD(KEY_TYPE_e type,uint8_t key_contral,char key_value);
 void CH9329_Input_Ascii(char *ascii,uint8_t len);
 void CH9329_Input_Shortcut(uint8_t func_key,char *key,uint8_t key_len);

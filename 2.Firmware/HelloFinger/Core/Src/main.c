@@ -80,56 +80,17 @@ uint8_t rx[20] = {0};
   */
 int main(void)
 {
-  /* USER CODE BEGIN 1 */
-	uint16_t id = 0;
-  /* USER CODE END 1 */
 
-  /* MCU Configuration--------------------------------------------------------*/
-
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
 
-  /* USER CODE BEGIN Init */
-
-  /* USER CODE END Init */
-
-  /* Configure the system clock */
   SystemClock_Config();
 
-  /* USER CODE BEGIN SysInit */
-	
-  /* USER CODE END SysInit */
-
-  /* Initialize all configured peripherals */
-  
-  /* USER CODE BEGIN 2 */
-	
-	
 	System_PARAM_Init();
 	
 	SYSTEM_Init();
 	
-	printf("hello finger\r\n");
-	memcpy(g_sys_info.firmware_version,Firmware_Version,strlen(Firmware_Version));
+	printf("hello finger£¡\r\n");
 
-	uint8_t data[10] = {0,1,2,3,4,5,6,7,8,9};
-	
-	//Flash_write(data,0,10);
-	//AT24C64_WriteOneByte(0x00,data[2]);
-	
-	delay_ms(1000);
-	
-	//rx[0] = AT24C64_ReadOneByte(0x00);
-	Flash_read(rx,0x0,10);
-	//Flash_Read_DMA(rx,0x100000+100*2,20);
-	//delay_ms(1000);
-	for(uint8_t i=0;i<20;i++)
-	{
-		printf("data : %d\r\n",rx[i]);
-	}
-	
-	//char hello[15] = {"hello world!!!"};
-	//CH9329_Input_Ascii(hello);
 	RegisterUsart1ReceiveCallBack(Key_GiveNotifyFromISR);
 	RegisterUsart2ReceiveCallBack(Finger_GiveNotifyFromISR);
 	RegisterADC1ReceiveCallBack(JoyStick_GiveNotifyFromISR);
@@ -139,27 +100,15 @@ int main(void)
 	RegisterNormalKeyCallBack(Normal_KeyNotifyFromISR);
 	RegisterJoyconKeyCallBack(Joycon_KeyNotifyFromISR);
 	RegisterEncoderCallBack(ENCODER_NotifyFromISR);
-	//FPM383C_StoreChar(0xAB,0x01);
+	
 	Task_Create();
+	
 	vTaskStartScheduler();
-	//char hello[5] = {"hello"};
-	//CH9329_Input_Ascii(hello);
-	//CH9329_Index_to_Ascii(hello);
-	//uint8_t data[5] = {0xAB,0xCD,0xEF,0x12,0x34};
-	//CH9329_Send_HID_Data(data,5);
-	//CH9329_Generate_KEY_CMD(KEY_TYPE_GENERAL_KEY,'T');
-	//FPM383C_AutoEnroll(0x0001,4,AUTOENROLL_PARAM_BACKLIGHT_ON|AUTOENROLL_PARAM_PRETREATMENT_ON|AUTOENROLL_PARAM_CRITICAL_STATE_ON|AUTOENROLL_PARAM_ID_COVER_ON|AUTOENROLL_PARAM_ENROLL_REPEAT_ON|AUTOENROLL_PARAM_FINGER_MOVE_ON);
-  /* USER CODE END 2 */
 
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
   while (1)
   {
-    /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
   }
-  /* USER CODE END 3 */
+
 }
 
 /**

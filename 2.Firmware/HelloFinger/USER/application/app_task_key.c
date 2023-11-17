@@ -150,7 +150,7 @@ static void vTaskActionKeyProcessing(void)	//Action°´¼üÈÎÎñ
 {
 	uint8_t func = 0;
 	uint8_t action = 0;
-	uint32_t crc_value = 0;
+
 	while(1)
 	{
 		BaseType_t ret = ulTaskNotifyTake((BaseType_t)pdTRUE,(TickType_t)portMAX_DELAY);	

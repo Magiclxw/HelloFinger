@@ -53,6 +53,7 @@ int System_PARAM_Init(void)
 	g_sys_init_param.rgb_param.RGB_B_decrease = 5;
 	g_sys_init_param.rgb_param.RGB_interval = 30;
 
+	return OPERATE_SUCCESS;
 }
 
 void SYSTEM_Init(void)

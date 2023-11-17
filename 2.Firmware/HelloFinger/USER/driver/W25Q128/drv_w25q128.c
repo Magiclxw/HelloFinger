@@ -307,6 +307,7 @@ int Flash_Erase_Chip(void)
 	Flash_Read_Write_Byte(FLASH_ChipErase);
 	SPI_FLASH_CS_HIGH();
 	Flash_Wait_Busy();
+	return OPERATE_SUCCESS;
 }
 
 int Flash_Erase_Sector(uint32_t saddr)

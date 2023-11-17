@@ -61,34 +61,15 @@ static void vTaskKeyProcessing(void)
 	KeyResetData();
 	Queue_KeyProcessing_Handle = xQueueCreate((UBaseType_t)KEY_DATA_HANDLE_QUEUE_LEN,(UBaseType_t)KEY_DATA_HANDLE_QUEUE_SIZE);
 	Queue_Computer_Info_Handle = xQueueCreate((UBaseType_t)COMPUTER_INFO_QUEUE_LEN,(UBaseType_t)COMPUTER_INFO_QUEUE_SIZE);
-	//uint16_t id = 0x00;
-	//uint8_t enroll_times = 0x02;
-	//uint16_t param = 0x0F;
-	//FPM383C_AutoEnroll(id,enroll_times,param);
-	//HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_autoenroll,g_autoenroll.LEN[0]<<8|g_autoenroll.LEN[1]+FIXED_CMD_LEN,1000);
-	//taskENTER_CRITICAL();
-	//FPM383C_ReadIndexTable(0);
-	//HAL_UART_Transmit(&huart2,(uint8_t*)&g_read_index_table,g_read_index_table.LEN[0]<<8|g_read_index_table.LEN[1]+FIXED_CMD_LEN,1000);
-	//taskEXIT_CRITICAL();
-	_LED_Function_t func = g_sys_init_param.fp383_param.FPM383_RGB_func;
+
+	_LED_Function_t func = (_LED_Function_t)g_sys_init_param.fp383_param.FPM383_RGB_func;
 	uint8_t start_color = g_sys_init_param.fp383_param.FPM383_RGB_startColor;
 	uint8_t end_color = g_sys_init_param.fp383_param.FPM383_RGB_stopColor;
 	uint8_t cycle_time = g_sys_init_param.fp383_param.FPM383_RGB_cycle;
 	FPM383C_ControlBLN(func,start_color,end_color,cycle_time);
 	
 	CH9329_Get_Info();
-	
-	//RGB_Effect(255,0,0,500,2);
-	//CH9329_Input_Media_Key(3);
-	//uint8_t time = 36;
-	//uint8_t color1 = 0x99;
-	//uint8_t color2 = 0x00;
-	//uint8_t color3 = 0x00;
-	//uint8_t color4 = 0x00;
-	//uint8_t color5 = 0x00;
-	//uint8_t cycle = 0;
-	//FPM383C_ControlBLN_Program(time,color1,color2,color3,color4,color5,cycle);
-	//HAL_UART_Transmit(&FINGER_HANDLE,(uint8_t*)&g_control_bln_pro,g_control_bln_pro.LEN[0]<<8|g_control_bln_pro.LEN[1]+FIXED_CMD_LEN,1000);
+
 	while(1)
 	{
 		BaseType_t ret = xQueueReceive(Queue_KeyProcessing_Handle,&rec_data,portMAX_DELAY);
@@ -200,7 +181,7 @@ int Key_Protocol_Mode_RecData_Handle(uint8_t data)	//协议传输数据处理
 
 int Key_Trans_Mode_RecData_Handle(uint8_t data)	//透传模式数据处理
 {
-	
+	return OPERATE_SUCCESS;
 }
 
 static void KeyResetData(void)
@@ -451,7 +432,6 @@ int HID_Data_Handle(void)
 					 }
 					 if(packNum == 0 && index == g_key_data_format.data[6])
 					 {
-						 uint8_t len = 0;
 						 uint32_t crc_value = 0;
 						 store_msg[seqLen1+3] = seqLen2;	//存储密码长度
 						 store_msg[seqLen1+3+1] = (uint8_t)FINGER_FUNC_RESERVED_DATA;//存储无效字节
@@ -599,7 +579,6 @@ int HID_Data_Handle(void)
 					 }
 					 if(packNum == 0 && index == g_key_data_format.data[6])
 					 {
-						 uint8_t len = 0;
 						 uint32_t crc_value = 0;
 						 store_msg[seqLen1+3] = seqLen2;	//存储密码长度
 						 store_msg[seqLen1+3+1] = (uint8_t)FINGER_FUNC_RESERVED_DATA;//存储无效字节
@@ -694,8 +673,7 @@ int HID_Data_Handle(void)
 			 case USB_PROTOCOL_FORMAT_GET_HW:
 			 {
 				 uint16_t flashId = 0;
-				 uint8_t ch9329_ver = 0;
-				 
+
 				 Flash_Read_id(&flashId);
 				 
 				 g_usb_response.head = USB_RESPONSE_HEAD;
@@ -736,10 +714,5 @@ int HID_Data_Handle(void)
 			return OPERATE_ERROR_INVALID_PARAMETERS;
 	 }
 	 return OPERATE_SUCCESS;
-}
-
-static void Store_FingerFunc()
-{
-	
 }
 

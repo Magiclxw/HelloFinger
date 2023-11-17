@@ -403,16 +403,6 @@ int CH9329_Get_Info(void)
 
 
 /************************************************数据处理***********************************************/
-int CH9329_Index_to_Ascii(uint8_t *ascii)
-{
-	uint16_t len = 0;	//记录数据长度
-	static uint8_t ascii_value[100] = {0};
-	len=strlen((char*)ascii);
-	for(int i=0;i<len;i++){
-		ascii_value[i]=(char)ascii[i];
-	}
-	return OPERATE_SUCCESS;
-}
 
 uint8_t CH9329_CAL_SUM(uint8_t *cmd,uint8_t len)
 {
@@ -655,6 +645,7 @@ int CH9329_REL_Mouse_Ctrl(uint8_t step,uint8_t dir_x,uint8_t dir_y,BUTTON_VALUE_
 int CH9329_Key_Release(void)	//发送释放按键指令
 {
 	HAL_UART_Transmit(&KEY_HANDLE,KeyRelease,14,1000);	//释放按键
+	return OPERATE_SUCCESS;
 }
 
 /**
@@ -665,6 +656,7 @@ int CH9329_Key_Release(void)	//发送释放按键指令
 int CH9329_Keyboard_Switch(void)
 {
 	CH9329_Input_Shortcut(R_SHIFT|R_ALT,NULL,0);
+	return OPERATE_SUCCESS;
 }
 
 

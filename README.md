@@ -1,7 +1,7 @@
 # HelloFinger
 ![HelloFinger](https://github.com/Magiclxw/HelloFinger/blob/main/4.Doc/Image/HelloFinger.jpg)
 ## 关于本项目：
-该项目通过操作单个模块，实现与Windows系统的HID通信，配合上位机实现电脑开机、电脑解锁、鼠标控制、快捷键、多任务、AI对话等功能。
+本项目通过操作单个模块，实现与Windows系统的HID通信，配合上位机实现电脑开机、电脑解锁、鼠标控制、快捷键、多任务、AI对话等功能。
 
 ## 项目相关功能：  
   1. AI 对话：接入通义千问API，可进行对话、问答；
@@ -17,8 +17,8 @@
 ## 开发平台：
 -**外壳设计**：SolidWorks  
 -**原理图、PCB设计**：立创eda  
--**固件**：Keil5  
--**上位机**：Qt  
+-**固件开发**：Keil5  
+-**上位机开发**：Qt  
 
 ## 设计原理
 HelloFinger使用一颗STM32F103作为主控通过串口与CH9329芯片通信,CH9329通过HID接口与Windows系统交互；交互方式分为两类，一类直接操作Windows系统，一类以自定义数据包方式与Windows系统进行数据传输。上位机通过HID接口收发自定义数据包，进而实现自定义的交互功能。
@@ -52,10 +52,10 @@ HelloFinger使用一颗STM32F103作为主控通过串口与CH9329芯片通信,CH
 
 ## PCB说明
 本项目需要2个PCB板，分别是主板和连接器板，其中连接器板不是必须的，如果不需要连接电脑的物理开机键，就可以舍弃掉连接器板。
-![连接器板正面](https://github.com/Magiclxw/HelloFinger/blob/main/4.Doc/Image/%E8%BF%9E%E6%8E%A5%E5%99%A8%E6%9D%BF%E6%AD%A3%E9%9D%A2.jpg)
-![连接器板背面](https://github.com/Magiclxw/HelloFinger/blob/main/4.Doc/Image/%E8%BF%9E%E6%8E%A5%E5%99%A8%E6%9D%BF%E8%83%8C%E9%9D%A2.jpg)
-![主板正面](https://github.com/Magiclxw/HelloFinger/blob/main/4.Doc/Image/%E4%B8%BB%E6%9D%BF%E6%AD%A3%E9%9D%A2.jpg)
-![主板背面](https://github.com/Magiclxw/HelloFinger/blob/main/4.Doc/Image/%E4%B8%BB%E6%9D%BF%E8%83%8C%E9%9D%A2.jpg)
+  1. 连接器板正面![连接器板正面](https://github.com/Magiclxw/HelloFinger/blob/main/4.Doc/Image/%E8%BF%9E%E6%8E%A5%E5%99%A8%E6%9D%BF%E6%AD%A3%E9%9D%A2.jpg)
+  2. 连接器板背面![连接器板背面](https://github.com/Magiclxw/HelloFinger/blob/main/4.Doc/Image/%E8%BF%9E%E6%8E%A5%E5%99%A8%E6%9D%BF%E8%83%8C%E9%9D%A2.jpg)
+  3. 主板正面![主板正面](https://github.com/Magiclxw/HelloFinger/blob/main/4.Doc/Image/%E4%B8%BB%E6%9D%BF%E6%AD%A3%E9%9D%A2.jpg)
+  4. 主板背面![主板背面](https://github.com/Magiclxw/HelloFinger/blob/main/4.Doc/Image/%E4%B8%BB%E6%9D%BF%E8%83%8C%E9%9D%A2.jpg)
 PCB采用4层板，电容电阻封装采用0603，整体含有3个非标准封装，分别是JoyStick摇杆、FPM383C指纹识别模块以及弯角微动。
 PCB焊接时需要遵循一定的焊接步骤，具体的步骤见[焊接指南](https://github.com/Magiclxw/HelloFinger/blob/main/4.Doc/HelloFinger%E7%84%8A%E6%8E%A5%E6%8C%87%E5%8D%97V1.0.pdf)
 

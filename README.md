@@ -47,4 +47,4 @@ STM32F103作为主控通过串口与CH9329芯片通信,CH9329通过HID接口与W
 ## PCB说明
 
 PCB采用4层板，电容电阻封装采用0603，整体含有3个非标准封装，分别是JoyStick摇杆、FPM383C指纹识别模块以及弯角微动。
-PCB焊接时需要遵循一定的焊接步骤，具体的步骤见
+PCB焊接时需要遵循一定的焊接步骤，具体的步骤见[焊接指南](https://github.com/Magiclxw/HelloFinger/blob/main/4.Doc/HelloFinger%E7%84%8A%E6%8E%A5%E6%8C%87%E5%8D%97V1.0.pdf)

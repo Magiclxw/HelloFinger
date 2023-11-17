@@ -44,6 +44,8 @@ HelloFinger使用一颗STM32F103作为主控通过串口与CH9329芯片通信,CH
   5. Model:模型文件夹：包含3D打印文件；
   6. Tools：工具文件夹：包含硬件外设的测试工具；
 
+## 原理图
+
 ## PCB说明
 本项目需要2个PCB板，分别是主板和连接器板，其中连接器板不是必须的，如果不需要连接电脑的物理开机键，就可以舍弃掉连接器板。
 ![连接器板正面](https://github.com/Magiclxw/HelloFinger/blob/main/4.Doc/Image/%E8%BF%9E%E6%8E%A5%E5%99%A8%E6%9D%BF%E6%AD%A3%E9%9D%A2.jpg)
@@ -55,4 +57,13 @@ PCB焊接时需要遵循一定的焊接步骤，具体的步骤见[焊接指南]
 
 ## 3D结构件
 HelloFinger一共有8个结构件，分别是[连接器上壳](https://github.com/Magiclxw/HelloFinger/blob/main/5.Model/%E8%BF%9E%E6%8E%A5%E5%99%A8%E4%B8%8A%E5%A3%B3..STL)、[连接器下壳](https://github.com/Magiclxw/HelloFinger/blob/main/5.Model/%E8%BF%9E%E6%8E%A5%E5%99%A8%E4%B8%8B%E5%A3%B3.STL)、[主板上壳](https://github.com/Magiclxw/HelloFinger/blob/main/5.Model/%E4%B8%8A%E5%A3%B3.STL)、[主板下壳](https://github.com/Magiclxw/HelloFinger/blob/main/5.Model/%E4%B8%8B%E5%A3%B3.STL)、[上按钮*2](https://github.com/Magiclxw/HelloFinger/blob/main/5.Model/%E4%B8%8A%E6%8C%89%E9%92%AE.STL)、[侧键*2](https://github.com/Magiclxw/HelloFinger/blob/main/5.Model/%E4%BE%A7%E9%94%AE.STL)。
+  1. 上壳![上壳](https://github.com/Magiclxw/HelloFinger/blob/main/4.Doc/Image/%E4%B8%8A%E5%A3%B3.JPG)
+  2. 下壳![下壳](https://github.com/Magiclxw/HelloFinger/blob/main/4.Doc/Image/%E4%B8%8B%E5%A3%B3.JPG)
+  3. 连接器上壳![连接器上壳](https://github.com/Magiclxw/HelloFinger/blob/main/4.Doc/Image/%E8%BF%9E%E6%8E%A5%E5%99%A8%E4%B8%8A%E5%A3%B3.JPG)
+  4. 连接器下壳![连接器下壳](https://github.com/Magiclxw/HelloFinger/blob/main/4.Doc/Image/%E8%BF%9E%E6%8E%A5%E5%99%A8%E4%B8%8B%E5%A3%B3.JPG)
+  5. 上按钮![上按钮](https://github.com/Magiclxw/HelloFinger/blob/main/4.Doc/Image/%E4%B8%8A%E6%8C%89%E9%92%AE.JPG)
+  6. 侧键![侧键](https://github.com/Magiclxw/HelloFinger/blob/main/4.Doc/Image/%E4%BE%A7%E9%94%AE.JPG)
 
+
+
+##
